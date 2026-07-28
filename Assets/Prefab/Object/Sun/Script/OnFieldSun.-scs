@@ -1,0 +1,58 @@
+﻿using System;
+using Script.Manager;
+using Script.Model;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+namespace Prefab.Object.Sun.Script
+{
+    public class OnFieldSun : OnFieldObject, IPointerClickHandler
+    {
+        // 是否可以被点击
+        private bool _canBeClick;
+        
+        public Sun.SunType sunType;
+
+        public OnFieldSun SetJumpMode()
+        {
+            _canBeClick = false;
+            SetSortingLayer("sun");
+            
+            // Transform.localScale.Scale(new Vector3(0.5f, 0.5f, 1f));
+            var localScale = transform.localScale;
+            localScale = new Vector3(localScale.x * 0.5f, localScale.y * 0.5f, 1f);
+            transform.localScale = localScale;
+            
+            LightCoroutineManager.Instance.StartLightCoroutine("JumpDown", GetEntity<Sun>().StartJumpDown());
+            _canBeClick = true;
+            
+            LightCoroutineManager.Instance.StartLightCoroutine("Disappear", GetEntity<Sun>().StartDisappear());
+            return this;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (!_canBeClick) return;
+            _canBeClick = false;
+
+            SunManager.Instance.AddCurrentSunLight(Sun.GetSunLightBySunType(sunType));
+            // 坐标转换优化
+            var worldSunPosition = SunManager.Instance.sunPoint.transform.position;
+            var localSunPosition = Transform.parent.InverseTransformPoint(worldSunPosition);
+
+            // 启动协程
+            LightCoroutineManager.Instance.StartLightCoroutine("ClickSun", GetEntity<Sun>().StartClickSun(localSunPosition));
+        }
+
+        private void Start()
+        {
+            // for (int i = 1; i <= 10; i++)
+            // {
+            //     
+            // }
+            
+        }
+    }
+    
+    
+}

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c2707e2c445614495bcbb3eee87e71, type: 3}
+  m_Name: GameConfigObject
+  m_EditorClassIdentifier: 
+  SunShroom: {fileID: 2647483252324358559, guid: 73cb07c4af754974eacec24ad9e6500a, type: 3}
+  PeaShooterSingle: {fileID: 5634576352058383807, guid: 43e0cd8660f85924caf47f1b88329c4a, type: 3}
+  ZombieNormal: {fileID: 5634576352058383807, guid: 43e0cd8660f85924caf47f1b88329c4a, type: 3}
+  Card: {fileID: 5784924986378957517, guid: 555cb2e475817a442b49304743fdd90e, type: 3}
+  Sun: {fileID: 5634576352058383807, guid: 43e0cd8660f85924caf47f1b88329c4a, type: 3}
+  PlanteShadow: {fileID: 5221094972796793387, guid: 3136945d49b693b4b99fb9faa81393e7, type: 3}
+  ProjectilePea: {fileID: 5634576352058383807, guid: 43e0cd8660f85924caf47f1b88329c4a, type: 3}
+  PeaSplat: {fileID: 7648562607328567218, guid: 0afe8e2823e4c184dba0d66e9fbe0533, type: 3}

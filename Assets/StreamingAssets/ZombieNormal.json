@@ -1,0 +1,3859 @@
+{
+	"idle": [
+		{
+			"obj": "ZombieNormal",
+			"ani_list": [
+				"m_LocalPosition.x"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"m_LocalPosition.x": "0"
+				},
+				{
+					"fram": "14",
+					"m_LocalPosition.x": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_hair",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "28.2",
+					"position.y": "18.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "25.2",
+					"position.y": "21.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "9",
+					"position.x": "24.2",
+					"position.y": "23.8",
+					"scale.x": "99.96948242",
+					"scale.y": "99.96948242",
+					"skew.x": "-5.561157227",
+					"skew.y": "-5.561157227",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "28.2",
+					"position.y": "18.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "44.45",
+					"position.y": "76.8",
+					"scale.x": "99.98321533",
+					"scale.y": "99.98321533",
+					"skew.x": "-3.033477783",
+					"skew.y": "-3.033477783",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "42.4",
+					"position.y": "77.75",
+					"scale.x": "99.96643066",
+					"scale.y": "99.96643066",
+					"skew.x": "-3.00819397",
+					"skew.y": "-3.00819397",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "44.45",
+					"position.y": "76.8",
+					"scale.x": "99.98321533",
+					"scale.y": "99.98321533",
+					"skew.x": "-3.033477783",
+					"skew.y": "-3.033477783",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "50.25",
+					"position.y": "56.1",
+					"scale.x": "99.98321533",
+					"scale.y": "99.98321533",
+					"skew.x": "-3.033477783",
+					"skew.y": "-3.033477783",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "48.2",
+					"position.y": "57.1",
+					"scale.x": "99.96643066",
+					"scale.y": "99.96643066",
+					"skew.x": "-3.00819397",
+					"skew.y": "-3.00819397",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "50.25",
+					"position.y": "56.1",
+					"scale.x": "99.98321533",
+					"scale.y": "99.98321533",
+					"skew.x": "-3.033477783",
+					"skew.y": "-3.033477783",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_hand",
+			"ani_list": [
+				"m_IsActive",
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"m_IsActive": "1",
+					"position.x": "43.4",
+					"position.y": "93.35",
+					"scale.x": "99.98321533",
+					"scale.y": "99.98321533",
+					"skew.x": "-3.033477783",
+					"skew.y": "-3.033477783",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"m_IsActive": "1",
+					"position.x": "41.4",
+					"position.y": "94.35",
+					"scale.x": "99.96643066",
+					"scale.y": "99.96643066",
+					"skew.x": "-3.00819397",
+					"skew.y": "-3.00819397",
+					"brightness": "1"
+				},
+				{
+					"fram": "9",
+					"m_IsActive": "1",
+					"position.x": "41.6",
+					"position.y": "95.8",
+					"scale.x": "99.949646",
+					"scale.y": "99.949646",
+					"skew.x": "-3.002960205",
+					"skew.y": "-3.002960205",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"m_IsActive": "1",
+					"position.x": "43.4",
+					"position.y": "93.35",
+					"scale.x": "99.98321533",
+					"scale.y": "99.98321533",
+					"skew.x": "-3.033477783",
+					"skew.y": "-3.033477783",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_hand2",
+			"ani_list": [
+				"m_IsActive"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"m_IsActive": "0"
+				},
+				{
+					"fram": "14",
+					"m_IsActive": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_jaw",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "26.25",
+					"position.y": "46.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "23.25",
+					"position.y": "51.1",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "9",
+					"position.x": "26.25",
+					"position.y": "52.8",
+					"scale.x": "99.92523193",
+					"scale.y": "99.92523193",
+					"skew.x": "-13.37113953",
+					"skew.y": "-13.37113953",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "26.25",
+					"position.y": "46.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_tie",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "32.3",
+					"position.y": "61.7",
+					"scale.x": "99.95117188",
+					"scale.y": "99.95117188",
+					"skew.x": "-8.547531128",
+					"skew.y": "-8.547531128",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "31.3",
+					"position.y": "65.2",
+					"scale.x": "99.90081787",
+					"scale.y": "99.90081787",
+					"skew.x": "-8.516738892",
+					"skew.y": "-8.516738892",
+					"brightness": "1"
+				},
+				{
+					"fram": "9",
+					"position.x": "31.4",
+					"position.y": "66.4",
+					"scale.x": "99.85656738",
+					"scale.y": "112.0758057",
+					"skew.x": "-8.509048462",
+					"skew.y": "-8.509902954",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "32.3",
+					"position.y": "61.7",
+					"scale.x": "99.95117188",
+					"scale.y": "99.95117188",
+					"skew.x": "-8.547531128",
+					"skew.y": "-8.547531128",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_body",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "50.1",
+					"position.y": "59",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "49.6",
+					"position.y": "61",
+					"scale.x": "99.95269775",
+					"scale.y": "99.95269775",
+					"skew.x": "-8.040725708",
+					"skew.y": "-8.040725708",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "50.1",
+					"position.y": "59",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerleg_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "70",
+					"position.y": "105.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "68",
+					"position.y": "106.05",
+					"scale.x": "99.93438721",
+					"scale.y": "99.93438721",
+					"skew.x": "-11.56173706",
+					"skew.y": "-11.56173706",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "70",
+					"position.y": "105.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerleg_foot",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "61.45",
+					"position.y": "117.75",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "61.45",
+					"position.y": "116.7",
+					"scale.x": "99.96185303",
+					"scale.y": "99.96185303",
+					"skew.x": "-6.274734497",
+					"skew.y": "-6.274734497",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "61.45",
+					"position.y": "117.75",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerleg_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "63.2",
+					"position.y": "83.45",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "61.2",
+					"position.y": "83.45",
+					"scale.x": "99.95269775",
+					"scale.y": "119.8165894",
+					"skew.x": "8.296859741",
+					"skew.y": "8.296859741",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "63.2",
+					"position.y": "83.45",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerleg_foot",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "46.1",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "46.1",
+					"position.y": "113.1",
+					"scale.x": "99.94049072",
+					"scale.y": "99.94049072",
+					"skew.x": "10.78848267",
+					"skew.y": "10.78848267",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "46.1",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerleg_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "44.35",
+					"position.y": "104.65",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "45.8",
+					"position.y": "102.6",
+					"scale.x": "99.91607666",
+					"scale.y": "105.46875",
+					"skew.x": "7.494857788",
+					"skew.y": "7.494003296",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "44.35",
+					"position.y": "104.65",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerleg_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "50.15",
+					"position.y": "87.15",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "51.15",
+					"position.y": "88.2",
+					"scale.x": "99.90234375",
+					"scale.y": "99.90234375",
+					"skew.x": "-18.5337677",
+					"skew.y": "-18.5337677",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "50.15",
+					"position.y": "87.15",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_head",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "27.85",
+					"position.y": "28",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "24.85",
+					"position.y": "31",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				},
+				{
+					"fram": "9",
+					"position.x": "24.8",
+					"position.y": "31.75",
+					"scale.x": "99.96948242",
+					"scale.y": "99.96948242",
+					"skew.x": "-5.561157227",
+					"skew.y": "-5.561157227",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "27.85",
+					"position.y": "28",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerarm_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "32.6",
+					"position.y": "58.8",
+					"scale.x": "99.96795654",
+					"scale.y": "99.96795654",
+					"skew.x": "-5.819122314",
+					"skew.y": "-5.819122314",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "31.6",
+					"position.y": "61.8",
+					"scale.x": "99.93438721",
+					"scale.y": "99.93438721",
+					"skew.x": "-5.769790649",
+					"skew.y": "-5.769790649",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "32.6",
+					"position.y": "58.8",
+					"scale.x": "99.96795654",
+					"scale.y": "99.96795654",
+					"skew.x": "-5.819122314",
+					"skew.y": "-5.819122314",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerarm_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "32.25",
+					"position.y": "75.85",
+					"scale.x": "99.96795654",
+					"scale.y": "99.96795654",
+					"skew.x": "-5.819122314",
+					"skew.y": "-5.819122314",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "31.3",
+					"position.y": "78.85",
+					"scale.x": "99.93438721",
+					"scale.y": "99.93438721",
+					"skew.x": "-5.769790649",
+					"skew.y": "-5.769790649",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "32.25",
+					"position.y": "75.85",
+					"scale.x": "99.96795654",
+					"scale.y": "99.96795654",
+					"skew.x": "-5.819122314",
+					"skew.y": "-5.819122314",
+					"brightness": "1"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerarm_hand",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"brightness"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "33.3",
+					"position.y": "89.55",
+					"scale.x": "99.96795654",
+					"scale.y": "99.96795654",
+					"skew.x": "-5.819122314",
+					"skew.y": "-5.819122314",
+					"brightness": "1"
+				},
+				{
+					"fram": "7",
+					"position.x": "32.3",
+					"position.y": "92.5",
+					"scale.x": "99.93438721",
+					"scale.y": "99.93438721",
+					"skew.x": "-5.769790649",
+					"skew.y": "-5.769790649",
+					"brightness": "1"
+				},
+				{
+					"fram": "9",
+					"position.x": "32.4",
+					"position.y": "93.75",
+					"scale.x": "99.90844727",
+					"scale.y": "99.90844727",
+					"skew.x": "-5.757675171",
+					"skew.y": "-5.757675171",
+					"brightness": "1"
+				},
+				{
+					"fram": "14",
+					"position.x": "33.3",
+					"position.y": "89.55",
+					"scale.x": "99.96795654",
+					"scale.y": "99.96795654",
+					"skew.x": "-5.819122314",
+					"skew.y": "-5.819122314",
+					"brightness": "1"
+				}
+			]
+		}
+	],
+	"walk": [
+		{
+			"obj": "ZombieNormal",
+			"ani_list": [
+				"m_LocalPosition.x"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"m_LocalPosition.x": "0"
+				},
+				{
+					"fram": "16",
+					"m_LocalPosition.x": "-20.5"
+				},
+				{
+					"fram": "23",
+					"m_LocalPosition.x": "-20.95"
+				},
+				{
+					"fram": "39",
+					"m_LocalPosition.x": "-49.4"
+				},
+				{
+					"fram": "46",
+					"m_LocalPosition.x": "-50"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_hair",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "28.2",
+					"position.y": "18.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "9",
+					"position.x": "33.05",
+					"position.y": "15",
+					"scale.x": "99.971",
+					"scale.y": "99.971",
+					"skew.x": "5.0671",
+					"skew.y": "5.0671"
+				},
+				{
+					"fram": "16",
+					"position.x": "25.95",
+					"position.y": "20.3",
+					"scale.x": "99.9786",
+					"scale.y": "99.9786",
+					"skew.x": "-4.0359",
+					"skew.y": "-4.0359"
+				},
+				{
+					"fram": "18",
+					"position.x": "25.95",
+					"position.y": "21.85",
+					"scale.x": "99.9481",
+					"scale.y": "99.9481",
+					"skew.x": "-6.8054",
+					"skew.y": "-6.8054"
+				},
+				{
+					"fram": "23",
+					"position.x": "27.5",
+					"position.y": "18.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "32",
+					"position.x": "29",
+					"position.y": "13.6",
+					"scale.x": "99.9237",
+					"scale.y": "99.9237",
+					"skew.x": "2.7632",
+					"skew.y": "2.7632"
+				},
+				{
+					"fram": "39",
+					"position.x": "23.4",
+					"position.y": "19",
+					"scale.x": "99.9451",
+					"scale.y": "99.9451",
+					"skew.x": "-0.0035",
+					"skew.y": "-0.0035"
+				},
+				{
+					"fram": "41",
+					"position.x": "25.2",
+					"position.y": "21.1",
+					"scale.x": "99.9039",
+					"scale.y": "99.9039",
+					"skew.x": "-4.0246",
+					"skew.y": "-4.0246"
+				},
+				{
+					"fram": "46",
+					"position.x": "28.2",
+					"position.y": "18.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "44.4",
+					"position.y": "76.8",
+					"scale.x": "99.97405",
+					"scale.y": "99.97405",
+					"skew.x": "-3.0073",
+					"skew.y": "-3.0073"
+				},
+				{
+					"fram": "9",
+					"position.x": "43.6",
+					"position.y": "69.75",
+					"scale.x": "99.8611",
+					"scale.y": "99.8611",
+					"skew.x": "15.3296",
+					"skew.y": "15.3296"
+				},
+				{
+					"fram": "16",
+					"position.x": "44.7",
+					"position.y": "79.9",
+					"scale.x": "99.9664",
+					"scale.y": "99.9664",
+					"skew.x": "-3.0082",
+					"skew.y": "-3.0082"
+				},
+				{
+					"fram": "23",
+					"position.x": "43.65",
+					"position.y": "76.4",
+					"scale.x": "99.9664",
+					"scale.y": "99.9664",
+					"skew.x": "-3.0082",
+					"skew.y": "-3.0082"
+				},
+				{
+					"fram": "32",
+					"position.x": "39.65",
+					"position.y": "69.9",
+					"scale.x": "99.8077",
+					"scale.y": "99.8077",
+					"skew.x": "15.5376",
+					"skew.y": "15.5376"
+				},
+				{
+					"fram": "39",
+					"position.x": "37.25",
+					"position.y": "71.25",
+					"scale.x": "99.9359",
+					"scale.y": "99.9359",
+					"skew.x": "1.7585",
+					"skew.y": "1.7585"
+				},
+				{
+					"fram": "46",
+					"position.x": "44.4",
+					"position.y": "76.8",
+					"scale.x": "99.97405",
+					"scale.y": "99.97405",
+					"skew.x": "-3.0335",
+					"skew.y": "-3.0335"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "50.05",
+					"position.y": "56.05",
+					"scale.x": "99.96565",
+					"scale.y": "99.96565",
+					"skew.x": "-3.0335",
+					"skew.y": "-3.0335"
+				},
+				{
+					"fram": "9",
+					"position.x": "52.6",
+					"position.y": "50.8",
+					"scale.x": "99.9359",
+					"scale.y": "99.9359",
+					"skew.x": "2.0598",
+					"skew.y": "2.0598"
+				},
+				{
+					"fram": "16",
+					"position.x": "50.5",
+					"position.y": "59.2",
+					"scale.x": "99.9664",
+					"scale.y": "99.9664",
+					"skew.x": "-3.0082",
+					"skew.y": "-3.0082"
+				},
+				{
+					"fram": "23",
+					"position.x": "49.35",
+					"position.y": "55.65",
+					"scale.x": "99.9481",
+					"scale.y": "99.9481",
+					"skew.x": "-3.0021",
+					"skew.y": "-3.0021"
+				},
+				{
+					"fram": "32",
+					"position.x": "47.65",
+					"position.y": "50.95",
+					"scale.x": "99.8917",
+					"scale.y": "99.8917",
+					"skew.x": "-3.2531",
+					"skew.y": "-3.2531"
+				},
+				{
+					"fram": "39",
+					"position.x": "44.7",
+					"position.y": "51",
+					"scale.x": "99.9176",
+					"scale.y": "99.9176",
+					"skew.x": "1.7523",
+					"skew.y": "1.7523"
+				},
+				{
+					"fram": "46",
+					"position.x": "50.05",
+					"position.y": "56.05",
+					"scale.x": "99.96565",
+					"scale.y": "99.96565",
+					"skew.x": "-3.0021",
+					"skew.y": "-3.0021"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_hand",
+			"ani_list": [
+				"m_IsActive",
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"m_IsActive": "1",
+					"position.x": "43.4",
+					"position.y": "93.35",
+					"scale.x": "99.9649",
+					"scale.y": "99.9649",
+					"skew.x": "-3.0335",
+					"skew.y": "-3.0335"
+				},
+				{
+					"fram": "9",
+					"m_IsActive": "1",
+					"position.x": "36.85",
+					"position.y": "82.6",
+					"scale.x": "99.646",
+					"scale.y": "99.646",
+					"skew.x": "32.3187",
+					"skew.y": "32.3187"
+				},
+				{
+					"fram": "16",
+					"m_IsActive": "1",
+					"position.x": "42.25",
+					"position.y": "96.4",
+					"scale.x": "99.9481",
+					"scale.y": "99.9481",
+					"skew.x": "-3.0021",
+					"skew.y": "-3.0021"
+				},
+				{
+					"fram": "18",
+					"m_IsActive": "1",
+					"position.x": "40.6",
+					"position.y": "96.35",
+					"scale.x": "99.9222",
+					"scale.y": "99.9222",
+					"skew.x": "-3.0021",
+					"skew.y": "-3.0021"
+				},
+				{
+					"fram": "23",
+					"m_IsActive": "1",
+					"position.x": "42.25",
+					"position.y": "92.9",
+					"scale.x": "99.9313",
+					"scale.y": "99.9313",
+					"skew.x": "-3.0021",
+					"skew.y": "-3.0021"
+				},
+				{
+					"fram": "32",
+					"m_IsActive": "1",
+					"position.x": "31.95",
+					"position.y": "83.2",
+					"scale.x": "99.4827",
+					"scale.y": "99.4827",
+					"skew.x": "38.8496",
+					"skew.y": "38.8496"
+				},
+				{
+					"fram": "39",
+					"m_IsActive": "1",
+					"position.x": "35.45",
+					"position.y": "87.1",
+					"scale.x": "99.881",
+					"scale.y": "99.881",
+					"skew.x": "2.4997",
+					"skew.y": "2.4997"
+				},
+				{
+					"fram": "41",
+					"m_IsActive": "1",
+					"position.x": "37.3",
+					"position.y": "89.15",
+					"scale.x": "99.9359",
+					"scale.y": "99.9359",
+					"skew.x": "-0.25",
+					"skew.y": "-0.25"
+				},
+				{
+					"fram": "46",
+					"m_IsActive": "1",
+					"position.x": "43.4",
+					"position.y": "93.35",
+					"scale.x": "99.9649",
+					"scale.y": "99.9649",
+					"skew.x": "-3.0073",
+					"skew.y": "-3.0073"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_hand2",
+			"ani_list": [
+				"m_IsActive"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"m_IsActive": 0
+				},
+				{
+					"fram": "46",
+					"m_IsActive": 0
+				}
+			]
+		},
+		{
+			"obj": "Zombie_jaw",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "26.25",
+					"position.y": "46.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "9",
+					"position.x": "30.7",
+					"position.y": "43.35",
+					"scale.x": "99.8291",
+					"scale.y": "99.8291",
+					"skew.x": "-10.0672",
+					"skew.y": "-10.0672"
+				},
+				{
+					"fram": "16",
+					"position.x": "26.25",
+					"position.y": "46.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "18",
+					"position.x": "27.3",
+					"position.y": "48.95",
+					"scale.x": "99.9451",
+					"scale.y": "99.9451",
+					"skew.x": "-5.2579",
+					"skew.y": "-4.7642"
+				},
+				{
+					"fram": "23",
+					"position.x": "25.55",
+					"position.y": "46.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "32",
+					"position.x": "27",
+					"position.y": "41.8",
+					"scale.x": "99.7879",
+					"scale.y": "99.7879",
+					"skew.x": "-11.0127",
+					"skew.y": "-11.0127"
+				},
+				{
+					"fram": "39",
+					"position.x": "22.5",
+					"position.y": "45.95",
+					"scale.x": "99.9466",
+					"scale.y": "99.9466",
+					"skew.x": "4.7547",
+					"skew.y": "4.7547"
+				},
+				{
+					"fram": "41",
+					"position.x": "25.7",
+					"position.y": "48.75",
+					"scale.x": "99.8734",
+					"scale.y": "99.8734",
+					"skew.x": "-7.561",
+					"skew.y": "-7.561"
+				},
+				{
+					"fram": "46",
+					"position.x": "26.25",
+					"position.y": "46.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_tie",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "32.3",
+					"position.y": "61.65",
+					"scale.x": "99.90235",
+					"scale.y": "99.90235",
+					"skew.x": "-8.5159",
+					"skew.y": "-8.5159"
+				},
+				{
+					"fram": "9",
+					"position.x": "32.45",
+					"position.y": "59.2",
+					"scale.x": "99.8535",
+					"scale.y": "99.8535",
+					"skew.x": "-3.2993",
+					"skew.y": "-3.2993"
+				},
+				{
+					"fram": "16",
+					"position.x": "32.2",
+					"position.y": "61.7",
+					"scale.x": "99.855",
+					"scale.y": "99.855",
+					"skew.x": "-8.5082",
+					"skew.y": "-8.5082"
+				},
+				{
+					"fram": "18",
+					"position.x": "31.95",
+					"position.y": "63.05",
+					"scale.x": "99.8047",
+					"scale.y": "99.8047",
+					"skew.x": "-8.5082",
+					"skew.y": "-8.5082"
+				},
+				{
+					"fram": "23",
+					"position.x": "31.55",
+					"position.y": "61.7",
+					"scale.x": "99.855",
+					"scale.y": "99.855",
+					"skew.x": "-8.5082",
+					"skew.y": "-8.5082"
+				},
+				{
+					"fram": "32",
+					"position.x": "29.25",
+					"position.y": "57.05",
+					"scale.x": "99.794",
+					"scale.y": "99.794",
+					"skew.x": "-8.7586",
+					"skew.y": "-8.7586"
+				},
+				{
+					"fram": "39",
+					"position.x": "27.25",
+					"position.y": "61.15",
+					"scale.x": "99.8489",
+					"scale.y": "99.8489",
+					"skew.x": "-3.7505",
+					"skew.y": "-3.7505"
+				},
+				{
+					"fram": "41",
+					"position.x": "29.7",
+					"position.y": "63.05",
+					"scale.x": "99.8444",
+					"scale.y": "99.8444",
+					"skew.x": "-6.012",
+					"skew.y": "-6.012"
+				},
+				{
+					"fram": "46",
+					"position.x": "32.3",
+					"position.y": "61.65",
+					"scale.x": "99.90235",
+					"scale.y": "99.90235",
+					"skew.x": "-8.5159",
+					"skew.y": "-8.5159"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_body",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "50.1",
+					"position.y": "59",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "9",
+					"position.x": "50.4",
+					"position.y": "58.15",
+					"scale.x": "99.9146",
+					"scale.y": "99.9146",
+					"skew.x": "7.5258",
+					"skew.y": "7.5258"
+				},
+				{
+					"fram": "16",
+					"position.x": "50.1",
+					"position.y": "59",
+					"scale.x": "99.939",
+					"scale.y": "99.939",
+					"skew.x": "-5.2631",
+					"skew.y": "-5.2631"
+				},
+				{
+					"fram": "23",
+					"position.x": "49.4",
+					"position.y": "59",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "32",
+					"position.x": "46.45",
+					"position.y": "56.1",
+					"scale.x": "99.8276",
+					"scale.y": "99.8276",
+					"skew.x": "9.2558",
+					"skew.y": "9.2558"
+				},
+				{
+					"fram": "39",
+					"position.x": "45.6",
+					"position.y": "59.7",
+					"scale.x": "99.8352",
+					"scale.y": "99.8352",
+					"skew.x": "-2.525",
+					"skew.y": "-2.525"
+				},
+				{
+					"fram": "46",
+					"position.x": "50.1",
+					"position.y": "59",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerleg_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "70",
+					"position.y": "105.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "9",
+					"position.x": "65",
+					"position.y": "104.6",
+					"scale.x": "99.9191",
+					"scale.y": "99.9191",
+					"skew.x": "7.0114",
+					"skew.y": "7.0114"
+				},
+				{
+					"fram": "16",
+					"position.x": "58.4",
+					"position.y": "105.8",
+					"scale.x": "99.7986",
+					"scale.y": "99.7986",
+					"skew.x": "-1.0464",
+					"skew.y": "-1.0464"
+				},
+				{
+					"fram": "23",
+					"position.x": "58.5",
+					"position.y": "105.95",
+					"scale.x": "99.8108",
+					"scale.y": "99.8108",
+					"skew.x": "7.5258",
+					"skew.y": "7.5258"
+				},
+				{
+					"fram": "32",
+					"position.x": "72.75",
+					"position.y": "103.65",
+					"scale.x": "99.527",
+					"scale.y": "113.385",
+					"skew.x": "-5.2839",
+					"skew.y": "-5.2839"
+				},
+				{
+					"fram": "39",
+					"position.x": "77.55",
+					"position.y": "99.9",
+					"scale.x": "99.4202",
+					"scale.y": "99.4202",
+					"skew.x": "-29.3312",
+					"skew.y": "-29.3312"
+				},
+				{
+					"fram": "46",
+					"position.x": "70",
+					"position.y": "105.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerleg_foot",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "61.45",
+					"position.y": "117.75",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "9",
+					"position.x": "55.1",
+					"position.y": "115.7",
+					"scale.x": "99.8901",
+					"scale.y": "99.8901",
+					"skew.x": "-5.7603",
+					"skew.y": "-5.7603"
+				},
+				{
+					"fram": "16",
+					"position.x": "48",
+					"position.y": "115.2",
+					"scale.x": "99.7086",
+					"scale.y": "99.7086",
+					"skew.x": "-6.3041",
+					"skew.y": "-6.3041"
+				},
+				{
+					"fram": "23",
+					"position.x": "47.3",
+					"position.y": "115.2",
+					"scale.x": "99.7086",
+					"scale.y": "99.7086",
+					"skew.x": "-6.3041",
+					"skew.y": "-6.3041"
+				},
+				{
+					"fram": "32",
+					"position.x": "65.1",
+					"position.y": "114.3",
+					"scale.x": "99.4827",
+					"scale.y": "99.4827",
+					"skew.x": "-12.2965",
+					"skew.y": "-12.2965"
+				},
+				{
+					"fram": "39",
+					"position.x": "72.9",
+					"position.y": "114.2",
+					"scale.x": "99.4919",
+					"scale.y": "99.4919",
+					"skew.x": "-19.5268",
+					"skew.y": "-19.5268"
+				},
+				{
+					"fram": "46",
+					"position.x": "61.45",
+					"position.y": "117.75",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerleg_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "63.2",
+					"position.y": "83.45",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "9",
+					"position.x": "60.95",
+					"position.y": "81.95",
+					"scale.x": "99.9191",
+					"scale.y": "99.9191",
+					"skew.x": "7.0114",
+					"skew.y": "7.0114"
+				},
+				{
+					"fram": "16",
+					"position.x": "55.8",
+					"position.y": "83.1",
+					"scale.x": "106.8817",
+					"scale.y": "99.7849",
+					"skew.x": "19.3207",
+					"skew.y": "-1.2885"
+				},
+				{
+					"fram": "23",
+					"position.x": "56.35",
+					"position.y": "80.95",
+					"scale.x": "99.8169",
+					"scale.y": "122.139",
+					"skew.x": "16.2999",
+					"skew.y": "16.2999"
+				},
+				{
+					"fram": "32",
+					"position.x": "62.1",
+					"position.y": "81.8",
+					"scale.x": "99.4263",
+					"scale.y": "99.4263",
+					"skew.x": "-12.0376",
+					"skew.y": "-12.0376"
+				},
+				{
+					"fram": "39",
+					"position.x": "63.05",
+					"position.y": "82.6",
+					"scale.x": "99.4324",
+					"scale.y": "99.4324",
+					"skew.x": "-19.079",
+					"skew.y": "-19.079"
+				},
+				{
+					"fram": "46",
+					"position.x": "63.2",
+					"position.y": "83.45",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerleg_foot",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "46.1",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "9",
+					"position.x": "62.15",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "16",
+					"position.x": "69.15",
+					"position.y": "111.2",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "23",
+					"position.x": "65.95",
+					"position.y": "109.4",
+					"scale.x": "99.5789",
+					"scale.y": "99.5789",
+					"skew.x": "-48.9029",
+					"skew.y": "-48.9029"
+				},
+				{
+					"fram": "32",
+					"position.x": "42.3",
+					"position.y": "110.7",
+					"scale.x": "99.5071",
+					"scale.y": "99.5071",
+					"skew.x": "11.059",
+					"skew.y": "11.059"
+				},
+				{
+					"fram": "39",
+					"position.x": "46.2",
+					"position.y": "112.15",
+					"scale.x": "99.5987",
+					"scale.y": "99.5987",
+					"skew.x": "2.5547",
+					"skew.y": "2.5547"
+				},
+				{
+					"fram": "46",
+					"position.x": "46.1",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerleg_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "44.35",
+					"position.y": "104.65",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "9",
+					"position.x": "54.55",
+					"position.y": "104.6",
+					"scale.x": "99.7238",
+					"scale.y": "99.7238",
+					"skew.x": "-25.3231",
+					"skew.y": "-25.3231"
+				},
+				{
+					"fram": "16",
+					"position.x": "62.15",
+					"position.y": "102.8",
+					"scale.x": "99.6338",
+					"scale.y": "99.6338",
+					"skew.x": "-38.3541",
+					"skew.y": "-38.3541"
+				},
+				{
+					"fram": "23",
+					"position.x": "57.55",
+					"position.y": "104.15",
+					"scale.x": "99.5544",
+					"scale.y": "99.5544",
+					"skew.x": "-52",
+					"skew.y": "-52"
+				},
+				{
+					"fram": "32",
+					"position.x": "39.85",
+					"position.y": "100.85",
+					"scale.x": "99.3256",
+					"scale.y": "99.3256",
+					"skew.x": "-1.2753",
+					"skew.y": "-1.2753"
+				},
+				{
+					"fram": "39",
+					"position.x": "42.3",
+					"position.y": "102.9",
+					"scale.x": "99.3134",
+					"scale.y": "99.3134",
+					"skew.x": "-3.0169",
+					"skew.y": "-3.0169"
+				},
+				{
+					"fram": "46",
+					"position.x": "44.35",
+					"position.y": "104.65",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerleg_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "50.15",
+					"position.y": "87.15",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "9",
+					"position.x": "53.25",
+					"position.y": "86.4",
+					"scale.x": "99.6048",
+					"scale.y": "99.6048",
+					"skew.x": "-20.2973",
+					"skew.y": "-20.2973"
+				},
+				{
+					"fram": "16",
+					"position.x": "58.55",
+					"position.y": "86.1",
+					"scale.x": "99.5941",
+					"scale.y": "99.5941",
+					"skew.x": "-9.0649",
+					"skew.y": "-9.0649"
+				},
+				{
+					"fram": "23",
+					"position.x": "51.85",
+					"position.y": "86.05",
+					"scale.x": "99.5941",
+					"scale.y": "99.5941",
+					"skew.x": "-9.0649",
+					"skew.y": "-9.0649"
+				},
+				{
+					"fram": "32",
+					"position.x": "45.6",
+					"position.y": "82.95",
+					"scale.x": "99.2554",
+					"scale.y": "99.2554",
+					"skew.x": "5.0628",
+					"skew.y": "5.0628"
+				},
+				{
+					"fram": "39",
+					"position.x": "46.7",
+					"position.y": "87.6",
+					"scale.x": "99.3195",
+					"scale.y": "99.3195",
+					"skew.x": "5.0628",
+					"skew.y": "5.0628"
+				},
+				{
+					"fram": "46",
+					"position.x": "50.15",
+					"position.y": "87.15",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_head",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "27.85",
+					"position.y": "28",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "9",
+					"position.x": "31.7",
+					"position.y": "24.5",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "16",
+					"position.x": "26.25",
+					"position.y": "30.1",
+					"scale.x": "99.9557",
+					"scale.y": "99.9557",
+					"skew.x": "-4.0089",
+					"skew.y": "-4.0089"
+				},
+				{
+					"fram": "18",
+					"position.x": "26.65",
+					"position.y": "30.1",
+					"scale.x": "99.9084",
+					"scale.y": "99.9084",
+					"skew.x": "-6.7658",
+					"skew.y": "-6.7658"
+				},
+				{
+					"fram": "23",
+					"position.x": "27.15",
+					"position.y": "28",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "32",
+					"position.x": "28.15",
+					"position.y": "22.95",
+					"scale.x": "99.9069",
+					"scale.y": "99.9069",
+					"skew.x": "2.7536",
+					"skew.y": "2.7536"
+				},
+				{
+					"fram": "39",
+					"position.x": "23.75",
+					"position.y": "28.4",
+					"scale.x": "99.9451",
+					"scale.y": "99.9451",
+					"skew.x": "-0.0035",
+					"skew.y": "-0.0035"
+				},
+				{
+					"fram": "41",
+					"position.x": "25.75",
+					"position.y": "28.95",
+					"scale.x": "99.9039",
+					"scale.y": "99.9039",
+					"skew.x": "-6.0085",
+					"skew.y": "-6.0085"
+				},
+				{
+					"fram": "46",
+					"position.x": "27.85",
+					"position.y": "28",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerarm_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "32.6",
+					"position.y": "58.7",
+					"scale.x": "99.968",
+					"scale.y": "99.968",
+					"skew.x": "-5.8191",
+					"skew.y": "-5.8191"
+				},
+				{
+					"fram": "9",
+					"position.x": "33.5",
+					"position.y": "58.5",
+					"scale.x": "99.9054",
+					"scale.y": "99.9054",
+					"skew.x": "-0.702",
+					"skew.y": "-0.702"
+				},
+				{
+					"fram": "16",
+					"position.x": "32.6",
+					"position.y": "55.25",
+					"scale.x": "99.9359",
+					"scale.y": "99.9359",
+					"skew.x": "-5.7698",
+					"skew.y": "-5.7698"
+				},
+				{
+					"fram": "23",
+					"position.x": "31.85",
+					"position.y": "58.75",
+					"scale.x": "99.9359",
+					"scale.y": "99.9359",
+					"skew.x": "-5.7698",
+					"skew.y": "-5.7698"
+				},
+				{
+					"fram": "32",
+					"position.x": "32.5",
+					"position.y": "53",
+					"scale.x": "99.7833",
+					"scale.y": "121.4233",
+					"skew.x": "11.7705",
+					"skew.y": "11.7705"
+				},
+				{
+					"fram": "39",
+					"position.x": "29.9",
+					"position.y": "61.75",
+					"scale.x": "99.9054",
+					"scale.y": "121.5714",
+					"skew.x": "-1.0027",
+					"skew.y": "-1.0027"
+				},
+				{
+					"fram": "46",
+					"position.x": "32.6",
+					"position.y": "58.7",
+					"scale.x": "99.968",
+					"scale.y": "99.968",
+					"skew.x": "-5.8191",
+					"skew.y": "-5.8191"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerarm_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "32.15",
+					"position.y": "75.75",
+					"scale.x": "99.9344",
+					"scale.y": "99.9344",
+					"skew.x": "-5.7689",
+					"skew.y": "-5.7689"
+				},
+				{
+					"fram": "9",
+					"position.x": "29.9",
+					"position.y": "74.85",
+					"scale.x": "99.7406",
+					"scale.y": "99.7406",
+					"skew.x": "14.5371",
+					"skew.y": "14.5371"
+				},
+				{
+					"fram": "16",
+					"position.x": "32.25",
+					"position.y": "72.25",
+					"scale.x": "99.9039",
+					"scale.y": "97.8134",
+					"skew.x": "-5.7568",
+					"skew.y": "-5.7568"
+				},
+				{
+					"fram": "23",
+					"position.x": "31.55",
+					"position.y": "75.75",
+					"scale.x": "99.9039",
+					"scale.y": "99.9039",
+					"skew.x": "-5.7568",
+					"skew.y": "-5.7568"
+				},
+				{
+					"fram": "32",
+					"position.x": "25.6",
+					"position.y": "71.65",
+					"scale.x": "99.6628",
+					"scale.y": "99.6628",
+					"skew.x": "17.5267",
+					"skew.y": "17.5267"
+				},
+				{
+					"fram": "39",
+					"position.x": "28.1",
+					"position.y": "80.05",
+					"scale.x": "99.8962",
+					"scale.y": "99.8962",
+					"skew.x": "-1.0001",
+					"skew.y": "-1.0001"
+				},
+				{
+					"fram": "46",
+					"position.x": "32.15",
+					"position.y": "75.75",
+					"scale.x": "99.9344",
+					"scale.y": "99.9344",
+					"skew.x": "-5.7689",
+					"skew.y": "-5.7689"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerarm_hand",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "33.25",
+					"position.y": "89.45",
+					"scale.x": "99.9344",
+					"scale.y": "99.9344",
+					"skew.x": "-5.7689",
+					"skew.y": "-5.7689"
+				},
+				{
+					"fram": "9",
+					"position.x": "26.2",
+					"position.y": "88.15",
+					"scale.x": "99.7406",
+					"scale.y": "99.7406",
+					"skew.x": "14.5371",
+					"skew.y": "14.5371"
+				},
+				{
+					"fram": "16",
+					"position.x": "33.25",
+					"position.y": "86",
+					"scale.x": "99.9039",
+					"scale.y": "99.9039",
+					"skew.x": "-5.7568",
+					"skew.y": "-5.7568"
+				},
+				{
+					"fram": "18",
+					"position.x": "32.95",
+					"position.y": "88.85",
+					"scale.x": "99.8703",
+					"scale.y": "99.8703",
+					"skew.x": "-5.7568",
+					"skew.y": "-5.7568"
+				},
+				{
+					"fram": "23",
+					"position.x": "32.55",
+					"position.y": "89.45",
+					"scale.x": "99.9039",
+					"scale.y": "99.9039",
+					"skew.x": "-5.7568",
+					"skew.y": "-5.7568"
+				},
+				{
+					"fram": "32",
+					"position.x": "21.15",
+					"position.y": "84.5",
+					"scale.x": "99.6643",
+					"scale.y": "99.6643",
+					"skew.x": "17.5259",
+					"skew.y": "17.5259"
+				},
+				{
+					"fram": "39",
+					"position.x": "28",
+					"position.y": "93.75",
+					"scale.x": "99.8962",
+					"scale.y": "99.8962",
+					"skew.x": "-1.0001",
+					"skew.y": "-1.0001"
+				},
+				{
+					"fram": "41",
+					"position.x": "29.65",
+					"position.y": "93.65",
+					"scale.x": "99.9176",
+					"scale.y": "99.9176",
+					"skew.x": "-3.2906",
+					"skew.y": "-3.2906"
+				},
+				{
+					"fram": "46",
+					"position.x": "33.25",
+					"position.y": "89.45",
+					"scale.x": "99.9344",
+					"scale.y": "99.9344",
+					"skew.x": "-5.7689",
+					"skew.y": "-5.7689"
+				}
+			]
+		}
+	],
+	"eat": [
+		{
+			"obj": "Zombie_hair",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "28.2",
+					"position.y": "18.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "5",
+					"position.x": "29.45",
+					"position.y": "18.1",
+					"scale.x": "96.12274169921875",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "10",
+					"position.x": "26.4",
+					"position.y": "19.9",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "14",
+					"position.x": "24.3",
+					"position.y": "22.1",
+					"scale.x": "100.0640869140625",
+					"scale.y": "99.97100830078125",
+					"skew.x": "-0.753570556640625",
+					"skew.y": "-3.0526580810546875"
+				},
+				{
+					"fram": "16",
+					"position.x": "25.35",
+					"position.y": "21.5",
+					"scale.x": "100.1190185546875",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "-2.7954254150390625"
+				},
+				{
+					"fram": "20",
+					"position.x": "28.2",
+					"position.y": "18.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "25",
+					"position.x": "29.45",
+					"position.y": "18.1",
+					"scale.x": "96.12274169921875",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "30",
+					"position.x": "26.4",
+					"position.y": "19.9",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "34",
+					"position.x": "24.3",
+					"position.y": "22.1",
+					"scale.x": "100.0640869140625",
+					"scale.y": "99.97100830078125",
+					"skew.x": "-0.753570556640625",
+					"skew.y": "-3.0526580810546875"
+				},
+				{
+					"fram": "36",
+					"position.x": "25.35",
+					"position.y": "21.5",
+					"scale.x": "100.1190185546875",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "-2.7954254150390625"
+				},
+				{
+					"fram": "39",
+					"position.x": "28.2",
+					"position.y": "18.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "25.1",
+					"position.y": "56.25",
+					"scale.x": "99.85504150390625",
+					"scale.y": "99.85504150390625",
+					"skew.x": "99.49577331542969",
+					"skew.y": "99.49577331542969"
+				},
+				{
+					"fram": "6",
+					"position.x": "26.1",
+					"position.y": "57.45",
+					"scale.x": "99.31640625",
+					"scale.y": "99.31640625",
+					"skew.x": "105.598388671875",
+					"skew.y": "105.598388671875"
+				},
+				{
+					"fram": "11",
+					"position.x": "28.25",
+					"position.y": "55.85",
+					"scale.x": "99.22332763671875",
+					"scale.y": "99.22332763671875",
+					"skew.x": "123.3829345703125",
+					"skew.y": "123.3829345703125"
+				},
+				{
+					"fram": "16",
+					"position.x": "29",
+					"position.y": "58.9",
+					"scale.x": "99.11346435546875",
+					"scale.y": "99.11346435546875",
+					"skew.x": "127.402099609375",
+					"skew.y": "127.402099609375"
+				},
+				{
+					"fram": "21",
+					"position.x": "28.95",
+					"position.y": "66.4",
+					"scale.x": "98.8189697265625",
+					"scale.y": "98.8189697265625",
+					"skew.x": "71.72282409667969",
+					"skew.y": "71.72282409667969"
+				},
+				{
+					"fram": "26",
+					"position.x": "28.7",
+					"position.y": "68.4",
+					"scale.x": "98.760986328125",
+					"scale.y": "98.760986328125",
+					"skew.x": "61.43058776855469",
+					"skew.y": "61.43058776855469"
+				},
+				{
+					"fram": "30",
+					"position.x": "28.7",
+					"position.y": "68.4",
+					"scale.x": "98.760986328125",
+					"scale.y": "98.760986328125",
+					"skew.x": "61.43058776855469",
+					"skew.y": "61.43058776855469"
+				},
+				{
+					"fram": "34",
+					"position.x": "28.7",
+					"position.y": "68.4",
+					"scale.x": "98.760986328125",
+					"scale.y": "98.760986328125",
+					"skew.x": "61.43058776855469",
+					"skew.y": "61.43058776855469"
+				},
+				{
+					"fram": "39",
+					"position.x": "25.1",
+					"position.y": "56.25",
+					"scale.x": "99.85504150390625",
+					"scale.y": "99.85504150390625",
+					"skew.x": "99.49577331542969",
+					"skew.y": "99.49577331542969"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "42.5",
+					"position.y": "54.9",
+					"scale.x": "99.55291748046875",
+					"scale.y": "99.55291748046875",
+					"skew.x": "44.37312316894531",
+					"skew.y": "44.37312316894531"
+				},
+				{
+					"fram": "5",
+					"position.x": "42.5",
+					"position.y": "54.9",
+					"scale.x": "99.55291748046875",
+					"scale.y": "99.55291748046875",
+					"skew.x": "44.37312316894531",
+					"skew.y": "44.37312316894531"
+				},
+				{
+					"fram": "10",
+					"position.x": "42.5",
+					"position.y": "54.9",
+					"scale.x": "99.55291748046875",
+					"scale.y": "99.55291748046875",
+					"skew.x": "44.37312316894531",
+					"skew.y": "44.37312316894531"
+				},
+				{
+					"fram": "15",
+					"position.x": "42.05",
+					"position.y": "55.55",
+					"scale.x": "99.50714111328125",
+					"scale.y": "99.50714111328125",
+					"skew.x": "36.33403015136719",
+					"skew.y": "36.33403015136719"
+				},
+				{
+					"fram": "20",
+					"position.x": "45.05",
+					"position.y": "56.4",
+					"scale.x": "99.4049072265625",
+					"scale.y": "99.4049072265625",
+					"skew.x": "18.000839233398438",
+					"skew.y": "18.000839233398438"
+				},
+				{
+					"fram": "25",
+					"position.x": "45.05",
+					"position.y": "56.4",
+					"scale.x": "99.4049072265625",
+					"scale.y": "99.4049072265625",
+					"skew.x": "18.000839233398438",
+					"skew.y": "18.000839233398438"
+				},
+				{
+					"fram": "29",
+					"position.x": "45.05",
+					"position.y": "56.4",
+					"scale.x": "99.4049072265625",
+					"scale.y": "99.4049072265625",
+					"skew.x": "18.000839233398438",
+					"skew.y": "18.000839233398438"
+				},
+				{
+					"fram": "33",
+					"position.x": "45.05",
+					"position.y": "56.4",
+					"scale.x": "99.4049072265625",
+					"scale.y": "99.4049072265625",
+					"skew.x": "18.000839233398438",
+					"skew.y": "18.000839233398438"
+				},
+				{
+					"fram": "39",
+					"position.x": "42.5",
+					"position.y": "54.9",
+					"scale.x": "99.55291748046875",
+					"scale.y": "99.55291748046875",
+					"skew.x": "44.37312316894531",
+					"skew.y": "44.37312316894531"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_hand",
+			"ani_list": [
+				"m_IsActive"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"m_IsActive": 0
+				},
+				{
+					"fram": "39",
+					"m_IsActive": 0
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerarm_hand2",
+			"ani_list": [
+				"m_IsActive",
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"m_IsActive": "1",
+					"position.x": "12.5",
+					"position.y": "49.55",
+					"scale.x": "99.969482421875",
+					"scale.y": "99.969482421875",
+					"skew.x": "5.7646026611328125",
+					"skew.y": "5.7646026611328125"
+				},
+				{
+					"fram": "5",
+					"m_IsActive": "1",
+					"position.x": "14.85",
+					"position.y": "45.1",
+					"scale.x": "98.74267578125",
+					"scale.y": "98.74267578125",
+					"skew.x": "25.123428344726562",
+					"skew.y": "25.123428344726562"
+				},
+				{
+					"fram": "10",
+					"m_IsActive": "1",
+					"position.x": "16.65",
+					"position.y": "45.1",
+					"scale.x": "98.16741943359375",
+					"scale.y": "98.16741943359375",
+					"skew.x": "-12.45501708984375",
+					"skew.y": "-12.45501708984375"
+				},
+				{
+					"fram": "15",
+					"m_IsActive": "1",
+					"position.x": "16.6",
+					"position.y": "47.7",
+					"scale.x": "98.03619384765625",
+					"scale.y": "98.03619384765625",
+					"skew.x": "-16.466522216796875",
+					"skew.y": "-16.466522216796875"
+				},
+				{
+					"fram": "20",
+					"m_IsActive": "1",
+					"position.x": "13.25",
+					"position.y": "63.85",
+					"scale.x": "97.65167236328125",
+					"scale.y": "97.65167236328125",
+					"skew.x": "-30.531387329101562",
+					"skew.y": "-30.531387329101562"
+				},
+				{
+					"fram": "25",
+					"m_IsActive": "1",
+					"position.x": "12.5",
+					"position.y": "69.75",
+					"scale.x": "97.42279052734375",
+					"scale.y": "97.42279052734375",
+					"skew.x": "-49.62928771972656",
+					"skew.y": "-49.62928771972656"
+				},
+				{
+					"fram": "29",
+					"m_IsActive": "1",
+					"position.x": "12.95",
+					"position.y": "69.8",
+					"scale.x": "97.84088134765625",
+					"scale.y": "97.84088134765625",
+					"skew.x": "-55.574066162109375",
+					"skew.y": "-55.574066162109375"
+				},
+				{
+					"fram": "33",
+					"m_IsActive": "1",
+					"position.x": "13.3",
+					"position.y": "70.45",
+					"scale.x": "97.9888916015625",
+					"scale.y": "97.9888916015625",
+					"skew.x": "-53.635345458984375",
+					"skew.y": "-53.635345458984375"
+				},
+				{
+					"fram": "39",
+					"m_IsActive": "1",
+					"position.x": "12.5",
+					"position.y": "49.55",
+					"scale.x": "99.969482421875",
+					"scale.y": "99.969482421875",
+					"skew.x": "5.7646026611328125",
+					"skew.y": "5.7646026611328125"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_jaw",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "26.25",
+					"position.y": "46.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "4",
+					"position.x": "28.8",
+					"position.y": "47.5",
+					"scale.x": "102.2735595703125",
+					"scale.y": "110.39276123046875",
+					"skew.x": "-8.537261962890625",
+					"skew.y": "-7.2584075927734375"
+				},
+				{
+					"fram": "7",
+					"position.x": "23.6",
+					"position.y": "46.8",
+					"scale.x": "109.33837890625",
+					"scale.y": "99.945068359375",
+					"skew.x": "0.0454559326171875",
+					"skew.y": "-0.790283203125"
+				},
+				{
+					"fram": "10",
+					"position.x": "23.6",
+					"position.y": "45.65",
+					"scale.x": "105.81817626953125",
+					"scale.y": "99.957275390625",
+					"skew.x": "-0.6714019775390625",
+					"skew.y": "-1.766326904296875"
+				},
+				{
+					"fram": "13",
+					"position.x": "23.4",
+					"position.y": "45.75",
+					"scale.x": "102.5665283203125",
+					"scale.y": "101.971435546875",
+					"skew.x": "-0.176605224609375",
+					"skew.y": "-0.3654327392578125"
+				},
+				{
+					"fram": "16",
+					"position.x": "25.9",
+					"position.y": "45.5",
+					"scale.x": "91.1895751953125",
+					"scale.y": "101.35040283203125",
+					"skew.x": "3.53887939453125",
+					"skew.y": "0.049835205078125"
+				},
+				{
+					"fram": "19",
+					"position.x": "26.25",
+					"position.y": "46.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "24",
+					"position.x": "28.8",
+					"position.y": "47.5",
+					"scale.x": "102.2735595703125",
+					"scale.y": "110.39276123046875",
+					"skew.x": "-8.537261962890625",
+					"skew.y": "-7.2584075927734375"
+				},
+				{
+					"fram": "27",
+					"position.x": "23.6",
+					"position.y": "46.8",
+					"scale.x": "109.33837890625",
+					"scale.y": "99.945068359375",
+					"skew.x": "0.0454559326171875",
+					"skew.y": "-0.790283203125"
+				},
+				{
+					"fram": "30",
+					"position.x": "23.6",
+					"position.y": "45.65",
+					"scale.x": "105.81817626953125",
+					"scale.y": "99.957275390625",
+					"skew.x": "-0.6714019775390625",
+					"skew.y": "-1.766326904296875"
+				},
+				{
+					"fram": "33",
+					"position.x": "23.4",
+					"position.y": "45.75",
+					"scale.x": "102.5665283203125",
+					"scale.y": "101.971435546875",
+					"skew.x": "-0.176605224609375",
+					"skew.y": "-0.3654327392578125"
+				},
+				{
+					"fram": "36",
+					"position.x": "25.9",
+					"position.y": "45.5",
+					"scale.x": "91.1895751953125",
+					"scale.y": "101.35040283203125",
+					"skew.x": "3.53887939453125",
+					"skew.y": "0.049835205078125"
+				},
+				{
+					"fram": "39",
+					"position.x": "26.25",
+					"position.y": "46.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_tie",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "32.3",
+					"position.y": "61.7",
+					"scale.x": "99.951171875",
+					"scale.y": "99.951171875",
+					"skew.x": "-8.547531127929688",
+					"skew.y": "-8.547531127929688"
+				},
+				{
+					"fram": "5",
+					"position.x": "33.75",
+					"position.y": "61.25",
+					"scale.x": "99.9359130859375",
+					"scale.y": "99.9359130859375",
+					"skew.x": "-11.2694091796875",
+					"skew.y": "-11.2694091796875"
+				},
+				{
+					"fram": "13",
+					"position.x": "34.1",
+					"position.y": "63.7",
+					"scale.x": "99.9969482421875",
+					"scale.y": "104.8980712890625",
+					"skew.x": "-14.0008544921875",
+					"skew.y": "-14.0008544921875"
+				},
+				{
+					"fram": "19",
+					"position.x": "32.3",
+					"position.y": "61.7",
+					"scale.x": "99.951171875",
+					"scale.y": "99.951171875",
+					"skew.x": "-8.547531127929688",
+					"skew.y": "-8.547531127929688"
+				},
+				{
+					"fram": "25",
+					"position.x": "33.75",
+					"position.y": "61.25",
+					"scale.x": "99.9359130859375",
+					"scale.y": "99.9359130859375",
+					"skew.x": "-11.2694091796875",
+					"skew.y": "-11.2694091796875"
+				},
+				{
+					"fram": "33",
+					"position.x": "34.1",
+					"position.y": "63.7",
+					"scale.x": "99.9969482421875",
+					"scale.y": "104.8980712890625",
+					"skew.x": "-14.0008544921875",
+					"skew.y": "-14.0008544921875"
+				},
+				{
+					"fram": "39",
+					"position.x": "32.3",
+					"position.y": "61.7",
+					"scale.x": "99.951171875",
+					"scale.y": "99.951171875",
+					"skew.x": "-8.547531127929688",
+					"skew.y": "-8.547531127929688"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_body",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "50.1",
+					"position.y": "59",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "5",
+					"position.x": "50.25",
+					"position.y": "57.8",
+					"scale.x": "99.9847412109375",
+					"scale.y": "99.9847412109375",
+					"skew.x": "2.7535552978515625",
+					"skew.y": "2.7535552978515625"
+				},
+				{
+					"fram": "13",
+					"position.x": "49.15",
+					"position.y": "59.5",
+					"scale.x": "99.9664306640625",
+					"scale.y": "99.9664306640625",
+					"skew.x": "-0.069061279296875",
+					"skew.y": "-0.069061279296875"
+				},
+				{
+					"fram": "19",
+					"position.x": "50.1",
+					"position.y": "59",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "25",
+					"position.x": "50.25",
+					"position.y": "57.8",
+					"scale.x": "99.9847412109375",
+					"scale.y": "99.9847412109375",
+					"skew.x": "2.7535552978515625",
+					"skew.y": "2.7535552978515625"
+				},
+				{
+					"fram": "33",
+					"position.x": "49.15",
+					"position.y": "60",
+					"scale.x": "99.95574951171875",
+					"scale.y": "99.95574951171875",
+					"skew.x": "-1.8615264892578125",
+					"skew.y": "-1.8615264892578125"
+				},
+				{
+					"fram": "39",
+					"position.x": "50.1",
+					"position.y": "59",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerleg_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "70",
+					"position.y": "105.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "5",
+					"position.x": "70",
+					"position.y": "105.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "13",
+					"position.x": "69",
+					"position.y": "105.55",
+					"scale.x": "100.48370361328125",
+					"scale.y": "99.945068359375",
+					"skew.x": "-9.557846069335938",
+					"skew.y": "-3.6120452880859375"
+				},
+				{
+					"fram": "19",
+					"position.x": "70",
+					"position.y": "105.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "25",
+					"position.x": "70",
+					"position.y": "105.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "33",
+					"position.x": "69",
+					"position.y": "105.55",
+					"scale.x": "100.48370361328125",
+					"scale.y": "99.945068359375",
+					"skew.x": "-9.557846069335938",
+					"skew.y": "-3.6120452880859375"
+				},
+				{
+					"fram": "39",
+					"position.x": "70",
+					"position.y": "105.55",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerleg_foot",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "61.45",
+					"position.y": "117.75",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "5",
+					"position.x": "61.45",
+					"position.y": "117.75",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "13",
+					"position.x": "61.5",
+					"position.y": "117.05",
+					"scale.x": "99.9725341796875",
+					"scale.y": "99.9725341796875",
+					"skew.x": "-4.7911376953125",
+					"skew.y": "-4.7911376953125"
+				},
+				{
+					"fram": "19",
+					"position.x": "61.45",
+					"position.y": "117.75",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "25",
+					"position.x": "61.45",
+					"position.y": "117.75",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "33",
+					"position.x": "61.5",
+					"position.y": "117.05",
+					"scale.x": "99.9725341796875",
+					"scale.y": "99.9725341796875",
+					"skew.x": "-4.7911376953125",
+					"skew.y": "-4.7911376953125"
+				},
+				{
+					"fram": "39",
+					"position.x": "61.45",
+					"position.y": "117.75",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_outerleg_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "63.2",
+					"position.y": "83.45",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "5",
+					"position.x": "63.2",
+					"position.y": "83.45",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "13",
+					"position.x": "61.8",
+					"position.y": "83.8",
+					"scale.x": "99.9603271484375",
+					"scale.y": "106.329345703125",
+					"skew.x": "6.270416259765625",
+					"skew.y": "6.270416259765625"
+				},
+				{
+					"fram": "19",
+					"position.x": "63.2",
+					"position.y": "83.45",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "25",
+					"position.x": "63.2",
+					"position.y": "83.45",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "33",
+					"position.x": "61.8",
+					"position.y": "83.8",
+					"scale.x": "99.9603271484375",
+					"scale.y": "106.329345703125",
+					"skew.x": "6.270416259765625",
+					"skew.y": "6.270416259765625"
+				},
+				{
+					"fram": "39",
+					"position.x": "63.2",
+					"position.y": "83.45",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerleg_foot",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "46.1",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "5",
+					"position.x": "46.1",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "13",
+					"position.x": "46.1",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "19",
+					"position.x": "46.1",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "25",
+					"position.x": "46.1",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "33",
+					"position.x": "46.1",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "39",
+					"position.x": "46.1",
+					"position.y": "112.6",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerleg_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "44.35",
+					"position.y": "104.65",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "5",
+					"position.x": "44.35",
+					"position.y": "104.65",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "13",
+					"position.x": "45.85",
+					"position.y": "104.65",
+					"scale.x": "100.09307861328125",
+					"scale.y": "99.96185302734375",
+					"skew.x": "6.2764739990234375",
+					"skew.y": "3.3803558349609375"
+				},
+				{
+					"fram": "19",
+					"position.x": "44.35",
+					"position.y": "104.65",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "25",
+					"position.x": "44.35",
+					"position.y": "104.65",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "33",
+					"position.x": "45.85",
+					"position.y": "104.65",
+					"scale.x": "100.09307861328125",
+					"scale.y": "99.96185302734375",
+					"skew.x": "6.2764739990234375",
+					"skew.y": "3.3803558349609375"
+				},
+				{
+					"fram": "39",
+					"position.x": "44.35",
+					"position.y": "104.65",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerleg_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "50.15",
+					"position.y": "87.15",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "5",
+					"position.x": "50.15",
+					"position.y": "87.15",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "13",
+					"position.x": "49.8",
+					"position.y": "89.6",
+					"scale.x": "99.94354248046875",
+					"scale.y": "99.94354248046875",
+					"skew.x": "-10.292465209960938",
+					"skew.y": "-10.292465209960938"
+				},
+				{
+					"fram": "19",
+					"position.x": "50.15",
+					"position.y": "87.15",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "25",
+					"position.x": "50.15",
+					"position.y": "86.75",
+					"scale.x": "100",
+					"scale.y": "103.3660888671875",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "33",
+					"position.x": "49.8",
+					"position.y": "89.15",
+					"scale.x": "99.94354248046875",
+					"scale.y": "107.08160400390625",
+					"skew.x": "-10.292465209960938",
+					"skew.y": "-10.292465209960938"
+				},
+				{
+					"fram": "39",
+					"position.x": "50.15",
+					"position.y": "87.15",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_head",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "27.85",
+					"position.y": "28",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "4",
+					"position.x": "29.6",
+					"position.y": "27",
+					"scale.x": "95.281982421875",
+					"scale.y": "102.740478515625",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "7",
+					"position.x": "26.95",
+					"position.y": "28.15",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "13",
+					"position.x": "24.2",
+					"position.y": "30.75",
+					"scale.x": "103.5064697265625",
+					"scale.y": "96.0662841796875",
+					"skew.x": "-0.7527008056640625",
+					"skew.y": "-0.753570556640625"
+				},
+				{
+					"fram": "19",
+					"position.x": "27.85",
+					"position.y": "28",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "24",
+					"position.x": "29.6",
+					"position.y": "27",
+					"scale.x": "95.281982421875",
+					"scale.y": "102.740478515625",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "27",
+					"position.x": "26.95",
+					"position.y": "28.15",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "33",
+					"position.x": "24.2",
+					"position.y": "30.75",
+					"scale.x": "103.5064697265625",
+					"scale.y": "96.0662841796875",
+					"skew.x": "-0.7527008056640625",
+					"skew.y": "-0.753570556640625"
+				},
+				{
+					"fram": "39",
+					"position.x": "27.85",
+					"position.y": "28",
+					"scale.x": "100",
+					"scale.y": "100",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerarm_upper",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "28.65",
+					"position.y": "50.15",
+					"scale.x": "90.4876708984375",
+					"scale.y": "104.96826171875",
+					"skew.x": "55.9534912109375",
+					"skew.y": "74.26705932617188"
+				},
+				{
+					"fram": "5",
+					"position.x": "32.65",
+					"position.y": "55.55",
+					"scale.x": "101.7120361328125",
+					"scale.y": "99.7283935546875",
+					"skew.x": "28.821014404296875",
+					"skew.y": "40.16200256347656"
+				},
+				{
+					"fram": "10",
+					"position.x": "32.8",
+					"position.y": "55.75",
+					"scale.x": "99.725341796875",
+					"scale.y": "99.725341796875",
+					"skew.x": "29.335189819335938",
+					"skew.y": "29.335189819335938"
+				},
+				{
+					"fram": "15",
+					"position.x": "27.25",
+					"position.y": "56.15",
+					"scale.x": "88.63067626953125",
+					"scale.y": "99.72381591796875",
+					"skew.x": "29.580429077148438",
+					"skew.y": "49.717193603515625"
+				},
+				{
+					"fram": "20",
+					"position.x": "29.2",
+					"position.y": "53.05",
+					"scale.x": "88.531494140625",
+					"scale.y": "99.61090087890625",
+					"skew.x": "50.89784240722656",
+					"skew.y": "71.03506469726562"
+				},
+				{
+					"fram": "25",
+					"position.x": "29.15",
+					"position.y": "52.25",
+					"scale.x": "88.47198486328125",
+					"scale.y": "99.54681396484375",
+					"skew.x": "62.92803955078125",
+					"skew.y": "83.0653076171875"
+				},
+				{
+					"fram": "29",
+					"position.x": "30.3",
+					"position.y": "52.45",
+					"scale.x": "88.43231201171875",
+					"scale.y": "99.49951171875",
+					"skew.x": "70.93582153320312",
+					"skew.y": "91.07260131835938"
+				},
+				{
+					"fram": "33",
+					"position.x": "29.85",
+					"position.y": "50.75",
+					"scale.x": "88.31939697265625",
+					"scale.y": "99.3682861328125",
+					"skew.x": "47.399658203125",
+					"skew.y": "67.53724670410156"
+				},
+				{
+					"fram": "39",
+					"position.x": "28.65",
+					"position.y": "50.15",
+					"scale.x": "90.4876708984375",
+					"scale.y": "104.96826171875",
+					"skew.x": "55.9534912109375",
+					"skew.y": "74.26705932617188"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerarm_lower",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "12.35",
+					"position.y": "55.2",
+					"scale.x": "105.62591552734375",
+					"scale.y": "99.45831298828125",
+					"skew.x": "89.71150207519531",
+					"skew.y": "70.03486633300781"
+				},
+				{
+					"fram": "3",
+					"position.x": "17.4",
+					"position.y": "62.1",
+					"scale.x": "107.196044921875",
+					"scale.y": "99.42626953125",
+					"skew.x": "73.94842529296875",
+					"skew.y": "51.90214538574219"
+				},
+				{
+					"fram": "5",
+					"position.x": "18.05",
+					"position.y": "65.7",
+					"scale.x": "108.53271484375",
+					"scale.y": "99.54833984375",
+					"skew.x": "63.28547668457031",
+					"skew.y": "39.80992126464844"
+				},
+				{
+					"fram": "10",
+					"position.x": "20.5",
+					"position.y": "67.2",
+					"scale.x": "101.78070068359375",
+					"scale.y": "99.51934814453125",
+					"skew.x": "53.629669189453125",
+					"skew.y": "41.534088134765625"
+				},
+				{
+					"fram": "15",
+					"position.x": "15.05",
+					"position.y": "67.85",
+					"scale.x": "104.27398681640625",
+					"scale.y": "99.493408203125",
+					"skew.x": "59.158905029296875",
+					"skew.y": "41.74114990234375"
+				},
+				{
+					"fram": "20",
+					"position.x": "14.85",
+					"position.y": "58",
+					"scale.x": "103.31268310546875",
+					"scale.y": "99.2431640625",
+					"skew.x": "91.15213012695312",
+					"skew.y": "75.01412963867188"
+				},
+				{
+					"fram": "25",
+					"position.x": "15.55",
+					"position.y": "53.7",
+					"scale.x": "101.26495361328125",
+					"scale.y": "99.1119384765625",
+					"skew.x": "117.71771240234375",
+					"skew.y": "105.88429260253906"
+				},
+				{
+					"fram": "29",
+					"position.x": "16.25",
+					"position.y": "52.05",
+					"scale.x": "101.17034912109375",
+					"scale.y": "99.01885986328125",
+					"skew.x": "116.96302795410156",
+					"skew.y": "105.13017272949219"
+				},
+				{
+					"fram": "33",
+					"position.x": "15.35",
+					"position.y": "56.85",
+					"scale.x": "103.0609130859375",
+					"scale.y": "98.8555908203125",
+					"skew.x": "89.91082763671875",
+					"skew.y": "73.54151916503906"
+				},
+				{
+					"fram": "39",
+					"position.x": "12.35",
+					"position.y": "55.2",
+					"scale.x": "105.62591552734375",
+					"scale.y": "99.45831298828125",
+					"skew.x": "89.71150207519531",
+					"skew.y": "70.03486633300781"
+				}
+			]
+		},
+		{
+			"obj": "Zombie_innerarm_hand",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "-0.2",
+					"position.y": "54.15",
+					"scale.x": "98.93341064453125",
+					"scale.y": "98.93341064453125",
+					"skew.x": "61.16758728027344",
+					"skew.y": "61.16758728027344"
+				},
+				{
+					"fram": "3",
+					"position.x": "4.45",
+					"position.y": "66.6",
+					"scale.x": "99.0142822265625",
+					"scale.y": "99.0142822265625",
+					"skew.x": "37.37284851074219",
+					"skew.y": "37.37284851074219"
+				},
+				{
+					"fram": "5",
+					"position.x": "8",
+					"position.y": "71.8",
+					"scale.x": "99.33624267578125",
+					"scale.y": "99.33624267578125",
+					"skew.x": "21.669082641601562",
+					"skew.y": "21.669082641601562"
+				},
+				{
+					"fram": "10",
+					"position.x": "10.75",
+					"position.y": "75.05",
+					"scale.x": "99.28131103515625",
+					"scale.y": "99.28131103515625",
+					"skew.x": "3.2479095458984375",
+					"skew.y": "3.2479095458984375"
+				},
+				{
+					"fram": "15",
+					"position.x": "4.4",
+					"position.y": "75.05",
+					"scale.x": "99.1851806640625",
+					"scale.y": "99.1851806640625",
+					"skew.x": "37.84794616699219",
+					"skew.y": "37.84794616699219"
+				},
+				{
+					"fram": "20",
+					"position.x": "-0.9",
+					"position.y": "54.45",
+					"scale.x": "98.8800048828125",
+					"scale.y": "98.8800048828125",
+					"skew.x": "92.99687194824219",
+					"skew.y": "92.99687194824219"
+				},
+				{
+					"fram": "25",
+					"position.x": "6.5",
+					"position.y": "41.05",
+					"scale.x": "104.24957275390625",
+					"scale.y": "98.58856201171875",
+					"skew.x": "149.11895751953125",
+					"skew.y": "130.1487274169922"
+				},
+				{
+					"fram": "29",
+					"position.x": "4.55",
+					"position.y": "44.85",
+					"scale.x": "99.2889404296875",
+					"scale.y": "98.17047119140625",
+					"skew.x": "86.46720886230469",
+					"skew.y": "77.86799621582031"
+				},
+				{
+					"fram": "33",
+					"position.x": "1.35",
+					"position.y": "57.8",
+					"scale.x": "103.4027099609375",
+					"scale.y": "94.0948486328125",
+					"skew.x": "50.70985412597656",
+					"skew.y": "41.73628234863281"
+				},
+				{
+					"fram": "39",
+					"position.x": "-0.2",
+					"position.y": "54.15",
+					"scale.x": "98.93341064453125",
+					"scale.y": "98.93341064453125",
+					"skew.x": "61.16758728027344",
+					"skew.y": "61.16758728027344"
+				}
+			]
+		}
+	]
+}

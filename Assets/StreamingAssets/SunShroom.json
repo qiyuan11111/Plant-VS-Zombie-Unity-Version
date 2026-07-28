@@ -1,0 +1,247 @@
+{
+	"idle": [
+		{
+			"obj": "SunShroom_head",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "42.25",
+					"position.y": "39.4",
+					"scale.x": "79.998779296875",
+					"scale.y": "79.998779296875",
+					"skew.x": "4.5010528564453125",
+					"skew.y": "4.501922607421875"
+				},
+				{
+					"fram": "5",
+					"position.x": "42.15",
+					"position.y": "41.6",
+					"scale.x": "84.564208984375",
+					"scale.y": "73.8037109375",
+					"skew.x": "4.50018310546875",
+					"skew.y": "4.5010528564453125"
+				},
+				{
+					"fram": "6",
+					"position.x": "41.95",
+					"position.y": "42.2",
+					"scale.x": "87.3291015625",
+					"scale.y": "70.22552490234375",
+					"skew.x": "4.50018310546875",
+					"skew.y": "4.50018310546875"
+				},
+				{
+					"fram": "11",
+					"position.x": "42.25",
+					"position.y": "39.4",
+					"scale.x": "79.998779296875",
+					"scale.y": "79.998779296875",
+					"skew.x": "4.5010528564453125",
+					"skew.y": "4.501922607421875"
+				}
+			]
+		},
+		{
+			"obj": "SunShroom_body",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": "0",
+					"position.x": "41.7",
+					"position.y": "56.35",
+					"scale.x": "79.998779296875",
+					"scale.y": "79.998779296875",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "5",
+					"position.x": "42.15",
+					"position.y": "56.85",
+					"scale.x": "86.99798583984375",
+					"scale.y": "73.51226806640625",
+					"skew.x": "0",
+					"skew.y": "0"
+				},
+				{
+					"fram": "11",
+					"position.x": "41.7",
+					"position.y": "56.35",
+					"scale.x": "79.998779296875",
+					"scale.y": "79.998779296875",
+					"skew.x": "0",
+					"skew.y": "0"
+				}
+			]
+		}
+	],
+	"sleep": [
+		{
+			"obj": "SunShroom_head",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": 0,
+					"position.x": 42,
+					"position.y": 39.6,
+					"scale.x": 79.9744,
+					"scale.y": 79.9744,
+					"skew.x": 4.4993,
+					"skew.y": 4.4993
+				},
+				{
+					"fram": 4,
+					"position.x": 41.85,
+					"position.y": 41.85,
+					"scale.x": 84.5367,
+					"scale.y": 73.7808,
+					"skew.x": 4.4993,
+					"skew.y": 4.4993
+				},
+				{
+					"fram": 5,
+					"position.x": 41.65,
+					"position.y": 42.45,
+					"scale.x": 87.2986,
+					"scale.y": 70.2026,
+					"skew.x": 4.4993,
+					"skew.y": 4.4993
+				},
+				{
+					"fram": 8,
+					"position.x": 41.85,
+					"position.y": 40.3,
+					"scale.x": 81.8024,
+					"scale.y": 77.5284,
+					"skew.x": 4.4993,
+					"skew.y": 4.4993
+				},
+				{
+					"fram": 9,
+					"position.x": 42,
+					"position.y": 39.6,
+					"scale.x": 79.9744,
+					"scale.y": 79.9744,
+					"skew.x": 4.4993,
+					"skew.y": 4.4993
+				}
+			]
+		},
+		{
+			"obj": "SunShroom_body",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y"
+			],
+			"ani": [
+				{
+					"fram": 0,
+					"position.x": 42,
+					"position.y": 56.35,
+					"scale.x": 79.9988,
+					"scale.y": 79.9988,
+					"skew.x": 0,
+					"skew.y": 0
+				},
+				{
+					"fram": 4,
+					"position.x": 42.2,
+					"position.y": 56.9,
+					"scale.x": 86.998,
+					"scale.y": 73.5107,
+					"skew.x": 0,
+					"skew.y": 0
+				},
+				{
+					"fram": 9,
+					"position.x": 42,
+					"position.y": 56.35,
+					"scale.x": 79.9988,
+					"scale.y": 79.9988,
+					"skew.x": 0,
+					"skew.y": 0
+				}
+			]
+		},
+		{
+			"obj": "SunShroom_sleep",
+			"ani_list": [
+				"position.x",
+				"position.y",
+				"scale.x",
+				"scale.y",
+				"skew.x",
+				"skew.y",
+				"m_IsActive"
+			],
+			"ani": [
+				{
+					"fram": 0,
+					"position.x": 41.45,
+					"position.y": 54.2,
+					"scale.x": 82.1411,
+					"scale.y": 84.4421,
+					"skew.x": 0,
+					"skew.y": 0,
+					"m_IsActive": 1
+				},
+				{
+					"fram": 4,
+					"position.x": 41.6,
+					"position.y": 55.15,
+					"scale.x": 91.507,
+					"scale.y": 75.3601,
+					"skew.x": 0,
+					"skew.y": 0,
+					"m_IsActive": 1
+				},
+				{
+					"fram": 5,
+					"position.x": 41.65,
+					"position.y": 54.8,
+					"scale.x": 91.5283,
+					"scale.y": 73.6496,
+					"skew.x": 0,
+					"skew.y": 1.1722,
+					"m_IsActive": 1
+				},
+				{
+					"fram": 9,
+					"position.x": 41.45,
+					"position.y": 54.2,
+					"scale.x": 82.1411,
+					"scale.y": 84.4421,
+					"skew.x": 0,
+					"skew.y": 0,
+					"m_IsActive": 1
+				}
+			]
+		}
+	]
+}
