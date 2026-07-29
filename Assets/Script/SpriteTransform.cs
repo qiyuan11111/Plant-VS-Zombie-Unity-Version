@@ -42,7 +42,8 @@ namespace Script
         public bool updatePosition;
 
         private Transform _cachedTransform;
-        private Material _runtimeMaterial;
+        private SpriteRenderer _spriteRenderer;
+        private MaterialPropertyBlock _materialProperties;
         private Vector3 _positionOffset;
 
         private bool _hasSkewX;
@@ -73,10 +74,10 @@ namespace Script
 
         private bool InitializeMaterial()
         {
-            var spriteRenderer = GetComponent<SpriteRenderer>();
-            if (spriteRenderer == null || spriteRenderer.sharedMaterial == null) return false;
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            if (_spriteRenderer == null || _spriteRenderer.sharedMaterial == null) return false;
 
-            var sharedMaterial = spriteRenderer.sharedMaterial;
+            var sharedMaterial = _spriteRenderer.sharedMaterial;
             _hasSkewX = sharedMaterial.HasProperty(SkewX);
             _hasSkewY = sharedMaterial.HasProperty(SkewY);
             _hasScaleX = sharedMaterial.HasProperty(ScaleX);
@@ -89,9 +90,8 @@ namespace Script
                                        _hasBrightness || _hasAlpha;
             if (!hasSupportedProperty) return false;
 
-            // Animation clips may target material properties, so each part keeps one runtime material instance.
-            _runtimeMaterial = spriteRenderer.material;
-            material = _runtimeMaterial;
+            material = sharedMaterial;
+            _materialProperties = new MaterialPropertyBlock();
             return true;
         }
 
@@ -135,45 +135,62 @@ namespace Script
 
         private void ApplyMaterialChanges()
         {
-            if (!hasMaterial || material == null) return;
+            if (!hasMaterial || material == null || _spriteRenderer == null) return;
 
-            if (_hasSkewX && (!_materialStateApplied || _appliedSkew.x != skew.x))
+            var skewXChanged = _hasSkewX && (!_materialStateApplied || _appliedSkew.x != skew.x);
+            var skewYChanged = _hasSkewY && (!_materialStateApplied || _appliedSkew.y != skew.y);
+            var scaleXChanged = _hasScaleX && (!_materialStateApplied || _appliedScale.x != scale.x);
+            var scaleYChanged = _hasScaleY && (!_materialStateApplied || _appliedScale.y != scale.y);
+            var brightnessChanged = _hasBrightness && (!_materialStateApplied || _appliedBrightness != brightness);
+            var combinedAlpha = alpha * alphaCoef;
+            var alphaChanged = _hasAlpha && (!_materialStateApplied || _appliedAlpha != combinedAlpha);
+
+            if (!skewXChanged && !skewYChanged &&
+                !scaleXChanged && !scaleYChanged &&
+                !brightnessChanged && !alphaChanged)
             {
-                material.SetFloat(SkewX, skew.x);
+                return;
+            }
+
+            _spriteRenderer.GetPropertyBlock(_materialProperties);
+
+            if (skewXChanged)
+            {
+                _materialProperties.SetFloat(SkewX, skew.x);
                 _appliedSkew.x = skew.x;
             }
 
-            if (_hasSkewY && (!_materialStateApplied || _appliedSkew.y != skew.y))
+            if (skewYChanged)
             {
-                material.SetFloat(SkewY, skew.y);
+                _materialProperties.SetFloat(SkewY, skew.y);
                 _appliedSkew.y = skew.y;
             }
 
-            if (_hasScaleX && (!_materialStateApplied || _appliedScale.x != scale.x))
+            if (scaleXChanged)
             {
-                material.SetFloat(ScaleX, scale.x);
+                _materialProperties.SetFloat(ScaleX, scale.x);
                 _appliedScale.x = scale.x;
             }
 
-            if (_hasScaleY && (!_materialStateApplied || _appliedScale.y != scale.y))
+            if (scaleYChanged)
             {
-                material.SetFloat(ScaleY, scale.y);
+                _materialProperties.SetFloat(ScaleY, scale.y);
                 _appliedScale.y = scale.y;
             }
 
-            if (_hasBrightness && (!_materialStateApplied || _appliedBrightness != brightness))
+            if (brightnessChanged)
             {
-                material.SetFloat(Brightness, brightness);
+                _materialProperties.SetFloat(Brightness, brightness);
                 _appliedBrightness = brightness;
             }
 
-            var combinedAlpha = alpha * alphaCoef;
-            if (_hasAlpha && (!_materialStateApplied || _appliedAlpha != combinedAlpha))
+            if (alphaChanged)
             {
-                material.SetFloat(Alpha, combinedAlpha);
+                _materialProperties.SetFloat(Alpha, combinedAlpha);
                 _appliedAlpha = combinedAlpha;
             }
 
+            _spriteRenderer.SetPropertyBlock(_materialProperties);
             _materialStateApplied = true;
         }
 
@@ -192,12 +209,5 @@ namespace Script
             }
         }
 
-        private void OnDestroy()
-        {
-            if (_runtimeMaterial != null)
-            {
-                Destroy(_runtimeMaterial);
-            }
-        }
     }
 }

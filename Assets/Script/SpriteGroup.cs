@@ -1,6 +1,7 @@
 ﻿using System;
 using Script.Manager;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Script
 {
@@ -9,6 +10,7 @@ namespace Script
         private static readonly int ColorProperty = Shader.PropertyToID("_Color");
         private Collider2D[] _childCollider2D;
         private MaterialPropertyBlock _materialProperties;
+        private SortingGroup _sortingGroup;
         // public Animator[] childAnimator;
         
         public SpriteGroup SetTransparentMaterial()
@@ -26,15 +28,37 @@ namespace Script
         
         public SpriteGroup SetSortingLayer(string layerName)
         {
+            if (CanUseSortingGroup(layerName))
+            {
+                if (_sortingGroup == null)
+                {
+                    _sortingGroup = GetComponent<SortingGroup>();
+                    if (_sortingGroup == null)
+                    {
+                        _sortingGroup = gameObject.AddComponent<SortingGroup>();
+                    }
+                }
+
+                _sortingGroup.sortingLayerName = layerName;
+                _sortingGroup.sortingOrder = (int)SpriteManager.Instance.GetSortingLayerNewOrder(layerName, 1);
+                return this;
+            }
+
             var spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
             var point = SpriteManager.Instance.GetSortingLayerNewOrder(layerName, spriteRenderers.Length);
-            foreach (var spriteRenderer in GetComponentsInChildren<SpriteRenderer>())
+            foreach (var spriteRenderer in spriteRenderers)
             {
                 spriteRenderer.sortingLayerName = layerName;
                 spriteRenderer.sortingOrder += (int)point;
             }
         
             return this;
+        }
+
+        private static bool CanUseSortingGroup(string layerName)
+        {
+            return !layerName.StartsWith("plant-", StringComparison.Ordinal) &&
+                   !layerName.StartsWith("zombie-", StringComparison.Ordinal);
         }
         
         public SpriteGroup SetLayer(string layerName)

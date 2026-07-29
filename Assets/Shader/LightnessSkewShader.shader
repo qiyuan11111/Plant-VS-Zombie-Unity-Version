@@ -10,7 +10,7 @@ Shader "Custom/LightnessSkewShader" {
         _Alpha ("Alpha", Range(0.0, 1.0)) = 1
     }
     SubShader {
-        Tags { "Queue"="Transparent" "RenderType"="Transparent" }
+        Tags { "Queue"="Transparent" "RenderType"="Transparent" "DisableBatching"="True" }
         LOD 100
 
         Pass {
