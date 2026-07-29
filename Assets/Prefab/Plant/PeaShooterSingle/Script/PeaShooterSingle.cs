@@ -65,12 +65,12 @@ public class PeaShooterSingle : Plant, IPointerClickHandler
 
     public override int GetDefaultSunPrice()
     {
-        throw new System.NotImplementedException();
+        return 100;
     }
 
     public override float GetDefaultCdTime()
     {
-        throw new System.NotImplementedException();
+        return 0.5f;
     }
 
     public new void Awake()
@@ -81,7 +81,6 @@ public class PeaShooterSingle : Plant, IPointerClickHandler
 
     public override void AfterCreate(Dictionary<string, object> param)
     {
-        throw new System.NotImplementedException();
     }
 
     public override Entity ToField(Dictionary<string, object> param = null)

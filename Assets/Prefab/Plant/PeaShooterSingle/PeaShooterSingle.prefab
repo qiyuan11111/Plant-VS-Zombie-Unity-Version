@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   material: {fileID: 0}
   hasMaterial: 0
   position: {x: 0, y: 0}
@@ -665,6 +665,7 @@ GameObject:
   - component: {fileID: 6100616670632725193}
   - component: {fileID: 6100616670632725192}
   - component: {fileID: 6100616670632725195}
+  - component: {fileID: 6100616670632725196}
   m_Layer: 6
   m_Name: PeaShooterSingle
   m_TagString: Untagged
@@ -768,6 +769,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 40, y: 60}
   m_EdgeRadius: 0
+--- !u!114 &6100616670632725196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6100616670632725194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6845d262a71244e493cd8039a380c71e, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1 &6100616670674902347
 GameObject:
   m_ObjectHideFlags: 0

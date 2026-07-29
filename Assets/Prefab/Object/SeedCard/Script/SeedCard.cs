@@ -162,7 +162,11 @@ namespace Prefab.Object.SeedCard.Script
         public SeedCard SetRemainCdTime(float time)
         {
             _remainCdTime = time;
-            SetCdMaskFill(Math.Max(time, 0f) / GetCdTime());
+            var cooldown = GetCdTime();
+            var fillAmount = cooldown > 0f
+                ? Mathf.Clamp01(Math.Max(time, 0f) / cooldown)
+                : 0f;
+            SetCdMaskFill(fillAmount);
             UpdateState();
             return this;
         }

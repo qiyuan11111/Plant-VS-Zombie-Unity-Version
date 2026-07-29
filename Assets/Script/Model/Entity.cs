@@ -144,7 +144,10 @@ namespace Script.Model
         
         public Entity SetShadow()
         {
-            var shadowPosition = ((Plant)this).shadowTransform.position;
+            var plant = (Plant)this;
+            var shadowPosition = plant.shadowTransform != null
+                ? plant.shadowTransform.position
+                : Transform.TransformPoint(new Vector3(0f, -17f, 0f));
             var shadowObject = Instantiate(MainGameManager.Instance.GetObjectByType(GameConfigObject.ObjectType.PlanteShadow), shadowPosition, Quaternion.identity, Transform);
             var shadow = shadowObject.GetComponent<Shadow>();
 

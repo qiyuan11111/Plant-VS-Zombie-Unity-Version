@@ -1,5 +1,3 @@
-using System;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Sprite = Script.Model.Sprite;
@@ -8,28 +6,29 @@ namespace Script
 {
     public class SpriteTransform : MonoBehaviour
     {
+        private static readonly int SkewX = Shader.PropertyToID("_SkewX");
+        private static readonly int SkewY = Shader.PropertyToID("_SkewY");
+        private static readonly int ScaleX = Shader.PropertyToID("_ScaleX");
+        private static readonly int ScaleY = Shader.PropertyToID("_ScaleY");
+        private static readonly int Brightness = Shader.PropertyToID("_Brightness");
+        private static readonly int Alpha = Shader.PropertyToID("_Alpha");
+
         public Material material;
         public bool hasMaterial;
-        private SpriteRenderer _spriteRenderer;
-        private Material _runtimeMaterial;
-    
-        //private Transform _transform;
-        private Vector3 _positionOffset;
-    
-        [FormerlySerializedAs("Position")] public Vector2 position;
-        
-        [FormerlySerializedAs("Float")]
-        
-        
-        
 
-        [FormerlySerializedAs("Scale")] public Vector2 scale;
-    
-        [FormerlySerializedAs("Skew")] public Vector2 skew;
+        [FormerlySerializedAs("Position")]
+        public Vector2 position;
+
+        [FormerlySerializedAs("Scale")]
+        public Vector2 scale;
+
+        [FormerlySerializedAs("Skew")]
+        public Vector2 skew;
 
         [FormerlySerializedAs("Brightness")]
         [Range(0f, 2f)]
         public float brightness;
+
         public bool isBright;
 
         [FormerlySerializedAs("Alpha")]
@@ -39,93 +38,166 @@ namespace Script
         [FormerlySerializedAs("AlphaCoef")]
         [Range(0f, 1f)]
         public float alphaCoef;
-        
-        private static readonly int SkewX = Shader.PropertyToID("_SkewX");
-        private static readonly int SkewY = Shader.PropertyToID("_SkewY");
-        private static readonly int ScaleX = Shader.PropertyToID("_ScaleX");
-        private static readonly int ScaleY = Shader.PropertyToID("_ScaleY");
-        private static readonly int Brightness = Shader.PropertyToID("_Brightness");
-        private static readonly int Alpha = Shader.PropertyToID("_Alpha");
 
         public bool updatePosition;
 
-        void Awake()
+        private Transform _cachedTransform;
+        private Material _runtimeMaterial;
+        private Vector3 _positionOffset;
+
+        private bool _hasSkewX;
+        private bool _hasSkewY;
+        private bool _hasScaleX;
+        private bool _hasScaleY;
+        private bool _hasBrightness;
+        private bool _hasAlpha;
+
+        private bool _materialStateApplied;
+        private Vector2 _appliedSkew;
+        private Vector2 _appliedScale;
+        private float _appliedBrightness;
+        private float _appliedAlpha;
+
+        private void Awake()
         {
-            InitializeParm();
+            _cachedTransform = transform;
+            hasMaterial = InitializeMaterial();
+            RestoreLegacyMaterialDefaults();
+            InitializePositionOffset();
+
+            if (!hasMaterial && !updatePosition)
+            {
+                enabled = false;
+            }
         }
 
         private bool InitializeMaterial()
         {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            if (_spriteRenderer == null || _spriteRenderer.sharedMaterial == null) return false;
+            var spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer == null || spriteRenderer.sharedMaterial == null) return false;
 
-            // 动画片段会直接修改 material._SkewX/_SkewY，因此每个部件必须使用独立材质。
-            // SpriteRenderer.material 会创建一次实例；不要再额外复制第二份材质。
-            _runtimeMaterial = _spriteRenderer.material;
+            var sharedMaterial = spriteRenderer.sharedMaterial;
+            _hasSkewX = sharedMaterial.HasProperty(SkewX);
+            _hasSkewY = sharedMaterial.HasProperty(SkewY);
+            _hasScaleX = sharedMaterial.HasProperty(ScaleX);
+            _hasScaleY = sharedMaterial.HasProperty(ScaleY);
+            _hasBrightness = sharedMaterial.HasProperty(Brightness);
+            _hasAlpha = sharedMaterial.HasProperty(Alpha);
+
+            var hasSupportedProperty = _hasSkewX || _hasSkewY ||
+                                       _hasScaleX || _hasScaleY ||
+                                       _hasBrightness || _hasAlpha;
+            if (!hasSupportedProperty) return false;
+
+            // Animation clips may target material properties, so each part keeps one runtime material instance.
+            _runtimeMaterial = spriteRenderer.material;
             material = _runtimeMaterial;
             return true;
-
         }
 
-        private bool InitializeSpriteType()
+        private void InitializePositionOffset()
         {
-            transform.parent.TryGetComponent<Sprite>(out var sprite);
-            if (sprite == null) return false;
-            _positionOffset = sprite.SpritePosition;
-            return true;
-        }
-
-        private void InitializeParm()
-        {
-            // skew = new Vector2(0f, 0f);
-            // scale = new Vector2(100f, 100f);
-            // position = new Vector2(0f, 0f);
-            // brightness = alpha = alphaCoef = 1f;
-            //
-            // updatePosition= true;
-        
-            hasMaterial = false;
-            if (InitializeMaterial())
+            var parent = _cachedTransform.parent;
+            if (parent != null && parent.TryGetComponent<Sprite>(out var sprite))
             {
-                hasMaterial = true;
+                _positionOffset = sprite.SpritePosition;
             }
-            else if (GetComponentsInChildren<Transform>(true).Length <= 1)
-            {
-                Debug.Log(transform.name+"None material!");
-            }
-
-            if (!InitializeSpriteType())
+            else
             {
                 _positionOffset = Vector3.zero;
-                // Debug.Log("None Sprite!");
             }
-        
         }
 
-        // Update is called once per frame
-        void Update()
+        private void RestoreLegacyMaterialDefaults()
         {
-            if (hasMaterial)
+            if (!hasMaterial || material == null) return;
+
+            var hasUninitializedValues = scale == Vector2.zero &&
+                                         brightness == 0f &&
+                                         alpha == 0f &&
+                                         alphaCoef == 0f;
+            if (!hasUninitializedValues) return;
+
+            if (_hasScaleX) scale.x = material.GetFloat(ScaleX);
+            if (_hasScaleY) scale.y = material.GetFloat(ScaleY);
+            if (_hasSkewX) skew.x = material.GetFloat(SkewX);
+            if (_hasSkewY) skew.y = material.GetFloat(SkewY);
+            if (_hasBrightness) brightness = material.GetFloat(Brightness);
+            if (_hasAlpha) alpha = material.GetFloat(Alpha);
+            alphaCoef = 1f;
+        }
+
+        private void Update()
+        {
+            ApplyMaterialChanges();
+            ApplyPositionChange();
+        }
+
+        private void ApplyMaterialChanges()
+        {
+            if (!hasMaterial || material == null) return;
+
+            if (_hasSkewX && (!_materialStateApplied || _appliedSkew.x != skew.x))
             {
                 material.SetFloat(SkewX, skew.x);
-                material.SetFloat(SkewY, skew.y);
-                material.SetFloat(ScaleX, scale.x);
-                material.SetFloat(ScaleY, scale.y);
-                material.SetFloat(Brightness, brightness);
-                material.SetFloat(Alpha, alpha * alphaCoef);
+                _appliedSkew.x = skew.x;
             }
 
-            if (updatePosition)
+            if (_hasSkewY && (!_materialStateApplied || _appliedSkew.y != skew.y))
             {
-                transform.localPosition = new Vector3(position.x - _positionOffset.x, -position.y - _positionOffset.y, 0);
+                material.SetFloat(SkewY, skew.y);
+                _appliedSkew.y = skew.y;
             }
 
-            
+            if (_hasScaleX && (!_materialStateApplied || _appliedScale.x != scale.x))
+            {
+                material.SetFloat(ScaleX, scale.x);
+                _appliedScale.x = scale.x;
+            }
+
+            if (_hasScaleY && (!_materialStateApplied || _appliedScale.y != scale.y))
+            {
+                material.SetFloat(ScaleY, scale.y);
+                _appliedScale.y = scale.y;
+            }
+
+            if (_hasBrightness && (!_materialStateApplied || _appliedBrightness != brightness))
+            {
+                material.SetFloat(Brightness, brightness);
+                _appliedBrightness = brightness;
+            }
+
+            var combinedAlpha = alpha * alphaCoef;
+            if (_hasAlpha && (!_materialStateApplied || _appliedAlpha != combinedAlpha))
+            {
+                material.SetFloat(Alpha, combinedAlpha);
+                _appliedAlpha = combinedAlpha;
+            }
+
+            _materialStateApplied = true;
+        }
+
+        private void ApplyPositionChange()
+        {
+            if (!updatePosition) return;
+
+            var targetPosition = new Vector3(
+                position.x - _positionOffset.x,
+                -position.y - _positionOffset.y,
+                0f);
+
+            if (_cachedTransform.localPosition != targetPosition)
+            {
+                _cachedTransform.localPosition = targetPosition;
+            }
         }
 
         private void OnDestroy()
         {
-            if (_runtimeMaterial != null) Destroy(_runtimeMaterial);
+            if (_runtimeMaterial != null)
+            {
+                Destroy(_runtimeMaterial);
+            }
         }
     }
 }

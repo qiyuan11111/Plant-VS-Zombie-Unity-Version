@@ -94,8 +94,7 @@ namespace Script.Manager
             LoadPlantCard(GameConfigObject.PlantType.SunShroom);
             LoadPlantCard(GameConfigObject.PlantType.SunShroom);
             LoadPlantCard(GameConfigObject.PlantType.SunShroom);
-            LoadPlantCard(GameConfigObject.PlantType.SunShroom);
-            // LoadPlantCard(GameConfigObject.PlantType.PeaShooterSingle);
+            LoadPlantCard(GameConfigObject.PlantType.PeaShooterSingle);
             InitSeedCardGroup();
         }
 
