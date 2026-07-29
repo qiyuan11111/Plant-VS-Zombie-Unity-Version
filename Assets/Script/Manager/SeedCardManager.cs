@@ -99,11 +99,11 @@ namespace Script.Manager
             InitSeedCardGroup();
         }
 
-        private void StartColdDown()
+        private void StartInitialCooldown()
         {
             foreach (var seedCard in _seedCards)
             {
-                seedCard.ColdDown(seedCard.GetCdTime());
+                seedCard.StartCooldown(seedCard.GetCdTime());
             }
         }
 
@@ -118,7 +118,7 @@ namespace Script.Manager
         private void Start()
         {
             LoadCardGroup();
-            StartColdDown();
+            StartInitialCooldown();
         }
     }
 }

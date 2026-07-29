@@ -10,6 +10,9 @@ namespace Script.Manager
 {
     public class SunManager : MonoBehaviour
     {
+        private const string SunPointPath = "/UI/SeedBank/SunPoint";
+        private const string SunLightTextPath = "/UI/SeedBank/SunLight";
+
         public static SunManager Instance;
 
         [Header("Sun References")]
@@ -33,9 +36,15 @@ namespace Script.Manager
             set
             {
                 _currentSunLight = value;
-                sunLightText.text = _currentSunLight.ToString();
-                SeedCardManager.Instance.UpdateCardGroupState();
-                // SeedCardBankManager.Instance.UpdateCardGroupState();
+                if (sunLightText != null)
+                {
+                    sunLightText.text = _currentSunLight.ToString();
+                }
+
+                if (SeedCardManager.Instance != null)
+                {
+                    SeedCardManager.Instance.UpdateCardGroupState();
+                }
             }
         }
 
@@ -129,12 +138,46 @@ namespace Script.Manager
         private void Awake()
         {
             Instance = this;
-            sunPointPosition = transform.InverseTransformPoint(sunPoint.position);
+            ResolveReferences();
+            sunPointPosition = sunPoint != null
+                ? transform.InverseTransformPoint(sunPoint.position)
+                : Vector3.zero;
+            SetCurrentSunLight(100);
+        }
+
+        private void ResolveReferences()
+        {
+            if (sunPoint == null)
+            {
+                var sunPointObject = GameObject.Find(SunPointPath);
+                if (sunPointObject != null)
+                {
+                    sunPoint = sunPointObject.transform;
+                }
+            }
+
+            if (sunLightText == null)
+            {
+                var sunLightTextObject = GameObject.Find(SunLightTextPath);
+                if (sunLightTextObject != null)
+                {
+                    sunLightText = sunLightTextObject.GetComponent<TextMeshProUGUI>();
+                }
+            }
+
+            if (sunPoint == null)
+            {
+                Debug.LogError($"SunManager cannot find sun collection point at {SunPointPath}.", this);
+            }
+
+            if (sunLightText == null)
+            {
+                Debug.LogError($"SunManager cannot find sunlight text at {SunLightTextPath}.", this);
+            }
         }
 
         private void Start()
         {
-            SetCurrentSunLight(100);
             if (enableNaturalSun)
             {
                 StartCoroutine(SpawnNaturalSuns());

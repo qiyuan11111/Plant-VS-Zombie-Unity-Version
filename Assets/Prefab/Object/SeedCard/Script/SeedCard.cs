@@ -12,8 +12,11 @@ namespace Prefab.Object.SeedCard.Script
 {
     public class SeedCard : global::Script.Model.Object, IToField, IPointerClickHandler
     {
+        private const float CooldownRefreshInterval = 0.05f;
+
         private Image _lackOfSunMask;
         private Image _cdMask;
+        private Coroutine _cooldownCoroutine;
 
         private GameConfigObject.PlantType _entityType;
 
@@ -182,25 +185,37 @@ namespace Prefab.Object.SeedCard.Script
             return _plantable;
         }
 
-        private IEnumerator StartColdDown(float time)
+        private IEnumerator Cooldown(float duration)
         {
-            // _remainCdTime = time;
-            SetRemainCdTime(time);
-            
-            var gapTime = Math.Max(0.05f, Time.deltaTime);
-            var targetTime = TimeManager.Instance.globalTime + time;
-            while (_remainCdTime > 0)
+            var finishTime = Time.time + duration;
+            var wait = new WaitForSeconds(CooldownRefreshInterval);
+            SetRemainCdTime(duration);
+
+            while (Time.time < finishTime)
             {
-                SetRemainCdTime(targetTime - TimeManager.Instance.globalTime);
-                yield return WaitForSecondsPool.Create(gapTime);
+                SetRemainCdTime(finishTime - Time.time);
+                yield return wait;
             }
+
+            SetRemainCdTime(0f);
+            _cooldownCoroutine = null;
         }
 
-        public void ColdDown(float time)
+        public void StartCooldown(float duration)
         {
-            
-            LightCoroutineManager.Instance.StartLightCoroutine("StartColdDown",
-                StartColdDown(time));
+            if (_cooldownCoroutine != null)
+            {
+                StopCoroutine(_cooldownCoroutine);
+                _cooldownCoroutine = null;
+            }
+
+            if (duration <= 0f)
+            {
+                SetRemainCdTime(0f);
+                return;
+            }
+
+            _cooldownCoroutine = StartCoroutine(Cooldown(duration));
         }
 
         // private GameConfigObject.PlantType GetPlantType()
@@ -224,7 +239,7 @@ namespace Prefab.Object.SeedCard.Script
 
         public void AfterPlace()
         {
-            ColdDown(GetCdTime());
+            StartCooldown(GetCdTime());
         }
 
 
