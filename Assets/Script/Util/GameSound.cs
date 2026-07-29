@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "GameSound", menuName = "GameSound", order = 2)]
 public class GameSound : ScriptableObject
@@ -27,18 +24,15 @@ public class GameSound : ScriptableObject
         Points
     }
 
-    public Dictionary<SoundType, AudioClip> typeToAudioClip = new();
-
-    public void Init()
-    {
-        typeToAudioClip.Add(SoundType.BGM_day, BGM_day);
-        typeToAudioClip.Add(SoundType.Plante, Plant);
-        typeToAudioClip.Add(SoundType.SeedLift, SeedLift);
-        typeToAudioClip.Add(SoundType.Points, Points);
-    }
-
     public AudioClip GetAudioClipByType(SoundType soundType)
     {
-        return typeToAudioClip[soundType];
+        return soundType switch
+        {
+            SoundType.BGM_day => BGM_day,
+            SoundType.Plante => Plant,
+            SoundType.SeedLift => SeedLift,
+            SoundType.Points => Points,
+            _ => null
+        };
     }
 }

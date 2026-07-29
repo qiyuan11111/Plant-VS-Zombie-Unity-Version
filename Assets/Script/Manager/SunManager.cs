@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Prefab.Object.Sun.Script;
 using Script.Util;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Script.Manager
@@ -13,6 +11,18 @@ namespace Script.Manager
     public class SunManager : MonoBehaviour
     {
         public static SunManager Instance;
+
+        [Header("Sun References")]
+        [SerializeField] private Transform sunPoint;
+        [SerializeField] private TextMeshProUGUI sunLightText;
+
+        [Header("Natural Sun Spawn")]
+        [SerializeField] private bool enableNaturalSun = true;
+        [SerializeField, Min(0.1f)] private float naturalSunInterval = 0.8f;
+        [SerializeField, Min(1)] private int maxNaturalSunCount = 30;
+        [SerializeField] private Vector2 naturalSunXRange = new(-600f, 600f);
+        [SerializeField] private Vector2 naturalSunYRange = new(-500f, 500f);
+
         public Vector3 sunPointPosition;
 
         private int _currentSunLight;
@@ -29,16 +39,20 @@ namespace Script.Manager
             }
         }
 
-        public TextMeshProUGUI sunLightText; // 阳光文本
-        // Start is called before the first frame update
-
-        IEnumerator DelayedLoop()
+        private IEnumerator SpawnNaturalSuns()
         {
-            for (int i = 0; i < 20000; i++)
+            var wait = new WaitForSeconds(naturalSunInterval);
+            while (enableNaturalSun)
             {
-                ProduceSun(new Vector3(Random.Range(-600f, 600f), Random.Range(-500f, 500f), 0), SunType.Normal);
-                // 等待 0.5 秒
-                yield return new WaitForSeconds(0.8f);
+                if (transform.childCount < maxNaturalSunCount)
+                {
+                    ProduceSun(new Vector3(
+                        Random.Range(naturalSunXRange.x, naturalSunXRange.y),
+                        Random.Range(naturalSunYRange.x, naturalSunYRange.y),
+                        0f), SunType.Normal);
+                }
+
+                yield return wait;
             }
         }
 
@@ -115,24 +129,16 @@ namespace Script.Manager
         private void Awake()
         {
             Instance = this;
-
-            sunPointPosition =
-                transform.InverseTransformPoint(GameObject.Find("/UI/SeedBank/SunPoint").transform.position);
-            sunLightText = GameObject.Find("/UI/SeedBank/SunLight").GetComponent<TextMeshProUGUI>();
+            sunPointPosition = transform.InverseTransformPoint(sunPoint.position);
         }
 
         private void Start()
         {
             SetCurrentSunLight(100);
-            StartCoroutine(DelayedLoop());
-
-            // ProduceSun(Vector3.zero, Sun.SunType.Normal);
-            // ProduceSun(Vector3.zero, Sun.SunType.Normal);
-            // ProduceSun(Vector3.zero, Sun.SunType.Normal);
-            // ProduceSun(Vector3.zero, Sun.SunType.Normal);
-            // ProduceSun(Vector3.zero, Sun.SunType.Normal);
-            // ProduceSun(Vector3.zero, Sun.SunType.Normal);
-            // ProduceSun(Vector3.zero, Sun.SunType.Normal);
+            if (enableNaturalSun)
+            {
+                StartCoroutine(SpawnNaturalSuns());
+            }
         }
     }
 }

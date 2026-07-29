@@ -20,7 +20,6 @@ namespace Script.Manager
             gameConfigObject.Init();
 
             gameSound = Resources.Load<GameSound>("GameSound");
-            gameSound.Init();
 
             _camera = Camera.main;
         }
@@ -77,28 +76,5 @@ namespace Script.Manager
             };
         }
 
-        // public static void DestoryIfNotNull(GameObject gameObject)
-        // {
-        //     if (gameObject != null)
-        //     {
-        //         Destroy(gameObject);
-        //     }
-        // }
-        //
-        // public static bool IsExist(Entity sprite)
-        // {
-        //     var o = sprite.gameObject;
-        //     return sprite != null && o != null && o.activeSelf;
-        // }
-        // void Start()
-        // {
-        //
-        // }
-        //
-        // // Update is called once per frame
-        // void Update()
-        // {
-        //
-        // }
     }
 }

@@ -635,9 +635,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf9a11a743c13a449b3c32ccfaf6f7bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgm: {fileID: 0}
-  effect: {fileID: 0}
-  clip: {fileID: 8300000, guid: 4abfcbb0bd21d3c45aa49f916deb6eda, type: 3}
+  bgm: {fileID: 722384326}
+  effect: {fileID: 722384329}
 --- !u!82 &722384329
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1334,7 +1333,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1456128042}
-  - component: {fileID: 1456128041}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -1342,19 +1340,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1456128041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456128040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a06317f1f698bd6499c9216207651786, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Transform: {fileID: 4793693558176785722, guid: f82741bcb459acf4882c2b4f0c741017, type: 3}
 --- !u!4 &1456128042
 Transform:
   m_ObjectHideFlags: 0
@@ -1763,8 +1748,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158407cae0801f8478b748f49abd9f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sunPoint: {fileID: 0}
-  sunLightText: {fileID: 0}
+  sunPoint: {fileID: 2127898155}
+  sunLightText: {fileID: 787954046}
+  enableNaturalSun: 1
+  naturalSunInterval: 0.8
+  maxNaturalSunCount: 30
+  naturalSunXRange: {x: -600, y: 600}
+  naturalSunYRange: {x: -500, y: 500}
 --- !u!1 &2126844787
 GameObject:
   m_ObjectHideFlags: 0

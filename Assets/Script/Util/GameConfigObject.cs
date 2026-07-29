@@ -131,6 +131,15 @@ namespace Script.Util
 
         public void Init()
         {
+            _objectTypeToGameObject.Clear();
+            _plantTypeToGameObject.Clear();
+            _zombieTypeToGameObject.Clear();
+            _bulletTypeToGameObject.Clear();
+            _particleTypeToGameObject.Clear();
+            _objectTypeToObject.Clear();
+            _plantTypeToPlant.Clear();
+            _zombieTypeToZombie.Clear();
+
             InitPlante();
             InitBullet();
             InitZombie();

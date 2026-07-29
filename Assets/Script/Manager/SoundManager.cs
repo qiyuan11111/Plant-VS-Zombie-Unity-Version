@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Script.Manager;
 using UnityEngine;
 
@@ -8,28 +5,32 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
     
-    public AudioSource bgm;
-    public AudioSource effect;
+    [SerializeField] private AudioSource bgm;
+    [SerializeField] private AudioSource effect;
 
-    public AudioClip clip;
-    // Start is called before the first frame update
-
-    void Awake()
+    private void Awake()
     {
         Instance = this;
-        
-        bgm = GetComponents<AudioSource>()[0];
-        effect = GetComponents<AudioSource>()[1];
     }
 
-    void Start()
+    private void Start()
     {
+        if (bgm == null) return;
+
         bgm.clip = MainGameManager.Instance.GetAudioClipByType(GameSound.SoundType.BGM_day);
+        if (bgm.clip == null) return;
+
         bgm.Play();
     }
 
     public void PlayEffect(GameSound.SoundType soundType)
     {
-        effect.PlayOneShot(MainGameManager.Instance.GetAudioClipByType(soundType));
+        if (effect == null) return;
+
+        var audioClip = MainGameManager.Instance.GetAudioClipByType(soundType);
+        if (audioClip != null)
+        {
+            effect.PlayOneShot(audioClip);
+        }
     }
 }
