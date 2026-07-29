@@ -85,7 +85,7 @@ namespace Script.Manager
             var sun = sunObject.GetComponent<Sun>();
             sun.Reset();
 
-            sun.ToField<OnFieldSun>(new Dictionary<string, object>
+            sun.ToField(new Dictionary<string, object>
             {
                 { "LocalPosition", transform.InverseTransformPoint(position) },
                 { "sunType", type }

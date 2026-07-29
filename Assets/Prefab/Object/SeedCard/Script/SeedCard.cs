@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace Prefab.Object.SeedCard.Script
 {
-    public class SeedCard : global::Script.Model.Object, IToField, IPointerEnterHandler, IPointerExitHandler
+    public class SeedCard : global::Script.Model.Object, IToField, IPointerClickHandler
     {
         private Image _lackOfSunMask;
         private Image _cdMask;
@@ -81,14 +81,6 @@ namespace Prefab.Object.SeedCard.Script
             return _priceText.text;
         }
 
-        // public override OnFieldSprite ToField()
-        // {
-        //     var onFieldEntity = gameObject.AddComponent<OnFieldSeedCard>();
-        //     onFieldEntity.SetEntity(this);
-        //     return onFieldEntity;
-        // }
-
-        
         private new void Awake()
         {
             base.Awake();
@@ -106,31 +98,24 @@ namespace Prefab.Object.SeedCard.Script
             InitPlantType(plantType);
         }
 
-        public override OnFieldEntity ToField(Dictionary<string, object> param = null)
+        public override Entity ToField(Dictionary<string, object> param = null)
         {
-            return ToField<OnFieldSeedCard>(param);
-        }
-
-        public T ToField<T>(Dictionary<string, object> param = null) where T : OnFieldEntity
-        {
-            var onFieldSeedCard = PrePareToField<OnFieldSeedCard>()
-                .CreateCardIcon()
+            CreateCardIcon()
                 .SetPlantable(false)
                 .SetCardSunPrice(GetDefaultSunPrice())
                 .SetCdTime(GetDefaultCdTime())
-
                 .SetLocalScale(new Vector3(1, 1, 1));
             
             if (param != null)
             {
                 var name = param["Name"] as string;
-                onFieldSeedCard.SetName(name);
+                SetName(name);
             }
             
-            var cardRectTransform = onFieldSeedCard.GetComponent<RectTransform>();
+            var cardRectTransform = GetComponent<RectTransform>();
             var anchoredPosition = cardRectTransform.anchoredPosition3D;
             cardRectTransform.anchoredPosition3D = new Vector3(anchoredPosition.x, anchoredPosition.y, -10);
-            return onFieldSeedCard as T;
+            return this;
         }
         
         
@@ -138,7 +123,7 @@ namespace Prefab.Object.SeedCard.Script
         
         
         /*******/
-        private OnFieldEntity _plant;
+        private Entity _plant;
 
         // private bool _dirty = false;
 
@@ -258,9 +243,9 @@ namespace Prefab.Object.SeedCard.Script
         public void UpdateState()
         {
             var currentSunlight = SunManager.Instance.GetCurrentSunLight();
-            var currentChooseIndex = PlantingManager.Instance.GetCurrentChosenCardIndex();
+            var isSelected = PlantingManager.Instance != null && PlantingManager.Instance.IsSelected(this);
 
-            if (GetRemainCdTime() <= 0 && currentChooseIndex != Transform.GetSiblingIndex())
+            if (GetRemainCdTime() <= 0 && !isSelected)
             {
                 if (currentSunlight < GetSunPrice())
                 {
@@ -283,15 +268,16 @@ namespace Prefab.Object.SeedCard.Script
             }
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public void OnPointerClick(PointerEventData eventData)
         {
-            var index = Transform.GetSiblingIndex();
-            PlantingManager.Instance.SetCurrentPutOnCardIndex(index);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            PlantingManager.Instance.SetCurrentPutOnCardIndex(-1);
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                PlantingManager.Instance.TryBegin(this);
+            }
+            else if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                PlantingManager.Instance.Cancel();
+            }
         }
     }
 }

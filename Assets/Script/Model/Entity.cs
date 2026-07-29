@@ -28,16 +28,9 @@ namespace Script.Model
             Animator = GetComponentInChildren<Animator>();
         } 
         
-        protected T PrePareToField<T>() where T : OnFieldEntity
-        {
-            var onFieldEntity = gameObject.AddComponent<T>();
-            onFieldEntity.SetEntity(this);
-            return onFieldEntity;
-        }
-
         public abstract void AfterCreate(Dictionary<string, object> param);
 
-        public abstract OnFieldEntity ToField(Dictionary<string, object> param = null);
+        public abstract Entity ToField(Dictionary<string, object> param = null);
 
         public Entity DisableAnimation()
         {
@@ -58,45 +51,6 @@ namespace Script.Model
             }
             return this;
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        // public OnFieldEntity DisableAnimation()
-        // {
-        //     GetEntity<Entity>().DisableAnimation();
-        //     return this;
-        // }
-        // public OnFieldEntity DisableRaycast()
-        // {
-        //     GetEntity<Entity>().DisableRaycast();
-        //     return this;
-        // }
-        // public Entity SetEntity(Entity entity)
-        // {
-        //     Sprite = entity;
-        //     return entity;
-        // }
-
-        // protected T GetEntity<T>() where T : Entity
-        // {
-        //     return (T) Sprite;
-        // }
-        
-        // public string GetEnglishName()
-        // {
-        //     return GetEntity<Entity>().GetEnglishName();
-        // }
-        //
-        // public string GetChineseName()
-        // {
-        //     return GetEntity<Entity>().GetChineseName();
-        // }
-        
         public Entity SetParent(Transform parentTransform)
         {
             Transform.SetParent(parentTransform);
@@ -200,13 +154,5 @@ namespace Script.Model
             return this;
         }
         
-        private static bool hasSunUnderPointer = false;
-        private static GameObject currentTopObject = null;
-        
-        
-
-        protected void Update()
-        {
-        }
     }
 }

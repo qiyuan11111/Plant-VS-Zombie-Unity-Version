@@ -84,9 +84,9 @@ public class PeaShooterSingle : Plant, IPointerClickHandler
         throw new System.NotImplementedException();
     }
 
-    public override OnFieldEntity ToField(Dictionary<string, object> param = null)
+    public override Entity ToField(Dictionary<string, object> param = null)
     {
-        throw new System.NotImplementedException();
+        return this;
     }
 
     public void ShootProjectilePea()

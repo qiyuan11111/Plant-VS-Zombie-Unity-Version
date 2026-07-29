@@ -3,15 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using Script.Manager;
 using Script.Model;
+using Script.Util;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Prefab.Object.Sun.Script
 {
-    public class Sun : global::Script.Model.Object, IToField
+    public class Sun : global::Script.Model.Object, IToField, IPointerClickHandler
     {
         private static readonly int DisappearProperty = Animator.StringToHash("disappear");
+        private SunManager.SunType _sunType;
+        private string _jumpDownTask;
+        private string _disappearTask;
+        private string _clickTask;
+        private bool _isCollected;
 
         // // 是否可以被点击
         // public bool canBeClick;
@@ -85,7 +92,7 @@ namespace Prefab.Object.Sun.Script
             var startT = TimeManager.Instance.globalTime;
             var startPosition = Transform.localPosition;
 
-            var t = T;
+            var t = startT;
             var scale = transform.localScale;
 
             var a = 2f * (offsetY - 400f * T) / T / T;
@@ -132,7 +139,6 @@ namespace Prefab.Object.Sun.Script
 
         public IEnumerator StartClickSun(Vector3 position)
         {
-            const float T = 0.5f;
             var offsetT = Math.Max(0.01f, Time.deltaTime);
             // var scale = transform.localScale / (2 * T);
             var startTime = TimeManager.Instance.globalTime;
@@ -153,7 +159,7 @@ namespace Prefab.Object.Sun.Script
                     Disappear();
                 }
 
-                yield return new WaitForSeconds(offsetT);
+                yield return WaitForSecondsPool.Create(offsetT);
             }
         }
 
@@ -252,9 +258,45 @@ namespace Prefab.Object.Sun.Script
         //     }
         // }
 
-        public T ToField<T>(Dictionary<string, object> param = null) where T : OnFieldEntity
+        public Sun SetSunType(SunManager.SunType type)
         {
-            var onFieldSun = PrePareToField<OnFieldSun>();
+            _sunType = type;
+            return this;
+        }
+
+        private bool IsCanBeClick()
+        {
+            return string.IsNullOrEmpty(_jumpDownTask) ||
+                   !LightCoroutineManager.Instance.Exist(_jumpDownTask);
+        }
+
+        private Sun SetJumpMode()
+        {
+            Transform.localScale = Vector3.Scale(Transform.localScale, new Vector3(0.5f, 0.5f, 1f));
+            _jumpDownTask = LightCoroutineManager.Instance.StartLightCoroutine("JumpDown", StartJumpDown());
+            _disappearTask = LightCoroutineManager.Instance.StartLightCoroutine("Disappear", StartDisappear());
+            return this;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (_isCollected || !IsCanBeClick()) return;
+
+            _isCollected = true;
+            SetComponentState(false);
+            LightCoroutineManager.Stop(_disappearTask);
+
+            SunManager.Instance.AddCurrentSunLight(SunManager.Instance.GetSunLightBySunType(_sunType));
+            SoundManager.Instance.PlayEffect(GameSound.SoundType.Points);
+            _clickTask = LightCoroutineManager.Instance.StartLightCoroutine("ClickSun",
+                StartClickSun(SunManager.Instance.sunPointPosition));
+        }
+
+        public override Entity ToField(Dictionary<string, object> param = null)
+        {
+            _isCollected = false;
+            SetComponentState(true);
+
             if (param != null)
             {
                 var type = param["sunType"] is SunManager.SunType ? (SunManager.SunType)param["sunType"] : SunManager.SunType.Small;
@@ -263,24 +305,27 @@ namespace Prefab.Object.Sun.Script
                 var scale = SunManager.Instance.GetSunScaleBySunType(type);
                 var localScale = new Vector3(scale, scale, 1f);
 
-                onFieldSun.SetSunType(type)
-                    .SetLocalPosition(localPosition)
-                    .SetLocalScale(localScale);
+                SetSunType(type);
+                SetLocalPosition(localPosition);
+                SetLocalScale(localScale);
             }
 
-            onFieldSun.SetSortingLayer("sun");
-            onFieldSun.SetJumpMode();
+            SetSortingLayer("sun");
+            SetJumpMode();
 
-            return onFieldSun as T;
+            return this;
+        }
+
+        private void OnDestroy()
+        {
+            LightCoroutineManager.Stop(_jumpDownTask);
+            LightCoroutineManager.Stop(_disappearTask);
+            LightCoroutineManager.Stop(_clickTask);
         }
 
         public override void AfterCreate(Dictionary<string, object> param)
         {
         }
 
-        public override OnFieldEntity ToField(Dictionary<string, object> param = null)
-        {
-            return ToField<OnFieldSun>(param);
-        }
     }
 }

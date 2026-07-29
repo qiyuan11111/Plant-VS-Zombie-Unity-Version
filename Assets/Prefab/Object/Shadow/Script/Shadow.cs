@@ -29,14 +29,10 @@ namespace Prefab.Object.Shadow.Script
             throw new System.NotImplementedException();
         }
 
-        public override OnFieldEntity ToField(Dictionary<string, object> param = null)
+        public override Entity ToField(Dictionary<string, object> param = null)
         {
-            return ToField<OnFieldShadow>(param).SetPlaceMode();
-        }
-
-        public T ToField<T>(Dictionary<string, object> param = null) where T : OnFieldEntity
-        {
-            return PrePareToField<OnFieldShadow>() as T;
+            SetSortingLayer("shadow");
+            return this;
         }
     }
 }

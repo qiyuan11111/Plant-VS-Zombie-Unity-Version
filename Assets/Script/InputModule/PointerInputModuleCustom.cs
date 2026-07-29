@@ -264,6 +264,8 @@ namespace Script.InputModule
         }
 
         private readonly MouseState m_MouseState = new MouseState();
+        private readonly List<RaycastResult> _sunRaycastResults = new List<RaycastResult>();
+        private readonly List<RaycastResult> _normalRaycastResults = new List<RaycastResult>();
 
         /// <summary>
         /// Return the current MouseState. Using the default pointer.
@@ -304,26 +306,26 @@ namespace Script.InputModule
             leftData.button = PointerEventData.InputButton.Left;
             eventSystem.RaycastAll(leftData, m_RaycastResultCache);
             
-            List<RaycastResult> sunResults = new List<RaycastResult>();
-            List<RaycastResult> normalResults = new List<RaycastResult>();
+            _sunRaycastResults.Clear();
+            _normalRaycastResults.Clear();
             
             foreach (var result in m_RaycastResultCache)
             {
                 if (result.gameObject.CompareTag("Sun"))
                 {
-                    sunResults.Add(result);
+                    _sunRaycastResults.Add(result);
                 }
                 else
                 {
-                    normalResults.Add(result);
+                    _normalRaycastResults.Add(result);
                 }
             }
             m_RaycastResultCache.Clear();
-            // Debug.Log(MainGameManager.Instance.GetMouseStatus().Type);
-            if(MainGameManager.Instance.GetMouseStatus() == MainGameManager.MouseEvent.None)
-                m_RaycastResultCache.AddRange(sunResults.Count > 0 ? sunResults : normalResults);
+            var isPlanting = PlantingManager.Instance != null && PlantingManager.Instance.IsPlanting;
+            if (!isPlanting)
+                m_RaycastResultCache.AddRange(_sunRaycastResults.Count > 0 ? _sunRaycastResults : _normalRaycastResults);
             else
-                m_RaycastResultCache.AddRange(normalResults);
+                m_RaycastResultCache.AddRange(_normalRaycastResults);
             
             var raycast = FindFirstRaycast(m_RaycastResultCache);
             leftData.pointerCurrentRaycast = raycast;

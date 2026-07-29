@@ -31,6 +31,9 @@ namespace Script.DataStructure
 
         public T Dequeue()
         {
+            if (_data.Count == 0)
+                throw new InvalidOperationException("Queue is empty");
+
             int lastIndex = _data.Count - 1;
             T frontItem = _data[0];
             _data[0] = _data[lastIndex];
@@ -65,8 +68,17 @@ namespace Script.DataStructure
             _data[index] = _data[lastIndex];
             _data.RemoveAt(lastIndex);
 
-            // Rebuild heap from the removed index
-            Heapify(index);
+            if (index >= _data.Count) return;
+
+            int parentIndex = (index - 1) / 2;
+            if (index > 0 && _comparison(_data[index], _data[parentIndex]) < 0)
+            {
+                BubbleUp(index);
+            }
+            else
+            {
+                Heapify(index);
+            }
         }
 
         public T Peek()
@@ -91,6 +103,18 @@ namespace Script.DataStructure
             {
                 Swap(index, smallest);
                 Heapify(smallest);
+            }
+        }
+
+        private void BubbleUp(int index)
+        {
+            while (index > 0)
+            {
+                int parentIndex = (index - 1) / 2;
+                if (_comparison(_data[index], _data[parentIndex]) >= 0) break;
+
+                Swap(index, parentIndex);
+                index = parentIndex;
             }
         }
 

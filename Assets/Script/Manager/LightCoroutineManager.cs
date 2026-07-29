@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Script.Manager
@@ -10,6 +9,8 @@ namespace Script.Manager
     {
         public static LightCoroutineManager Instance;
         private readonly Dictionary<string, IEnumerator> _coroutines = new Dictionary<string, IEnumerator>();
+        private readonly List<string> _coroutineKeys = new List<string>();
+        private readonly List<string> _toRemove = new List<string>();
 
         private void Awake()
         {
@@ -18,24 +19,30 @@ namespace Script.Manager
 
         public string StartLightCoroutine(string name, IEnumerator routine)
         {
-            // 同名协程存在时先停止旧协程
-            name = name + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + Guid.NewGuid().ToString("N")[..8];
-            if (Instance._coroutines.ContainsKey(name))
+            var taskId = $"{name}:{Guid.NewGuid():N}";
+            if (routine == null) return taskId;
+
+            try
             {
-                Stop(name);
+                if (routine.MoveNext()) _coroutines.Add(taskId, routine);
             }
-            if (routine.MoveNext()) Instance._coroutines.Add(name, routine);
-            return name;
+            catch (Exception exception)
+            {
+                Debug.LogException(exception);
+            }
+
+            return taskId;
         }
 
         public bool Exist(string name)
         {
-            return _coroutines.ContainsKey(name);
+            return !string.IsNullOrEmpty(name) && _coroutines.ContainsKey(name);
         }
 
         public static void Stop(string name)
         {
-            if (Instance == null || !Instance._coroutines.TryGetValue(name, out var routine)) return;
+            if (Instance == null || string.IsNullOrEmpty(name) ||
+                !Instance._coroutines.TryGetValue(name, out var routine)) return;
             // 回收正在等待的对象
             if (routine.Current is WaitForSecondsPool wait)
             {
@@ -47,11 +54,21 @@ namespace Script.Manager
 
         private void Update()
         {
-            var toRemove = (from pair in _coroutines where !ProcessCoroutine(pair.Value) select pair.Key).ToList();
-            // Debug.Log(toRemove.Count);
-            foreach (var corName in toRemove)
+            _coroutineKeys.Clear();
+            _coroutineKeys.AddRange(_coroutines.Keys);
+            _toRemove.Clear();
+
+            foreach (var taskId in _coroutineKeys)
             {
-                _coroutines.Remove(corName);
+                if (_coroutines.TryGetValue(taskId, out var routine) && !ProcessCoroutine(routine))
+                {
+                    _toRemove.Add(taskId);
+                }
+            }
+
+            foreach (var taskId in _toRemove)
+            {
+                _coroutines.Remove(taskId);
             }
         }
 
@@ -60,34 +77,36 @@ namespace Script.Manager
             try
             {
                 var current = coroutine.Current;
-                switch (current)
+                if (current is WaitForSecondsPool wait)
                 {
-                    case null:
-                        return false;
-                    // 处理时间等待对象
-                    case WaitForSecondsPool { IsDone: false }:
-                        return true; // 未完成等待
-                    // 等待完成时回收对象
-                    case WaitForSecondsPool wait:
-                        wait.Recycle();
-                        break;
+                    if (!wait.IsDone) return true;
+                    wait.Recycle();
                 }
-                
-                // 推进协程并检查结束状态
-                if (coroutine.MoveNext()) return true;
-                // 协程自然结束时回收最后等待对象
-                // if (current is WaitForSecondsPool finalWait)
-                // {
-                //     finalWait.Recycle();
-                // }
+                else if (current != null)
+                {
+                    Debug.LogError($"LightCoroutine 不支持等待类型: {current.GetType().FullName}");
+                    return false;
+                }
 
-                return false;
+                // 推进协程并检查结束状态
+                return coroutine.MoveNext();
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                // Debug.LogError($"协程异常终止: {e}");
+                Debug.LogException(exception);
                 return false;
             }
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var routine in _coroutines.Values)
+            {
+                if (routine.Current is WaitForSecondsPool wait) wait.Recycle();
+            }
+
+            _coroutines.Clear();
+            if (Instance == this) Instance = null;
         }
     }
 

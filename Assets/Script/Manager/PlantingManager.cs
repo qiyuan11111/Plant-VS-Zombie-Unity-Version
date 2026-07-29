@@ -1,338 +1,176 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using Prefab.Object.SeedCard.Script;
 using Script.Model;
 using Script.Util;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Script.Manager
 {
-    public class PlantingManager : MonoBehaviour, IPointerClickHandler
+    /// <summary>
+    /// Coordinates one planting transaction from card selection to placement or cancellation.
+    /// </summary>
+    public class PlantingManager : MonoBehaviour
     {
+        public enum PlantingState
+        {
+            Idle,
+            Holding
+        }
+
         public static PlantingManager Instance;
-        
-        private readonly List<OnFieldEntity> _mouseEntity = new(); //准备种植时，跟随鼠标
-        
-        private readonly List<OnFieldEntity> _gridEntity = new(); // 准备种植时，草坪上的虚影
 
-        private Transform _plantTransform;
-        
-        private Vector2Int _currentChosenPoint; // 草坪行列
-        
-        // private readonly List<bool> _isSeedCardChosen = new();
-        
-        private int _currentChosenCardIndex;
-        public int GetCurrentChosenCardIndex()
+        [SerializeField] private Transform plantParent;
+
+        private PlantingState _state = PlantingState.Idle;
+        private SeedCard _selectedCard;
+        private GridManager.Grid _hoveredGrid;
+        private PlantingPreview _preview;
+
+        public bool IsPlanting => _state == PlantingState.Holding;
+
+        public bool IsSelected(SeedCard card)
         {
-            return _currentChosenCardIndex;
+            return IsPlanting && _selectedCard == card;
         }
 
-        public void SetCurrentChosenCardIndex(int index)
+        public bool TryBegin(SeedCard card)
         {
-            _currentChosenCardIndex = index;
-            if (index != -1)
+            if (card == null) return false;
+
+            // Preserve the previous interaction: clicking a card while holding a plant cancels it.
+            if (IsPlanting)
             {
-                SeedCardManager.Instance.ChoosePlantCard(index);
+                Cancel();
+                return false;
             }
-        }
-        
-        public bool IsChooseCard()
-        {
-            return _currentChosenCardIndex != -1;
-        }
-        
-        private int _currentPutOnIndex = -1;
-        public void SetCurrentPutOnCardIndex(int currentPutOnIndex)
-        {
-            _currentPutOnIndex = currentPutOnIndex;
-        }
 
-        public bool IsPutOnCard()
-        {
-            return _currentPutOnIndex != -1;
-        }
+            if (!card.IsPlantable()) return false;
 
-        public int GetCurrentPutOnCardIndex()
-        {
-            return _currentPutOnIndex;
-        }
-        
-        private void DoChoosePlantCard(int cardIndex)
-        {
-            MainGameManager.Instance.SetMouseStatus(MainGameManager.MouseEvent.Planting);
+            var prefab = MainGameManager.Instance.GetPlantByType(card.GetPlantType());
+            if (prefab == null) return false;
+
+            _selectedCard = card;
+            _state = PlantingState.Holding;
+            _preview = new PlantingPreview(prefab, GridManager.Instance.transform);
+
+            card.OnChoose();
             SoundManager.Instance.PlayEffect(GameSound.SoundType.SeedLift);
-            SetCurrentChosenCardIndex(cardIndex);
-        }
-        
-        public void ChoosePlantCard()
-        {
-            if (IsChooseCard())
-            {
-                CancelChoosePlantCard();
-                return;
-            }
-            var index = GetCurrentPutOnCardIndex();
-            if (!IsPutOnCard() || !SeedCardManager.Instance.IsPlantable(index))
-            {
-                return;
-            }
-            DoChoosePlantCard(index);
+            UpdatePreview();
+            return true;
         }
 
-        private void DoCancelChoosePlant(int cardIndex)
+        public void Cancel()
         {
-            MainGameManager.Instance.SetMouseStatus(MainGameManager.MouseEvent.None);
-            SetCurrentChosenCardIndex(-1);
-            SeedCardManager.Instance.CancelChoosePlantCard(cardIndex);
-        }
-        
-        public void CancelChoosePlantCard()
-        {
-            SetCurrentChosenPoint(GridManager.Grid.None);
-            if (!IsChooseCard())
-            {
-                return;
-            }
-            DoCancelChoosePlant(GetCurrentChosenCardIndex());
-        }
-        
-        
-        public void CreateGridPlant(List<GameConfigObject.PlantType> plantTypes)
-        {
-            _gridEntity.Clear();
-            foreach (var onFieldPlant in plantTypes.Select(type => Instantiate(MainGameManager.Instance.GetPlantByType(type),
-                         GridManager.Instance.transform, true).GetComponent<Plant>()).Select(plant => plant.ToField()))
-            {
-                _gridEntity.Add(onFieldPlant.SetGridIconMode());
-            }
-        }
-        
-        public void CreateGridPlant(GameConfigObject.PlantType plantTypes, int index)
-        {
-            var plant = Instantiate(MainGameManager.Instance.GetPlantByType(plantTypes), GridManager.Instance.transform, true)
-                .GetComponent<Plant>();
-            var onFieldPlant = plant.ToField();
-            if (onFieldPlant == null) return;
-            _gridEntity[index] = onFieldPlant.SetGridIconMode();
-        }
-        
-        private void DoResetGridPlantPosition(Vector3 position)
-        {
-            foreach (var onFieldEntity in _gridEntity)
-            {
-                onFieldEntity.SetLocalPosition(position);
-            }
-        }
-        
-        public void ResetGridPlantPosition()
-        {
-            var position = new Vector3(1000f, 1000f, 1000f);
-            DoResetGridPlantPosition(position);
-        }
-        
-        public void CreateMousePlant(List<GameConfigObject.PlantType> plantTypes)
-        {
-            _mouseEntity.Clear();
-            foreach (var onFieldPlant in plantTypes.Select(type => Instantiate(MainGameManager.Instance.GetPlantByType(type),
-                         GridManager.Instance.transform, true).GetComponent<Plant>()).Select(plant => plant.ToField()))
-            {
-                _mouseEntity.Add(onFieldPlant.SetMouseIconMode());
-            }
+            if (!IsPlanting) return;
 
-            // for (int i = 0; i < plantTypes.Count; i++)
-            // {
-            //     var plant = Instantiate(MainGameManager.Instance.GetPlantByType(plantTypes[i]),
-            //         GridManager.Instance.transform, true).GetComponent<Plant>();
-            //     var onFieldPlant = plant.ToField();
-            //     _mouseEntity.Add(onFieldPlant.SetMouseIconMode());
-            // }
-        }
-        
-        public void CreateMousePlant(GameConfigObject.PlantType plantTypes, int index)
-        {
-            var plant = Instantiate(MainGameManager.Instance.GetPlantByType(plantTypes), GridManager.Instance.transform, true)
-                .GetComponent<Plant>();
-            var onFieldPlant = plant.ToField();
-            if (onFieldPlant == null) return;
-            _mouseEntity[index] = onFieldPlant.SetMouseIconMode();
+            var card = _selectedCard;
+            EndSession();
+            card?.CancelChoose();
         }
 
-        private OnFieldEntity GetCurrentChosenMouseEntity()
+        public bool TryPlace()
         {
-            return IsChooseCard() ? _mouseEntity[GetCurrentChosenCardIndex()] : null;
-        }
-        
-        private OnFieldEntity GetCurrentChosenGridEntity()
-        {
-            return IsChooseCard() ? _gridEntity[GetCurrentChosenCardIndex()] : null;
-        }
+            if (!IsPlanting || _selectedCard == null || !IsValidGrid(_hoveredGrid)) return false;
 
-        private void DoUpdateMousePlantPosition(Vector3 position)
-        {
-            GetCurrentChosenMouseEntity().SetPosition(position);
-        }
-        
-        private void UpdateMousePlantPosition()
-        {
-            var position = MainGameManager.Instance.GetNowMouseScreenToWorldPoint(10);
-            GetCurrentChosenMouseEntity().SetPosition(position);
-            // if (IsChooseCard())
-            // {
-            //     DoUpdateMousePlantPosition(position);
-            // }
-            
-        }
+            var price = _selectedCard.GetSunPrice();
+            if (SunManager.Instance.GetCurrentSunLight() < price) return false;
 
-        private void UpdateGridPlantPosition()
-        {
-            var position = GridManager.Instance.GetGridByPoint(_currentChosenPoint).Position;
-            GetCurrentChosenGridEntity().SetLocalPosition(position);
-        }
+            var prefab = MainGameManager.Instance.GetPlantByType(_selectedCard.GetPlantType());
+            if (prefab == null) return false;
 
-        private void DoResetMousePlantPosition(Vector3 position)
-        {
-            foreach (var onFieldEntity in _mouseEntity)
+            var plantObject = Instantiate(prefab, plantParent, false);
+            var plant = plantObject.GetComponent<Plant>();
+            if (plant == null)
             {
-                onFieldEntity.SetLocalPosition(position);
+                Destroy(plantObject);
+                return false;
             }
-        }
-    
-        public void ResetMousePlantPosition()
-        {
-            var position = new Vector3(1000f, 1000f, 1000f);
-            foreach (var onFieldEntity in _mouseEntity)
-            {
-                onFieldEntity.SetLocalPosition(position);
-            }
-            // if (!IsChooseCard())
-            // {
-            //     DoResetMousePlantPosition(position);
-            // }
-        }
 
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (eventData.button == 0)
+            var entity = plant.ToField();
+            var character = entity as Character;
+            if (character == null)
             {
-                ChoosePlantCard();
+                Destroy(plantObject);
+                return false;
             }
-            else
-            {
-                CancelChoosePlantCard();
-            }
-        }
 
-        private void DoSetCurrentChosenPoint(Vector2Int point)
-        {
-            _currentChosenPoint = point;
-        }
+            character.SetPlaceMode(_hoveredGrid);
+            if (!_hoveredGrid.TrySetCharacter(character))
+            {
+                Destroy(plantObject);
+                return false;
+            }
 
-        public void SetCurrentChosenPoint(GridManager.Grid grid)
-        {
-            if (grid == null) DoSetCurrentChosenPoint(GridManager.Grid.None.Point);
-            else if (IsChooseCard() && !grid.IsOccupied())
-            {
-                DoSetCurrentChosenPoint(grid.Point);
-            }
-            else
-            {
-                DoSetCurrentChosenPoint(GridManager.Grid.None.Point);
-            }
-        }
-        
-        private bool IsCurrentChosenPointInGrid()
-        {
-            var currentChosenPoint = _currentChosenPoint;
-            return GridManager.Grid.None.Point != currentChosenPoint;
-        }
-        
-        private void DoPlacePlant(GridManager.Grid grid, GameConfigObject.PlantType plantType)
-        {
+            var card = _selectedCard;
+            EndSession();
+
             SoundManager.Instance.PlayEffect(GameSound.SoundType.Plante);
-            SetCurrentChosenPoint(GridManager.Grid.None);
-            
-            var onFieldPlant = Instantiate(MainGameManager.Instance.GetPlantByType(plantType),
-                _plantTransform, true).GetComponent<Plant>().ToField();
-
-            grid.SetOnFieldCharacter(onFieldPlant.SetPlaceMode(grid) as OnFieldCharacter);
-            
-            // RegisterPlant(onFieldPlant);
-        }
-
-        private bool PlacePlant(GridManager.Grid grid, GameConfigObject.PlantType plantType)
-        {
-            if (grid.IsOccupied()) return false;
-            DoPlacePlant(grid, plantType);
-            return true;
-        }
-
-        private void DoAfterPlacePlant(int price)
-        {
+            card.AfterPlace();
             SunManager.Instance.SubCurrentSunLight(price);
-            SeedCardManager.Instance.AfterPlacePlant(_currentChosenCardIndex);
-            SetCurrentChosenCardIndex(-1);
-            MainGameManager.Instance.SetMouseStatus(MainGameManager.MouseEvent.None);
-        }
-
-        public bool AfterPlacePlant(int price)
-        {
-            if (!IsChooseCard()) return false;
-            DoAfterPlacePlant(price);
             return true;
         }
-        
-        public void PlaceChosenPlant()
+
+        private void UpdatePreview()
         {
-            if(!IsChooseCard() || !IsCurrentChosenPointInGrid()) return;
-            
-            var price = SeedCardManager.Instance.GetCard(_currentChosenCardIndex).GetSunPrice();
-            if(SunManager.Instance.GetCurrentSunLight() < price) return;
-            
-            var grid = GridManager.Instance.GetGridByPoint(_currentChosenPoint);
-            var type = SeedCardManager.Instance.GetPlantType(_currentChosenCardIndex);
-            if (grid.IsOccupied()) return;
-            
-            DoPlacePlant(grid, type);
-            DoAfterPlacePlant(price);
+            if (!IsPlanting || _preview == null) return;
+
+            var cursorPosition = MainGameManager.Instance.GetNowMouseScreenToWorldPoint(10f);
+            _preview.SetCursorPosition(cursorPosition);
+
+            var grid = GridManager.Instance.GetGridByWorldPosition(cursorPosition);
+            if (IsValidGrid(grid))
+            {
+                _hoveredGrid = grid;
+                _preview.ShowGrid(grid);
+            }
+            else
+            {
+                _hoveredGrid = null;
+                _preview.HideGrid();
+            }
         }
-        
+
+        private static bool IsValidGrid(GridManager.Grid grid)
+        {
+            return grid != null && grid != GridManager.Grid.None && !grid.IsOccupied();
+        }
+
+        private void EndSession()
+        {
+            _state = PlantingState.Idle;
+            _selectedCard = null;
+            _hoveredGrid = null;
+
+            _preview?.Dispose();
+            _preview = null;
+        }
+
         private void Awake()
         {
             Instance = this;
-            _plantTransform = GameObject.Find("/UI/Grid/Plant").transform;
-        }
-
-
-        private void Start()
-        {
-            SetCurrentChosenCardIndex(-1);
-            SetCurrentPutOnCardIndex(-1);
-            SetCurrentChosenPoint(GridManager.Grid.None);
+            if (plantParent == null)
+            {
+                var plantObject = GameObject.Find("/UI/Grid/Plant");
+                if (plantObject != null) plantParent = plantObject.transform;
+            }
         }
 
         private void Update()
         {
-            // Debug.Log(IsChooseCard() && IsCurrentChosenPointInGrid());
-            // Debug.Log(_currentChosenPoint);
-            if (IsChooseCard())
+            if (!IsPlanting) return;
+
+            if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
             {
-                UpdateMousePlantPosition();
+                Cancel();
+                return;
             }
-            else
-            {
-                ResetMousePlantPosition();
-            }
-            
-            if (IsChooseCard() && IsCurrentChosenPointInGrid())
-            {
-                UpdateGridPlantPosition();
-            }
-            else
-            {
-                ResetGridPlantPosition();
-            }
+
+            UpdatePreview();
+        }
+
+        private void OnDestroy()
+        {
+            _preview?.Dispose();
+            if (Instance == this) Instance = null;
         }
     }
 }

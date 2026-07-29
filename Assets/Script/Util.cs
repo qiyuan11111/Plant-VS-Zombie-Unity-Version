@@ -25,12 +25,6 @@ public class Util : MonoBehaviour
             Debug.Log(new Vector2(lat, lon));
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
 
 /*Vector2 minxy = new Vector2(float.MaxValue, float.MaxValue);

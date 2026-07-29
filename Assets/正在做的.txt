@@ -1,2 +1,3 @@
-目前逐步取消OnFieldXXX之类的类,合并到对应的非field中
-Tofield的方法还没有进行修改
+已完成：
+1. OnFieldXXX 类的功能已合并到对应实体类，并移除旧类。
+2. ToField 已改为配置并返回原实体，不再动态添加 OnField 组件。

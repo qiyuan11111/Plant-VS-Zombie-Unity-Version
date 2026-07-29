@@ -31,7 +31,8 @@ namespace Script
                 }
             }
             resultAppendList.Clear();
-            if(MainGameManager.Instance.GetMouseStatus() == MainGameManager.MouseEvent.None)
+            var isPlanting = PlantingManager.Instance != null && PlantingManager.Instance.IsPlanting;
+            if (!isPlanting)
                 resultAppendList.AddRange(sunResults.Count > 0 ? sunResults : normalResults);
             else
                 resultAppendList.AddRange(normalResults);

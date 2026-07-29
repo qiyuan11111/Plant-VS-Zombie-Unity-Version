@@ -23,6 +23,11 @@ namespace Script.Model
         
         public SpriteGroup GetComponentRoot()
         {
+            if (ComponentRoot == null)
+            {
+                throw new MissingComponentException($"{name} requires a SpriteGroup component");
+            }
+
             return ComponentRoot;
         }
 
@@ -44,10 +49,6 @@ namespace Script.Model
         private void CacheSpriteGroup()
         {
             ComponentRoot = GetComponent<SpriteGroup>();
-            if (ComponentRoot == null)
-            {
-                Debug.LogWarning($"Missing SpriteGroup component in parent hierarchy for {name}", this);
-            }
         }
 
         private void RefreshChildTransforms()

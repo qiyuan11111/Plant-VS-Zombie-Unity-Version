@@ -6,14 +6,19 @@ namespace Script
 {
     public class SpriteGroup : SpriteImage
     {
+        private static readonly int ColorProperty = Shader.PropertyToID("_Color");
         private Collider2D[] _childCollider2D;
+        private MaterialPropertyBlock _materialProperties;
         // public Animator[] childAnimator;
         
         public SpriteGroup SetTransparentMaterial()
         {
-            foreach (var material in GetComponentsInChildren<SpriteRenderer>())
+            _materialProperties ??= new MaterialPropertyBlock();
+            foreach (var spriteRenderer in GetComponentsInChildren<SpriteRenderer>())
             {
-                material.material.color = new Color(1,1,1,0.5f);
+                spriteRenderer.GetPropertyBlock(_materialProperties);
+                _materialProperties.SetColor(ColorProperty, new Color(1, 1, 1, 0.5f));
+                spriteRenderer.SetPropertyBlock(_materialProperties);
             }
 
             return this;

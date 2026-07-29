@@ -46,13 +46,5 @@ namespace Script.Manager
             Screen.fullScreen = true;
         }
  
-        private void Update()
-        {
-
-        }
- 
-   
-
-        // Update is called once per frame
     }
 }

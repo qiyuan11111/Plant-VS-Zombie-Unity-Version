@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Script.Model;
-using Script.Util;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace Script.Manager
 {
-    public class GridManager : MonoBehaviour, IPointerMoveHandler, IPointerClickHandler
+    public class GridManager : MonoBehaviour, IPointerClickHandler
     {
         public static GridManager Instance;
 
@@ -62,24 +58,24 @@ namespace Script.Manager
             return null;
         }
 
-        private Grid GetGridByMouse()
+        public Grid GetGridByWorldPosition(Vector3 worldPosition)
         {
             int row = -1, col = -1;
-            Vector2 mouse = transform.InverseTransformPoint(MainGameManager.Instance.GetNowMouseScreenToWorldPoint());
+            Vector2 localPosition = transform.InverseTransformPoint(worldPosition);
 
             var minDistance = float.MaxValue;
             for (var i = 0; i < XAxis.Count; i++)
             {
-                var distance = Math.Abs(mouse.x - XAxis[i]);
+                var distance = Math.Abs(localPosition.x - XAxis[i]);
                 if (!(distance < 41f) || !(distance < minDistance)) continue;
                 minDistance = distance;
                 row = i;
             }
 
             minDistance = float.MaxValue;
-            for (var i = 0; i < YAxis.Count(); i++)
+            for (var i = 0; i < YAxis.Count; i++)
             {
-                var distance = Math.Abs(mouse.y - YAxis[i]);
+                var distance = Math.Abs(localPosition.y - YAxis[i]);
                 if (!(distance < 51f) || !(distance < minDistance)) continue;
                 minDistance = distance;
                 col = i;
@@ -94,24 +90,15 @@ namespace Script.Manager
             return _gridMap[row, col];
         }
 
-        public void OnPointerMove(PointerEventData eventData)
-        {
-            var grid = GetGridByMouse();
-            PlantingManager.Instance.SetCurrentChosenPoint(grid);
-        }
-
-        
-
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button == 0)
             {
-                PlantingManager.Instance.PlaceChosenPlant();
+                PlantingManager.Instance.TryPlace();
             }
             else
             {
-                PlantingManager.Instance.CancelChoosePlantCard();
-                // PlantingManager.Instance.SetCurrentChosenPoint(G);
+                PlantingManager.Instance.Cancel();
             }
         }
 
@@ -153,21 +140,21 @@ namespace Script.Manager
             }
 
             // private Entity Plante;
-            private OnFieldCharacter _plante;
+            private Character _plant;
 
-            public OnFieldCharacter GetOnFieldCharacter()
+            public Character GetCharacter()
             {
-                return _plante;
+                return _plant;
             }
 
-            public Grid SetOnFieldCharacter(OnFieldCharacter character)
+            public bool TrySetCharacter(Character character)
             {
-                if (IsOccupied()) return this;
+                if (IsOccupied() || character == null) return false;
 
                 SetOccupied(true);
-                _plante = character;
+                _plant = character;
 
-                return this;
+                return true;
             }
 
             public static Grid None = new Grid(new Vector2Int(-1, -1), new Vector2(-1, -1));

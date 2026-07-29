@@ -10,6 +10,8 @@ namespace Script
     {
         public Material material;
         public bool hasMaterial;
+        private SpriteRenderer _spriteRenderer;
+        private Material _runtimeMaterial;
     
         //private Transform _transform;
         private Vector3 _positionOffset;
@@ -54,13 +56,13 @@ namespace Script
 
         private bool InitializeMaterial()
         {
-            var spriteRenderer = GetComponent<SpriteRenderer>();
-            if (spriteRenderer == null) return false;
-            var mat = spriteRenderer.material;
-            var shader = mat.shader;
-            var m = new Material(shader);
-            m.CopyPropertiesFromMaterial(mat);
-            GetComponent<SpriteRenderer>().material = m;
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            if (_spriteRenderer == null || _spriteRenderer.sharedMaterial == null) return false;
+
+            // 动画片段会直接修改 material._SkewX/_SkewY，因此每个部件必须使用独立材质。
+            // SpriteRenderer.material 会创建一次实例；不要再额外复制第二份材质。
+            _runtimeMaterial = _spriteRenderer.material;
+            material = _runtimeMaterial;
             return true;
 
         }
@@ -85,7 +87,6 @@ namespace Script
             hasMaterial = false;
             if (InitializeMaterial())
             {
-                material = GetComponent<SpriteRenderer>().material;
                 hasMaterial = true;
             }
             else if (GetComponentsInChildren<Transform>(true).Length <= 1)
@@ -120,6 +121,11 @@ namespace Script
             }
 
             
+        }
+
+        private void OnDestroy()
+        {
+            if (_runtimeMaterial != null) Destroy(_runtimeMaterial);
         }
     }
 }

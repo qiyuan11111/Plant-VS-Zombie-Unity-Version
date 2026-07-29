@@ -9,56 +9,11 @@ namespace Script.Manager
     public class SeedCardManager : MonoBehaviour
     {
         public static SeedCardManager Instance;
-        private readonly List<OnFieldSeedCard> _seedCards = new();
+        private readonly List<SeedCard> _seedCards = new();
         private readonly List<GameConfigObject.PlantType> _plantTypes = new();
 
         public RectTransform seedBankRectTransform;
         public RectTransform cardGroupRectTransform;
-
-        public OnFieldSeedCard GetCard(int index)
-        {
-            if (index < 0 || index >= _seedCards.Count) return null;
-            return _seedCards[index];
-        }
-
-        public List<GameConfigObject.PlantType> GetPlantTypes()
-        {
-            return _plantTypes;
-        }
-
-        public GameConfigObject.PlantType GetPlantType(int index)
-        {
-            return _plantTypes[index];
-        }
-
-        public bool IsPlantable(int index)
-        {
-            return _seedCards[index].IsPlantable();
-        }
-
-        public void CancelChoosePlantCard(int index)
-        {
-            if (index >= 0 && index < _seedCards.Count)
-            {
-                _seedCards[index].CancelChoose();
-            }
-        }
-
-        public void ChoosePlantCard(int index)
-        {
-            if (index >= 0 && index < _seedCards.Count)
-            {
-                _seedCards[index].OnChoose();
-            }
-        }
-
-        public void AfterPlacePlant(int index)
-        {
-            if (index >= 0 && index < _seedCards.Count)
-            {
-                _seedCards[index].AfterPlace();
-            }
-        }
 
         public void UpdateCardGroupState()
         {
@@ -71,7 +26,7 @@ namespace Script.Manager
         private const float SeedBankWidth = 444;
         private const float CardWidth = 50;
 
-        private OnFieldSeedCard CreateSeedCard(GameConfigObject.PlantType plantType, string cardName)
+        private SeedCard CreateSeedCard(GameConfigObject.PlantType plantType, string cardName)
         {
             var seedCard = Instantiate(MainGameManager.Instance.GetObjectByType(GameConfigObject.ObjectType.Card),
                 cardGroupRectTransform, true).GetComponent<SeedCard>();
@@ -80,10 +35,11 @@ namespace Script.Manager
                 { "entityType", plantType }
             });
 
-            return seedCard.ToField<OnFieldSeedCard>(new Dictionary<string, object>
-                {
-                    { "Name", cardName }
-                });
+            seedCard.ToField(new Dictionary<string, object>
+            {
+                { "Name", cardName }
+            });
+            return seedCard;
         }
 
         private void InitSeedCardGroup()
@@ -130,24 +86,6 @@ namespace Script.Manager
             }
         }
 
-        private void ConfirmChosenPlant()
-        {
-            PlantingManager.Instance.CreateMousePlant(_plantTypes);
-            PlantingManager.Instance.ResetMousePlantPosition();
-
-            PlantingManager.Instance.CreateGridPlant(_plantTypes);
-            PlantingManager.Instance.ResetGridPlantPosition();
-        }
-
-        private void ConfirmChosenPlant(int index)
-        {
-            PlantingManager.Instance.CreateMousePlant(_plantTypes[index], index);
-            PlantingManager.Instance.ResetMousePlantPosition();
-
-            PlantingManager.Instance.CreateGridPlant(_plantTypes[index], index);
-            PlantingManager.Instance.ResetGridPlantPosition();
-        }
-
         private void LoadCardGroup()
         {
             LoadPlantCard(GameConfigObject.PlantType.SunShroom);
@@ -158,8 +96,6 @@ namespace Script.Manager
             LoadPlantCard(GameConfigObject.PlantType.SunShroom);
             LoadPlantCard(GameConfigObject.PlantType.SunShroom);
             // LoadPlantCard(GameConfigObject.PlantType.PeaShooterSingle);
-            ConfirmChosenPlant();
-
             InitSeedCardGroup();
         }
 
@@ -170,18 +106,6 @@ namespace Script.Manager
                 seedCard.ColdDown(seedCard.GetCdTime());
             }
         }
-
-        private void StartColdDown(int index)
-        {
-            if (index >= 0 && index < _seedCards.Count)
-            {
-                _seedCards[index].ColdDown(_seedCards[index].GetCdTime());
-            }
-        }
-        // public List<GameConfigObject.PlantType> GetChosenEntityTypes()
-        // {
-        //     return _plantTypes;
-        // }
 
         private void Awake()
         {

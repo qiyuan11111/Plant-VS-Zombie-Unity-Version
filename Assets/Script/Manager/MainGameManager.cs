@@ -13,32 +13,6 @@ namespace Script.Manager
 
         private Camera _camera;
 
-        private MouseEvent _status;
-        
-        public MouseEvent GetMouseStatus(){return _status;}
-
-        public void SetMouseStatus(MouseEvent eEvent)
-        {
-            _status = eEvent;
-        }
-        
-        
-        public class MouseEvent
-        {
-            public int Type;
-
-            private MouseEvent(int type)
-            {
-                Type = type;
-            }
-            
-            public static MouseEvent None = new(0);
-            
-            public static MouseEvent Planting = new(1);
-        }
-    
-    
-    
         private void Awake()
         {
             Instance = this;
@@ -49,22 +23,12 @@ namespace Script.Manager
             gameSound.Init();
 
             _camera = Camera.main;
-            _status = MouseEvent.None;
-
-        
         }
 
         public Vector3 GetNowMouseScreenToWorldPoint(float z)
         {
             var position = _camera.ScreenToWorldPoint(Input.mousePosition);
             position.z = z;
-            return position;
-        }
-    
-        public Vector2 GetNowMouseScreenToWorldPoint()
-        {
-            var position3 = _camera.ScreenToWorldPoint(Input.mousePosition);
-            var position = new Vector2(position3.x, position3.y);
             return position;
         }
     

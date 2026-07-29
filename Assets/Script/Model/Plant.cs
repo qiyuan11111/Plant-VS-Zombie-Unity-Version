@@ -15,7 +15,7 @@ namespace Script.Model
             shadowTransform = transform.Find("Shadow_Anchor"); 
         } 
         
-        public new void SetNormalMode()
+        public void SetNormalMode()
         {
             SetSortingLayer("plant-"+Row);
         }
