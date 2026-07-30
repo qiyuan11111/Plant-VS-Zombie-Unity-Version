@@ -7,9 +7,10 @@ namespace Script.InputModule
     {
         private const string SunTag = "Sun";
 
-        public static RaycastResult Select(IReadOnlyList<RaycastResult> results, bool prioritizeSun)
+        public static RaycastResult Select(IReadOnlyList<RaycastResult> results, bool isPlanting)
         {
             var firstNormalResult = default(RaycastResult);
+            var firstClickableResult = default(RaycastResult);
 
             for (var i = 0; i < results.Count; i++)
             {
@@ -18,7 +19,7 @@ namespace Script.InputModule
 
                 if (result.gameObject.CompareTag(SunTag))
                 {
-                    if (prioritizeSun) return result;
+                    if (!isPlanting) return result;
                     continue;
                 }
 
@@ -26,9 +27,18 @@ namespace Script.InputModule
                 {
                     firstNormalResult = result;
                 }
+
+                if (isPlanting &&
+                    firstClickableResult.gameObject == null &&
+                    ExecuteEvents.GetEventHandler<IPointerClickHandler>(result.gameObject) != null)
+                {
+                    firstClickableResult = result;
+                }
             }
 
-            return firstNormalResult;
+            return isPlanting && firstClickableResult.gameObject != null
+                ? firstClickableResult
+                : firstNormalResult;
         }
     }
 }

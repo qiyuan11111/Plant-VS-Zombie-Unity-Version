@@ -35,8 +35,8 @@ namespace Script.InputModule
             leftData.button = PointerEventData.InputButton.Left;
             eventSystem.RaycastAll(leftData, m_RaycastResultCache);
 
-            var prioritizeSun = PlantingManager.Instance == null || !PlantingManager.Instance.IsPlanting;
-            leftData.pointerCurrentRaycast = PointerPriorityPolicy.Select(m_RaycastResultCache, prioritizeSun);
+            var isPlanting = PlantingManager.Instance != null && PlantingManager.Instance.IsPlanting;
+            leftData.pointerCurrentRaycast = PointerPriorityPolicy.Select(m_RaycastResultCache, isPlanting);
             m_RaycastResultCache.Clear();
 
             GetPointerData(kMouseRightId, out var rightData, true);
