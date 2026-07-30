@@ -129,6 +129,21 @@ namespace Prefab.Object.Sun.Script
             return this;
         }
 
+        public Sun Initialize(SunManager.SunType type, Vector3 localPosition)
+        {
+            Reset();
+            _isCollected = false;
+            SetComponentState(true);
+
+            var scale = SunManager.Instance.GetSunScaleBySunType(type);
+            SetSunType(type);
+            SetLocalPosition(localPosition);
+            SetLocalScale(new Vector3(scale, scale, 1f));
+            SetSortingLayer("sun");
+            StartSunLifecycle();
+            return this;
+        }
+
         private bool CanCollect()
         {
             return !_isCollected && _jumpCoroutine == null;
@@ -156,27 +171,9 @@ namespace Prefab.Object.Sun.Script
             _collectCoroutine = StartCoroutine(CollectTo(SunManager.Instance.sunPointPosition));
         }
 
-        public override Entity ToField(Dictionary<string, object> param = null)
+        public override Entity ToField()
         {
-            _isCollected = false;
-            SetComponentState(true);
-
-            if (param != null)
-            {
-                var type = param["sunType"] is SunManager.SunType sunType
-                    ? sunType
-                    : SunManager.SunType.Small;
-                var localPosition = param["LocalPosition"] as Vector3? ?? default;
-                var scale = SunManager.Instance.GetSunScaleBySunType(type);
-
-                SetSunType(type);
-                SetLocalPosition(localPosition);
-                SetLocalScale(new Vector3(scale, scale, 1f));
-            }
-
-            SetSortingLayer("sun");
-            StartSunLifecycle();
-            return this;
+            return Initialize(SunManager.SunType.Small, Vector3.zero);
         }
 
         private void StopRunningCoroutines()
@@ -194,8 +191,5 @@ namespace Prefab.Object.Sun.Script
             coroutine = null;
         }
 
-        public override void AfterCreate(Dictionary<string, object> param)
-        {
-        }
     }
 }

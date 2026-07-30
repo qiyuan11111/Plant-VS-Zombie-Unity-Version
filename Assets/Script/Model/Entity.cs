@@ -28,9 +28,7 @@ namespace Script.Model
             Animator = GetComponentInChildren<Animator>();
         } 
         
-        public abstract void AfterCreate(Dictionary<string, object> param);
-
-        public abstract Entity ToField(Dictionary<string, object> param = null);
+        public abstract Entity ToField();
 
         public Entity DisableAnimation()
         {

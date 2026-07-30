@@ -1,5 +1,3 @@
-using System;
-using Script.Model;
 using Script.Util;
 using UnityEngine;
 
@@ -40,10 +38,10 @@ namespace Script.Manager
         {
             return gameConfigObject.GetPlantByType(objectType);
         }
-        
-        public Plant GetPlantTypeByType(GameConfigObject.PlantType objectType)
+
+        public PlantDefinition GetPlantDefinition(GameConfigObject.PlantType plantType)
         {
-            return gameConfigObject.GetPlantTypeByType(objectType);
+            return gameConfigObject.GetPlantDefinition(plantType);
         }
     
         public GameObject GetZombieByType(GameConfigObject.ZombieType objectType)
@@ -65,16 +63,5 @@ namespace Script.Manager
         {
             return gameConfigObject.GetObjectByType(objectType);
         }
-    
-        public GameObject GetEntityByType(GameConfigObject.EntityType entityType)
-        {
-            return entityType switch
-            {
-                GameConfigObject.PlantType plantType => GetPlantByType(plantType),
-                GameConfigObject.ZombieType zombieType => GetZombieByType(zombieType),
-                _ => throw new Exception("No type of plant and zombie")
-            };
-        }
-
     }
 }

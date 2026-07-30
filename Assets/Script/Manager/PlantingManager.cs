@@ -45,7 +45,7 @@ namespace Script.Manager
 
             if (!card.IsPlantable()) return false;
 
-            var prefab = MainGameManager.Instance.GetPlantByType(card.GetPlantType());
+            var prefab = card.GetPlantDefinition().Prefab;
             if (prefab == null) return false;
 
             _selectedCard = card;
@@ -74,7 +74,7 @@ namespace Script.Manager
             var price = _selectedCard.GetSunPrice();
             if (SunManager.Instance.GetCurrentSunLight() < price) return false;
 
-            var prefab = MainGameManager.Instance.GetPlantByType(_selectedCard.GetPlantType());
+            var prefab = _selectedCard.GetPlantDefinition().Prefab;
             if (prefab == null) return false;
 
             var plantObject = Instantiate(prefab, plantParent, false);

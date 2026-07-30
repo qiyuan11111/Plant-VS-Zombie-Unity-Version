@@ -63,27 +63,13 @@ public class PeaShooterSingle : Plant, IPointerClickHandler
     //     }
     // }
 
-    public override int GetDefaultSunPrice()
-    {
-        return 100;
-    }
-
-    public override float GetDefaultCdTime()
-    {
-        return 0.5f;
-    }
-
     public new void Awake()
     {
         base.Awake();
         // animator = GetComponent<Animator>();
     }
 
-    public override void AfterCreate(Dictionary<string, object> param)
-    {
-    }
-
-    public override Entity ToField(Dictionary<string, object> param = null)
+    public override Entity ToField()
     {
         return this;
     }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using Prefab.Object.Sun.Script;
 using Script.Util;
 using TMPro;
@@ -106,13 +105,7 @@ namespace Script.Manager
             var sunObject = Instantiate(MainGameManager.Instance.GetObjectByType(GameConfigObject.ObjectType.Sun),
                 transform, true);
             var sun = sunObject.GetComponent<Sun>();
-            sun.Reset();
-
-            sun.ToField(new Dictionary<string, object>
-            {
-                { "LocalPosition", transform.InverseTransformPoint(position) },
-                { "sunType", type }
-            });
+            sun.Initialize(type, transform.InverseTransformPoint(position));
         }
 
         public int GetCurrentSunLight()

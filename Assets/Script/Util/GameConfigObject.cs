@@ -1,222 +1,156 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using Script.Model;
 using UnityEngine;
-using Object = Script.Model.Object;
-
-// using Object = UnityEngine.Object;
 
 namespace Script.Util
 {
+    [Serializable]
+    public sealed class PlantDefinition
+    {
+        [SerializeField] private GameConfigObject.PlantType type;
+        [SerializeField] private GameObject prefab;
+        [SerializeField, Min(0)] private int sunPrice;
+        [SerializeField, Min(0f)] private float cooldown;
+
+        public GameConfigObject.PlantType Type => type;
+        public GameObject Prefab => prefab;
+        public int SunPrice => sunPrice;
+        public float Cooldown => cooldown;
+    }
+
     [CreateAssetMenu(fileName = "GameConfigObject", menuName = "GameConfigObject", order = 1)]
     public class GameConfigObject : ScriptableObject
     {
-        [Header("植物")]
-        [Tooltip("阳光菇")]
-        public GameObject SunShroom;
-    
-        [Tooltip("豌豆射手")]
-        public GameObject PeaShooterSingle;
-    
-        [Header("僵尸")]
+        public enum PlantType
+        {
+            SunShroom = 0,
+            PeaShooterSingle = 1
+        }
+
+        public enum ZombieType
+        {
+            ZombieNormal = 0
+        }
+
+        public enum ObjectType
+        {
+            Card = 0,
+            Sun = 1,
+            PlanteShadow = 2
+        }
+
+        public enum BulletType
+        {
+            ProjectilePea = 0
+        }
+
+        public enum ParticleType
+        {
+            PeaSplat = 0
+        }
+
+        [Header("Plants")]
+        [SerializeField] private List<PlantDefinition> plantDefinitions = new();
+
+        [Header("Zombies")]
         public GameObject ZombieNormal;
 
-        [Header("物体")]
-        [Tooltip("卡片")]
+        [Header("Objects")]
         public GameObject Card;
-    
-        [Tooltip("阳光")]
         public GameObject Sun;
-    
-        [Tooltip("植物影子")]
         public GameObject PlanteShadow;
-    
-        [Header("子弹")]
-        [Tooltip("豌豆子弹")]
+
+        [Header("Bullets")]
         public GameObject ProjectilePea;
-    
-        [Header("粒子特效")]
-        [Tooltip("豌豆碎裂")]
+
+        [Header("Particles")]
         public GameObject PeaSplat;
-    
-        public class EntityType : IEqualityComparer<EntityType>
-        {
-            public string Order;
-            public static EntityType None = new("None");
 
-            protected EntityType(string order)
-            {
-                Order = order;
-            }
-            public bool Equals(EntityType x, EntityType y)
-            {
-                return x.Order == y.Order;
-            }
-
-            public int GetHashCode(EntityType obj)
-            {
-                return obj.Order.GetHashCode();
-            }
-        }
-    
-        public class ObjectType : EntityType
-        {
-            public static ObjectType Card = new("Card");
-            public static ObjectType Sun = new("Sun");
-            public static ObjectType PlanteShadow = new("PlanteShadow");
-
-            protected ObjectType(string order) : base(order)
-            {
-            }
-        }
-
-        public class PlantType: EntityType
-        {
-            public static PlantType SunShroom = new("SunShroom");
-            public static PlantType PeaShooterSingle = new("PeaShooterSingle");
-
-            protected PlantType(string order) : base(order)
-            {
-            }
-        }
-    
-        public class ZombieType: EntityType
-        {
-            public static ZombieType ZombieNormal = new("ZombieNormal");
-
-            protected ZombieType(string order) : base(order)
-            {
-            }
-        }
-    
-        public class BulletType: EntityType
-        {
-            public static BulletType ProjectilePea = new("ProjectilePea");
-
-            protected BulletType(string order) : base(order)
-            {
-            }
-        }
-    
-        public class ParticleType: EntityType
-        {
-            public static ParticleType PeaSplat = new("PeaSplat");
-
-            protected ParticleType(string order) : base(order)
-            {
-            }
-        }
-    
-
-        private readonly Dictionary<ObjectType, GameObject> _objectTypeToGameObject = new();
-    
-        private readonly Dictionary<PlantType, GameObject> _plantTypeToGameObject = new();
-    
-        private readonly Dictionary<ZombieType, GameObject> _zombieTypeToGameObject = new();
-
-        private readonly Dictionary<BulletType, GameObject> _bulletTypeToGameObject = new();
-    
-        private readonly Dictionary<ParticleType, GameObject> _particleTypeToGameObject = new();
-        
-        
-        private readonly Dictionary<ObjectType, Object> _objectTypeToObject = new();
-    
-        private readonly Dictionary<PlantType, Plant> _plantTypeToPlant = new();
-    
-        private readonly Dictionary<ZombieType, Zombie> _zombieTypeToZombie = new();
-
-        // private Dictionary<BulletType, GameObject> bulletTypeToGameObject = new();
-    
-        // private Dictionary<ParticleType, GameObject> particleTypeToGameObject = new();
+        private readonly Dictionary<PlantType, PlantDefinition> _plants = new();
+        private readonly Dictionary<ZombieType, GameObject> _zombies = new();
+        private readonly Dictionary<ObjectType, GameObject> _objects = new();
+        private readonly Dictionary<BulletType, GameObject> _bullets = new();
+        private readonly Dictionary<ParticleType, GameObject> _particles = new();
 
         public void Init()
         {
-            _objectTypeToGameObject.Clear();
-            _plantTypeToGameObject.Clear();
-            _zombieTypeToGameObject.Clear();
-            _bulletTypeToGameObject.Clear();
-            _particleTypeToGameObject.Clear();
-            _objectTypeToObject.Clear();
-            _plantTypeToPlant.Clear();
-            _zombieTypeToZombie.Clear();
+            _plants.Clear();
+            _zombies.Clear();
+            _objects.Clear();
+            _bullets.Clear();
+            _particles.Clear();
 
-            InitPlante();
-            InitBullet();
-            InitZombie();
-            InitParticle();
-            InitObject();
-        }
+            foreach (var definition in plantDefinitions)
+            {
+                if (definition == null || definition.Prefab == null)
+                {
+                    Debug.LogError("GameConfigObject contains an incomplete plant definition.", this);
+                    continue;
+                }
 
-        private void InitPlante()
-        {
-            _plantTypeToPlant.Add(PlantType.PeaShooterSingle, PeaShooterSingle.GetComponent<Plant>());
-            _plantTypeToGameObject.Add(PlantType.PeaShooterSingle, PeaShooterSingle);
-            
-            _plantTypeToPlant.Add(PlantType.SunShroom, SunShroom.GetComponent<Plant>());
-            _plantTypeToGameObject.Add(PlantType.SunShroom, SunShroom);
-        }
+                if (_plants.ContainsKey(definition.Type))
+                {
+                    Debug.LogError($"Duplicate plant definition: {definition.Type}.", this);
+                    continue;
+                }
 
-        private void InitBullet()
-        {
-            _bulletTypeToGameObject.Add(BulletType.ProjectilePea, ProjectilePea);
-        }
-    
-        private void InitZombie()
-        {
-            _zombieTypeToGameObject.Add(ZombieType.ZombieNormal, ZombieNormal);
-        }
-    
-        private void InitParticle()
-        {
-            _particleTypeToGameObject.Add(ParticleType.PeaSplat, PeaSplat);
+                _plants.Add(definition.Type, definition);
+            }
+
+            Register(_zombies, ZombieType.ZombieNormal, ZombieNormal);
+            Register(_objects, ObjectType.Card, Card);
+            Register(_objects, ObjectType.Sun, Sun);
+            Register(_objects, ObjectType.PlanteShadow, PlanteShadow);
+            Register(_bullets, BulletType.ProjectilePea, ProjectilePea);
+            Register(_particles, ParticleType.PeaSplat, PeaSplat);
         }
 
-        private void InitObject()
+        public PlantDefinition GetPlantDefinition(PlantType type)
         {
-            _objectTypeToGameObject.Add(ObjectType.Card, Card);
-            _objectTypeToGameObject.Add(ObjectType.Sun, Sun);
-            _objectTypeToGameObject.Add(ObjectType.PlanteShadow, PlanteShadow);
+            return GetRequired(_plants, type);
         }
 
-        public GameObject GetObjectByType(ObjectType objectType)
+        public GameObject GetPlantByType(PlantType type)
         {
-            return _objectTypeToGameObject[objectType];
+            return GetPlantDefinition(type).Prefab;
         }
-    
-        public GameObject GetPlantByType(PlantType objectType)
+
+        public GameObject GetZombieByType(ZombieType type)
         {
-            return _plantTypeToGameObject[objectType];
+            return GetRequired(_zombies, type);
         }
-    
-        public GameObject GetZombieByType(ZombieType objectType)
+
+        public GameObject GetObjectByType(ObjectType type)
         {
-            return _zombieTypeToGameObject[objectType];
+            return GetRequired(_objects, type);
         }
-    
-        public GameObject GetBulletByType(BulletType objectType)
+
+        public GameObject GetBulletByType(BulletType type)
         {
-            return _bulletTypeToGameObject[objectType];
+            return GetRequired(_bullets, type);
         }
-    
-        public GameObject GetParticleByType(ParticleType objectType)
+
+        public GameObject GetParticleByType(ParticleType type)
         {
-            return _particleTypeToGameObject[objectType];
+            return GetRequired(_particles, type);
         }
-        
-        
-        public Object GetObjectTypeByType(ObjectType objectType)
+
+        private void Register<TType>(Dictionary<TType, GameObject> target, TType type, GameObject prefab)
         {
-            return _objectTypeToObject[objectType];
+            if (prefab == null)
+            {
+                Debug.LogError($"No prefab configured for {typeof(TType).Name}.{type}.", this);
+                return;
+            }
+
+            target.Add(type, prefab);
         }
-    
-        public Plant GetPlantTypeByType(PlantType objectType)
+
+        private static TValue GetRequired<TKey, TValue>(Dictionary<TKey, TValue> source, TKey key)
         {
-            return _plantTypeToPlant[objectType];
-        }
-    
-        public Zombie GetZombieTypeByType(ZombieType objectType)
-        {
-            return _zombieTypeToZombie[objectType];
+            if (source.TryGetValue(key, out var value)) return value;
+
+            throw new KeyNotFoundException($"No configuration found for {typeof(TKey).Name}.{key}.");
         }
     }
 }

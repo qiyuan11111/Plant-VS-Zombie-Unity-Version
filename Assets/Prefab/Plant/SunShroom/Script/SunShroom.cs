@@ -30,16 +30,6 @@ namespace Prefab.Plant.SunShroom.Script
             return "SunShroom";
         }
         
-        public override int GetDefaultSunPrice()
-        {
-            return 25;
-        }
-
-        public override float GetDefaultCdTime()
-        {
-            return 5f;
-        }
-
         // public override void SetNormalModeAnimatioSpeed()
         // {
         //     SetAnimationSpeed(1.4f);
@@ -63,12 +53,7 @@ namespace Prefab.Plant.SunShroom.Script
             base.Awake();
         }
 
-        public override void AfterCreate(Dictionary<string, object> param)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Entity ToField(Dictionary<string, object> param = null)
+        public override Entity ToField()
         {
             return this;
         }

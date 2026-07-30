@@ -24,12 +24,7 @@ namespace Prefab.Object.Shadow.Script
             return this;
         }
 
-        public override void AfterCreate(Dictionary<string, object> param)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Entity ToField(Dictionary<string, object> param = null)
+        public override Entity ToField()
         {
             SetSortingLayer("shadow");
             return this;

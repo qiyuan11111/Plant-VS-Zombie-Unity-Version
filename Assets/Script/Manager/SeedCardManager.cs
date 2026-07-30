@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Prefab.Object.SeedCard.Script;
+using System.Collections.Generic;
 using Script.Util;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace Script.Manager
     {
         public static SeedCardManager Instance;
         private readonly List<SeedCard> _seedCards = new();
-        private readonly List<GameConfigObject.PlantType> _plantTypes = new();
+        private readonly List<PlantDefinition> _plantDefinitions = new();
 
         public RectTransform seedBankRectTransform;
         public RectTransform cardGroupRectTransform;
@@ -26,19 +26,12 @@ namespace Script.Manager
         private const float SeedBankWidth = 444;
         private const float CardWidth = 50;
 
-        private SeedCard CreateSeedCard(GameConfigObject.PlantType plantType, string cardName)
+        private SeedCard CreateSeedCard(PlantDefinition plantDefinition, string cardName)
         {
             var seedCard = Instantiate(MainGameManager.Instance.GetObjectByType(GameConfigObject.ObjectType.Card),
                 cardGroupRectTransform, true).GetComponent<SeedCard>();
-            seedCard.AfterCreate(new Dictionary<string, object>
-            {
-                { "entityType", plantType }
-            });
-
-            seedCard.ToField(new Dictionary<string, object>
-            {
-                { "Name", cardName }
-            });
+            seedCard.Initialize(plantDefinition);
+            seedCard.SetName(cardName);
             return seedCard;
         }
 
@@ -46,14 +39,14 @@ namespace Script.Manager
         {
             _seedCards.Clear();
 
-            var num = _plantTypes.Count;
+            var num = _plantDefinitions.Count;
             InitSeedBankSize(num);
 
             for (var i = 0; i < num; i++)
             {
-                var plantType = _plantTypes[i];
+                var plantDefinition = _plantDefinitions[i];
                 var cardName = "CardItem-" + i;
-                _seedCards.Add(CreateSeedCard(plantType, cardName));
+                _seedCards.Add(CreateSeedCard(plantDefinition, cardName));
             }
         }
 
@@ -75,14 +68,14 @@ namespace Script.Manager
 
         private void LoadPlantCard(GameConfigObject.PlantType type)
         {
-            _plantTypes.Add(type);
+            _plantDefinitions.Add(MainGameManager.Instance.GetPlantDefinition(type));
         }
 
         public void LoadPlantCard(int index, GameConfigObject.PlantType type)
         {
-            if (index >= 0 && index < _plantTypes.Count)
+            if (index >= 0 && index < _plantDefinitions.Count)
             {
-                _plantTypes[index] = type;
+                _plantDefinitions[index] = MainGameManager.Instance.GetPlantDefinition(type);
             }
         }
 

@@ -18,29 +18,36 @@ namespace Prefab.Object.SeedCard.Script
         private Image _cdMask;
         private Coroutine _cooldownCoroutine;
 
-        private GameConfigObject.PlantType _entityType;
+        private PlantDefinition _plantDefinition;
 
         public GameConfigObject.PlantType GetPlantType()
         {
-            return _entityType;
+            return _plantDefinition.Type;
         }
-        
-        public SeedCard InitPlantType(GameConfigObject.PlantType type)
+
+        public PlantDefinition GetPlantDefinition()
         {
-            _entityType = type;
+            return _plantDefinition;
+        }
+
+        public SeedCard Initialize(PlantDefinition plantDefinition)
+        {
+            if (plantDefinition == null)
+            {
+                throw new ArgumentNullException(nameof(plantDefinition));
+            }
+
+            _plantDefinition = plantDefinition;
+            CreateCardIcon()
+                .SetPlantable(false)
+                .SetCardSunPrice(plantDefinition.SunPrice)
+                .SetCdTime(plantDefinition.Cooldown)
+                .SetLocalScale(Vector3.one);
+
+            var cardRectTransform = GetComponent<RectTransform>();
+            var anchoredPosition = cardRectTransform.anchoredPosition3D;
+            cardRectTransform.anchoredPosition3D = new Vector3(anchoredPosition.x, anchoredPosition.y, -10f);
             return this;
-        }
-
-        private int GetDefaultSunPrice()
-        {
-            var plant = MainGameManager.Instance.GetPlantTypeByType(_entityType);
-            return plant != null ? plant.GetDefaultSunPrice() : 0;
-        }
-
-        private float GetDefaultCdTime()
-        {
-            var plant = MainGameManager.Instance.GetPlantTypeByType(_entityType);
-            return plant != null ? plant.GetDefaultCdTime() : 0;
         }
 
         public override string GetChineseName()
@@ -95,29 +102,8 @@ namespace Prefab.Object.SeedCard.Script
             _cdMask.GetComponent<Canvas>().sortingLayerName = "cardmask";
         }
 
-        public override void AfterCreate(Dictionary<string, object> param)
+        public override Entity ToField()
         {
-            var plantType = param["entityType"] as GameConfigObject.PlantType;
-            InitPlantType(plantType);
-        }
-
-        public override Entity ToField(Dictionary<string, object> param = null)
-        {
-            CreateCardIcon()
-                .SetPlantable(false)
-                .SetCardSunPrice(GetDefaultSunPrice())
-                .SetCdTime(GetDefaultCdTime())
-                .SetLocalScale(new Vector3(1, 1, 1));
-            
-            if (param != null)
-            {
-                var name = param["Name"] as string;
-                SetName(name);
-            }
-            
-            var cardRectTransform = GetComponent<RectTransform>();
-            var anchoredPosition = cardRectTransform.anchoredPosition3D;
-            cardRectTransform.anchoredPosition3D = new Vector3(anchoredPosition.x, anchoredPosition.y, -10);
             return this;
         }
         
@@ -229,7 +215,7 @@ namespace Prefab.Object.SeedCard.Script
 
         public SeedCard CreateCardIcon()
         {
-            var entity = Instantiate(MainGameManager.Instance.GetPlantByType(GetPlantType()),
+            var entity = Instantiate(_plantDefinition.Prefab,
                 Transform, true).GetComponent<Entity>();
             _plant = entity.ToField().SetCardIconMode();
             return this;
