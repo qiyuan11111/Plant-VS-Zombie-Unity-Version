@@ -39,6 +39,7 @@ namespace Script.Manager
         {
             if (_gridPreview == null || grid == null) return;
 
+            _gridPreview.SetSortingLayer("plant-" + grid.Point.y);
             _gridPreview.SetLocalPosition(grid.Position);
             _gridPreview.gameObject.SetActive(true);
         }

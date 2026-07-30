@@ -1,5 +1,4 @@
 ﻿using System;
-using Script.Manager;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -8,15 +7,16 @@ namespace Script
     public class SpriteGroup : SpriteImage
     {
         private static readonly int ColorProperty = Shader.PropertyToID("_Color");
-        private Collider2D[] _childCollider2D;
+        private Collider2D[] _childColliders = Array.Empty<Collider2D>();
+        private SpriteRenderer[] _childSpriteRenderers = Array.Empty<SpriteRenderer>();
+        private SpriteTransform[] _childSpriteTransforms = Array.Empty<SpriteTransform>();
         private MaterialPropertyBlock _materialProperties;
         private SortingGroup _sortingGroup;
-        // public Animator[] childAnimator;
-        
+
         public SpriteGroup SetTransparentMaterial()
         {
             _materialProperties ??= new MaterialPropertyBlock();
-            foreach (var spriteRenderer in GetComponentsInChildren<SpriteRenderer>())
+            foreach (var spriteRenderer in _childSpriteRenderers)
             {
                 spriteRenderer.GetPropertyBlock(_materialProperties);
                 _materialProperties.SetColor(ColorProperty, new Color(1, 1, 1, 0.5f));
@@ -30,26 +30,16 @@ namespace Script
         {
             if (CanUseSortingGroup(layerName))
             {
-                if (_sortingGroup == null)
-                {
-                    _sortingGroup = GetComponent<SortingGroup>();
-                    if (_sortingGroup == null)
-                    {
-                        _sortingGroup = gameObject.AddComponent<SortingGroup>();
-                    }
-                }
+                EnsureSortingGroup();
 
                 _sortingGroup.sortingLayerName = layerName;
-                _sortingGroup.sortingOrder = (int)SpriteManager.Instance.GetSortingLayerNewOrder(layerName, 1);
+                _sortingGroup.sortingOrder = 0;
                 return this;
             }
 
-            var spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-            var point = SpriteManager.Instance.GetSortingLayerNewOrder(layerName, spriteRenderers.Length);
-            foreach (var spriteRenderer in spriteRenderers)
+            foreach (var spriteRenderer in _childSpriteRenderers)
             {
                 spriteRenderer.sortingLayerName = layerName;
-                spriteRenderer.sortingOrder += (int)point;
             }
         
             return this;
@@ -63,9 +53,10 @@ namespace Script
         
         public SpriteGroup SetLayer(string layerName)
         {
-            foreach (var sprite in GetComponentsInChildren<SpriteTransform>())
+            var layer = LayerMask.NameToLayer(layerName);
+            foreach (var sprite in _childSpriteTransforms)
             {
-                sprite.gameObject.layer = LayerMask.NameToLayer(layerName);
+                sprite.gameObject.layer = layer;
             }
 
             return this;
@@ -73,17 +64,38 @@ namespace Script
         
         public SpriteGroup SetColliderState(bool state)
         {
-            foreach (var _collider in _childCollider2D)
+            foreach (var childCollider in _childColliders)
             {
-                _collider.enabled = state;
+                childCollider.enabled = state;
             }
 
             return this;
         }
 
+        public void ApplyAndDisableSpriteTransforms()
+        {
+            foreach (var spriteTransform in _childSpriteTransforms)
+            {
+                spriteTransform.ApplyAndDisable();
+            }
+        }
+
         private void Awake()
         {
-            _childCollider2D = GetComponentsInChildren<Collider2D>();
+            _childColliders = GetComponentsInChildren<Collider2D>(true);
+            _childSpriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+            _childSpriteTransforms = GetComponentsInChildren<SpriteTransform>(true);
+        }
+
+        private void EnsureSortingGroup()
+        {
+            if (_sortingGroup != null) return;
+
+            _sortingGroup = GetComponent<SortingGroup>();
+            if (_sortingGroup == null)
+            {
+                _sortingGroup = gameObject.AddComponent<SortingGroup>();
+            }
         }
     }
 }

@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using Script.Manager;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Script.Model
 {
@@ -11,10 +8,6 @@ namespace Script.Model
         private long _timeId;
         protected Transform Transform;
     
-        [SerializeField, Tooltip("Sub sprite transforms under this object")]
-        private SpriteTransform[] childSpriteTransforms;
-        public IReadOnlyList<SpriteTransform> ChildSpriteTransforms => childSpriteTransforms;
-
         public virtual Vector3 SpritePosition { get; set; }
 
         public SpriteGroup ComponentRoot { get; private set; }
@@ -34,7 +27,6 @@ namespace Script.Model
         public virtual Sprite Reset()
         {
             _timeId = DateTime.Now.ToUniversalTime().Ticks;
-            RefreshChildTransforms();
             CacheSpriteGroup();
             return this;
         }
@@ -43,7 +35,6 @@ namespace Script.Model
         {
             Transform = transform;
             CacheSpriteGroup();
-            RefreshChildTransforms();
         }
 
         private void CacheSpriteGroup()
@@ -51,17 +42,6 @@ namespace Script.Model
             ComponentRoot = GetComponent<SpriteGroup>();
         }
 
-        private void RefreshChildTransforms()
-        {
-            var children = new List<SpriteTransform>();
-            foreach (Transform child in Transform)
-            {
-                var childTransforms = child.GetComponentsInChildren<SpriteTransform>(true);
-                children.AddRange(childTransforms);
-            }
-            childSpriteTransforms = children.ToArray();
-        }
-        
         /**********/
     
         // 设置所有材质为半透明

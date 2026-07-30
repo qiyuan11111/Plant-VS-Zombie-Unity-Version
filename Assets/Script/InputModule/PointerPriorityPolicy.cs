@@ -1,0 +1,34 @@
+using System.Collections.Generic;
+using UnityEngine.EventSystems;
+
+namespace Script.InputModule
+{
+    internal static class PointerPriorityPolicy
+    {
+        private const string SunTag = "Sun";
+
+        public static RaycastResult Select(IReadOnlyList<RaycastResult> results, bool prioritizeSun)
+        {
+            var firstNormalResult = default(RaycastResult);
+
+            for (var i = 0; i < results.Count; i++)
+            {
+                var result = results[i];
+                if (result.gameObject == null) continue;
+
+                if (result.gameObject.CompareTag(SunTag))
+                {
+                    if (prioritizeSun) return result;
+                    continue;
+                }
+
+                if (firstNormalResult.gameObject == null)
+                {
+                    firstNormalResult = result;
+                }
+            }
+
+            return firstNormalResult;
+        }
+    }
+}

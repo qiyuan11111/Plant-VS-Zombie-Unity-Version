@@ -129,8 +129,19 @@ namespace Script
 
         private void Update()
         {
+            Apply();
+        }
+
+        public void Apply()
+        {
             ApplyMaterialChanges();
             ApplyPositionChange();
+        }
+
+        public void ApplyAndDisable()
+        {
+            Apply();
+            enabled = false;
         }
 
         private void ApplyMaterialChanges()

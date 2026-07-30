@@ -39,6 +39,8 @@ namespace Script.Model
                 Animator.enabled = false;
             }
 
+            GetComponentRoot().ApplyAndDisableSpriteTransforms();
+
             return this;
         }
 
@@ -116,7 +118,6 @@ namespace Script.Model
         {
             GetComponentRoot()
                 .SetTransparentMaterial()
-                .SetSortingLayer("plant")
                 .SetColliderState(false);
             
             this.SetLocalScale(new Vector3(1.025f, 1.025f, 1f))
