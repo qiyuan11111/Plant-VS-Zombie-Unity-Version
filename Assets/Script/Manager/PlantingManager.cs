@@ -87,19 +87,19 @@ namespace Script.Manager
             }
 
             var entity = plant.ToField();
-            var character = entity as Character;
-            if (character == null)
+            if (entity != plant)
             {
                 Destroy(plantObject);
                 return false;
             }
 
-            character.SetPlaceMode(_hoveredGrid);
-            if (!_hoveredGrid.TrySetCharacter(character))
+            if (!_hoveredGrid.TryOccupy(plant))
             {
                 Destroy(plantObject);
                 return false;
             }
+
+            plant.PlaceOn(_hoveredGrid);
 
             var card = _selectedCard;
             EndSession();

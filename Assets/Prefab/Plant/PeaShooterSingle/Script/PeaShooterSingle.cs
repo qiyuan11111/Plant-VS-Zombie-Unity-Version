@@ -63,12 +63,6 @@ public class PeaShooterSingle : Plant, IPointerClickHandler
     //     }
     // }
 
-    public new void Awake()
-    {
-        base.Awake();
-        // animator = GetComponent<Animator>();
-    }
-
     public override Entity ToField()
     {
         return this;

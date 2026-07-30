@@ -1,13 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
-using Prefab.Object.Sun.Script;
-using Script.Manager;
-using Script.Util;
 using UnityEngine;
 using UnityEngine.UI;
-using Shadow = Prefab.Object.Shadow.Script.Shadow;
-
-// using UnityEngine.UI;
 
 namespace Script.Model
 {
@@ -22,7 +14,7 @@ namespace Script.Model
         
         
 
-        protected new void Awake()
+        protected sealed override void Awake()
         {
             base.Awake();
             Animator = GetComponentInChildren<Animator>();
@@ -126,35 +118,6 @@ namespace Script.Model
             return this;
         }
         
-        
-        public virtual Entity SetPlaceMode(GridManager.Grid grid)
-        {
-            GetComponentRoot()
-                .SetSortingLayer("plant-" + grid.Point.y)
-                .SetColliderState(true);
-            
-            this.SetLocalScale(new Vector3(1.025f, 1.025f, 1f))
-                .SetLocalPosition(new Vector3(grid.Position.x, grid.Position.y, 10f));
-            
-            this.SetName(GetEnglishName() + "-" + grid.Point.x + "-" + grid.Point.y)
-                .SetShadow();
-            return this;
-        }
-        
-        public Entity SetShadow()
-        {
-            var plant = (Plant)this;
-            var shadowPosition = plant.shadowTransform != null
-                ? plant.shadowTransform.position
-                : Transform.TransformPoint(new Vector3(0f, -17f, 0f));
-            var shadowObject = Instantiate(MainGameManager.Instance.GetObjectByType(GameConfigObject.ObjectType.PlanteShadow), shadowPosition, Quaternion.identity, Transform);
-            var shadow = shadowObject.GetComponent<Shadow>();
-
-            shadow.SetSize(0.7f)
-                .ToField();
-            
-            return this;
-        }
         
     }
 }

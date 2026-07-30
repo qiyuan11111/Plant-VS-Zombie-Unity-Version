@@ -19,13 +19,5 @@ namespace Script.Model
             return this;
         }
 
-        public override Entity SetPlaceMode(GridManager.Grid grid)
-        {
-            base.SetPlaceMode(grid);
-            
-            this.SetRow(grid.Point.y)
-                .SetHeight(0f);
-            return this;
-        }
     }
 }

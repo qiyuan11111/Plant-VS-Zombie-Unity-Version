@@ -126,44 +126,38 @@ namespace Script.Manager
             /// </summary>
             public Vector2 Position;
 
-            private bool _isOccupied;
+            private Plant _plant;
+
+            public Plant Occupant => _plant;
 
             public bool IsOccupied()
             {
-                return _isOccupied;
+                return _plant != null;
             }
 
-            private Grid SetOccupied(bool isOccupied)
+            public bool TryOccupy(Plant plant)
             {
-                _isOccupied = isOccupied;
-                return this;
-            }
+                if (IsOccupied() || plant == null) return false;
 
-            // private Entity Plante;
-            private Character _plant;
-
-            public Character GetCharacter()
-            {
-                return _plant;
-            }
-
-            public bool TrySetCharacter(Character character)
-            {
-                if (IsOccupied() || character == null) return false;
-
-                SetOccupied(true);
-                _plant = character;
+                _plant = plant;
 
                 return true;
             }
 
-            public static Grid None = new Grid(new Vector2Int(-1, -1), new Vector2(-1, -1));
-
-            public Grid(Vector2Int point, Vector2 position, bool isOccupied = false)
+            public bool TryRelease(Plant plant)
             {
-                this.Point = point;
-                this.Position = position;
-                this._isOccupied = isOccupied;
+                if (_plant != plant) return false;
+
+                _plant = null;
+                return true;
+            }
+
+            public static readonly Grid None = new(new Vector2Int(-1, -1), new Vector2(-1, -1));
+
+            public Grid(Vector2Int point, Vector2 position)
+            {
+                Point = point;
+                Position = position;
             }
         }
     }

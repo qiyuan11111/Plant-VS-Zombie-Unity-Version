@@ -1,11 +1,9 @@
-using System;
 using UnityEngine;
 
 namespace Script.Model
 {
     public abstract class Sprite : MonoBehaviour
     {
-        private long _timeId;
         protected Transform Transform;
     
         public virtual Vector3 SpritePosition { get; set; }
@@ -24,14 +22,13 @@ namespace Script.Model
             return ComponentRoot;
         }
 
-        public virtual Sprite Reset()
+        public virtual Sprite ResetRuntimeState()
         {
-            _timeId = DateTime.Now.ToUniversalTime().Ticks;
             CacheSpriteGroup();
             return this;
         }
 
-        protected void Awake()
+        protected virtual void Awake()
         {
             Transform = transform;
             CacheSpriteGroup();

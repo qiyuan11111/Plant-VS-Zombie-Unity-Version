@@ -48,11 +48,6 @@ namespace Prefab.Plant.SunShroom.Script
         //     SunManager.instance.ProduceSun(transform.Find("SunShroom_head").position, Sun.GetSunTypeByType(type));
         // }
     
-        public new void Awake()
-        {
-            base.Awake();
-        }
-
         public override Entity ToField()
         {
             return this;

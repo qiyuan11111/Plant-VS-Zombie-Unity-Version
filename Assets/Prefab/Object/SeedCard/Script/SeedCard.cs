@@ -29,6 +29,7 @@ namespace Prefab.Object.SeedCard.Script
         public SeedCard Initialize(PlantDefinition plantDefinition)
         {
             _plantDefinition = plantDefinition ?? throw new ArgumentNullException(nameof(plantDefinition));
+            ResolveView();
             view.Initialize(plantDefinition);
 
             SetLocalScale(Vector3.one);
@@ -105,9 +106,8 @@ namespace Prefab.Object.SeedCard.Script
             }
         }
 
-        private new void Awake()
+        private void ResolveView()
         {
-            base.Awake();
             if (view == null) view = GetComponent<SeedCardView>();
             if (view == null) view = gameObject.AddComponent<SeedCardView>();
         }

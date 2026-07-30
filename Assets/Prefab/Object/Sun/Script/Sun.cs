@@ -25,11 +25,6 @@ namespace Prefab.Object.Sun.Script
         private Coroutine _collectCoroutine;
         private bool _isCollected;
 
-        private new void Awake()
-        {
-            base.Awake();
-        }
-
         public override string GetChineseName()
         {
             return "阳光";
@@ -131,7 +126,7 @@ namespace Prefab.Object.Sun.Script
 
         public Sun Initialize(SunManager.SunType type, Vector3 localPosition)
         {
-            Reset();
+            ResetRuntimeState();
             _isCollected = false;
             SetComponentState(true);
 
