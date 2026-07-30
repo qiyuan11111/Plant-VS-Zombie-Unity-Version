@@ -1,6 +1,5 @@
 using Prefab.Object.SeedCard.Script;
 using Script.Model;
-using Script.Util;
 using UnityEngine;
 
 namespace Script.Manager
@@ -24,6 +23,7 @@ namespace Script.Manager
         private SeedCard _selectedCard;
         private GridManager.Grid _hoveredGrid;
         private PlantingPreview _preview;
+        private bool _isConfigured;
 
         public bool IsPlanting => _state == PlantingState.Holding;
 
@@ -34,7 +34,7 @@ namespace Script.Manager
 
         public bool TryBegin(SeedCard card)
         {
-            if (card == null) return false;
+            if (!_isConfigured || card == null) return false;
 
             // Preserve the previous interaction: clicking a card while holding a plant cancels it.
             if (IsPlanting)
@@ -43,9 +43,9 @@ namespace Script.Manager
                 return false;
             }
 
-            if (!card.IsPlantable()) return false;
+            if (!card.CanPlant) return false;
 
-            var prefab = card.GetPlantDefinition().Prefab;
+            var prefab = card.Definition.Prefab;
             if (prefab == null) return false;
 
             _selectedCard = card;
@@ -69,12 +69,13 @@ namespace Script.Manager
 
         public bool TryPlace()
         {
-            if (!IsPlanting || _selectedCard == null || !IsValidGrid(_hoveredGrid)) return false;
+            if (!_isConfigured || !IsPlanting || _selectedCard == null || !IsValidGrid(_hoveredGrid))
+                return false;
 
-            var price = _selectedCard.GetSunPrice();
+            var price = _selectedCard.SunPrice;
             if (SunManager.Instance.GetCurrentSunLight() < price) return false;
 
-            var prefab = _selectedCard.GetPlantDefinition().Prefab;
+            var prefab = _selectedCard.Definition.Prefab;
             if (prefab == null) return false;
 
             var plantObject = Instantiate(prefab, plantParent, false);
@@ -147,11 +148,18 @@ namespace Script.Manager
         private void Awake()
         {
             Instance = this;
-            if (plantParent == null)
-            {
-                var plantObject = GameObject.Find("/UI/Grid/Plant");
-                if (plantObject != null) plantParent = plantObject.transform;
-            }
+            _isConfigured = ValidateReferences();
+            enabled = _isConfigured;
+        }
+
+        private bool ValidateReferences()
+        {
+            if (plantParent != null) return true;
+
+            Debug.LogError(
+                $"{nameof(PlantingManager)} requires {nameof(plantParent)} to be assigned in the Inspector.",
+                this);
+            return false;
         }
 
         private void Update()

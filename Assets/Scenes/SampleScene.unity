@@ -1310,6 +1310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 053a45bba8b64b168996738fad061f66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plantParent: {fileID: 1987009393}
 --- !u!114 &1206753454
 MonoBehaviour:
   m_ObjectHideFlags: 0

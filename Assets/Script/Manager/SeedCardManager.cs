@@ -11,15 +11,17 @@ namespace Script.Manager
         public static SeedCardManager Instance;
         private readonly List<SeedCard> _seedCards = new();
         private readonly List<PlantDefinition> _plantDefinitions = new();
+        private int _currentSunlight;
 
         public RectTransform seedBankRectTransform;
         public RectTransform cardGroupRectTransform;
 
-        public void UpdateCardGroupState()
+        public void SetCurrentSunlight(int sunlight)
         {
+            _currentSunlight = sunlight;
             foreach (var seedCard in _seedCards)
             {
-                seedCard.UpdateState();
+                seedCard.SetCurrentSunlight(sunlight);
             }
         }
 
@@ -31,6 +33,7 @@ namespace Script.Manager
             var seedCard = Instantiate(MainGameManager.Instance.GetObjectByType(GameConfigObject.ObjectType.Card),
                 cardGroupRectTransform, true).GetComponent<SeedCard>();
             seedCard.Initialize(plantDefinition);
+            seedCard.SetCurrentSunlight(_currentSunlight);
             seedCard.SetName(cardName);
             return seedCard;
         }
@@ -95,7 +98,7 @@ namespace Script.Manager
         {
             foreach (var seedCard in _seedCards)
             {
-                seedCard.StartCooldown(seedCard.GetCdTime());
+                seedCard.StartCooldown();
             }
         }
 
@@ -109,6 +112,11 @@ namespace Script.Manager
 
         private void Start()
         {
+            if (SunManager.Instance != null)
+            {
+                _currentSunlight = SunManager.Instance.GetCurrentSunLight();
+            }
+
             LoadCardGroup();
             StartInitialCooldown();
         }

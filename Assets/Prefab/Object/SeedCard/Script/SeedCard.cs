@@ -1,52 +1,42 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Script.Manager;
 using Script.Model;
 using Script.Util;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Prefab.Object.SeedCard.Script
 {
     public class SeedCard : global::Script.Model.Object, IToField, IPointerClickHandler
     {
-        private const float CooldownRefreshInterval = 0.05f;
+        [SerializeField] private SeedCardView view;
 
-        private Image _lackOfSunMask;
-        private Image _cdMask;
-        private Coroutine _cooldownCoroutine;
-
+        private readonly SeedCardCooldown _cooldown = new();
         private PlantDefinition _plantDefinition;
+        private int _currentSunlight;
+        private bool _isSelected;
 
-        public GameConfigObject.PlantType GetPlantType()
-        {
-            return _plantDefinition.Type;
-        }
-
-        public PlantDefinition GetPlantDefinition()
-        {
-            return _plantDefinition;
-        }
+        public PlantDefinition Definition => _plantDefinition;
+        public int SunPrice => _plantDefinition.SunPrice;
+        public float Cooldown => _plantDefinition.Cooldown;
+        public float CooldownRemaining => _cooldown.Remaining;
+        public bool CanPlant =>
+            _plantDefinition != null &&
+            !_isSelected &&
+            _cooldown.IsReady &&
+            _currentSunlight >= SunPrice;
 
         public SeedCard Initialize(PlantDefinition plantDefinition)
         {
-            if (plantDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(plantDefinition));
-            }
+            _plantDefinition = plantDefinition ?? throw new ArgumentNullException(nameof(plantDefinition));
+            view.Initialize(plantDefinition);
 
-            _plantDefinition = plantDefinition;
-            CreateCardIcon()
-                .SetPlantable(false)
-                .SetCardSunPrice(plantDefinition.SunPrice)
-                .SetCdTime(plantDefinition.Cooldown)
-                .SetLocalScale(Vector3.one);
-
+            SetLocalScale(Vector3.one);
             var cardRectTransform = GetComponent<RectTransform>();
-            var anchoredPosition = cardRectTransform.anchoredPosition3D;
-            cardRectTransform.anchoredPosition3D = new Vector3(anchoredPosition.x, anchoredPosition.y, -10f);
+            var position = cardRectTransform.anchoredPosition3D;
+            cardRectTransform.anchoredPosition3D = new Vector3(position.x, position.y, -10f);
+
+            RefreshView();
             return this;
         }
 
@@ -60,217 +50,47 @@ namespace Prefab.Object.SeedCard.Script
             return "Card";
         }
 
-        public SeedCard SetCdMaskFill(float fillAmount)
-        {
-            _cdMask.fillAmount = fillAmount;
-            return this;
-        }
-
-        public SeedCard SetCdMaskColor(Color color)
-        {
-            _cdMask.color = color;
-            return this;
-        }
-
-        public SeedCard SetLackOfSunMaskColor(Color color)
-        {
-            _lackOfSunMask.color = color;
-            return this;
-        }
-
-        public Text _priceText;
-
-        public SeedCard SetPriceText(string priceText)
-        {
-            _priceText.text = priceText;
-            return this;
-        }
-
-        public string GetPriceText()
-        {
-            return _priceText.text;
-        }
-
-        private new void Awake()
-        {
-            base.Awake();
-            _lackOfSunMask = Transform.Find("NoSunMask").GetComponent<Image>();
-            _cdMask = Transform.Find("CDMask").GetComponent<Image>();
-            _priceText = Transform.Find("Price").GetComponent<Text>();
-
-            _lackOfSunMask.GetComponent<Canvas>().sortingLayerName = "cardmask";
-            _cdMask.GetComponent<Canvas>().sortingLayerName = "cardmask";
-        }
-
         public override Entity ToField()
         {
             return this;
         }
-        
-        
-        
-        
-        
-        /*******/
-        private Entity _plant;
 
-        // private bool _dirty = false;
-
-        private float _cdTime;
-
-        public SeedCard SetCdTime(float time)
+        public void SetCurrentSunlight(int sunlight)
         {
-            _cdTime = time;
-            return this;
+            if (_currentSunlight == sunlight) return;
+
+            _currentSunlight = sunlight;
+            RefreshView();
         }
 
-        public float GetCdTime()
+        public void SetSelected(bool selected)
         {
-            return _cdTime;
+            if (_isSelected == selected) return;
+
+            _isSelected = selected;
+            RefreshView();
         }
 
-        private int _sunPrice;
-
-        public SeedCard SetCardSunPrice(int price)
+        public void StartCooldown()
         {
-            _sunPrice = price;
-            SetPriceText(price.ToString());
-            return this;
-        }
-
-        public int GetSunPrice()
-        {
-            return _sunPrice;
-        }
-
-        private float _remainCdTime;
-
-        public SeedCard SetRemainCdTime(float time)
-        {
-            _remainCdTime = time;
-            var cooldown = GetCdTime();
-            var fillAmount = cooldown > 0f
-                ? Mathf.Clamp01(Math.Max(time, 0f) / cooldown)
-                : 0f;
-            SetCdMaskFill(fillAmount);
-            UpdateState();
-            return this;
-        }
-
-        public float GetRemainCdTime()
-        {
-            return _remainCdTime;
-        }
-
-        private bool _plantable;
-
-        public SeedCard SetPlantable(bool able)
-        {
-            _plantable = able;
-            return this;
-        }
-
-        public bool IsPlantable()
-        {
-            return _plantable;
-        }
-
-        private IEnumerator Cooldown(float duration)
-        {
-            var finishTime = Time.time + duration;
-            var wait = new WaitForSeconds(CooldownRefreshInterval);
-            SetRemainCdTime(duration);
-
-            while (Time.time < finishTime)
-            {
-                SetRemainCdTime(finishTime - Time.time);
-                yield return wait;
-            }
-
-            SetRemainCdTime(0f);
-            _cooldownCoroutine = null;
-        }
-
-        public void StartCooldown(float duration)
-        {
-            if (_cooldownCoroutine != null)
-            {
-                StopCoroutine(_cooldownCoroutine);
-                _cooldownCoroutine = null;
-            }
-
-            if (duration <= 0f)
-            {
-                SetRemainCdTime(0f);
-                return;
-            }
-
-            _cooldownCoroutine = StartCoroutine(Cooldown(duration));
-        }
-
-        // private GameConfigObject.PlantType GetPlantType()
-        // {
-        //     return GetEntity<SeedCard>().GetPlantType();
-        // }
-
-        public SeedCard CreateCardIcon()
-        {
-            var entity = Instantiate(_plantDefinition.Prefab,
-                Transform, true).GetComponent<Entity>();
-            _plant = entity.ToField().SetCardIconMode();
-            return this;
+            _cooldown.Start(Cooldown);
+            RefreshView();
         }
 
         public void OnChoose()
         {
-            UpdateState();
-            SetCdMaskFill(1);
+            SetSelected(true);
         }
 
         public void AfterPlace()
         {
-            StartCooldown(GetCdTime());
+            _isSelected = false;
+            StartCooldown();
         }
-
 
         public void CancelChoose()
         {
-            SetCdMaskFill(0);
-            UpdateState();
-        }
-
-        private void UpdateMaskColor(Color lackOfSunMaskColor, Color cdMaskColor)
-        {
-            this.SetLackOfSunMaskColor(lackOfSunMaskColor)
-                .SetCdMaskColor(cdMaskColor);
-        }
-
-        public void UpdateState()
-        {
-            var currentSunlight = SunManager.Instance.GetCurrentSunLight();
-            var isSelected = PlantingManager.Instance != null && PlantingManager.Instance.IsSelected(this);
-
-            if (GetRemainCdTime() <= 0 && !isSelected)
-            {
-                if (currentSunlight < GetSunPrice())
-                {
-                    SetPlantable(false);
-                    UpdateMaskColor(new Color(0f, 0f, 0f, 0.47f),
-                        new Color(0f, 0f, 0f, 0f));
-                }
-                else
-                {
-                    SetPlantable(true);
-                    UpdateMaskColor(new Color(0f, 0f, 0f, 0f),
-                        new Color(0f, 0f, 0f, 0f));
-                }
-            }
-            else
-            {
-                SetPlantable(false);
-                UpdateMaskColor(new Color(0f, 0f, 0f, 0.47f),
-                    new Color(0f, 0f, 0f, 0.47f));
-            }
+            SetSelected(false);
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -283,6 +103,35 @@ namespace Prefab.Object.SeedCard.Script
             {
                 PlantingManager.Instance.Cancel();
             }
+        }
+
+        private new void Awake()
+        {
+            base.Awake();
+            if (view == null) view = GetComponent<SeedCardView>();
+            if (view == null) view = gameObject.AddComponent<SeedCardView>();
+        }
+
+        private void Update()
+        {
+            if (_cooldown.Tick(Time.deltaTime)) RefreshView();
+        }
+
+        private void RefreshView()
+        {
+            if (_plantDefinition == null || view == null) return;
+
+            var state = GetVisualState();
+            view.Render(state, _cooldown.Progress);
+        }
+
+        private SeedCardVisualState GetVisualState()
+        {
+            if (_isSelected) return SeedCardVisualState.Selected;
+            if (!_cooldown.IsReady) return SeedCardVisualState.CoolingDown;
+            return _currentSunlight < SunPrice
+                ? SeedCardVisualState.InsufficientSun
+                : SeedCardVisualState.Ready;
         }
     }
 }

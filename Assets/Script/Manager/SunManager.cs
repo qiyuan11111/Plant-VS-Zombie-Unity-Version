@@ -9,9 +9,6 @@ namespace Script.Manager
 {
     public class SunManager : MonoBehaviour
     {
-        private const string SunPointPath = "/UI/SeedBank/SunPoint";
-        private const string SunLightTextPath = "/UI/SeedBank/SunLight";
-
         public static SunManager Instance;
 
         [Header("Sun References")]
@@ -28,6 +25,7 @@ namespace Script.Manager
         public Vector3 sunPointPosition;
 
         private int _currentSunLight;
+        private bool _isConfigured;
 
         private int CurrentSunLight
         {
@@ -42,7 +40,7 @@ namespace Script.Manager
 
                 if (SeedCardManager.Instance != null)
                 {
-                    SeedCardManager.Instance.UpdateCardGroupState();
+                    SeedCardManager.Instance.SetCurrentSunlight(_currentSunLight);
                 }
             }
         }
@@ -131,42 +129,34 @@ namespace Script.Manager
         private void Awake()
         {
             Instance = this;
-            ResolveReferences();
-            sunPointPosition = sunPoint != null
-                ? transform.InverseTransformPoint(sunPoint.position)
-                : Vector3.zero;
+            _isConfigured = ValidateReferences();
+            enabled = _isConfigured;
+            if (!_isConfigured) return;
+
+            sunPointPosition = transform.InverseTransformPoint(sunPoint.position);
             SetCurrentSunLight(100);
         }
 
-        private void ResolveReferences()
+        private bool ValidateReferences()
         {
+            var isValid = true;
             if (sunPoint == null)
             {
-                var sunPointObject = GameObject.Find(SunPointPath);
-                if (sunPointObject != null)
-                {
-                    sunPoint = sunPointObject.transform;
-                }
+                Debug.LogError(
+                    $"{nameof(SunManager)} requires {nameof(sunPoint)} to be assigned in the Inspector.",
+                    this);
+                isValid = false;
             }
 
             if (sunLightText == null)
             {
-                var sunLightTextObject = GameObject.Find(SunLightTextPath);
-                if (sunLightTextObject != null)
-                {
-                    sunLightText = sunLightTextObject.GetComponent<TextMeshProUGUI>();
-                }
+                Debug.LogError(
+                    $"{nameof(SunManager)} requires {nameof(sunLightText)} to be assigned in the Inspector.",
+                    this);
+                isValid = false;
             }
 
-            if (sunPoint == null)
-            {
-                Debug.LogError($"SunManager cannot find sun collection point at {SunPointPath}.", this);
-            }
-
-            if (sunLightText == null)
-            {
-                Debug.LogError($"SunManager cannot find sunlight text at {SunLightTextPath}.", this);
-            }
+            return isValid;
         }
 
         private void Start()
