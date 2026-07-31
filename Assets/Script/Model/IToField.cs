@@ -1,9 +1,0 @@
-﻿using System.Collections.Generic;
-
-namespace Script.Model
-{
-    public interface IToField 
-    {
-        Entity ToField();
-    }
-}
