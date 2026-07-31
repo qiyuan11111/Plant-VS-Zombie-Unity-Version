@@ -58,7 +58,13 @@ namespace Script.Presentation
         private static void Freeze(Entity entity)
         {
             var animator = entity.GetComponentInChildren<Animator>();
-            if (animator != null) animator.enabled = false;
+            if (animator != null)
+            {
+                // Presentation instances are frozen immediately after Instantiate,
+                // before Animator has had a frame to populate SpriteTransform values.
+                animator.Update(0f);
+                animator.enabled = false;
+            }
 
             var image = entity.GetComponent<Image>();
             if (image != null) image.raycastTarget = false;

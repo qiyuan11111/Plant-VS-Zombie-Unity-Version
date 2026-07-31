@@ -40,6 +40,8 @@ namespace Script
         public float alphaCoef;
 
         public bool updatePosition;
+        public bool updateHierarchyScale;
+        public Vector2 hierarchyScaleReference;
 
         private Transform _cachedTransform;
         private SpriteRenderer _spriteRenderer;
@@ -61,12 +63,9 @@ namespace Script
 
         private void Awake()
         {
-            _cachedTransform = transform;
-            hasMaterial = InitializeMaterial();
-            RestoreLegacyMaterialDefaults();
-            InitializePositionOffset();
+            EnsureInitialized();
 
-            if (!hasMaterial && !updatePosition)
+            if (!hasMaterial && !updatePosition && !updateHierarchyScale)
             {
                 enabled = false;
             }
@@ -98,13 +97,24 @@ namespace Script
         private void InitializePositionOffset()
         {
             var parent = _cachedTransform.parent;
-            if (parent != null && parent.TryGetComponent<Sprite>(out var sprite))
+            while (parent != null)
             {
-                _positionOffset = sprite.SpritePosition;
-            }
-            else
-            {
-                _positionOffset = Vector3.zero;
+                if (parent.TryGetComponent<Sprite>(out var sprite))
+                {
+                    _positionOffset = sprite.SpritePosition;
+                    return;
+                }
+
+                // An animated parent establishes a local animation coordinate system.
+                // Pure organizational transforms can be skipped safely, but crossing
+                // another SpriteTransform would apply the plant offset more than once.
+                if (parent.TryGetComponent<SpriteTransform>(out var animatedParent) &&
+                    animatedParent.updatePosition)
+                {
+                    return;
+                }
+
+                parent = parent.parent;
             }
         }
 
@@ -134,8 +144,36 @@ namespace Script
 
         public void Apply()
         {
+            EnsureInitialized();
             ApplyMaterialChanges();
             ApplyPositionChange();
+            ApplyHierarchyScaleChange();
+        }
+
+        private void EnsureInitialized()
+        {
+            if (_cachedTransform != null) return;
+
+            _cachedTransform = transform;
+            hasMaterial = InitializeMaterial();
+            RestoreLegacyMaterialDefaults();
+            InitializePositionOffset();
+        }
+
+        private void InvalidateInitialization()
+        {
+            _cachedTransform = null;
+            _spriteRenderer = null;
+            _materialProperties = null;
+            _positionOffset = Vector3.zero;
+
+            _hasSkewX = false;
+            _hasSkewY = false;
+            _hasScaleX = false;
+            _hasScaleY = false;
+            _hasBrightness = false;
+            _hasAlpha = false;
+            _materialStateApplied = false;
         }
 
         public void ApplyAndDisable()
@@ -147,6 +185,16 @@ namespace Script
         private void ApplyMaterialChanges()
         {
             if (!hasMaterial || material == null || _spriteRenderer == null) return;
+
+            // MaterialPropertyBlock is transient Unity state. It can be cleared
+            // by an editor validation/domain-reload cycle while the cached
+            // renderer and material are still valid, so always create it lazily
+            // at the point of use.
+            if (_materialProperties == null)
+            {
+                _materialProperties = new MaterialPropertyBlock();
+                _materialStateApplied = false;
+            }
 
             var skewXChanged = _hasSkewX && (!_materialStateApplied || _appliedSkew.x != skew.x);
             var skewYChanged = _hasSkewY && (!_materialStateApplied || _appliedSkew.y != skew.y);
@@ -219,6 +267,43 @@ namespace Script
                 _cachedTransform.localPosition = targetPosition;
             }
         }
+
+        private void ApplyHierarchyScaleChange()
+        {
+            if (!updateHierarchyScale) return;
+
+            var referenceX = Mathf.Approximately(hierarchyScaleReference.x, 0f)
+                ? 100f
+                : hierarchyScaleReference.x;
+            var referenceY = Mathf.Approximately(hierarchyScaleReference.y, 0f)
+                ? 100f
+                : hierarchyScaleReference.y;
+            var targetScale = new Vector3(
+                scale.x / referenceX,
+                scale.y / referenceY,
+                1f);
+
+            if (_cachedTransform.localScale != targetScale)
+            {
+                _cachedTransform.localScale = targetScale;
+            }
+        }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (Application.isPlaying) return;
+
+            // Preview both per-renderer shader properties and animation-space
+            // position changes while editing a prefab. Position remains gated by
+            // updatePosition, exactly as it is at runtime.
+            InvalidateInitialization();
+            EnsureInitialized();
+            ApplyMaterialChanges();
+            ApplyPositionChange();
+            ApplyHierarchyScaleChange();
+        }
+#endif
 
     }
 }

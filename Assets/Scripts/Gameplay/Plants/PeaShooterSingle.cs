@@ -8,8 +8,9 @@ using UnityEngine.EventSystems;
 
 public class PeaShooterSingle : Plant, IPointerClickHandler
 {
+    private const string MouthPath = "component/basic/head/pod/mouth";
     private static readonly int Shoot = Animator.StringToHash("shoot");
-    // public override Vector3 spritePosition => new(40.2f, -52.25f, 0f);
+    public override Vector3 SpritePosition => new(40.2f, -52.25f, 0f);
 
     // public override int sunlight => 100;
     // public override float cdTime => 0.5f;
@@ -65,7 +66,7 @@ public class PeaShooterSingle : Plant, IPointerClickHandler
 
     public void ShootProjectilePea()
     {
-        Vector3 position = Transform.Find("PeaShooterSingle_head/PeaShooterSingle_mouth").transform.position;
+        Vector3 position = Transform.Find(MouthPath).position;
         // BulletManager.instance.InstantiateBullet(this, position + new Vector3(30, 6, 0), 
         //     GameConfigObject.BulletType.ProjectilePea);
     }

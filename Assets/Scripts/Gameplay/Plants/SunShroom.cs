@@ -2,10 +2,11 @@ using UnityEngine;
 
 namespace Prefab.Plant.SunShroom.Script
 {
-    [RequireComponent(typeof(SunProducer))]
+    [RequireComponent(typeof(SunProducer), typeof(SunShroomBlink))]
     public sealed class SunShroom : global::Script.Model.Plant
     {
         [SerializeField] private SunProducer sunProducer;
+        [SerializeField] private SunShroomBlink blink;
 
         public override Vector3 SpritePosition => new(42.275f, -45.875f, 0f);
 
@@ -23,6 +24,7 @@ namespace Prefab.Plant.SunShroom.Script
         {
             base.OnEnteredBoard();
             ResolveSunProducer().StartProducing();
+            ResolveBlink().StartBlinking();
         }
 
         protected override void OnDestroy()
@@ -30,6 +32,11 @@ namespace Prefab.Plant.SunShroom.Script
             if (sunProducer != null)
             {
                 sunProducer.StopProducing();
+            }
+
+            if (blink != null)
+            {
+                blink.StopBlinking();
             }
 
             base.OnDestroy();
@@ -50,12 +57,33 @@ namespace Prefab.Plant.SunShroom.Script
             return sunProducer;
         }
 
+        private SunShroomBlink ResolveBlink()
+        {
+            if (blink == null)
+            {
+                blink = GetComponent<SunShroomBlink>();
+            }
+
+            if (blink == null)
+            {
+                throw new MissingComponentException(
+                    $"{name} requires a {nameof(SunShroomBlink)} component.");
+            }
+
+            return blink;
+        }
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
             if (sunProducer == null)
             {
                 sunProducer = GetComponent<SunProducer>();
+            }
+
+            if (blink == null)
+            {
+                blink = GetComponent<SunShroomBlink>();
             }
         }
 #endif

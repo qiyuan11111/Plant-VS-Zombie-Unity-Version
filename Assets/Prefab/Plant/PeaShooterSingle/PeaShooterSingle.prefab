@@ -331,7 +331,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!1 &6100616670557935543
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +438,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!1 &6100616670573988965
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +545,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!1 &6100616670584786733
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,7 +652,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!1 &6100616670632725194
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,7 +888,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!222 &6100616670674902345
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1004,7 +1004,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!222 &6100616670855778065
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1119,7 +1119,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!1 &6100616672076282298
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,7 +1226,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!1 &6100616672131985224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1333,7 +1333,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!1 &6100616672289469948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,7 +1440,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!1 &6100616672291064424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,7 +1547,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!1 &6252327462186539546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,7 +1603,7 @@ MonoBehaviour:
   isBright: 0
   alpha: 0
   alphaCoef: 0
-  updatePosition: 0
+  updatePosition: 1
 --- !u!1 &6532773474092720366
 GameObject:
   m_ObjectHideFlags: 0

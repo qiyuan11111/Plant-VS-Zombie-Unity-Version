@@ -7,6 +7,9 @@ namespace Prefab.Plant.SunShroom.Script
     [DisallowMultipleComponent]
     public sealed class SunProducer : MonoBehaviour
     {
+        private const string ProductionAnchorPath =
+            "component/basic/head/SunShroom_head/Sun_Anchor";
+
         private static readonly int ProduceTrigger = Animator.StringToHash("produce");
 
         [Header("Production")]
@@ -130,7 +133,7 @@ namespace Prefab.Plant.SunShroom.Script
         {
             if (productionAnchor == null)
             {
-                productionAnchor = transform.Find("SunShroom_head");
+                productionAnchor = transform.Find(ProductionAnchorPath);
             }
 
             if (productionAnchor == null)
@@ -162,7 +165,7 @@ namespace Prefab.Plant.SunShroom.Script
 
             if (productionAnchor == null)
             {
-                productionAnchor = transform.Find("SunShroom_head");
+                productionAnchor = transform.Find(ProductionAnchorPath);
             }
         }
 #endif

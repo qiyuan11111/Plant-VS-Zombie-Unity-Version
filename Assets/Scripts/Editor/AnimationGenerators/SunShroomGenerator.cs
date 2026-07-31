@@ -18,7 +18,19 @@ public class SunShroomGenerator : AnimGenerator
 
     protected override string[] getClipNames()
     {
-        return new[] { "idle"};
+        return new[] { "idle", "sleep" };
+    }
+
+    protected override string getAnimationPath(string objectName)
+    {
+        return objectName switch
+        {
+            "SunShroom_head" => "component/basic/head/SunShroom_head",
+            // Body motion lives on the outer group so facial overlays inherit it.
+            "SunShroom_body" => "component/basic/body",
+            "SunShroom_sleep" => "component/basic/sleep/SunShroom_sleep",
+            _ => base.getAnimationPath(objectName)
+        };
     }
 
     public override Type getPropertyType(string prop)

@@ -21,6 +21,26 @@ public class PeaShooterSingleGenerator : AnimGenerator
         return new[] { "shoot", "head_idle" };
     }
 
+    protected override string getAnimationPath(string objectName)
+    {
+        return objectName switch
+        {
+            "PeaShooterSingle_backleaf" => "component/basic/leaf/backleaf/backleaf",
+            "PeaShooterSingle_backleaf_left_tip" => "component/basic/leaf/backleaf/left_tip",
+            "PeaShooterSingle_backleaf_right_tip" => "component/basic/leaf/backleaf/right_tip",
+            "PeaShooterSingle_front_leaf" => "component/basic/leaf/frontleaf/frontleaf",
+            "PeaShooterSingle_frontleaf_left_tip" => "component/basic/leaf/frontleaf/left_tip",
+            "PeaShooterSingle_frontleaf_right_tip" => "component/basic/leaf/frontleaf/right_tip",
+            "PeaShooterSingle_head" => "component/basic/head",
+            "PeaShooterSingle_stalk_bottom" => "component/basic/stalk/bottom",
+            "PeaShooterSingle_stalk_top" => "component/basic/stalk/top",
+            "PeaShooterSingle_head/PeaShooterSingle_head" => "component/basic/head/pod/head",
+            "PeaShooterSingle_head/PeaShooterSingle_mouth" => "component/basic/head/pod/mouth",
+            "PeaShooterSingle_head/PeaShooterSingle_sprout" => "component/basic/head/sprout",
+            _ => base.getAnimationPath(objectName)
+        };
+    }
+
     public override Type getPropertyType(string prop)
     {
         // Debug.Log(prop);
