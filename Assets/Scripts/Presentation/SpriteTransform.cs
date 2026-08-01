@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Sprite = Script.Model.Sprite;
+using Script.Model;
 
 namespace Script
 {
+    [ExecuteAlways]
+    [DisallowMultipleComponent]
     public class SpriteTransform : MonoBehaviour
     {
         private static readonly int SkewX = Shader.PropertyToID("_SkewX");
@@ -13,8 +16,8 @@ namespace Script
         private static readonly int Brightness = Shader.PropertyToID("_Brightness");
         private static readonly int Alpha = Shader.PropertyToID("_Alpha");
 
-        public Material material;
-        public bool hasMaterial;
+        [NonSerialized] public Material material;
+        [NonSerialized] public bool hasMaterial;
 
         [FormerlySerializedAs("Position")]
         public Vector2 position;
@@ -99,7 +102,7 @@ namespace Script
             var parent = _cachedTransform.parent;
             while (parent != null)
             {
-                if (parent.TryGetComponent<Sprite>(out var sprite))
+                if (parent.TryGetComponent<EntitySprite>(out var sprite))
                 {
                     _positionOffset = sprite.SpritePosition;
                     return;
@@ -115,6 +118,14 @@ namespace Script
                 }
 
                 parent = parent.parent;
+            }
+        }
+
+        private void OnEnable()
+        {
+            if (!Application.isPlaying)
+            {
+                Apply();
             }
         }
 
@@ -138,6 +149,11 @@ namespace Script
         }
 
         private void Update()
+        {
+            Apply();
+        }
+
+        private void OnDidApplyAnimationProperties()
         {
             Apply();
         }
@@ -290,6 +306,14 @@ namespace Script
         }
 
 #if UNITY_EDITOR
+        private void OnTransformParentChanged()
+        {
+            if (Application.isPlaying) return;
+
+            InvalidateInitialization();
+            Apply();
+        }
+
         private void OnValidate()
         {
             if (Application.isPlaying) return;

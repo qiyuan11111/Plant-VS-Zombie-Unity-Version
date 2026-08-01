@@ -97,8 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: c67c2bf536a9d2e4e86b3e59881ab5cd, type: 2}
-  hasMaterial: 1
   position: {x: 0, y: 0}
   scale: {x: 0, y: 0}
   skew: {x: 0, y: 0}
@@ -107,6 +105,8 @@ MonoBehaviour:
   alpha: 0
   alphaCoef: 0
   updatePosition: 0
+  updateHierarchyScale: 0
+  hierarchyScaleReference: {x: 0, y: 0}
 --- !u!1 &900100000000000001
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,10 +250,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  material: {fileID: 0}
-  hasMaterial: 0
+  m_Name: 
+  m_EditorClassIdentifier: 
   position: {x: 41.7, y: 56.35}
   scale: {x: 79.99878, y: 79.99878}
   skew: {x: 0, y: 0}
@@ -489,8 +487,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 5fc99a42c8198864185103b092b6079e, type: 2}
-  hasMaterial: 1
   position: {x: -0.1, y: -2.35}
   scale: {x: 78.746, y: 80.5328}
   skew: {x: 0, y: 0}
@@ -499,6 +495,8 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
+  updateHierarchyScale: 0
+  hierarchyScaleReference: {x: 0, y: 0}
 --- !u!1 &900200000000000007
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,8 +594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 5fc99a42c8198864185103b092b6079e, type: 2}
-  hasMaterial: 1
   position: {x: -0.25, y: -2.45}
   scale: {x: 82.8552, y: 84.4421}
   skew: {x: 0, y: 0}
@@ -606,6 +602,8 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
+  updateHierarchyScale: 0
+  hierarchyScaleReference: {x: 0, y: 0}
 --- !u!1 &2647483252324358559
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,8 +876,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 08961244f37b0a14dbda2668d4fd0a2d, type: 2}
-  hasMaterial: 1
   position: {x: 42.25, y: 39.4}
   scale: {x: 79.99878, y: 79.99878}
   skew: {x: 4.501053, y: 4.5019226}
@@ -888,6 +884,8 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
+  updateHierarchyScale: 0
+  hierarchyScaleReference: {x: 0, y: 0}
 --- !u!1 &4358634213513046557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1016,8 +1014,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 0f3b0650e4d40e54caa081beccb8ef62, type: 2}
-  hasMaterial: 1
   position: {x: 0, y: 0}
   scale: {x: 79.99878, y: 79.99878}
   skew: {x: 0, y: 0}
@@ -1026,3 +1022,5 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
+  updateHierarchyScale: 0
+  hierarchyScaleReference: {x: 0, y: 0}

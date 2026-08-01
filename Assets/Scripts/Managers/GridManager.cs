@@ -6,10 +6,8 @@ using UnityEngine.EventSystems;
 
 namespace Script.Manager
 {
-    public class GridManager : MonoBehaviour, IPointerClickHandler
+    public class GridManager : SceneSingleton<GridManager>, IPointerClickHandler
     {
-        public static GridManager Instance;
-
         private static readonly List<float> XAxis = new()
         {
             -401f,
@@ -102,15 +100,18 @@ namespace Script.Manager
             }
         }
 
-        private void Awake()
+        protected override void OnReferencesValidated()
         {
-            Instance = this;
-
             _rowNum = XAxis.Count;
             _colNum = YAxis.Count;
             _gridMap = new Grid[_rowNum, _colNum];
 
             CreatGrids();
+        }
+
+        protected override bool ValidateDependencies()
+        {
+            return RequireManager(PlantingManager.Instance);
         }
 
 
@@ -126,25 +127,26 @@ namespace Script.Manager
             /// </summary>
             public Vector2 Position;
 
-            private Plant _plant;
+            private PlantEntity _plant;
+            private readonly bool _acceptsOccupant;
 
-            public Plant Occupant => _plant;
+            public PlantEntity Occupant => _plant;
 
             public bool IsOccupied()
             {
                 return _plant != null;
             }
 
-            public bool TryOccupy(Plant plant)
+            public bool TryOccupy(PlantEntity plant)
             {
-                if (IsOccupied() || plant == null) return false;
+                if (!_acceptsOccupant || IsOccupied() || plant == null) return false;
 
                 _plant = plant;
 
                 return true;
             }
 
-            public bool TryRelease(Plant plant)
+            public bool TryRelease(PlantEntity plant)
             {
                 if (_plant != plant) return false;
 
@@ -152,12 +154,21 @@ namespace Script.Manager
                 return true;
             }
 
-            public static readonly Grid None = new(new Vector2Int(-1, -1), new Vector2(-1, -1));
+            public static readonly Grid None = new(
+                new Vector2Int(-1, -1),
+                new Vector2(-1, -1),
+                false);
 
             public Grid(Vector2Int point, Vector2 position)
+                : this(point, position, true)
+            {
+            }
+
+            private Grid(Vector2Int point, Vector2 position, bool acceptsOccupant)
             {
                 Point = point;
                 Position = position;
+                _acceptsOccupant = acceptsOccupant;
             }
         }
     }

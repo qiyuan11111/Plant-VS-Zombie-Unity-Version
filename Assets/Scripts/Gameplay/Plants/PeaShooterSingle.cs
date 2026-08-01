@@ -6,7 +6,7 @@ using Script.Util;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PeaShooterSingle : Plant, IPointerClickHandler
+public class PeaShooterSingle : PlantEntity, IPointerClickHandler
 {
     private const string MouthPath = "component/basic/head/pod/mouth";
     private static readonly int Shoot = Animator.StringToHash("shoot");
@@ -33,13 +33,13 @@ public class PeaShooterSingle : Plant, IPointerClickHandler
     //         peaShooterSingle.attack = false;
     //     }
     //
-    //     public override bool IsGoal(Entity sprite)
+    //     public override bool IsGoal(GameEntity sprite)
     //     {
     //         if (sprite.row != this.sprite.row) return false;
     //         return true;
     //     }
     //
-    //     public DetectZombieCallback(Entity sprite) : base(sprite)
+    //     public DetectZombieCallback(GameEntity sprite) : base(sprite)
     //     {
     //     }
     // }
@@ -59,7 +59,7 @@ public class PeaShooterSingle : Plant, IPointerClickHandler
     //         collider2D.isTrigger = true;
     //     }
     //
-    //     public HandDetectZombieRegion(Entity sprite, string name, string layer) : base(sprite, name, layer)
+    //     public HandDetectZombieRegion(GameEntity sprite, string name, string layer) : base(sprite, name, layer)
     //     {
     //     }
     // }
@@ -73,7 +73,7 @@ public class PeaShooterSingle : Plant, IPointerClickHandler
 
     // public override void SetDetectRegions()
     // {
-    //     SetDetectRegion<Zombie>(new DetectZombieCallback(this), new HandDetectZombieRegion(this, "DetectZombieRegion", "DetectZombieRegion"));
+    //     SetDetectRegion<ZombieEntity>(new DetectZombieCallback(this), new HandDetectZombieRegion(this, "DetectZombieRegion", "DetectZombieRegion"));
     // }
     //
     // public override List<Task> SetFunction()

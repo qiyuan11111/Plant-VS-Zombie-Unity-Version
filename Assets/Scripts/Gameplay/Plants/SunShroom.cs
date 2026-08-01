@@ -1,9 +1,10 @@
 using UnityEngine;
+using Script.Model;
 
 namespace Prefab.Plant.SunShroom.Script
 {
     [RequireComponent(typeof(SunProducer), typeof(SunShroomBlink))]
-    public sealed class SunShroom : global::Script.Model.Plant
+    public sealed class SunShroom : PlantEntity
     {
         [SerializeField] private SunProducer sunProducer;
         [SerializeField] private SunShroomBlink blink;

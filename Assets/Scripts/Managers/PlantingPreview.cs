@@ -1,6 +1,7 @@
 using System;
 using Script.Model;
 using Script.Presentation;
+using Script.Util;
 using UnityEngine;
 
 namespace Script.Manager
@@ -10,18 +11,25 @@ namespace Script.Manager
     /// </summary>
     internal sealed class PlantingPreview : IDisposable
     {
-        private Entity _cursorPreview;
-        private Entity _gridPreview;
+        private GameEntity _cursorPreview;
+        private GameEntity _gridPreview;
 
-        public PlantingPreview(GameObject plantPrefab, Transform previewParent)
+        public PlantingPreview(PlantDefinition definition, Transform previewParent)
         {
-            if (plantPrefab == null) throw new ArgumentNullException(nameof(plantPrefab));
+            if (definition == null) throw new ArgumentNullException(nameof(definition));
             if (previewParent == null) throw new ArgumentNullException(nameof(previewParent));
+
+            var plantPrefab = definition.PresentationPrefab;
+            if (plantPrefab == null) throw new MissingReferenceException("Plant definition requires a presentation prefab.");
 
             try
             {
-                _cursorPreview = EntityPresentation.ConfigureCursorPreview(CreatePlant(plantPrefab, previewParent));
-                _gridPreview = EntityPresentation.ConfigureGridPreview(CreatePlant(plantPrefab, previewParent));
+                _cursorPreview = EntityPresentation.ConfigureCursorPreview(
+                    CreatePlant(plantPrefab, previewParent),
+                    definition.CardIconFrame);
+                _gridPreview = EntityPresentation.ConfigureGridPreview(
+                    CreatePlant(plantPrefab, previewParent),
+                    definition.CardIconFrame);
                 _gridPreview.gameObject.SetActive(false);
             }
             catch
@@ -56,10 +64,10 @@ namespace Script.Manager
             DestroyPreview(ref _gridPreview);
         }
 
-        private static Plant CreatePlant(GameObject prefab, Transform parent)
+        private static PlantEntity CreatePlant(GameObject prefab, Transform parent)
         {
             var instance = UnityEngine.Object.Instantiate(prefab, parent, false);
-            var plant = instance.GetComponent<Plant>();
+            var plant = instance.GetComponent<PlantEntity>();
             if (plant == null)
             {
                 UnityEngine.Object.Destroy(instance);
@@ -69,7 +77,7 @@ namespace Script.Manager
             return plant;
         }
 
-        private static void DestroyPreview(ref Entity preview)
+        private static void DestroyPreview(ref GameEntity preview)
         {
             if (preview != null) UnityEngine.Object.Destroy(preview.gameObject);
             preview = null;

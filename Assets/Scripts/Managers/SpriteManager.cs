@@ -2,12 +2,7 @@
 
 namespace Script.Manager
 {
-    public class SpriteManager : MonoBehaviour
+    public class SpriteManager : SceneSingleton<SpriteManager>
     {
-        public static SpriteManager Instance;
-        private void Awake()
-        {
-            Instance = this;
-        }
     }
 }

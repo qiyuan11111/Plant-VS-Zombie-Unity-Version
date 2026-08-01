@@ -3,7 +3,7 @@ using Script.Model;
 
 namespace Prefab.Object.Shadow.Script
 {
-    public class Shadow : global::Script.Model.Object
+    public class Shadow : WorldObject
     {
         private float _size;
         

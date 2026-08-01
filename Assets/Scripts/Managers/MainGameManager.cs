@@ -3,23 +3,32 @@ using UnityEngine;
 
 namespace Script.Manager
 {
-    public class MainGameManager : MonoBehaviour
+    public class MainGameManager : SceneSingleton<MainGameManager>
     {
-        public static MainGameManager Instance;
         public GameConfigObject gameConfigObject{get; private set;}
         public GameSound gameSound{get; private set;}
 
         private Camera _camera;
 
-        private void Awake()
+        protected override void OnSingletonAwake()
         {
-            Instance = this;
             gameConfigObject = Resources.Load<GameConfigObject>("GameConfigObject");
-            gameConfigObject.Init();
-
             gameSound = Resources.Load<GameSound>("GameSound");
-
             _camera = Camera.main;
+        }
+
+        protected override bool ValidateReferences()
+        {
+            var isValid = true;
+            isValid &= RequireReference(gameConfigObject, "Resources/GameConfigObject");
+            isValid &= RequireReference(gameSound, "Resources/GameSound");
+            isValid &= RequireReference(_camera, "a Camera tagged MainCamera");
+            return isValid;
+        }
+
+        protected override void OnReferencesValidated()
+        {
+            gameConfigObject.Init();
         }
 
         public Vector3 GetNowMouseScreenToWorldPoint(float z)
