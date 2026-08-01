@@ -43,15 +43,22 @@ namespace Script
         public float alphaCoef;
 
         public bool updatePosition;
+
+        [Tooltip("Use this transform's static FLA position as the origin for descendant SpriteTransforms.")]
+        public bool providesChildSpritePosition;
+
+        [Tooltip("Static FLA attachment position used only by descendant SpriteTransforms.")]
+        public Vector2 childSpritePosition;
+
         public bool updateHierarchyScale;
         public Vector2 hierarchyScaleReference;
 
         private Transform _cachedTransform;
         private SpriteRenderer _spriteRenderer;
         private MaterialPropertyBlock _materialProperties;
-        private SpriteCoordinateSpace _coordinateSpace;
-        private EntitySprite _entityCoordinateSpace;
-        private bool _coordinateSpaceResolved;
+        private SpriteTransform _childSpritePositionProvider;
+        private EntitySprite _entitySpritePositionProvider;
+        private bool _positionReferenceResolved;
 
         private bool _hasSkewX;
         private bool _hasSkewY;
@@ -99,26 +106,30 @@ namespace Script
             return true;
         }
 
-        private void ResolveCoordinateSpace()
+        private void ResolvePositionReference()
         {
-            if (_coordinateSpaceResolved) return;
+            if (_positionReferenceResolved) return;
 
-            _coordinateSpaceResolved = true;
-            _coordinateSpace = null;
-            _entityCoordinateSpace = null;
+            _positionReferenceResolved = true;
+            _childSpritePositionProvider = null;
+            _entitySpritePositionProvider = null;
 
+            // Start at the parent deliberately: a sub-animation root is positioned
+            // in its parent's FLA space, while only its descendants use the static
+            // childSpritePosition defined on that root.
             var parent = _cachedTransform.parent;
             while (parent != null)
             {
-                if (parent.TryGetComponent<SpriteCoordinateSpace>(out var coordinateSpace))
+                if (parent.TryGetComponent<SpriteTransform>(out var spriteTransform) &&
+                    spriteTransform.providesChildSpritePosition)
                 {
-                    _coordinateSpace = coordinateSpace;
+                    _childSpritePositionProvider = spriteTransform;
                     return;
                 }
 
                 if (parent.TryGetComponent<EntitySprite>(out var entitySprite))
                 {
-                    _entityCoordinateSpace = entitySprite;
+                    _entitySpritePositionProvider = entitySprite;
                     return;
                 }
 
@@ -178,7 +189,7 @@ namespace Script
             _cachedTransform = transform;
             hasMaterial = InitializeMaterial();
             RestoreLegacyMaterialDefaults();
-            ResolveCoordinateSpace();
+            ResolvePositionReference();
         }
 
         private void InvalidateInitialization()
@@ -186,9 +197,9 @@ namespace Script
             _cachedTransform = null;
             _spriteRenderer = null;
             _materialProperties = null;
-            _coordinateSpace = null;
-            _entityCoordinateSpace = null;
-            _coordinateSpaceResolved = false;
+            _childSpritePositionProvider = null;
+            _entitySpritePositionProvider = null;
+            _positionReferenceResolved = false;
 
             _hasSkewX = false;
             _hasSkewY = false;
@@ -205,15 +216,24 @@ namespace Script
             enabled = false;
         }
 
-        public void RefreshCoordinateSpace()
+        public void RefreshPositionReference()
         {
-            _coordinateSpace = null;
-            _entityCoordinateSpace = null;
-            _coordinateSpaceResolved = false;
+            _childSpritePositionProvider = null;
+            _entitySpritePositionProvider = null;
+            _positionReferenceResolved = false;
 
             if (_cachedTransform != null)
             {
                 ApplyPositionChange();
+            }
+        }
+
+        public void RefreshDescendantPositionReferences()
+        {
+            foreach (var spriteTransform in GetComponentsInChildren<SpriteTransform>(true))
+            {
+                if (spriteTransform == this) continue;
+                spriteTransform.RefreshPositionReference();
             }
         }
 
@@ -292,7 +312,7 @@ namespace Script
         {
             if (!updatePosition) return;
 
-            ResolveCoordinateSpace();
+            ResolvePositionReference();
             var targetPosition = ResolveLocalPosition();
 
             if (_cachedTransform.localPosition != targetPosition)
@@ -303,19 +323,23 @@ namespace Script
 
         private Vector3 ResolveLocalPosition()
         {
-            if (_coordinateSpace != null)
+            if (_childSpritePositionProvider != null)
             {
-                return _coordinateSpace.ToLocalPosition(position);
+                return ToLocalPosition(position, _childSpritePositionProvider.childSpritePosition);
             }
 
-            if (_entityCoordinateSpace != null)
+            if (_entitySpritePositionProvider != null)
             {
-                var origin = (Vector2)_entityCoordinateSpace.SpritePosition;
-                var delta = position - origin;
-                return new Vector3(delta.x, -delta.y, 0f);
+                return ToLocalPosition(position, (Vector2)_entitySpritePositionProvider.SpritePosition);
             }
 
             return new Vector3(position.x, -position.y, 0f);
+        }
+
+        private static Vector3 ToLocalPosition(Vector2 sourcePosition, Vector2 sourceOrigin)
+        {
+            var delta = sourcePosition - sourceOrigin;
+            return new Vector3(delta.x, -delta.y, 0f);
         }
 
         private void ApplyHierarchyScaleChange()
@@ -360,6 +384,7 @@ namespace Script
             ApplyMaterialChanges();
             ApplyPositionChange();
             ApplyHierarchyScaleChange();
+            RefreshDescendantPositionReferences();
         }
 #endif
 

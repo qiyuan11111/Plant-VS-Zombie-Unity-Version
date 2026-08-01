@@ -21,7 +21,7 @@ public static class SunFlowerPrefabOptimizer
     private const string LegacyHeadPath = "component/basic/head/SunFlower_head";
     private const string LegacyBlinkRootPath = "component/basic/head/blink";
     private const string FaceMotionPath = "component/basic/head/face";
-    private const string OptimizationVersion = "sunflower-structure-v7-fla-coordinate-spaces";
+    private const string OptimizationVersion = "sunflower-structure-v8-child-sprite-position";
 
     private static readonly Dictionary<string, string> PartPaths = new()
     {
@@ -350,12 +350,11 @@ public static class SunFlowerPrefabOptimizer
         faceTransform.alpha = 1f;
         faceTransform.alphaCoef = 1f;
         faceTransform.updatePosition = true;
+        faceTransform.providesChildSpritePosition = true;
+        faceTransform.childSpritePosition = firstFramePosition;
         faceTransform.updateHierarchyScale = true;
         faceTransform.hierarchyScaleReference = firstFrameScale;
         faceTransform.Apply();
-
-        var faceCoordinateSpace = GetOrAddComponent<SpriteCoordinateSpace>(faceMotion.gameObject);
-        faceCoordinateSpace.SpritePosition = firstFramePosition;
 
         var headTransform = GetOrAddComponent<SpriteTransform>(head.gameObject);
         headTransform.enabled = true;
@@ -368,7 +367,6 @@ public static class SunFlowerPrefabOptimizer
         headTransform.Apply();
 
         EditorUtility.SetDirty(faceTransform);
-        EditorUtility.SetDirty(faceCoordinateSpace);
         EditorUtility.SetDirty(headTransform);
     }
 

@@ -106,12 +106,11 @@ namespace Prefab.Plant.SunFlower.Script
             var headRoot = faceMotion ?? transform.Find("component/basic/head") ?? transform;
             if (faceMotion != null)
             {
-                var coordinateSpace = faceMotion.GetComponent<SpriteCoordinateSpace>() ??
-                                      faceMotion.gameObject.AddComponent<SpriteCoordinateSpace>();
                 var faceTransform = faceMotion.GetComponent<SpriteTransform>();
                 if (faceTransform != null)
                 {
-                    coordinateSpace.SpritePosition = faceTransform.position;
+                    faceTransform.providesChildSpritePosition = true;
+                    faceTransform.childSpritePosition = faceTransform.position;
                 }
             }
 

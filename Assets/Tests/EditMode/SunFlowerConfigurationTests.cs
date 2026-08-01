@@ -46,10 +46,10 @@ namespace Tests.EditMode
             Assert.That(prefab.GetComponent<SunFlowerBlink>(), Is.Not.Null);
             var faceMotion = prefab.transform.Find("component/basic/head/face");
             Assert.That(faceMotion, Is.Not.Null);
-            Assert.That(faceMotion.GetComponent<SpriteTransform>(), Is.Not.Null);
-            var faceSpace = faceMotion.GetComponent<SpriteCoordinateSpace>();
-            Assert.That(faceSpace, Is.Not.Null);
-            Assert.That(faceSpace.SpritePosition, Is.EqualTo(new Vector2(37.1f, 35.7f)));
+            var faceTransform = faceMotion.GetComponent<SpriteTransform>();
+            Assert.That(faceTransform, Is.Not.Null);
+            Assert.That(faceTransform.providesChildSpritePosition, Is.True);
+            Assert.That(faceTransform.childSpritePosition, Is.EqualTo(new Vector2(37.1f, 35.7f)));
             Assert.That(faceMotion.Find("SunFlower_head"), Is.Not.Null);
             var blink1 = faceMotion.Find("blink/SunFlower_blink1");
             var blink2 = faceMotion.Find("blink/SunFlower_blink2");
