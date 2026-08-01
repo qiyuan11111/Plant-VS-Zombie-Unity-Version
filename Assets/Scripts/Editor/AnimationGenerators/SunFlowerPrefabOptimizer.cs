@@ -21,7 +21,7 @@ public static class SunFlowerPrefabOptimizer
     private const string LegacyHeadPath = "component/basic/head/SunFlower_head";
     private const string LegacyBlinkRootPath = "component/basic/head/blink";
     private const string FaceMotionPath = "component/basic/head/face";
-    private const string OptimizationVersion = "sunflower-structure-v6-inherited-face-blink";
+    private const string OptimizationVersion = "sunflower-structure-v7-fla-coordinate-spaces";
 
     private static readonly Dictionary<string, string> PartPaths = new()
     {
@@ -354,6 +354,9 @@ public static class SunFlowerPrefabOptimizer
         faceTransform.hierarchyScaleReference = firstFrameScale;
         faceTransform.Apply();
 
+        var faceCoordinateSpace = GetOrAddComponent<SpriteCoordinateSpace>(faceMotion.gameObject);
+        faceCoordinateSpace.SpritePosition = firstFramePosition;
+
         var headTransform = GetOrAddComponent<SpriteTransform>(head.gameObject);
         headTransform.enabled = true;
         headTransform.position = Vector2.zero;
@@ -365,6 +368,7 @@ public static class SunFlowerPrefabOptimizer
         headTransform.Apply();
 
         EditorUtility.SetDirty(faceTransform);
+        EditorUtility.SetDirty(faceCoordinateSpace);
         EditorUtility.SetDirty(headTransform);
     }
 
@@ -431,6 +435,9 @@ public static class SunFlowerPrefabOptimizer
 
     private static void ConfigureBlinkParts(Transform root)
     {
+        EnsureSpritePivot(Blink1SpritePath, new Vector2(1f, 0f));
+        EnsureSpritePivot(Blink2SpritePath, new Vector2(1f, 0f));
+
         var sharedMaterial = AssetDatabase.LoadAssetAtPath<Material>(SharedMaterialPath);
         var blink1 = AssetDatabase.LoadAssetAtPath<Sprite>(Blink1SpritePath);
         var blink2 = AssetDatabase.LoadAssetAtPath<Sprite>(Blink2SpritePath);
@@ -439,19 +446,37 @@ public static class SunFlowerPrefabOptimizer
             throw new MissingReferenceException("SunFlower blink sprites or shared material are missing.");
         }
 
-        var facePosition = root.Find(FaceMotionPath).GetComponent<SpriteTransform>().position;
         ConfigureBlinkPart(
             root,
             BlinkPartPaths["SunFlower_blink1"],
             blink1,
             sharedMaterial,
-            new Vector2(27.1f, 25.25f) - facePosition);
+            new Vector2(39.1f, 31.5f));
         ConfigureBlinkPart(
             root,
             BlinkPartPaths["SunFlower_blink2"],
             blink2,
             sharedMaterial,
-            new Vector2(27.1f, 25.1f) - facePosition);
+            new Vector2(39.1f, 31.5f));
+    }
+
+    private static void EnsureSpritePivot(string assetPath, Vector2 pivot)
+    {
+        var importer = AssetImporter.GetAtPath(assetPath) as TextureImporter;
+        if (importer == null) return;
+
+        var settings = new TextureImporterSettings();
+        importer.ReadTextureSettings(settings);
+        if (settings.spriteAlignment == (int)SpriteAlignment.Custom &&
+            settings.spritePivot == pivot)
+        {
+            return;
+        }
+
+        settings.spriteAlignment = (int)SpriteAlignment.Custom;
+        settings.spritePivot = pivot;
+        importer.SetTextureSettings(settings);
+        importer.SaveAndReimport();
     }
 
     private static void ConfigureBlinkPart(

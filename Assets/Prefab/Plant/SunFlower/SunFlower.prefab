@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: -9.999998, y: -10.6}
+  position: {x: 39.1, y: 31.5}
   scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
   brightness: 1
@@ -117,6 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6215993558222050374}
   - component: {fileID: 6507016225742789706}
+  - component: {fileID: 9000000000000000001}
   m_Layer: 0
   m_Name: face
   m_TagString: Untagged
@@ -163,6 +164,19 @@ MonoBehaviour:
   updatePosition: 1
   updateHierarchyScale: 1
   hierarchyScaleReference: {x: 100, y: 89}
+--- !u!114 &9000000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624076798297915738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38b1ae7a2fd4d54bc4e529a96f5c731, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  spritePosition: {x: 37.1, y: 35.7}
 --- !u!1 &3807032332989413555
 GameObject:
   m_ObjectHideFlags: 0
@@ -3456,7 +3470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: -9.999998, y: -10.450001}
+  position: {x: 39.1, y: 31.5}
   scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
   brightness: 1

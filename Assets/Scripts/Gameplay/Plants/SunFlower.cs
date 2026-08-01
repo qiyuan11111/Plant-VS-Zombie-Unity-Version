@@ -10,7 +10,7 @@ namespace Prefab.Plant.SunFlower.Script
         [SerializeField] private SunProducer sunProducer;
         [SerializeField] private SunFlowerBlink blink;
 
-        public override Vector3 SpritePosition => new(40.2f, -52.25f, 0f);
+        public override Vector3 SpritePosition => new(40.2f, 52.25f, 0f);
 
         public override string GetChineseName()
         {

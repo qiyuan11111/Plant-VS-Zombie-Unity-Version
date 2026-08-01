@@ -216,6 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 900100000000000008}
   - component: {fileID: 900300000000000001}
+  - component: {fileID: 9000000000000000003}
   m_Layer: 6
   m_Name: body
   m_TagString: Untagged
@@ -262,6 +263,19 @@ MonoBehaviour:
   updatePosition: 1
   updateHierarchyScale: 1
   hierarchyScaleReference: {x: 79.99878, y: 79.99878}
+--- !u!114 &9000000000000000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900100000000000007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38b1ae7a2fd4d54bc4e529a96f5c731, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &900100000000000009
 GameObject:
   m_ObjectHideFlags: 0

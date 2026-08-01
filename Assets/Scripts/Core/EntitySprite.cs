@@ -6,6 +6,9 @@ namespace Script.Model
     {
         protected Transform Transform;
     
+        /// <summary>
+        /// Origin of the entity's FLA coordinate space. Source values use X-right/Y-down.
+        /// </summary>
         public virtual Vector3 SpritePosition { get; set; }
 
         public SpriteGroup ComponentRoot { get; private set; }

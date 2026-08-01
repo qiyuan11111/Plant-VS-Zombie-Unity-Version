@@ -104,6 +104,17 @@ namespace Prefab.Plant.SunFlower.Script
 
             var faceMotion = transform.Find("component/basic/head/face");
             var headRoot = faceMotion ?? transform.Find("component/basic/head") ?? transform;
+            if (faceMotion != null)
+            {
+                var coordinateSpace = faceMotion.GetComponent<SpriteCoordinateSpace>() ??
+                                      faceMotion.gameObject.AddComponent<SpriteCoordinateSpace>();
+                var faceTransform = faceMotion.GetComponent<SpriteTransform>();
+                if (faceTransform != null)
+                {
+                    coordinateSpace.SpritePosition = faceTransform.position;
+                }
+            }
+
             var blinkRoot = headRoot.Find("blink");
             if (blinkRoot == null)
             {
@@ -117,10 +128,10 @@ namespace Prefab.Plant.SunFlower.Script
                 transform.Find("component/basic/head/SunFlower_head")
                 ?.GetComponent<SpriteRenderer>();
             var blink1Position = faceMotion != null
-                ? new Vector2(-10f, -10.45f)
+                ? new Vector2(39.1f, 31.5f)
                 : new Vector2(27.1f, 25.25f);
             var blink2Position = faceMotion != null
-                ? new Vector2(-10f, -10.6f)
+                ? new Vector2(39.1f, 31.5f)
                 : new Vector2(27.1f, 25.1f);
             _blink1 = CreateBlinkVisual(
                 blinkRoot,

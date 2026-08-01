@@ -47,9 +47,25 @@ namespace Tests.EditMode
             var faceMotion = prefab.transform.Find("component/basic/head/face");
             Assert.That(faceMotion, Is.Not.Null);
             Assert.That(faceMotion.GetComponent<SpriteTransform>(), Is.Not.Null);
+            var faceSpace = faceMotion.GetComponent<SpriteCoordinateSpace>();
+            Assert.That(faceSpace, Is.Not.Null);
+            Assert.That(faceSpace.SpritePosition, Is.EqualTo(new Vector2(37.1f, 35.7f)));
             Assert.That(faceMotion.Find("SunFlower_head"), Is.Not.Null);
-            Assert.That(faceMotion.Find("blink/SunFlower_blink1"), Is.Not.Null);
-            Assert.That(faceMotion.Find("blink/SunFlower_blink2"), Is.Not.Null);
+            var blink1 = faceMotion.Find("blink/SunFlower_blink1");
+            var blink2 = faceMotion.Find("blink/SunFlower_blink2");
+            Assert.That(blink1, Is.Not.Null);
+            Assert.That(blink2, Is.Not.Null);
+            Assert.That(blink1.GetComponent<SpriteTransform>().position,
+                Is.EqualTo(new Vector2(39.1f, 31.5f)));
+            Assert.That(blink2.GetComponent<SpriteTransform>().position,
+                Is.EqualTo(new Vector2(39.1f, 31.5f)));
+
+            foreach (var blink in new[] { blink1, blink2 })
+            {
+                var sprite = blink.GetComponent<SpriteRenderer>().sprite;
+                Assert.That(sprite.pivot.x, Is.EqualTo(sprite.rect.width).Within(0.001f));
+                Assert.That(sprite.pivot.y, Is.Zero.Within(0.001f));
+            }
 
             var controller = prefab.GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
             Assert.That(controller, Is.Not.Null);

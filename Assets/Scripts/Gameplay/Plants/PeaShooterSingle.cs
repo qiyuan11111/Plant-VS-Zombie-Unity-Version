@@ -10,7 +10,7 @@ public class PeaShooterSingle : PlantEntity, IPointerClickHandler
 {
     private const string MouthPath = "component/basic/head/pod/mouth";
     private static readonly int Shoot = Animator.StringToHash("shoot");
-    public override Vector3 SpritePosition => new(40.2f, -52.25f, 0f);
+    public override Vector3 SpritePosition => new(40.2f, 52.25f, 0f);
 
     // public override int sunlight => 100;
     // public override float cdTime => 0.5f;

@@ -49,7 +49,9 @@ namespace Script
         private Transform _cachedTransform;
         private SpriteRenderer _spriteRenderer;
         private MaterialPropertyBlock _materialProperties;
-        private Vector3 _positionOffset;
+        private SpriteCoordinateSpace _coordinateSpace;
+        private EntitySprite _entityCoordinateSpace;
+        private bool _coordinateSpaceResolved;
 
         private bool _hasSkewX;
         private bool _hasSkewY;
@@ -97,23 +99,26 @@ namespace Script
             return true;
         }
 
-        private void InitializePositionOffset()
+        private void ResolveCoordinateSpace()
         {
+            if (_coordinateSpaceResolved) return;
+
+            _coordinateSpaceResolved = true;
+            _coordinateSpace = null;
+            _entityCoordinateSpace = null;
+
             var parent = _cachedTransform.parent;
             while (parent != null)
             {
-                if (parent.TryGetComponent<EntitySprite>(out var sprite))
+                if (parent.TryGetComponent<SpriteCoordinateSpace>(out var coordinateSpace))
                 {
-                    _positionOffset = sprite.SpritePosition;
+                    _coordinateSpace = coordinateSpace;
                     return;
                 }
 
-                // An animated parent establishes a local animation coordinate system.
-                // Pure organizational transforms can be skipped safely, but crossing
-                // another SpriteTransform would apply the plant offset more than once.
-                if (parent.TryGetComponent<SpriteTransform>(out var animatedParent) &&
-                    animatedParent.updatePosition)
+                if (parent.TryGetComponent<EntitySprite>(out var entitySprite))
                 {
+                    _entityCoordinateSpace = entitySprite;
                     return;
                 }
 
@@ -173,7 +178,7 @@ namespace Script
             _cachedTransform = transform;
             hasMaterial = InitializeMaterial();
             RestoreLegacyMaterialDefaults();
-            InitializePositionOffset();
+            ResolveCoordinateSpace();
         }
 
         private void InvalidateInitialization()
@@ -181,7 +186,9 @@ namespace Script
             _cachedTransform = null;
             _spriteRenderer = null;
             _materialProperties = null;
-            _positionOffset = Vector3.zero;
+            _coordinateSpace = null;
+            _entityCoordinateSpace = null;
+            _coordinateSpaceResolved = false;
 
             _hasSkewX = false;
             _hasSkewY = false;
@@ -196,6 +203,18 @@ namespace Script
         {
             Apply();
             enabled = false;
+        }
+
+        public void RefreshCoordinateSpace()
+        {
+            _coordinateSpace = null;
+            _entityCoordinateSpace = null;
+            _coordinateSpaceResolved = false;
+
+            if (_cachedTransform != null)
+            {
+                ApplyPositionChange();
+            }
         }
 
         private void ApplyMaterialChanges()
@@ -273,15 +292,30 @@ namespace Script
         {
             if (!updatePosition) return;
 
-            var targetPosition = new Vector3(
-                position.x - _positionOffset.x,
-                -position.y - _positionOffset.y,
-                0f);
+            ResolveCoordinateSpace();
+            var targetPosition = ResolveLocalPosition();
 
             if (_cachedTransform.localPosition != targetPosition)
             {
                 _cachedTransform.localPosition = targetPosition;
             }
+        }
+
+        private Vector3 ResolveLocalPosition()
+        {
+            if (_coordinateSpace != null)
+            {
+                return _coordinateSpace.ToLocalPosition(position);
+            }
+
+            if (_entityCoordinateSpace != null)
+            {
+                var origin = (Vector2)_entityCoordinateSpace.SpritePosition;
+                var delta = position - origin;
+                return new Vector3(delta.x, -delta.y, 0f);
+            }
+
+            return new Vector3(position.x, -position.y, 0f);
         }
 
         private void ApplyHierarchyScaleChange()
