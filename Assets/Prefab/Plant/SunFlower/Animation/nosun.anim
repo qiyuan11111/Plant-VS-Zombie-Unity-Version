@@ -43,7 +43,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/face/SunFlower_head
+    path: component/basic/head/SunFlower_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -883,7 +883,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/face/blink/SunFlower_blink1
+    path: component/basic/head/SunFlower_head/blink/SunFlower_blink1
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -913,7 +913,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/face/blink/SunFlower_blink2
+    path: component/basic/head/SunFlower_head/blink/SunFlower_blink2
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1243,7 +1243,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/face/SunFlower_head
+    path: component/basic/head/SunFlower_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2083,7 +2083,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/face/blink/SunFlower_blink1
+    path: component/basic/head/SunFlower_head/blink/SunFlower_blink1
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2113,7 +2113,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/face/blink/SunFlower_blink2
+    path: component/basic/head/SunFlower_head/blink/SunFlower_blink2
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16

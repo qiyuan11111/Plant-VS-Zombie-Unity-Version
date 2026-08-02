@@ -18,14 +18,16 @@ public static class SunFlowerPrefabOptimizer
     private const string SharedMaterialPath = "Assets/Prefab/Plant/SunFlower/Material/LightnessSkew 1.mat";
     private const string Blink1SpritePath = "Assets/Prefab/Plant/SunFlower/Sprite/SunFlower_blink1.png";
     private const string Blink2SpritePath = "Assets/Prefab/Plant/SunFlower/Sprite/SunFlower_blink2.png";
-    private const string LegacyHeadPath = "component/basic/head/SunFlower_head";
+    private const string HeadPath = "component/basic/head/SunFlower_head";
+    private const string LegacyNestedHeadPath = "component/basic/head/face/SunFlower_head";
     private const string LegacyBlinkRootPath = "component/basic/head/blink";
-    private const string FaceMotionPath = "component/basic/head/face";
-    private const string OptimizationVersion = "sunflower-structure-v8-child-sprite-position";
+    private const string LegacyNestedBlinkRootPath = "component/basic/head/face/blink";
+    private const string LegacyFacePath = "component/basic/head/face";
+    private const string OptimizationVersion = "sunflower-structure-v11-head-owns-blink";
 
     private static readonly Dictionary<string, string> PartPaths = new()
     {
-        { "SunFlower_head", "component/basic/head/face/SunFlower_head" },
+        { "SunFlower_head", HeadPath },
         { "SunFlower_toppetals", "component/basic/head/SunFlower_toppetals" },
         { "SunFlower_bottompetals", "component/basic/head/SunFlower_bottompetals" },
         { "SunFlower_rightpetal1", "component/basic/head/petals/right/SunFlower_rightpetal1" },
@@ -57,8 +59,8 @@ public static class SunFlowerPrefabOptimizer
 
     private static readonly Dictionary<string, string> BlinkPartPaths = new()
     {
-        { "SunFlower_blink1", "component/basic/head/face/blink/SunFlower_blink1" },
-        { "SunFlower_blink2", "component/basic/head/face/blink/SunFlower_blink2" }
+        { "SunFlower_blink1", "component/basic/head/SunFlower_head/blink/SunFlower_blink1" },
+        { "SunFlower_blink2", "component/basic/head/SunFlower_head/blink/SunFlower_blink2" }
     };
 
     [InitializeOnLoadMethod]
@@ -132,7 +134,7 @@ public static class SunFlowerPrefabOptimizer
         ConfigureAnimatorController(clip, noSunClip, sunClip, blinkClip);
 
         ConvertAnimationBindings(clip);
-        MigrateHeadMotionBindings(clip);
+        MigrateHeadAnimationBindings(clip);
 
         var root = PrefabUtility.LoadPrefabContents(PrefabPath);
         try
@@ -141,7 +143,7 @@ public static class SunFlowerPrefabOptimizer
             ConfigureRoot(root);
             EnsureSharedMaterial(root.transform);
             ConfigureParts(root.transform, clip);
-            ConfigureFaceMotion(root.transform, clip);
+            ConfigureHeadMotion(root.transform, clip);
             ConfigureBlinkParts(root.transform);
             ConfigureAnchors(root.transform);
 
@@ -200,15 +202,36 @@ public static class SunFlowerPrefabOptimizer
 
         GetOrCreatePath(root, "component/anchors");
 
-        var faceMotion = GetOrCreatePath(root, FaceMotionPath);
-        var blinkRoot = root.Find(LegacyBlinkRootPath);
-        if (blinkRoot != null && blinkRoot.parent != faceMotion)
+        var head = root.Find(HeadPath);
+        if (head == null)
         {
-            blinkRoot.SetParent(faceMotion, false);
+            throw new MissingReferenceException("SunFlower head hierarchy is incomplete.");
         }
-        else
+
+        var blinkRoot = head.Find("blink") ??
+                        root.Find(LegacyNestedBlinkRootPath) ??
+                        root.Find(LegacyBlinkRootPath);
+        if (blinkRoot == null)
         {
-            GetOrCreateChild(faceMotion, "blink");
+            blinkRoot = GetOrCreateChild(head, "blink");
+        }
+        else if (blinkRoot.parent != head)
+        {
+            blinkRoot.SetParent(head, false);
+        }
+
+        var legacyFace = root.Find(LegacyFacePath);
+        if (legacyFace == null) return;
+
+        var legacyFaceTransform = legacyFace.GetComponent<SpriteTransform>();
+        if (legacyFaceTransform != null)
+        {
+            UnityEngine.Object.DestroyImmediate(legacyFaceTransform);
+        }
+
+        if (legacyFace.childCount == 0)
+        {
+            UnityEngine.Object.DestroyImmediate(legacyFace.gameObject);
         }
     }
 
@@ -295,8 +318,6 @@ public static class SunFlowerPrefabOptimizer
             spriteTransform.alpha = 1f;
             spriteTransform.alphaCoef = 1f;
             spriteTransform.updatePosition = true;
-            spriteTransform.updateHierarchyScale = false;
-
             if (bindingsByPath.TryGetValue(targetPath, out var bindings))
             {
                 foreach (var binding in bindings)
@@ -325,48 +346,32 @@ public static class SunFlowerPrefabOptimizer
         }
     }
 
-    private static void ConfigureFaceMotion(Transform root, AnimationClip clip)
+    private static void ConfigureHeadMotion(Transform root, AnimationClip clip)
     {
-        var faceMotion = root.Find(FaceMotionPath);
-        var head = root.Find(PartPaths["SunFlower_head"]);
-        if (faceMotion == null || head == null)
+        var head = root.Find(HeadPath);
+        if (head == null)
         {
-            throw new MissingReferenceException("SunFlower face motion hierarchy is incomplete.");
+            throw new MissingReferenceException("SunFlower head hierarchy is incomplete.");
         }
 
         var firstFramePosition = new Vector2(
-            EvaluateFirstFrame(clip, FaceMotionPath, "position.x", 0f),
-            EvaluateFirstFrame(clip, FaceMotionPath, "position.y", 0f));
+            EvaluateFirstFrame(clip, HeadPath, "position.x", 0f),
+            EvaluateFirstFrame(clip, HeadPath, "position.y", 0f));
         var firstFrameScale = new Vector2(
-            EvaluateFirstFrame(clip, FaceMotionPath, "scale.x", 100f),
-            EvaluateFirstFrame(clip, FaceMotionPath, "scale.y", 100f));
-
-        var faceTransform = GetOrAddComponent<SpriteTransform>(faceMotion.gameObject);
-        faceTransform.enabled = true;
-        faceTransform.position = firstFramePosition;
-        faceTransform.scale = firstFrameScale;
-        faceTransform.skew = Vector2.zero;
-        faceTransform.brightness = 1f;
-        faceTransform.alpha = 1f;
-        faceTransform.alphaCoef = 1f;
-        faceTransform.updatePosition = true;
-        faceTransform.providesChildSpritePosition = true;
-        faceTransform.childSpritePosition = firstFramePosition;
-        faceTransform.updateHierarchyScale = true;
-        faceTransform.hierarchyScaleReference = firstFrameScale;
-        faceTransform.Apply();
+            EvaluateFirstFrame(clip, HeadPath, "scale.x", 100f),
+            EvaluateFirstFrame(clip, HeadPath, "scale.y", 100f));
 
         var headTransform = GetOrAddComponent<SpriteTransform>(head.gameObject);
         headTransform.enabled = true;
-        headTransform.position = Vector2.zero;
+        headTransform.position = firstFramePosition;
         headTransform.scale = firstFrameScale;
-        headTransform.updatePosition = false;
-        headTransform.updateHierarchyScale = false;
-        head.localPosition = Vector3.zero;
+        headTransform.updatePosition = true;
+        headTransform.providesChildSpritePosition = true;
+        headTransform.childSpritePosition = firstFramePosition;
+        head.localRotation = Quaternion.identity;
         head.localScale = Vector3.one;
         headTransform.Apply();
 
-        EditorUtility.SetDirty(faceTransform);
         EditorUtility.SetDirty(headTransform);
     }
 
@@ -433,8 +438,8 @@ public static class SunFlowerPrefabOptimizer
 
     private static void ConfigureBlinkParts(Transform root)
     {
-        EnsureSpritePivot(Blink1SpritePath, new Vector2(1f, 0f));
-        EnsureSpritePivot(Blink2SpritePath, new Vector2(1f, 0f));
+        EnsureCenteredSpritePivot(Blink1SpritePath);
+        EnsureCenteredSpritePivot(Blink2SpritePath);
 
         var sharedMaterial = AssetDatabase.LoadAssetAtPath<Material>(SharedMaterialPath);
         var blink1 = AssetDatabase.LoadAssetAtPath<Sprite>(Blink1SpritePath);
@@ -458,21 +463,22 @@ public static class SunFlowerPrefabOptimizer
             new Vector2(39.1f, 31.5f));
     }
 
-    private static void EnsureSpritePivot(string assetPath, Vector2 pivot)
+    private static void EnsureCenteredSpritePivot(string assetPath)
     {
         var importer = AssetImporter.GetAtPath(assetPath) as TextureImporter;
         if (importer == null) return;
 
         var settings = new TextureImporterSettings();
         importer.ReadTextureSettings(settings);
-        if (settings.spriteAlignment == (int)SpriteAlignment.Custom &&
-            settings.spritePivot == pivot)
+        var centerPivot = new Vector2(0.5f, 0.5f);
+        if (settings.spriteAlignment == (int)SpriteAlignment.Center &&
+            settings.spritePivot == centerPivot)
         {
             return;
         }
 
-        settings.spriteAlignment = (int)SpriteAlignment.Custom;
-        settings.spritePivot = pivot;
+        settings.spriteAlignment = (int)SpriteAlignment.Center;
+        settings.spritePivot = centerPivot;
         importer.SetTextureSettings(settings);
         importer.SaveAndReimport();
     }
@@ -501,7 +507,6 @@ public static class SunFlowerPrefabOptimizer
         spriteTransform.alpha = 1f;
         spriteTransform.alphaCoef = 1f;
         spriteTransform.updatePosition = true;
-        spriteTransform.updateHierarchyScale = false;
         spriteTransform.Apply();
 
         target.gameObject.SetActive(false);
@@ -823,20 +828,23 @@ public static class SunFlowerPrefabOptimizer
         }
     }
 
-    private static void MigrateHeadMotionBindings(AnimationClip clip)
+    private static void MigrateHeadAnimationBindings(AnimationClip clip)
     {
         var migrations = new List<(EditorCurveBinding OldBinding, EditorCurveBinding NewBinding, AnimationCurve Curve)>();
         foreach (var binding in AnimationUtility.GetCurveBindings(clip))
         {
-            if (binding.type != typeof(SpriteTransform) ||
-                (binding.path != LegacyHeadPath && binding.path != PartPaths["SunFlower_head"]) ||
-                !IsInheritedFaceProperty(binding.propertyName))
+            if (binding.type != typeof(SpriteTransform))
             {
                 continue;
             }
 
+            var isLegacyHeadTransform =
+                (binding.path == LegacyFacePath || binding.path == LegacyNestedHeadPath) &&
+                IsHeadTransformProperty(binding.propertyName);
+            if (!isLegacyHeadTransform) continue;
+
             var migratedBinding = binding;
-            migratedBinding.path = FaceMotionPath;
+            migratedBinding.path = HeadPath;
             migrations.Add((binding, migratedBinding, AnimationUtility.GetEditorCurve(clip, binding)));
         }
 
@@ -847,7 +855,7 @@ public static class SunFlowerPrefabOptimizer
         }
     }
 
-    private static bool IsInheritedFaceProperty(string propertyName)
+    private static bool IsHeadTransformProperty(string propertyName)
     {
         return propertyName == "position.x" ||
                propertyName == "position.y" ||

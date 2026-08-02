@@ -26,9 +26,8 @@ public class SunShroomGenerator : AnimGenerator
         return objectName switch
         {
             "SunShroom_head" => "component/basic/head/SunShroom_head",
-            // Body motion lives on the outer group so facial overlays inherit it.
-            "SunShroom_body" => "component/basic/body",
-            "SunShroom_sleep" => "component/basic/sleep/SunShroom_sleep",
+            "SunShroom_body" => "component/basic/body/SunShroom_body",
+            "SunShroom_sleep" => "component/basic/body/SunShroom_body/SunShroom_sleep",
             _ => base.getAnimationPath(objectName)
         };
     }

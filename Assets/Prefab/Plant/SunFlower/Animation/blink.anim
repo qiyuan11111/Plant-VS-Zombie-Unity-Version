@@ -70,7 +70,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: component/basic/head/face/blink/SunFlower_blink1
+    path: component/basic/head/SunFlower_head/blink/SunFlower_blink1
     classID: 1
     script: {fileID: 0}
     flags: 16
@@ -127,7 +127,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: component/basic/head/face/blink/SunFlower_blink2
+    path: component/basic/head/SunFlower_head/blink/SunFlower_blink2
     classID: 1
     script: {fileID: 0}
     flags: 16
@@ -232,7 +232,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: component/basic/head/face/blink/SunFlower_blink1
+    path: component/basic/head/SunFlower_head/blink/SunFlower_blink1
     classID: 1
     script: {fileID: 0}
     flags: 16
@@ -289,7 +289,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: component/basic/head/face/blink/SunFlower_blink2
+    path: component/basic/head/SunFlower_head/blink/SunFlower_blink2
     classID: 1
     script: {fileID: 0}
     flags: 16

@@ -13153,7 +13153,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: component/basic/head/face
+    path: component/basic/head/SunFlower_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13264,7 +13264,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: component/basic/head/face
+    path: component/basic/head/SunFlower_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13375,7 +13375,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: component/basic/head/face
+    path: component/basic/head/SunFlower_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -27805,7 +27805,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: component/basic/head/face
+    path: component/basic/head/SunFlower_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -27916,7 +27916,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: component/basic/head/face
+    path: component/basic/head/SunFlower_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -28027,7 +28027,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: component/basic/head/face
+    path: component/basic/head/SunFlower_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16

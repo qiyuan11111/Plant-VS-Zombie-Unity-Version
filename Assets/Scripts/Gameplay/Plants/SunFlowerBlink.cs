@@ -97,52 +97,46 @@ namespace Prefab.Plant.SunFlower.Script
 
         private void ResolveVisuals()
         {
-            _blink1 = transform.Find("component/basic/head/face/blink/SunFlower_blink1")?.gameObject;
-            _blink2 = transform.Find("component/basic/head/face/blink/SunFlower_blink2")?.gameObject;
+            const string headPath = "component/basic/head/SunFlower_head";
+            var head = transform.Find(headPath) ??
+                       transform.Find("component/basic/head/face/SunFlower_head");
+            if (head == null) return;
+
+            _blink1 = head.Find("blink/SunFlower_blink1")?.gameObject ??
+                      head.Find("SunFlower_blink1")?.gameObject;
+            _blink2 = head.Find("blink/SunFlower_blink2")?.gameObject ??
+                      head.Find("SunFlower_blink2")?.gameObject;
             if (_blink1 != null && _blink2 != null) return;
             if (blink1Sprite == null || blink2Sprite == null) return;
 
-            var faceMotion = transform.Find("component/basic/head/face");
-            var headRoot = faceMotion ?? transform.Find("component/basic/head") ?? transform;
-            if (faceMotion != null)
+            var headTransform = head.GetComponent<SpriteTransform>();
+            if (headTransform != null)
             {
-                var faceTransform = faceMotion.GetComponent<SpriteTransform>();
-                if (faceTransform != null)
-                {
-                    faceTransform.providesChildSpritePosition = true;
-                    faceTransform.childSpritePosition = faceTransform.position;
-                }
+                headTransform.providesChildSpritePosition = true;
+                headTransform.childSpritePosition = headTransform.position;
             }
 
-            var blinkRoot = headRoot.Find("blink");
+            var blinkRoot = head.Find("blink");
             if (blinkRoot == null)
             {
                 var blinkRootObject = new GameObject("blink");
                 blinkRoot = blinkRootObject.transform;
-                blinkRoot.SetParent(headRoot, false);
+                blinkRoot.SetParent(head, false);
             }
 
-            var templateRenderer = transform.Find("component/basic/head/face/SunFlower_head")
-                ?.GetComponent<SpriteRenderer>() ??
-                transform.Find("component/basic/head/SunFlower_head")
-                ?.GetComponent<SpriteRenderer>();
-            var blink1Position = faceMotion != null
-                ? new Vector2(39.1f, 31.5f)
-                : new Vector2(27.1f, 25.25f);
-            var blink2Position = faceMotion != null
-                ? new Vector2(39.1f, 31.5f)
-                : new Vector2(27.1f, 25.1f);
+            var templateRenderer = head.GetComponent<SpriteRenderer>();
+            var blinkPosition = new Vector2(39.1f, 31.5f);
             _blink1 = CreateBlinkVisual(
                 blinkRoot,
                 "SunFlower_blink1",
                 blink1Sprite,
-                blink1Position,
+                blinkPosition,
                 templateRenderer);
             _blink2 = CreateBlinkVisual(
                 blinkRoot,
                 "SunFlower_blink2",
                 blink2Sprite,
-                blink2Position,
+                blinkPosition,
                 templateRenderer);
         }
 

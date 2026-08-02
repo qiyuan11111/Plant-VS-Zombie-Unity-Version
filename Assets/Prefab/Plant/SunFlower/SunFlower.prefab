@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 15
   m_Sprite: {fileID: 21300000, guid: 2a7d0e04eae74c2ab55e8bb4aa102177, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -107,66 +107,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 0, y: 0}
---- !u!1 &624076798297915738
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6215993558222050374}
-  - component: {fileID: 6507016225742789706}
-  m_Layer: 0
-  m_Name: face
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6215993558222050374
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624076798297915738}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.1000023, y: 16.55, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3807032333735489121}
-  - {fileID: 4061162649535098084}
-  m_Father: {fileID: 7100000000000000005}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6507016225742789706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 624076798297915738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  position: {x: 37.1, y: 35.7}
-  scale: {x: 100, y: 89}
-  skew: {x: 0, y: 0}
-  brightness: 1
-  isBright: 0
-  alpha: 1
-  alphaCoef: 1
-  updatePosition: 1
-  providesChildSpritePosition: 1
-  childSpritePosition: {x: 37.1, y: 35.7}
-  updateHierarchyScale: 1
-  hierarchyScaleReference: {x: 100, y: 89}
 --- !u!1 &3807032332989413555
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,8 +214,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032333322721014
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,8 +321,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032333456652815
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,8 +428,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032333503133560
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,8 +535,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032333527380577
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,8 +642,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032333675319765
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,8 +749,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032333684376368
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,8 +856,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032333693070398
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,8 +963,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032333735489120
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,11 +990,12 @@ Transform:
   m_GameObject: {fileID: 3807032333735489120}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.1000023, y: 16.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6215993558222050374}
+  m_Children:
+  - {fileID: 4061162649535098084}
+  m_Father: {fileID: 7100000000000000005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032333735489123
 SpriteRenderer:
@@ -1136,18 +1061,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0}
+  position: {x: 37.1, y: 35.7}
   scale: {x: 100, y: 89}
   skew: {x: 0, y: 0}
   brightness: 1
   isBright: 0
   alpha: 1
   alphaCoef: 1
-  updatePosition: 0
-  providesChildSpritePosition: 0
-  childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
+  updatePosition: 1
+  providesChildSpritePosition: 1
+  childSpritePosition: {x: 37.1, y: 35.7}
 --- !u!1 &3807032333809933546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,8 +1178,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032333894541335
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,8 +1285,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334296917772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,8 +1559,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334420671194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,8 +1666,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334448922086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,8 +1773,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334553621342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1967,8 +1880,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334574634623
 GameObject:
   m_ObjectHideFlags: 0
@@ -2076,8 +1987,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334691456787
 GameObject:
   m_ObjectHideFlags: 0
@@ -2185,8 +2094,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334802216184
 GameObject:
   m_ObjectHideFlags: 0
@@ -2294,8 +2201,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334809350024
 GameObject:
   m_ObjectHideFlags: 0
@@ -2403,8 +2308,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334821394710
 GameObject:
   m_ObjectHideFlags: 0
@@ -2512,8 +2415,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334864812780
 GameObject:
   m_ObjectHideFlags: 0
@@ -2621,8 +2522,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334889655203
 GameObject:
   m_ObjectHideFlags: 0
@@ -2730,8 +2629,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334898038738
 GameObject:
   m_ObjectHideFlags: 0
@@ -2839,8 +2736,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334905698536
 GameObject:
   m_ObjectHideFlags: 0
@@ -2948,8 +2843,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334907204376
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,8 +2950,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032334952746828
 GameObject:
   m_ObjectHideFlags: 0
@@ -3166,8 +3057,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032335084810905
 GameObject:
   m_ObjectHideFlags: 0
@@ -3275,8 +3164,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &3807032335115932319
 GameObject:
   m_ObjectHideFlags: 0
@@ -3384,8 +3271,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 100, y: 100}
 --- !u!1 &4658327488092265681
 GameObject:
   m_ObjectHideFlags: 0
@@ -3417,7 +3302,7 @@ Transform:
   m_Children:
   - {fileID: 1556646271206500178}
   - {fileID: 5157234314875937667}
-  m_Father: {fileID: 6215993558222050374}
+  m_Father: {fileID: 3807032333735489121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4753076276517951115
 GameObject:
@@ -3436,7 +3321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1556646271206500178
 Transform:
   m_ObjectHideFlags: 0
@@ -3492,7 +3377,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 15
   m_Sprite: {fileID: 21300000, guid: e70d5c3ea6d84786bd756db1e93d1523, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3526,8 +3411,6 @@ MonoBehaviour:
   updatePosition: 1
   providesChildSpritePosition: 0
   childSpritePosition: {x: 0, y: 0}
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 0, y: 0}
 --- !u!1 &7100000000000000000
 GameObject:
   m_ObjectHideFlags: 0
@@ -3627,7 +3510,7 @@ Transform:
   - {fileID: 7100000000000000007}
   - {fileID: 3807032334691456812}
   - {fileID: 3807032333322721015}
-  - {fileID: 6215993558222050374}
+  - {fileID: 3807032333735489121}
   m_Father: {fileID: 7100000000000000003}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7100000000000000006

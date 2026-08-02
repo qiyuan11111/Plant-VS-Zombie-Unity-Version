@@ -74,6 +74,113 @@ namespace Tests.EditMode
             }
         }
 
+        [Test]
+        public void Apply_DoesNotWriteUnityTransformScale()
+        {
+            var target = new GameObject("sprite");
+
+            try
+            {
+                target.transform.localScale = Vector3.one;
+                var spriteTransform = target.AddComponent<SpriteTransform>();
+                spriteTransform.scale = new Vector2(80f, 125f);
+
+                spriteTransform.Apply();
+
+                Assert.That(target.transform.localScale, Is.EqualTo(Vector3.one));
+            }
+            finally
+            {
+                Object.DestroyImmediate(target);
+            }
+        }
+
+        [Test]
+        public void ParentScale_IsPushedToChildShaderAroundParentPivot()
+        {
+            var parent = new GameObject("parent");
+            var child = new GameObject("child");
+            Material material = null;
+
+            try
+            {
+                child.transform.SetParent(parent.transform, false);
+                child.transform.localPosition = new Vector3(10f, 20f, 0f);
+
+                var parentTransform = parent.AddComponent<SpriteTransform>();
+                parentTransform.scale = new Vector2(200f, 50f);
+
+                var shader = Shader.Find("Custom/LightnessSkewShader");
+                Assert.That(shader, Is.Not.Null);
+                material = new Material(shader);
+                child.AddComponent<SpriteRenderer>().sharedMaterial = material;
+                var childTransform = child.AddComponent<SpriteTransform>();
+
+                parentTransform.Apply();
+                childTransform.Apply();
+
+                var properties = new MaterialPropertyBlock();
+                child.GetComponent<SpriteRenderer>().GetPropertyBlock(properties);
+                var row0 = properties.GetVector("_AffineRow0");
+                var row1 = properties.GetVector("_AffineRow1");
+
+                Assert.That(row0.x, Is.EqualTo(2f).Within(0.0001f));
+                Assert.That(row0.y, Is.Zero.Within(0.0001f));
+                Assert.That(row0.z, Is.EqualTo(10f).Within(0.0001f));
+                Assert.That(row1.x, Is.Zero.Within(0.0001f));
+                Assert.That(row1.y, Is.EqualTo(0.5f).Within(0.0001f));
+                Assert.That(row1.z, Is.EqualTo(-10f).Within(0.0001f));
+                Assert.That(parent.transform.localScale, Is.EqualTo(Vector3.one));
+                Assert.That(child.transform.localScale, Is.EqualTo(Vector3.one));
+            }
+            finally
+            {
+                if (material != null) Object.DestroyImmediate(material);
+                Object.DestroyImmediate(parent);
+            }
+        }
+
+        [Test]
+        public void LegacyEmptyAttachment_DoesNotCollapseDescendantRenderer()
+        {
+            var attachment = new GameObject("attachment");
+            var child = new GameObject("child");
+            Material material = null;
+
+            try
+            {
+                child.transform.SetParent(attachment.transform, false);
+                var attachmentTransform = attachment.AddComponent<SpriteTransform>();
+                attachmentTransform.scale = Vector2.zero;
+                attachmentTransform.brightness = 0f;
+                attachmentTransform.alpha = 0f;
+                attachmentTransform.alphaCoef = 0f;
+
+                var shader = Shader.Find("Custom/LightnessSkewShader");
+                Assert.That(shader, Is.Not.Null);
+                material = new Material(shader);
+                child.AddComponent<SpriteRenderer>().sharedMaterial = material;
+                var childTransform = child.AddComponent<SpriteTransform>();
+
+                attachmentTransform.Apply();
+                childTransform.Apply();
+
+                var properties = new MaterialPropertyBlock();
+                child.GetComponent<SpriteRenderer>().GetPropertyBlock(properties);
+                var row0 = properties.GetVector("_AffineRow0");
+                var row1 = properties.GetVector("_AffineRow1");
+
+                Assert.That(attachmentTransform.scale, Is.EqualTo(new Vector2(100f, 100f)));
+                Assert.That(row0, Is.EqualTo(new Vector4(1f, 0f, 0f, 0f)));
+                Assert.That(row1, Is.EqualTo(new Vector4(0f, 1f, 0f, 0f)));
+            }
+            finally
+            {
+                if (material != null) Object.DestroyImmediate(material);
+                Object.DestroyImmediate(attachment);
+            }
+        }
+
         private sealed class TestEntitySprite : EntitySprite
         {
         }

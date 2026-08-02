@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7323814355400627201
 Transform:
   m_ObjectHideFlags: 0
@@ -27,11 +27,11 @@ Transform:
   m_GameObject: {fileID: 743919592881848576}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.825, y: -8.325, z: 0}
+  m_LocalPosition: {x: -0.25, y: 2.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 900100000000000010}
+  m_Father: {fileID: 2043720009682376378}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4843406698265247964
 SpriteRenderer:
@@ -97,16 +97,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 41.45, y: 54.2}
+  scale: {x: 82.1411, y: 84.4421}
   skew: {x: 0, y: 0}
   brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
-  updatePosition: 0
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 0, y: 0}
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
 --- !u!1 &900100000000000001
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +169,6 @@ Transform:
   m_Children:
   - {fileID: 900100000000000006}
   - {fileID: 900100000000000008}
-  - {fileID: 900100000000000010}
   m_Father: {fileID: 900100000000000002}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &900100000000000005
@@ -215,7 +212,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 900100000000000008}
-  - component: {fileID: 900300000000000001}
   m_Layer: 6
   m_Name: body
   m_TagString: Untagged
@@ -232,68 +228,11 @@ Transform:
   m_GameObject: {fileID: 900100000000000007}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.575, y: -10.475, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2043720009682376378}
-  - {fileID: 900200000000000002}
-  m_Father: {fileID: 900100000000000004}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &900300000000000001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900100000000000007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  position: {x: 41.7, y: 56.35}
-  scale: {x: 79.99878, y: 79.99878}
-  skew: {x: 0, y: 0}
-  brightness: 1
-  isBright: 0
-  alpha: 1
-  alphaCoef: 1
-  updatePosition: 1
-  updateHierarchyScale: 1
-  hierarchyScaleReference: {x: 79.99878, y: 79.99878}
-  providesChildSpritePosition: 1
-  childSpritePosition: {x: 0, y: 0}
---- !u!1 &900100000000000009
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 900100000000000010}
-  m_Layer: 6
-  m_Name: sleep
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &900100000000000010
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900100000000000009}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7323814355400627201}
+  - {fileID: 2043720009682376378}
   m_Father: {fileID: 900100000000000004}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &900100000000000011
@@ -390,7 +329,7 @@ Transform:
   m_Children:
   - {fileID: 900200000000000004}
   - {fileID: 900200000000000008}
-  m_Father: {fileID: 900100000000000008}
+  m_Father: {fileID: 2043720009682376378}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &900200000000000003
 GameObject:
@@ -489,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: -0.1, y: -2.35}
+  position: {x: 41.6, y: 54}
   scale: {x: 78.746, y: 80.5328}
   skew: {x: 0, y: 0}
   brightness: 1
@@ -497,8 +436,6 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 0, y: 0}
 --- !u!1 &900200000000000007
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: -0.25, y: -2.45}
+  position: {x: 41.45, y: 53.9}
   scale: {x: 82.8552, y: 84.4421}
   skew: {x: 0, y: 0}
   brightness: 1
@@ -604,8 +541,6 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 0, y: 0}
 --- !u!1 &2647483252324358559
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,8 +821,6 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 0, y: 0}
 --- !u!1 &4358634213513046557
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,10 +879,12 @@ Transform:
   m_GameObject: {fileID: 6240029472060425614}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.575, y: -10.475, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 900200000000000002}
+  - {fileID: 7323814355400627201}
   m_Father: {fileID: 900100000000000008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6031430761051242655
@@ -1016,7 +951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0}
+  position: {x: 41.7, y: 56.35}
   scale: {x: 79.99878, y: 79.99878}
   skew: {x: 0, y: 0}
   brightness: 1
@@ -1024,5 +959,5 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
-  updateHierarchyScale: 0
-  hierarchyScaleReference: {x: 0, y: 0}
+  providesChildSpritePosition: 1
+  childSpritePosition: {x: 41.7, y: 56.35}
