@@ -5,8 +5,8 @@ Shader "Custom/LightnessSkewShader" {
         [PerRendererData] _Color ("Color", Color) = (1,1,1,1)
         [PerRendererData] _SkewX ("Skew X", Range(-90, 90)) = 0
         [PerRendererData] _SkewY ("Skew Y", Range(-90, 90)) = 0
-        [PerRendererData] _ScaleX ("Scale X", float) = 1
-        [PerRendererData] _ScaleY ("Scale Y", float) = 1
+        [PerRendererData] _ScaleX ("Scale X", float) = 100
+        [PerRendererData] _ScaleY ("Scale Y", float) = 100
         [PerRendererData] _AffineRow0 ("Inherited Affine Row 0", Vector) = (1,0,0,0)
         [PerRendererData] _AffineRow1 ("Inherited Affine Row 1", Vector) = (0,1,0,0)
         [PerRendererData] _Alpha ("Alpha", Range(0.0, 1.0)) = 1
