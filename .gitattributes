@@ -1,8 +1,10 @@
 # Use Unity's semantic YAML merge driver for serialized assets.
-*.unity merge=unityyamlmerge
-*.prefab merge=unityyamlmerge
-*.asset merge=unityyamlmerge
-*.anim merge=unityyamlmerge
-*.controller merge=unityyamlmerge
-*.overrideController merge=unityyamlmerge
-*.playable merge=unityyamlmerge
+*.unity merge=unityyamlmerge whitespace=-blank-at-eol
+*.prefab merge=unityyamlmerge whitespace=-blank-at-eol
+*.asset merge=unityyamlmerge whitespace=-blank-at-eol
+*.anim merge=unityyamlmerge whitespace=-blank-at-eol
+*.controller merge=unityyamlmerge whitespace=-blank-at-eol
+*.overrideController merge=unityyamlmerge whitespace=-blank-at-eol
+*.playable merge=unityyamlmerge whitespace=-blank-at-eol
+*.meta whitespace=-blank-at-eol
+*.mat whitespace=-blank-at-eol

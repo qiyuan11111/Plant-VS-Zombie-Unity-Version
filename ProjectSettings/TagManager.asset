@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Sun
+  - Grid
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - test
+  - Water
+  - UI
+  - Plant
+  - Zombie
+  - Bullet
+  - ZombieConfused
+  - BulletZombie
+  - DetectZombieRegion
+  - DetectPlantRegion
+  - PlantObject
+  - ZombieObject
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: card
+    uniqueID: 1701062211
+    locked: 0
+  - name: cardmask
+    uniqueID: 3580990629
+    locked: 0
+  - name: shadow
+    uniqueID: 1967770753
+    locked: 0
+  - name: plant-0
+    uniqueID: 4143028385
+    locked: 0
+  - name: zombie-0
+    uniqueID: 1674838757
+    locked: 0
+  - name: plant-1
+    uniqueID: 3463490403
+    locked: 0
+  - name: zombie-1
+    uniqueID: 1063056449
+    locked: 0
+  - name: plant-2
+    uniqueID: 252118995
+    locked: 0
+  - name: zombie-2
+    uniqueID: 63478499
+    locked: 0
+  - name: plant-3
+    uniqueID: 3531826013
+    locked: 0
+  - name: zombie-3
+    uniqueID: 4021996505
+    locked: 0
+  - name: plant-4
+    uniqueID: 2281506933
+    locked: 0
+  - name: zombie-4
+    uniqueID: 3787175347
+    locked: 0
+  - name: bullet
+    uniqueID: 3873597375
+    locked: 0
+  - name: sun
+    uniqueID: 22445013
+    locked: 0
+  - name: front
+    uniqueID: 2585496363
+    locked: 0
