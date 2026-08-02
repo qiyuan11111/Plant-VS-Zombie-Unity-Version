@@ -1,5 +1,6 @@
 using System.Linq;
 using NUnit.Framework;
+using Prefab.Plant.SunShroom.Script;
 using Script;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -14,6 +15,7 @@ namespace Tests.EditMode
         private const string BodyPath = "component/basic/body/SunShroom_body";
         private const string BlinkPath = BodyPath + "/blink";
         private const string SleepPath = BodyPath + "/SunShroom_sleep";
+        private const string AnchorPath = "component/anchors/Sun_Anchor";
 
         [Test]
         public void PresentationPrefab_VisualNodesOwnRawFlaTransforms()
@@ -49,7 +51,7 @@ namespace Tests.EditMode
             Assert.That(blink2.localPosition, Is.EqualTo(new Vector3(-0.25f, 2.45f, 0f)));
 
             AssertRawTransform(sleep, new Vector2(41.45f, 54.2f),
-                new Vector2(82.1411f, 84.4421f));
+                new Vector2(82.14111328125f, 84.442138671875f));
             Assert.That(sleep.gameObject.activeSelf, Is.False);
             Assert.That(sleep.parent, Is.SameAs(body));
             Assert.That(sleep.localPosition, Is.EqualTo(new Vector3(-0.25f, 2.15f, 0f)));
@@ -70,7 +72,6 @@ namespace Tests.EditMode
             var clipPaths = new[]
             {
                 "Assets/Prefab/Plant/SunShroom/Animation/idle.anim",
-                "Assets/Prefab/Plant/SunShroom/Animation/idle 1.anim",
                 "Assets/Prefab/Plant/SunShroom/Animation/sleep.anim",
                 "Assets/Prefab/Plant/SunShroom/Animation/blink.anim",
                 "Assets/Prefab/Plant/SunShroom/Animation/nosun.anim",
@@ -114,6 +115,29 @@ namespace Tests.EditMode
                 .Select(state => state.state)
                 .Single(state => state.name == "sleep");
             Assert.That(sleepState.motion, Is.SameAs(sleepClip));
+        }
+
+        [Test]
+        public void PresentationPrefab_UsesGameplayProductionAnchorBranch()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
+            Assert.That(prefab, Is.Not.Null);
+
+            var anchor = prefab.transform.Find(AnchorPath);
+            Assert.That(anchor, Is.Not.Null);
+            Assert.That(prefab.transform.Find(
+                "component/basic/head/SunShroom_head/Sun_Anchor"), Is.Null);
+            Assert.That(anchor.localPosition,
+                Is.EqualTo(new Vector3(-0.025001526f, 6.4749985f, 0f)));
+            Assert.That(anchor.localRotation, Is.EqualTo(Quaternion.identity));
+            Assert.That(anchor.localScale, Is.EqualTo(Vector3.one));
+            Assert.That(anchor.GetComponent<SpriteTransform>(), Is.Null);
+
+            var producer = prefab.GetComponent<SunProducer>();
+            Assert.That(producer, Is.Not.Null);
+            var serializedProducer = new SerializedObject(producer);
+            Assert.That(serializedProducer.FindProperty("productionAnchor").objectReferenceValue,
+                Is.SameAs(anchor));
         }
 
         private static void AssertRawTransform(

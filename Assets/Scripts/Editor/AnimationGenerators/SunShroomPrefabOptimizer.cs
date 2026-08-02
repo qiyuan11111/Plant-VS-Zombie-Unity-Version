@@ -11,7 +11,6 @@ public static class SunShroomPrefabOptimizer
 {
     private const string PrefabPath = "Assets/Prefab/Plant/SunShroom/SunShroom.prefab";
     private const string IdleClipPath = "Assets/Prefab/Plant/SunShroom/Animation/idle.anim";
-    private const string ActiveIdleClipPath = "Assets/Prefab/Plant/SunShroom/Animation/idle 1.anim";
     private const string SleepClipPath = "Assets/Prefab/Plant/SunShroom/Animation/sleep.anim";
     private const string BlinkClipPath = "Assets/Prefab/Plant/SunShroom/Animation/blink.anim";
     private const string NoSunClipPath = "Assets/Prefab/Plant/SunShroom/Animation/nosun.anim";
@@ -19,12 +18,15 @@ public static class SunShroomPrefabOptimizer
     private const string ControllerPath = "Assets/Prefab/Plant/SunShroom/Animation/SunShroom.controller";
     private const string BodyContainerPath = "component/basic/body";
     private const string BodyPath = "component/basic/body/SunShroom_body";
+    private const string AnchorsPath = "component/anchors";
+    private const string AnchorPath = "component/anchors/Sun_Anchor";
+    private const string OldAnchorPath = "component/basic/head/SunShroom_head/Sun_Anchor";
     private const string OldSleepContainerPath = "component/basic/sleep";
     private const string OldSleepPath = "component/basic/sleep/SunShroom_sleep";
     private const string SleepPath = "component/basic/body/SunShroom_body/SunShroom_sleep";
     private const string OldBlinkPath = "component/basic/body/blink";
     private const string BlinkPath = "component/basic/body/SunShroom_body/blink";
-    private const string OptimizationVersion = "sunshroom-structure-v3-sleep-under-body-image";
+    private const string OptimizationVersion = "sunshroom-structure-v5-xml-animation-values";
 
     [InitializeOnLoadMethod]
     private static void SchedulePendingOptimization()
@@ -59,11 +61,9 @@ public static class SunShroomPrefabOptimizer
     {
         var source = LoadSource();
         var idleClip = RequireClip(IdleClipPath);
-        var activeIdleClip = RequireClip(ActiveIdleClipPath);
         var sleepClip = RequireClip(SleepClipPath);
 
         RebuildSourceClip(idleClip, source["idle"]);
-        RebuildSourceClip(activeIdleClip, source["idle"]);
         RebuildSourceClip(sleepClip, source["sleep"]);
         MigrateSupplementalClip(RequireClip(BlinkClipPath));
         MigrateSupplementalClip(RequireClip(NoSunClipPath));
@@ -225,6 +225,9 @@ public static class SunShroomPrefabOptimizer
         {
             var bodyContainer = RequireTransform(root.transform, BodyContainerPath);
             var body = RequireTransform(root.transform, BodyPath);
+            var anchors = RequireTransform(root.transform, AnchorsPath);
+            var sunAnchor = root.transform.Find(AnchorPath) ?? root.transform.Find(OldAnchorPath);
+            if (sunAnchor == null) throw new MissingReferenceException("SunShroom sun anchor is missing.");
             var sleep = root.transform.Find(SleepPath) ?? root.transform.Find(OldSleepPath);
             if (sleep == null) throw new MissingReferenceException("SunShroom sleep sprite is missing.");
             var blinkRoot = body.Find("blink") ?? root.transform.Find(OldBlinkPath);
@@ -232,6 +235,15 @@ public static class SunShroomPrefabOptimizer
 
             if (blinkRoot.parent != body) blinkRoot.SetParent(body, false);
             if (sleep.parent != body) sleep.SetParent(body, false);
+            if (sunAnchor.parent != anchors) sunAnchor.SetParent(anchors, false);
+            sunAnchor.localPosition = new Vector3(-0.025001526f, 6.4749985f, 0f);
+            sunAnchor.localRotation = Quaternion.identity;
+            sunAnchor.localScale = Vector3.one;
+            var anchorSpriteTransform = sunAnchor.GetComponent<SpriteTransform>();
+            if (anchorSpriteTransform != null)
+            {
+                UnityEngine.Object.DestroyImmediate(anchorSpriteTransform);
+            }
 
             var oldSleepContainer = root.transform.Find(OldSleepContainerPath);
             if (oldSleepContainer != null && oldSleepContainer.childCount == 0)
@@ -268,7 +280,7 @@ public static class SunShroomPrefabOptimizer
                 sleep,
                 sleepTransform,
                 new Vector2(41.45f, 54.2f),
-                new Vector2(82.1411f, 84.4421f));
+                new Vector2(82.14111328125f, 84.442138671875f));
             sleep.gameObject.SetActive(false);
 
             PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);

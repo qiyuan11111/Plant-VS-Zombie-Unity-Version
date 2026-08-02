@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 41.45, y: 54.2}
-  scale: {x: 82.1411, y: 84.4421}
+  scale: {x: 82.14111, y: 84.44214}
   skew: {x: 0, y: 0}
   brightness: 1
   isBright: 0
@@ -265,6 +265,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 79424729920951421}
+  - {fileID: 900100000000000014}
   m_Father: {fileID: 900100000000000002}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &900100000000000013
@@ -292,11 +293,11 @@ Transform:
   m_GameObject: {fileID: 900100000000000013}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.025001526, y: 6.4749985, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2819535200135201753}
+  m_Father: {fileID: 900100000000000012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &900200000000000001
 GameObject:
@@ -745,8 +746,7 @@ Transform:
   m_LocalPosition: {x: -0.025001526, y: 6.4749985, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 900100000000000014}
+  m_Children: []
   m_Father: {fileID: 900100000000000006}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7116376385701918397
