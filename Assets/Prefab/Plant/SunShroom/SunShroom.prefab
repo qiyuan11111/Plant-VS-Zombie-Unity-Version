@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   material: {fileID: 0}
   hasMaterial: 0
   position: {x: 0, y: 0}
@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 968657580573475880}
   - component: {fileID: 4474694981646689053}
   - component: {fileID: 4348092117344695832}
+  - component: {fileID: 6219350413376402199}
   - component: {fileID: 3655578370796775962}
   - component: {fileID: 1630400799535052503}
   - component: {fileID: 7401570263052556772}
@@ -182,6 +183,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   childSpriteTransforms: []
   shadowTransform: {fileID: 0}
+  sunProducer: {fileID: 6219350413376402199}
+--- !u!114 &6219350413376402199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2647483252324358559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81849ee1b6a7460fbfc1ae32686ca41e, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  productionAnchor: {fileID: 2819535200135201753}
+  initialDelaySeconds: 10
+  initialDelayVariationSeconds: 2
+  intervalSeconds: 24
+  intervalVariationSeconds: 3
+  fallbackSunType: 0
 --- !u!61 &3655578370796775962
 BoxCollider2D:
   m_ObjectHideFlags: 0
