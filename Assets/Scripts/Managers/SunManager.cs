@@ -7,10 +7,8 @@ using Random = UnityEngine.Random;
 
 namespace Script.Manager
 {
-    public class SunManager : MonoBehaviour
+    public class SunManager : SceneSingleton<SunManager>
     {
-        public static SunManager Instance;
-
         [Header("Sun References")]
         [SerializeField] private Transform sunPoint;
         [SerializeField] private TextMeshProUGUI sunLightText;
@@ -25,8 +23,6 @@ namespace Script.Manager
         public Vector3 sunPointPosition;
 
         private int _currentSunLight;
-        private bool _isConfigured;
-
         private int CurrentSunLight
         {
             get => _currentSunLight;
@@ -138,40 +134,26 @@ namespace Script.Manager
             CurrentSunLight += sunLight;
         }
 
-        private void Awake()
+        protected override bool ValidateReferences()
         {
-            Instance = this;
-            _isConfigured = ValidateReferences();
-            enabled = _isConfigured;
-            if (!_isConfigured) return;
+            var isValid = true;
+            isValid &= RequireReference(sunPoint, nameof(sunPoint));
+            isValid &= RequireReference(sunLightText, nameof(sunLightText));
+            return isValid;
+        }
 
+        protected override void OnReferencesValidated()
+        {
             sunPointPosition = transform.InverseTransformPoint(sunPoint.position);
             SetCurrentSunLight(100);
         }
 
-        private bool ValidateReferences()
+        protected override bool ValidateDependencies()
         {
-            var isValid = true;
-            if (sunPoint == null)
-            {
-                Debug.LogError(
-                    $"{nameof(SunManager)} requires {nameof(sunPoint)} to be assigned in the Inspector.",
-                    this);
-                isValid = false;
-            }
-
-            if (sunLightText == null)
-            {
-                Debug.LogError(
-                    $"{nameof(SunManager)} requires {nameof(sunLightText)} to be assigned in the Inspector.",
-                    this);
-                isValid = false;
-            }
-
-            return isValid;
+            return RequireManager(MainGameManager.Instance);
         }
 
-        private void Start()
+        protected override void OnSingletonStart()
         {
             if (enableNaturalSun)
             {

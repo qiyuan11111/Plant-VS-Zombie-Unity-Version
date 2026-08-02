@@ -1,22 +1,26 @@
 using Script.Manager;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : SceneSingleton<SoundManager>
 {
-    public static SoundManager Instance;
-    
     [SerializeField] private AudioSource bgm;
     [SerializeField] private AudioSource effect;
 
-    private void Awake()
+    protected override bool ValidateReferences()
     {
-        Instance = this;
+        var isValid = true;
+        isValid &= RequireReference(bgm, nameof(bgm));
+        isValid &= RequireReference(effect, nameof(effect));
+        return isValid;
     }
 
-    private void Start()
+    protected override bool ValidateDependencies()
     {
-        if (bgm == null) return;
+        return RequireManager(MainGameManager.Instance);
+    }
 
+    protected override void OnSingletonStart()
+    {
         bgm.clip = MainGameManager.Instance.GetAudioClipByType(GameSound.SoundType.BGM_day);
         if (bgm.clip == null) return;
 
@@ -25,8 +29,6 @@ public class SoundManager : MonoBehaviour
 
     public void PlayEffect(GameSound.SoundType soundType)
     {
-        if (effect == null) return;
-
         var audioClip = MainGameManager.Instance.GetAudioClipByType(soundType);
         if (audioClip != null)
         {

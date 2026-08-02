@@ -6,10 +6,11 @@ using Script.Util;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PeaShooterSingle : Plant, IPointerClickHandler
+public class PeaShooterSingle : PlantEntity, IPointerClickHandler
 {
+    private const string MouthPath = "component/basic/head/pod/mouth";
     private static readonly int Shoot = Animator.StringToHash("shoot");
-    // public override Vector3 spritePosition => new(40.2f, -52.25f, 0f);
+    public override Vector3 SpritePosition => new(40.2f, 52.25f, 0f);
 
     // public override int sunlight => 100;
     // public override float cdTime => 0.5f;
@@ -32,13 +33,13 @@ public class PeaShooterSingle : Plant, IPointerClickHandler
     //         peaShooterSingle.attack = false;
     //     }
     //
-    //     public override bool IsGoal(Entity sprite)
+    //     public override bool IsGoal(GameEntity sprite)
     //     {
     //         if (sprite.row != this.sprite.row) return false;
     //         return true;
     //     }
     //
-    //     public DetectZombieCallback(Entity sprite) : base(sprite)
+    //     public DetectZombieCallback(GameEntity sprite) : base(sprite)
     //     {
     //     }
     // }
@@ -58,21 +59,21 @@ public class PeaShooterSingle : Plant, IPointerClickHandler
     //         collider2D.isTrigger = true;
     //     }
     //
-    //     public HandDetectZombieRegion(Entity sprite, string name, string layer) : base(sprite, name, layer)
+    //     public HandDetectZombieRegion(GameEntity sprite, string name, string layer) : base(sprite, name, layer)
     //     {
     //     }
     // }
 
     public void ShootProjectilePea()
     {
-        Vector3 position = Transform.Find("PeaShooterSingle_head/PeaShooterSingle_mouth").transform.position;
+        Vector3 position = Transform.Find(MouthPath).position;
         // BulletManager.instance.InstantiateBullet(this, position + new Vector3(30, 6, 0), 
         //     GameConfigObject.BulletType.ProjectilePea);
     }
 
     // public override void SetDetectRegions()
     // {
-    //     SetDetectRegion<Zombie>(new DetectZombieCallback(this), new HandDetectZombieRegion(this, "DetectZombieRegion", "DetectZombieRegion"));
+    //     SetDetectRegion<ZombieEntity>(new DetectZombieCallback(this), new HandDetectZombieRegion(this, "DetectZombieRegion", "DetectZombieRegion"));
     // }
     //
     // public override List<Task> SetFunction()

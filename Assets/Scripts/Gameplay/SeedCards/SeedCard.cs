@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace Prefab.Object.SeedCard.Script
 {
-    public class SeedCard : global::Script.Model.Object, IPointerClickHandler
+    public class SeedCard : WorldObject, IPointerClickHandler
     {
         [SerializeField] private SeedCardView view;
 

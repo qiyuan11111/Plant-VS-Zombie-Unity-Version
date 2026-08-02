@@ -17,6 +17,11 @@ public abstract class AnimGenerator : MonoBehaviour
 
     protected abstract string getPrefabName();
 
+    protected virtual string getAnimationPath(string objectName)
+    {
+        return objectName.Equals(gameObject.transform.name) ? string.Empty : objectName;
+    }
+
     protected virtual float getFrameRate()
     {
         return 12f;
@@ -56,7 +61,15 @@ public abstract class AnimGenerator : MonoBehaviour
             {
                 var name = jsonData[i]["obj"].ToString();
                 // 获得gameObject的一个名叫aaa的子物体
-                var child = name.Equals(gameObject.transform.name) ? gameObject.transform : gameObject.transform.Find(name);
+                var animationPath = getAnimationPath(name);
+                var child = string.IsNullOrEmpty(animationPath)
+                    ? gameObject.transform
+                    : gameObject.transform.Find(animationPath);
+                if (child == null)
+                {
+                    throw new InvalidOperationException(
+                        $"Cannot bind animation object '{name}' at path '{animationPath}' on '{gameObject.name}'.");
+                }
                 var ani = jsonData[i]["ani"];
                 var props = jsonData[i]["ani_list"];
                 
@@ -76,8 +89,7 @@ public abstract class AnimGenerator : MonoBehaviour
                         curve.AddKey(new Keyframe(fram, data));
                     }
 
-                    clip.SetCurve(name.Equals(gameObject.transform.name) ? "" : name, getPropertyType(prop), prop,
-                        curve);
+                    clip.SetCurve(animationPath, getPropertyType(prop), prop, curve);
                 }
             }
 

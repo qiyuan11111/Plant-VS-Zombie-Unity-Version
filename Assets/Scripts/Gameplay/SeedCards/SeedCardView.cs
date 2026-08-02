@@ -25,7 +25,7 @@ namespace Prefab.Object.SeedCard.Script
         [SerializeField] private Text priceText;
         [SerializeField] private Transform iconRoot;
 
-        private Entity _plantIcon;
+        private GameEntity _plantIcon;
 
         public void Initialize(PlantDefinition definition)
         {
@@ -74,7 +74,7 @@ namespace Prefab.Object.SeedCard.Script
             if (_plantIcon != null) Destroy(_plantIcon.gameObject);
 
             var iconObject = Instantiate(definition.PresentationPrefab, iconRoot, true);
-            _plantIcon = iconObject.GetComponent<global::Script.Model.Plant>();
+            _plantIcon = iconObject.GetComponent<PlantEntity>();
             if (_plantIcon == null)
             {
                 Destroy(iconObject);
@@ -84,7 +84,7 @@ namespace Prefab.Object.SeedCard.Script
 
             try
             {
-                EntityPresentation.ConfigureCardIcon(_plantIcon);
+                EntityPresentation.ConfigureCardIcon(_plantIcon, definition.CardIconFrame);
             }
             catch
             {

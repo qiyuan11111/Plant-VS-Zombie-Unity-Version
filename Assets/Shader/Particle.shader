@@ -7,6 +7,8 @@ Shader "Custom/Particle" {
         _SkewY ("Skew Y", Range(-90, 90)) = 0
         _ScaleX ("Scale X", float) = 1
         _ScaleY ("Scale Y", float) = 1
+        _AffineRow0 ("Inherited Affine Row 0", Vector) = (1,0,0,0)
+        _AffineRow1 ("Inherited Affine Row 1", Vector) = (0,1,0,0)
         _Alpha ("Alpha", Range(0.0, 1.0)) = 1
     }
     SubShader {
@@ -39,6 +41,7 @@ Shader "Custom/Particle" {
 
             float _SkewX, _SkewY;
             float _ScaleX, _ScaleY;
+            float4 _AffineRow0, _AffineRow1;
             float _Alpha;
             
 
@@ -75,8 +78,13 @@ Shader "Custom/Particle" {
 
             v2f vert (appdata v) {
                 v2f o;
-                float4x4 affine = mul(Skew(_SkewX, _SkewY), Scale(_ScaleX, _ScaleY));
-                v.vertex = mul(affine, v.vertex);
+                float4x4 inheritedAffine = float4x4(
+                    _AffineRow0.x, _AffineRow0.y, 0.0, _AffineRow0.z,
+                    _AffineRow1.x, _AffineRow1.y, 0.0, _AffineRow1.z,
+                    0.0, 0.0, 1.0, 0.0,
+                    0.0, 0.0, 0.0, 1.0);
+                float4x4 localAffine = mul(Skew(_SkewX, _SkewY), Scale(_ScaleX, _ScaleY));
+                v.vertex = mul(inheritedAffine, mul(localAffine, v.vertex));
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
                 o.texcoord1 = v.texcoord1;

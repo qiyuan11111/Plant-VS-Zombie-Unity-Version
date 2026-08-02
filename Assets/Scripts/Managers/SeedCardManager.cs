@@ -6,9 +6,8 @@ using UnityEngine;
 
 namespace Script.Manager
 {
-    public class SeedCardManager : MonoBehaviour
+    public class SeedCardManager : SceneSingleton<SeedCardManager>
     {
-        public static SeedCardManager Instance;
         private readonly List<SeedCard> _seedCards = new();
         private readonly List<PlantDefinition> _plantDefinitions = new();
         private int _currentSunlight;
@@ -84,7 +83,7 @@ namespace Script.Manager
 
         private void LoadCardGroup()
         {
-            LoadPlantCard(GameConfigObject.PlantType.SunShroom);
+            LoadPlantCard(GameConfigObject.PlantType.SunFlower);
             LoadPlantCard(GameConfigObject.PlantType.SunShroom);
             LoadPlantCard(GameConfigObject.PlantType.SunShroom);
             LoadPlantCard(GameConfigObject.PlantType.SunShroom);
@@ -102,15 +101,27 @@ namespace Script.Manager
             }
         }
 
-        private void Awake()
+        protected override void OnSingletonAwake()
         {
-            Instance = this;
-
             seedBankRectTransform = GetComponent<RectTransform>();
-            cardGroupRectTransform = seedBankRectTransform.Find("Group").GetComponent<RectTransform>();
+            var cardGroup = seedBankRectTransform != null ? seedBankRectTransform.Find("Group") : null;
+            cardGroupRectTransform = cardGroup != null ? cardGroup.GetComponent<RectTransform>() : null;
         }
 
-        private void Start()
+        protected override bool ValidateReferences()
+        {
+            var isValid = true;
+            isValid &= RequireReference(seedBankRectTransform, $"a {nameof(RectTransform)} on the same GameObject");
+            isValid &= RequireReference(cardGroupRectTransform, "a child RectTransform named Group");
+            return isValid;
+        }
+
+        protected override bool ValidateDependencies()
+        {
+            return RequireManager(MainGameManager.Instance);
+        }
+
+        protected override void OnSingletonStart()
         {
             if (SunManager.Instance != null)
             {

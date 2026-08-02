@@ -12,12 +12,14 @@ namespace Script.Util
         [SerializeField] private GameObject presentationPrefab;
         [SerializeField, Min(0)] private int sunPrice;
         [SerializeField, Min(0f)] private float cooldown;
+        [SerializeField, Min(1)] private int cardIconFrame = 1;
 
         public GameConfigObject.PlantType Type => type;
         public GameObject Prefab => prefab;
         public GameObject PresentationPrefab => presentationPrefab != null ? presentationPrefab : prefab;
         public int SunPrice => sunPrice;
         public float Cooldown => cooldown;
+        public int CardIconFrame => Mathf.Max(1, cardIconFrame);
     }
 
     [CreateAssetMenu(fileName = "GameConfigObject", menuName = "GameConfigObject", order = 1)]
@@ -26,7 +28,8 @@ namespace Script.Util
         public enum PlantType
         {
             SunShroom = 0,
-            PeaShooterSingle = 1
+            PeaShooterSingle = 1,
+            SunFlower = 2
         }
 
         public enum ZombieType

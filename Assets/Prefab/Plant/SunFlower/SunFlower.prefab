@@ -1,5 +1,112 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &579160871428131033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5157234314875937667}
+  - component: {fileID: 5031207353632303437}
+  - component: {fileID: 6212896503050189708}
+  m_Layer: 6
+  m_Name: SunFlower_blink2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5157234314875937667
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579160871428131033}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2, y: 4.200001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4061162649535098084}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &5031207353632303437
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579160871428131033}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 15
+  m_Sprite: {fileID: 21300000, guid: 2a7d0e04eae74c2ab55e8bb4aa102177, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 24, y: 12.8}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &6212896503050189708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579160871428131033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 39.1, y: 31.5}
+  scale: {x: 100, y: 100}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032332989413555
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,6 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032332989413580}
   - component: {fileID: 3807032332989413581}
+  - component: {fileID: 7300000000000000007}
   m_Layer: 6
   m_Name: SunFlower_rightpetal7
   m_TagString: Untagged
@@ -26,11 +134,11 @@ Transform:
   m_GameObject: {fileID: 3807032332989413555}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 16.2, y: 5.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032332989413581
 SpriteRenderer:
@@ -52,7 +160,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,6 +192,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032332989413555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 56.4, y: 46.8}
+  scale: {x: 80.3, y: 86.7}
+  skew: {x: 0, y: 4.8}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032333322721014
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032333322721015}
   - component: {fileID: 3807032333322721008}
+  - component: {fileID: 7300000000000000000}
   m_Layer: 6
   m_Name: SunFlower_bottompetals
   m_TagString: Untagged
@@ -110,11 +241,11 @@ Transform:
   m_GameObject: {fileID: 3807032333322721014}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.3, y: -2.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032333322721008
 SpriteRenderer:
@@ -136,7 +267,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -168,6 +299,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032333322721014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 36.9, y: 54.7}
+  scale: {x: 80, y: 98.5}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032333456652815
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +331,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032333456652808}
   - component: {fileID: 3807032333456652809}
+  - component: {fileID: 7300000000000000009}
   m_Layer: 6
   m_Name: SunFlower_rightpetal9
   m_TagString: Untagged
@@ -194,11 +348,11 @@ Transform:
   m_GameObject: {fileID: 3807032333456652815}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 7.15, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032333456652809
 SpriteRenderer:
@@ -220,7 +374,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -252,6 +406,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032333456652815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 47.35, y: 52.65}
+  scale: {x: 80, y: 86.7}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032333503133560
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,8 +438,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032333503133561}
   - component: {fileID: 3807032333503133562}
+  - component: {fileID: 7300000000000000019}
   m_Layer: 6
-  m_Name: SunFlower_frontleaf_left_tip
+  m_Name: left_tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,11 +455,11 @@ Transform:
   m_GameObject: {fileID: 3807032333503133560}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 146.1, z: 0}
+  m_LocalPosition: {x: -15, y: -16.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000017}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032333503133562
 SpriteRenderer:
@@ -304,7 +481,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -325,7 +502,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 981800aa49faebf4cb8423ee49a25085, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 52c86611f985c604a8ddcb445d7c1cac, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -336,6 +513,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032333503133560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 25.2, y: 69.1}
+  scale: {x: 55.5, y: 55.5}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032333527380577
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,8 +545,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032333527380578}
   - component: {fileID: 3807032333527380579}
+  - component: {fileID: 7300000000000000020}
   m_Layer: 6
-  m_Name: SunFlower_frontleaf_right_tip
+  m_Name: right_tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -362,11 +562,11 @@ Transform:
   m_GameObject: {fileID: 3807032333527380577}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 146.1, z: 0}
+  m_LocalPosition: {x: 19.7, y: -11.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000017}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032333527380579
 SpriteRenderer:
@@ -388,7 +588,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -409,7 +609,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 4011dddfb60217a40999ccb899e6c329, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ef74d4375bea7e54a872f5fd0c3fca85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -420,6 +620,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032333527380577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 59.9, y: 63.8}
+  scale: {x: 55.5, y: 55.5}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032333675319765
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,6 +652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032333675319766}
   - component: {fileID: 3807032333675319767}
+  - component: {fileID: 7300000000000000011}
   m_Layer: 6
   m_Name: SunFlower_leftpetal2
   m_TagString: Untagged
@@ -446,11 +669,11 @@ Transform:
   m_GameObject: {fileID: 3807032333675319765}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 146.1, z: 0}
+  m_LocalPosition: {x: -16.1, y: 30.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032333675319767
 SpriteRenderer:
@@ -472,7 +695,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -504,6 +727,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032333675319765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 24.1, y: 21.5}
+  scale: {x: 100, y: 100}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032333684376368
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,6 +759,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032333684376369}
   - component: {fileID: 3807032333684376370}
+  - component: {fileID: 7300000000000000004}
   m_Layer: 6
   m_Name: SunFlower_rightpetal4
   m_TagString: Untagged
@@ -530,11 +776,11 @@ Transform:
   m_GameObject: {fileID: 3807032333684376368}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 20.45, y: 23.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032333684376370
 SpriteRenderer:
@@ -556,7 +802,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -588,6 +834,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032333684376368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 60.65, y: 28.95}
+  scale: {x: 100.3, y: 100}
+  skew: {x: 0, y: 4.4}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032333693070398
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,6 +866,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032333693070399}
   - component: {fileID: 3807032333693070392}
+  - component: {fileID: 7300000000000000015}
   m_Layer: 6
   m_Name: SunFlower_leftpetal6
   m_TagString: Untagged
@@ -614,11 +883,11 @@ Transform:
   m_GameObject: {fileID: 3807032333693070398}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 146.1, z: 0}
+  m_LocalPosition: {x: -26.25, y: 6.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032333693070392
 SpriteRenderer:
@@ -640,7 +909,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -672,6 +941,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032333693070398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 13.95, y: 45.35}
+  scale: {x: 80.6, y: 86.7}
+  skew: {x: 0, y: -7.3}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032333735489120
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,11 +990,12 @@ Transform:
   m_GameObject: {fileID: 3807032333735489120}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.1000023, y: 16.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Children:
+  - {fileID: 4061162649535098084}
+  m_Father: {fileID: 7100000000000000005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032333735489123
 SpriteRenderer:
@@ -725,7 +1017,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -769,16 +1061,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 37.1, y: 35.7}
+  scale: {x: 100, y: 89}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
-  updatePosition: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 1
+  childSpritePosition: {x: 37.1, y: 35.7}
 --- !u!1 &3807032333809933546
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,8 +1081,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032333809933547}
   - component: {fileID: 3807032333809933540}
+  - component: {fileID: 7300000000000000021}
   m_Layer: 6
-  m_Name: SunFlower_backleaf
+  m_Name: backleaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -805,11 +1098,11 @@ Transform:
   m_GameObject: {fileID: 3807032333809933546}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.3, y: 164.9, z: 0}
+  m_LocalPosition: {x: -1.2, y: -6.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032333809933540
 SpriteRenderer:
@@ -831,7 +1124,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -852,7 +1145,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -3
-  m_Sprite: {fileID: 21300000, guid: 4d6b0f6b0a7cd6045adc7312a39c1f14, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c47e6efa0e28a5a4d86dcca8a11e56a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -863,6 +1156,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032333809933546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 39, y: 58.7}
+  scale: {x: 100, y: 100}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032333894541335
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,6 +1188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032333894541328}
   - component: {fileID: 3807032333894541329}
+  - component: {fileID: 7300000000000000013}
   m_Layer: 6
   m_Name: SunFlower_leftpetal4
   m_TagString: Untagged
@@ -889,11 +1205,11 @@ Transform:
   m_GameObject: {fileID: 3807032333894541335}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 146.1, z: 0}
+  m_LocalPosition: {x: -26.65, y: 21.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032333894541329
 SpriteRenderer:
@@ -915,7 +1231,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -947,6 +1263,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032333894541335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 13.55, y: 30.75}
+  scale: {x: 100, y: 100}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334296917772
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,7 +1295,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334296917774}
   - component: {fileID: 3807032334296917773}
-  - component: {fileID: -345464813986198189}
+  - component: {fileID: 7200000000000000001}
+  - component: {fileID: 7200000000000000002}
+  - component: {fileID: 7200000000000000003}
+  - component: {fileID: 7200000000000000004}
+  - component: {fileID: 3670718413270380522}
   m_Layer: 6
   m_Name: SunFlower
   m_TagString: Untagged
@@ -974,38 +1316,11 @@ Transform:
   m_GameObject: {fileID: 3807032334296917772}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -190.89386, y: -92.61072, z: 0}
-  m_LocalScale: {x: 0.3375, y: 0.3375, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3807032333735489121}
-  - {fileID: 3807032334691456812}
-  - {fileID: 3807032334420671195}
-  - {fileID: 3807032335084810906}
-  - {fileID: 3807032334553621343}
-  - {fileID: 3807032333684376369}
-  - {fileID: 3807032334821394711}
-  - {fileID: 3807032334889655228}
-  - {fileID: 3807032332989413580}
-  - {fileID: 3807032334905698537}
-  - {fileID: 3807032333456652808}
-  - {fileID: 3807032333322721015}
-  - {fileID: 3807032334802216185}
-  - {fileID: 3807032333675319766}
-  - {fileID: 3807032335115932312}
-  - {fileID: 3807032333894541328}
-  - {fileID: 3807032334574634616}
-  - {fileID: 3807032333693070399}
-  - {fileID: 3807032334864812781}
-  - {fileID: 3807032334809350025}
-  - {fileID: 3807032333503133561}
-  - {fileID: 3807032333527380578}
-  - {fileID: 3807032334907204377}
-  - {fileID: 3807032334355023009}
-  - {fileID: 3807032334448922087}
-  - {fileID: 3807032334952746829}
-  - {fileID: 3807032334898038739}
-  - {fileID: 3807032333809933547}
+  - {fileID: 7100000000000000001}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3807032334296917773
@@ -1029,58 +1344,114 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!212 &-345464813986198189
-SpriteRenderer:
+--- !u!114 &7200000000000000001
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3807032334296917772}
   m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9ace6e0b84402d94cb5cb25f441348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  shadowTransform: {fileID: 7100000000000000025}
+  sunProducer: {fileID: 7200000000000000002}
+  blink: {fileID: 3670718413270380522}
+--- !u!114 &7200000000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334296917772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81849ee1b6a7460fbfc1ae32686ca41e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productionAnchor: {fileID: 7100000000000000023}
+  initialDelaySeconds: 10
+  initialDelayVariationSeconds: 2
+  intervalSeconds: 24
+  intervalVariationSeconds: 3
+  fallbackSunType: 1
+--- !u!61 &7200000000000000003
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334296917772}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 4}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 40, y: 60}
+  m_EdgeRadius: 0
+--- !u!114 &7200000000000000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334296917772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6845d262a71244e493cd8039a380c71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3670718413270380522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334296917772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 399bb92ceebb4bad90f75621fa6342d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3807032334296917773}
+  blink1Sprite: {fileID: 21300000, guid: e70d5c3ea6d84786bd756db1e93d1523, type: 3}
+  blink2Sprite: {fileID: 21300000, guid: 2a7d0e04eae74c2ab55e8bb4aa102177, type: 3}
+  minimumIntervalSeconds: 2.5
+  maximumIntervalSeconds: 5.5
 --- !u!1 &3807032334355023008
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,7 +1464,7 @@ GameObject:
   - component: {fileID: 3807032334355023011}
   - component: {fileID: 3807032334355023010}
   m_Layer: 6
-  m_Name: SunFlower_stalk_top
+  m_Name: top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1108,11 +1479,11 @@ Transform:
   m_GameObject: {fileID: 3807032334355023008}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 46.8, y: -47.45, z: 0}
+  m_LocalPosition: {x: -1.95, y: 2.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000013}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334355023011
 SpriteRenderer:
@@ -1134,7 +1505,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bf7855e67662150478853438f11e5db2, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1155,7 +1526,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ec1c370fed2ca8044b5941e3dd4c71ba, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 903b919a0d3b58944b6cb4fb98bc13af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1178,16 +1549,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 100, y: 100}
+  position: {x: 38.25, y: 50}
+  scale: {x: 55.5405, y: 55.5405}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
-  updatePosition: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334420671194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,6 +1569,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334420671195}
   - component: {fileID: 3807032334420671188}
+  - component: {fileID: 7300000000000000001}
   m_Layer: 6
   m_Name: SunFlower_rightpetal1
   m_TagString: Untagged
@@ -1214,11 +1586,11 @@ Transform:
   m_GameObject: {fileID: 3807032334420671194}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5.85, y: 32.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334420671188
 SpriteRenderer:
@@ -1240,7 +1612,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1272,6 +1644,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334420671194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 46.05, y: 19.6}
+  scale: {x: 80, y: 80}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334448922086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,7 +1678,7 @@ GameObject:
   - component: {fileID: 3807032334448922081}
   - component: {fileID: 3807032334448922080}
   m_Layer: 6
-  m_Name: SunFlower_stalk_bottom
+  m_Name: bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1299,11 +1693,11 @@ Transform:
   m_GameObject: {fileID: 3807032334448922086}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 43.4, y: -58.35, z: 0}
+  m_LocalPosition: {x: 0.1, y: -5.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000013}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334448922081
 SpriteRenderer:
@@ -1325,7 +1719,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1346,7 +1740,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 23c3a0327b0cad441b197c1a65021de8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6ff08ef975796d04598823fa05512d93, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1369,16 +1763,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 40.3, y: 57.95}
+  scale: {x: 55.5405, y: 55.5405}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
-  updatePosition: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334553621342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1389,6 +1783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334553621343}
   - component: {fileID: 3807032334553621336}
+  - component: {fileID: 7300000000000000003}
   m_Layer: 6
   m_Name: SunFlower_rightpetal3
   m_TagString: Untagged
@@ -1405,11 +1800,11 @@ Transform:
   m_GameObject: {fileID: 3807032334553621342}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 16, y: 27.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334553621336
 SpriteRenderer:
@@ -1431,7 +1826,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1463,6 +1858,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334553621342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 56.2, y: 25.05}
+  scale: {x: 100.3, y: 100}
+  skew: {x: 0, y: 4.4}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334574634623
 GameObject:
   m_ObjectHideFlags: 0
@@ -1473,6 +1890,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334574634616}
   - component: {fileID: 3807032334574634617}
+  - component: {fileID: 7300000000000000014}
   m_Layer: 6
   m_Name: SunFlower_leftpetal5
   m_TagString: Untagged
@@ -1489,11 +1907,11 @@ Transform:
   m_GameObject: {fileID: 3807032334574634623}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 146.1, z: 0}
+  m_LocalPosition: {x: -29.05, y: 13.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334574634617
 SpriteRenderer:
@@ -1515,7 +1933,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1547,6 +1965,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334574634623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 11.15, y: 38.3}
+  scale: {x: 80.6, y: 80}
+  skew: {x: 0, y: -6.7}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334691456787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,11 +2014,11 @@ Transform:
   m_GameObject: {fileID: 3807032334691456787}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.75, y: 33.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334691456814
 SpriteRenderer:
@@ -1600,7 +2040,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b6b39a4199d10ec4cb06d26ed0182b40, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1644,16 +2084,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 37.45, y: 18.3}
+  scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
-  updatePosition: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334802216184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1664,6 +2104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334802216185}
   - component: {fileID: 3807032334802216186}
+  - component: {fileID: 7300000000000000010}
   m_Layer: 6
   m_Name: SunFlower_leftpetal1
   m_TagString: Untagged
@@ -1680,11 +2121,11 @@ Transform:
   m_GameObject: {fileID: 3807032334802216184}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 146.1, z: 0}
+  m_LocalPosition: {x: -10.95, y: 33.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334802216186
 SpriteRenderer:
@@ -1706,7 +2147,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1738,6 +2179,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334802216184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 29.25, y: 19.2}
+  scale: {x: 80, y: 80}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334809350024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1748,6 +2211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334809350025}
   - component: {fileID: 3807032334809350026}
+  - component: {fileID: 7300000000000000017}
   m_Layer: 6
   m_Name: SunFlower_leftpetal8
   m_TagString: Untagged
@@ -1764,11 +2228,11 @@ Transform:
   m_GameObject: {fileID: 3807032334809350024}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 146.1, z: 0}
+  m_LocalPosition: {x: -13.5, y: -1.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334809350026
 SpriteRenderer:
@@ -1790,7 +2254,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1822,6 +2286,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334809350024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 26.7, y: 53.4}
+  scale: {x: 80, y: 86.7}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334821394710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1832,6 +2318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334821394711}
   - component: {fileID: 3807032334821394704}
+  - component: {fileID: 7300000000000000005}
   m_Layer: 6
   m_Name: SunFlower_rightpetal5
   m_TagString: Untagged
@@ -1848,11 +2335,11 @@ Transform:
   m_GameObject: {fileID: 3807032334821394710}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 22.4, y: 16.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334821394704
 SpriteRenderer:
@@ -1874,7 +2361,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1906,6 +2393,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334821394710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 62.6, y: 35.3}
+  scale: {x: 80.2, y: 80}
+  skew: {x: 0, y: 4.4}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334864812780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1916,6 +2425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334864812781}
   - component: {fileID: 3807032334864812782}
+  - component: {fileID: 7300000000000000016}
   m_Layer: 6
   m_Name: SunFlower_leftpetal7
   m_TagString: Untagged
@@ -1932,11 +2442,11 @@ Transform:
   m_GameObject: {fileID: 3807032334864812780}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 146.1, z: 0}
+  m_LocalPosition: {x: -20.6, y: 2.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334864812782
 SpriteRenderer:
@@ -1958,7 +2468,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1990,6 +2500,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334864812780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 19.6, y: 50.2}
+  scale: {x: 100.8, y: 108.4}
+  skew: {x: 0, y: -7.3}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334889655203
 GameObject:
   m_ObjectHideFlags: 0
@@ -2000,6 +2532,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334889655228}
   - component: {fileID: 3807032334889655229}
+  - component: {fileID: 7300000000000000006}
   m_Layer: 6
   m_Name: SunFlower_rightpetal6
   m_TagString: Untagged
@@ -2016,11 +2549,11 @@ Transform:
   m_GameObject: {fileID: 3807032334889655203}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 20.2, y: 10.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334889655229
 SpriteRenderer:
@@ -2042,7 +2575,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2074,6 +2607,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334889655203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 60.4, y: 41.3}
+  scale: {x: 80.2, y: 80}
+  skew: {x: 0, y: 4.4}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334898038738
 GameObject:
   m_ObjectHideFlags: 0
@@ -2084,8 +2639,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334898038739}
   - component: {fileID: 3807032334898038764}
+  - component: {fileID: 7300000000000000022}
   m_Layer: 6
-  m_Name: SunFlower_backleaf_left_tip
+  m_Name: left_tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2100,11 +2656,11 @@ Transform:
   m_GameObject: {fileID: 3807032334898038738}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.3, y: 164.9, z: 0}
+  m_LocalPosition: {x: -11.65, y: -4.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334898038764
 SpriteRenderer:
@@ -2126,7 +2682,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2147,7 +2703,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 927773f640cf94e4db410557e99f3b2d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0704b9122cb99e34f80b66b5b7727880, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2158,6 +2714,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334898038738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 28.55, y: 56.95}
+  scale: {x: 55.5, y: 55.5}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334905698536
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,6 +2746,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334905698537}
   - component: {fileID: 3807032334905698538}
+  - component: {fileID: 7300000000000000008}
   m_Layer: 6
   m_Name: SunFlower_rightpetal8
   m_TagString: Untagged
@@ -2184,11 +2763,11 @@ Transform:
   m_GameObject: {fileID: 3807032334905698536}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 11.75, y: 2.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334905698538
 SpriteRenderer:
@@ -2210,7 +2789,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2242,6 +2821,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334905698536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 51.95, y: 49.8}
+  scale: {x: 80.3, y: 86.7}
+  skew: {x: 0, y: 4.8}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334907204376
 GameObject:
   m_ObjectHideFlags: 0
@@ -2252,8 +2853,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334907204377}
   - component: {fileID: 3807032334907204378}
+  - component: {fileID: 7300000000000000018}
   m_Layer: 6
-  m_Name: SunFlower_frontleaf
+  m_Name: frontleaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2268,11 +2870,11 @@ Transform:
   m_GameObject: {fileID: 3807032334907204376}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 146.1, z: 0}
+  m_LocalPosition: {x: 1.0999985, y: -12.699997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000017}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334907204378
 SpriteRenderer:
@@ -2294,7 +2896,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2315,7 +2917,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 2a1324920c600ea4d9b564a1e0585e94, type: 3}
+  m_Sprite: {fileID: 21300000, guid: be39c5e9328ce8e4a9560d3ee2458c4f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2326,6 +2928,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334907204376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 41.3, y: 64.95}
+  scale: {x: 55.5, y: 55.5}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032334952746828
 GameObject:
   m_ObjectHideFlags: 0
@@ -2336,8 +2960,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032334952746829}
   - component: {fileID: 3807032334952746830}
+  - component: {fileID: 7300000000000000023}
   m_Layer: 6
-  m_Name: SunFlower_backleaf_right_tip
+  m_Name: right_tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2352,11 +2977,11 @@ Transform:
   m_GameObject: {fileID: 3807032334952746828}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.3, y: 164.9, z: 0}
+  m_LocalPosition: {x: 9.9, y: -3.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032334952746830
 SpriteRenderer:
@@ -2378,7 +3003,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2399,7 +3024,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 03be90782c229af44995f44e45bcc1a5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c5daa69e1279edb4984393d8b468d394, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2410,6 +3035,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032334952746828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 50.1, y: 55.4}
+  scale: {x: 55.5, y: 55.5}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032335084810905
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,6 +3067,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032335084810906}
   - component: {fileID: 3807032335084810907}
+  - component: {fileID: 7300000000000000002}
   m_Layer: 6
   m_Name: SunFlower_rightpetal2
   m_TagString: Untagged
@@ -2436,11 +3084,11 @@ Transform:
   m_GameObject: {fileID: 3807032335084810905}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 11.5, y: 30.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032335084810907
 SpriteRenderer:
@@ -2462,7 +3110,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2494,6 +3142,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032335084810905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 51.7, y: 22.15}
+  scale: {x: 80.2, y: 80}
+  skew: {x: 0, y: 4.4}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
 --- !u!1 &3807032335115932319
 GameObject:
   m_ObjectHideFlags: 0
@@ -2504,6 +3174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807032335115932312}
   - component: {fileID: 3807032335115932313}
+  - component: {fileID: 7300000000000000012}
   m_Layer: 6
   m_Name: SunFlower_leftpetal3
   m_TagString: Untagged
@@ -2520,11 +3191,11 @@ Transform:
   m_GameObject: {fileID: 3807032335115932319}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.1, y: 146.1, z: 0}
+  m_LocalPosition: {x: -22.15, y: 26.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3807032334296917774}
+  m_Father: {fileID: 7100000000000000011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3807032335115932313
 SpriteRenderer:
@@ -2546,7 +3217,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57619d13a1bee764a9a4dda5519db3c1, type: 2}
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2578,3 +3249,608 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7300000000000000012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807032335115932319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 18.05, y: 26.15}
+  scale: {x: 80.6, y: 80}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
+--- !u!1 &4658327488092265681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4061162649535098084}
+  m_Layer: 0
+  m_Name: blink
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4061162649535098084
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4658327488092265681}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1556646271206500178}
+  - {fileID: 5157234314875937667}
+  m_Father: {fileID: 3807032333735489121}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4753076276517951115
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1556646271206500178}
+  - component: {fileID: 3979921710193379799}
+  - component: {fileID: 4476588446578942040}
+  m_Layer: 6
+  m_Name: SunFlower_blink1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1556646271206500178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4753076276517951115}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2, y: 4.200001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4061162649535098084}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &3979921710193379799
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4753076276517951115}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7a1d844db3530734a94378ec0006089b, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 15
+  m_Sprite: {fileID: 21300000, guid: e70d5c3ea6d84786bd756db1e93d1523, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 24, y: 12.8}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &4476588446578942040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4753076276517951115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 39.1, y: 31.5}
+  scale: {x: 100, y: 100}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 1
+  providesChildSpritePosition: 0
+  childSpritePosition: {x: 0, y: 0}
+--- !u!1 &7100000000000000000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000001}
+  m_Layer: 6
+  m_Name: component
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7100000000000000003}
+  - {fileID: 7100000000000000021}
+  m_Father: {fileID: 3807032334296917774}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000003}
+  m_Layer: 6
+  m_Name: basic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000002}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7100000000000000005}
+  - {fileID: 7100000000000000013}
+  - {fileID: 7100000000000000015}
+  m_Father: {fileID: 7100000000000000001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000005}
+  m_Layer: 6
+  m_Name: head
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000004}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7100000000000000007}
+  - {fileID: 3807032334691456812}
+  - {fileID: 3807032333322721015}
+  - {fileID: 3807032333735489121}
+  m_Father: {fileID: 7100000000000000003}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000007}
+  m_Layer: 6
+  m_Name: petals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000007
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000006}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7100000000000000009}
+  - {fileID: 7100000000000000011}
+  m_Father: {fileID: 7100000000000000005}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000009}
+  m_Layer: 6
+  m_Name: right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000008}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3807032334420671195}
+  - {fileID: 3807032335084810906}
+  - {fileID: 3807032334553621343}
+  - {fileID: 3807032333684376369}
+  - {fileID: 3807032334821394711}
+  - {fileID: 3807032334889655228}
+  - {fileID: 3807032332989413580}
+  - {fileID: 3807032334905698537}
+  - {fileID: 3807032333456652808}
+  m_Father: {fileID: 7100000000000000007}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000011}
+  m_Layer: 6
+  m_Name: left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3807032334802216185}
+  - {fileID: 3807032333675319766}
+  - {fileID: 3807032335115932312}
+  - {fileID: 3807032333894541328}
+  - {fileID: 3807032334574634616}
+  - {fileID: 3807032333693070399}
+  - {fileID: 3807032334864812781}
+  - {fileID: 3807032334809350025}
+  m_Father: {fileID: 7100000000000000007}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000012
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000013}
+  m_Layer: 6
+  m_Name: stalk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000013
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000012}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3807032334355023009}
+  - {fileID: 3807032334448922087}
+  m_Father: {fileID: 7100000000000000003}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000015}
+  m_Layer: 6
+  m_Name: leaf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000015
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000014}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7100000000000000017}
+  - {fileID: 7100000000000000019}
+  m_Father: {fileID: 7100000000000000003}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000017}
+  m_Layer: 6
+  m_Name: frontleaf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000016}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3807032334907204377}
+  - {fileID: 3807032333503133561}
+  - {fileID: 3807032333527380578}
+  m_Father: {fileID: 7100000000000000015}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000019}
+  m_Layer: 6
+  m_Name: backleaf
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000018}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3807032333809933547}
+  - {fileID: 3807032334898038739}
+  - {fileID: 3807032334952746829}
+  m_Father: {fileID: 7100000000000000015}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000021}
+  m_Layer: 6
+  m_Name: anchors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000020}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7100000000000000023}
+  - {fileID: 7100000000000000025}
+  m_Father: {fileID: 7100000000000000001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000023}
+  m_Layer: 6
+  m_Name: Sun_Anchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000022}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7100000000000000021}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7100000000000000024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100000000000000025}
+  m_Layer: 6
+  m_Name: Shadow_Anchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100000000000000025
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100000000000000024}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -17, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7100000000000000021}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

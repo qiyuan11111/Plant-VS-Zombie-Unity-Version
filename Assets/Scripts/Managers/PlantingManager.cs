@@ -7,15 +7,13 @@ namespace Script.Manager
     /// <summary>
     /// Coordinates one planting transaction from card selection to placement or cancellation.
     /// </summary>
-    public class PlantingManager : MonoBehaviour
+    public class PlantingManager : SceneSingleton<PlantingManager>
     {
         public enum PlantingState
         {
             Idle,
             Holding
         }
-
-        public static PlantingManager Instance;
 
         [SerializeField] private Transform plantParent;
 
@@ -50,7 +48,7 @@ namespace Script.Manager
 
             _selectedCard = card;
             _state = PlantingState.Holding;
-            _preview = new PlantingPreview(card.Definition.PresentationPrefab, GridManager.Instance.transform);
+            _preview = new PlantingPreview(card.Definition, GridManager.Instance.transform);
 
             card.OnChoose();
             SoundManager.Instance.PlayEffect(GameSound.SoundType.SeedLift);
@@ -79,7 +77,7 @@ namespace Script.Manager
             if (prefab == null) return false;
 
             var plantObject = Instantiate(prefab, plantParent, false);
-            var plant = plantObject.GetComponent<Plant>();
+            var plant = plantObject.GetComponent<PlantEntity>();
             if (plant == null)
             {
                 Destroy(plantObject);
@@ -148,21 +146,24 @@ namespace Script.Manager
             _preview = null;
         }
 
-        private void Awake()
+        protected override bool ValidateReferences()
         {
-            Instance = this;
-            _isConfigured = ValidateReferences();
-            enabled = _isConfigured;
+            return RequireReference(plantParent, nameof(plantParent));
         }
 
-        private bool ValidateReferences()
+        protected override void OnSingletonStart()
         {
-            if (plantParent != null) return true;
+            _isConfigured = true;
+        }
 
-            Debug.LogError(
-                $"{nameof(PlantingManager)} requires {nameof(plantParent)} to be assigned in the Inspector.",
-                this);
-            return false;
+        protected override bool ValidateDependencies()
+        {
+            var isValid = true;
+            isValid &= RequireManager(MainGameManager.Instance);
+            isValid &= RequireManager(GridManager.Instance);
+            isValid &= RequireManager(SunManager.Instance);
+            isValid &= RequireManager(SoundManager.Instance);
+            return isValid;
         }
 
         private void Update()
@@ -178,10 +179,9 @@ namespace Script.Manager
             UpdatePreview();
         }
 
-        private void OnDestroy()
+        protected override void OnSingletonDestroy()
         {
             _preview?.Dispose();
-            if (Instance == this) Instance = null;
         }
     }
 }

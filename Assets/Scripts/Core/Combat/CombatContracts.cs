@@ -15,9 +15,9 @@ namespace Script.Combat
     {
         public int Amount { get; }
         public DamageType Type { get; }
-        public Entity Source { get; }
+        public GameEntity Source { get; }
 
-        public DamageInfo(int amount, DamageType type = DamageType.Normal, Entity source = null)
+        public DamageInfo(int amount, DamageType type = DamageType.Normal, GameEntity source = null)
         {
             if (amount < 0) throw new ArgumentOutOfRangeException(nameof(amount));
 

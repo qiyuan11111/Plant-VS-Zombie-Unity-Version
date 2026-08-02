@@ -1,4 +1,5 @@
 using System.Collections;
+using Script;
 using Script.Manager;
 using UnityEngine;
 
@@ -7,6 +8,12 @@ namespace Prefab.Plant.SunShroom.Script
     [DisallowMultipleComponent]
     public sealed class SunProducer : MonoBehaviour
     {
+        private static readonly string[] ProductionAnchorPaths =
+        {
+            "component/anchors/Sun_Anchor",
+            "component/basic/head/SunShroom_head/Sun_Anchor"
+        };
+
         private static readonly int ProduceTrigger = Animator.StringToHash("produce");
 
         [Header("Production")]
@@ -19,6 +26,9 @@ namespace Prefab.Plant.SunShroom.Script
 
         private Animator _animator;
         private Coroutine _productionRoutine;
+        private Coroutine _fallbackProductionRoutine;
+        private SpriteTransform[] _fallbackVisualParts;
+        private float[] _fallbackBrightness;
 
         public bool IsProducing => _productionRoutine != null;
 
@@ -52,6 +62,8 @@ namespace Prefab.Plant.SunShroom.Script
             {
                 _animator.ResetTrigger(ProduceTrigger);
             }
+
+            StopFallbackProductionAnimation();
         }
 
         // Called by the ProduceSun animation event on sun.anim.
@@ -105,13 +117,104 @@ namespace Prefab.Plant.SunShroom.Script
 
         private void RequestProduction()
         {
-            if (_animator != null && _animator.isActiveAndEnabled)
+            if (CanUseProductionAnimation())
             {
                 _animator.SetTrigger(ProduceTrigger);
                 return;
             }
 
-            SpawnSun(SunManager.Instance, fallbackSunType);
+            if (_fallbackProductionRoutine == null)
+            {
+                _fallbackProductionRoutine = StartCoroutine(FallbackProductionAnimation());
+            }
+        }
+
+        private IEnumerator FallbackProductionAnimation()
+        {
+            CacheVisualBrightness();
+
+            const float glowDuration = 2f;
+            const float peakTime = glowDuration * 0.5f;
+            var elapsed = 0f;
+            var produced = false;
+
+            while (elapsed < glowDuration)
+            {
+                var glow = elapsed <= peakTime
+                    ? Mathf.SmoothStep(1f, 2f, elapsed / peakTime)
+                    : Mathf.SmoothStep(2f, 1f, (elapsed - peakTime) / peakTime);
+                ApplyFallbackBrightness(glow);
+
+                if (!produced && elapsed >= peakTime)
+                {
+                    SpawnSun(SunManager.Instance, fallbackSunType);
+                    produced = true;
+                }
+
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            if (!produced && IsProducing)
+            {
+                SpawnSun(SunManager.Instance, fallbackSunType);
+            }
+
+            RestoreFallbackBrightness();
+            _fallbackProductionRoutine = null;
+        }
+
+        private void CacheVisualBrightness()
+        {
+            _fallbackVisualParts = GetComponentsInChildren<SpriteTransform>(true);
+            _fallbackBrightness = new float[_fallbackVisualParts.Length];
+            for (var index = 0; index < _fallbackVisualParts.Length; index++)
+            {
+                _fallbackBrightness[index] = _fallbackVisualParts[index].brightness;
+            }
+        }
+
+        private void ApplyFallbackBrightness(float multiplier)
+        {
+            if (_fallbackVisualParts == null || _fallbackBrightness == null) return;
+
+            for (var index = 0; index < _fallbackVisualParts.Length; index++)
+            {
+                var part = _fallbackVisualParts[index];
+                if (part == null) continue;
+
+                part.brightness = _fallbackBrightness[index] * multiplier;
+                part.Apply();
+            }
+        }
+
+        private void StopFallbackProductionAnimation()
+        {
+            if (_fallbackProductionRoutine != null)
+            {
+                StopCoroutine(_fallbackProductionRoutine);
+                _fallbackProductionRoutine = null;
+            }
+
+            RestoreFallbackBrightness();
+        }
+
+        private void RestoreFallbackBrightness()
+        {
+            if (_fallbackVisualParts != null && _fallbackBrightness != null)
+            {
+                for (var index = 0; index < _fallbackVisualParts.Length; index++)
+                {
+                    var part = _fallbackVisualParts[index];
+                    if (part == null) continue;
+
+                    part.brightness = _fallbackBrightness[index];
+                    part.Apply();
+                }
+            }
+
+            _fallbackVisualParts = null;
+            _fallbackBrightness = null;
         }
 
         private void SpawnSun(SunManager sunManager, SunManager.SunType type)
@@ -126,11 +229,42 @@ namespace Prefab.Plant.SunShroom.Script
             sunManager.SpawnSun(productionAnchor.position, type);
         }
 
+        private bool CanUseProductionAnimation()
+        {
+            if (_animator == null || !_animator.isActiveAndEnabled) return false;
+
+            foreach (var parameter in _animator.parameters)
+            {
+                if (parameter.nameHash == ProduceTrigger &&
+                    parameter.type == AnimatorControllerParameterType.Trigger)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void ResolveReferences()
         {
             if (productionAnchor == null)
             {
-                productionAnchor = transform.Find("SunShroom_head");
+                foreach (var path in ProductionAnchorPaths)
+                {
+                    productionAnchor = transform.Find(path);
+                    if (productionAnchor != null) break;
+                }
+            }
+
+            if (productionAnchor == null)
+            {
+                foreach (var child in GetComponentsInChildren<Transform>(true))
+                {
+                    if (child.name != "Sun_Anchor") continue;
+
+                    productionAnchor = child;
+                    break;
+                }
             }
 
             if (productionAnchor == null)
@@ -162,7 +296,11 @@ namespace Prefab.Plant.SunShroom.Script
 
             if (productionAnchor == null)
             {
-                productionAnchor = transform.Find("SunShroom_head");
+                foreach (var path in ProductionAnchorPaths)
+                {
+                    productionAnchor = transform.Find(path);
+                    if (productionAnchor != null) break;
+                }
             }
         }
 #endif

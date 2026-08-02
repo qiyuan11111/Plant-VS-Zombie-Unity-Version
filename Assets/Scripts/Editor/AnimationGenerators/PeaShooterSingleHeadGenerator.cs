@@ -7,7 +7,7 @@ using Script;
 using UnityEditor;
 using UnityEngine;
 
-public class PeaShooterSingleHeadGenerator : AnimGenerator
+public class PeaShooterSingleHeadGenerator : PeaShooterSingleGenerator
 {
     // Start is called before the first frame update
 

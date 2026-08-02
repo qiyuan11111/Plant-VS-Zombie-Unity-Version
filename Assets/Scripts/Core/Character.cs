@@ -6,7 +6,7 @@ namespace Script.Model
     using Script.Combat;
     using UnityEngine;
 
-    public abstract class Character : Entity, IDamageable
+    public abstract class Character : GameEntity, IDamageable
     {
         [SerializeField, Min(1)] private int maxHealth = 100;
 

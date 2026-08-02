@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace Prefab.Object.Sun.Script
 {
-    public class Sun : global::Script.Model.Object, IPointerClickHandler
+    public class Sun : WorldObject, IPointerClickHandler
     {
         private const float LifetimeSeconds = 100f;
         private const float JumpDuration = 0.5f;
