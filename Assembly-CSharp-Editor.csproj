@@ -311,6 +311,9 @@
     <Reference Include="LitJson">
       <HintPath>D:\老D盘\Unity\Plante VS Zombie - 副本 - 副本\Assets\Plugin\LitJson.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>D:\老D盘\Unity\Plante VS Zombie - 副本 - 副本\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\software\Unity Hub\Editor\2022.3.57f1c2\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\mscorlib.dll</HintPath>
     </Reference>
@@ -685,6 +688,33 @@
     </Reference>
     <Reference Include="System.Xml.XPath.XDocument">
       <HintPath>D:\software\Unity Hub\Editor\2022.3.57f1c2\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>D:\老D盘\Unity\Plante VS Zombie - 副本 - 副本\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TestRunner">
+      <HintPath>D:\老D盘\Unity\Plante VS Zombie - 副本 - 副本\Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+      <HintPath>D:\老D盘\Unity\Plante VS Zombie - 副本 - 副本\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>D:\老D盘\Unity\Plante VS Zombie - 副本 - 副本\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>D:\老D盘\Unity\Plante VS Zombie - 副本 - 副本\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>D:\老D盘\Unity\Plante VS Zombie - 副本 - 副本\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>D:\老D盘\Unity\Plante VS Zombie - 副本 - 副本\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Rider.Editor">
+      <HintPath>D:\老D盘\Unity\Plante VS Zombie - 副本 - 副本\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VSCode.Editor">
+      <HintPath>D:\老D盘\Unity\Plante VS Zombie - 副本 - 副本\Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

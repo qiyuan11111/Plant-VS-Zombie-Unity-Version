@@ -1,8 +1,7 @@
 ﻿/Library/
 /Logs/
+/Library.broken-*/
 /obj/
-/Packages/
-/ProjectSettings/
 /Temp/
 /UserSettings/
 Assembly-CSharp.csproj
