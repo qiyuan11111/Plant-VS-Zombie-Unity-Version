@@ -1,0 +1,110 @@
+2026-08-01 12:48:37 [233092] Failed to mount fridge (error 0xffff)
+2026-08-01 12:48:37 [233092] Failed to remount user fridge (error 0xffff)
+2026-08-01 12:48:37 [233092] Failed to access directory 'C:\ProgramData/SafeNet Sentinel/Sentinel LDK/ac0db2dc-6d2d-6838-bdd0-9f739a2d1e7c/.46494431/' (syserr 5/ERROR_ACCESS_DENIED)
+2026-08-01 12:48:37 [233092] Failed to detect the machine SSID
+2026-08-01 12:48:37 [233092] Fridge is not supported in this machine
+2026-08-01 12:48:37 [233092] Failure in adding the v2c available in license file '1007393165790515547_provisional.v2c' (error 0x7000002b)
+2026-08-01 12:48:37 [233092] Fridge is not supported in this machine
+2026-08-01 12:48:37 [233092] Failure in adding the v2c available in license file '1086912966762999631_provisional.v2c' (error 0x7000002b)
+2026-08-01 12:48:37 [233092] Fridge is not supported in this machine
+2026-08-01 12:48:37 [233092] Failure in adding the v2c available in license file '1125200886191590463_provisional.v2c' (error 0x7000002b)
+2026-08-01 12:58:43 [47812] Failed to mount fridge (error 0xffff)
+2026-08-01 12:58:43 [47812] Failed to remount user fridge (error 0xffff)
+2026-08-01 12:58:43 [47812] Failed to access directory 'C:\ProgramData/SafeNet Sentinel/Sentinel LDK/ac0db2dc-6d2d-6838-bdd0-9f739a2d1e7c/.46494431/' (syserr 5/ERROR_ACCESS_DENIED)
+2026-08-01 12:58:43 [47812] Failed to detect the machine SSID
+2026-08-01 12:58:43 [47812] Fridge is not supported in this machine
+2026-08-01 12:58:43 [47812] Failure in adding the v2c available in license file '1007393165790515547_provisional.v2c' (error 0x7000002b)
+2026-08-01 12:58:43 [47812] Fridge is not supported in this machine
+2026-08-01 12:58:43 [47812] Failure in adding the v2c available in license file '1086912966762999631_provisional.v2c' (error 0x7000002b)
+2026-08-01 12:58:43 [47812] Fridge is not supported in this machine
+2026-08-01 12:58:43 [47812] Failure in adding the v2c available in license file '1125200886191590463_provisional.v2c' (error 0x7000002b)
+2026-08-01 13:04:28 [86664] Failed to mount fridge (error 0xffff)
+2026-08-01 13:04:28 [86664] Failed to remount user fridge (error 0xffff)
+2026-08-01 13:04:28 [86664] Failed to access directory 'C:\ProgramData/SafeNet Sentinel/Sentinel LDK/ac0db2dc-6d2d-6838-bdd0-9f739a2d1e7c/.46494431/' (syserr 5/ERROR_ACCESS_DENIED)
+2026-08-01 13:04:28 [86664] Failed to detect the machine SSID
+2026-08-01 13:04:28 [86664] Fridge is not supported in this machine
+2026-08-01 13:04:28 [86664] Failure in adding the v2c available in license file '1007393165790515547_provisional.v2c' (error 0x7000002b)
+2026-08-01 13:04:28 [86664] Fridge is not supported in this machine
+2026-08-01 13:04:28 [86664] Failure in adding the v2c available in license file '1086912966762999631_provisional.v2c' (error 0x7000002b)
+2026-08-01 13:04:28 [86664] Fridge is not supported in this machine
+2026-08-01 13:04:28 [86664] Failure in adding the v2c available in license file '1125200886191590463_provisional.v2c' (error 0x7000002b)
+2026-08-01 13:30:11 [211168] Failed to mount fridge (error 0xffff)
+2026-08-01 13:30:11 [211168] Failed to remount user fridge (error 0xffff)
+2026-08-01 13:30:11 [211168] Failed to access directory 'C:\ProgramData/SafeNet Sentinel/Sentinel LDK/ac0db2dc-6d2d-6838-bdd0-9f739a2d1e7c/.46494431/' (syserr 5/ERROR_ACCESS_DENIED)
+2026-08-01 13:30:11 [211168] Failed to detect the machine SSID
+2026-08-01 13:30:11 [211168] Fridge is not supported in this machine
+2026-08-01 13:30:11 [211168] Failure in adding the v2c available in license file '1007393165790515547_provisional.v2c' (error 0x7000002b)
+2026-08-01 13:30:11 [211168] Fridge is not supported in this machine
+2026-08-01 13:30:11 [211168] Failure in adding the v2c available in license file '1086912966762999631_provisional.v2c' (error 0x7000002b)
+2026-08-01 13:30:11 [211168] Fridge is not supported in this machine
+2026-08-01 13:30:11 [211168] Failure in adding the v2c available in license file '1125200886191590463_provisional.v2c' (error 0x7000002b)
+2026-08-01 14:08:09 [311960] Failed to mount fridge (error 0xffff)
+2026-08-01 14:08:09 [311960] Failed to remount user fridge (error 0xffff)
+2026-08-01 14:08:09 [311960] Failed to access directory 'C:\ProgramData/SafeNet Sentinel/Sentinel LDK/ac0db2dc-6d2d-6838-bdd0-9f739a2d1e7c/.46494431/' (syserr 5/ERROR_ACCESS_DENIED)
+2026-08-01 14:08:09 [311960] Failed to detect the machine SSID
+2026-08-01 14:08:09 [311960] Fridge is not supported in this machine
+2026-08-01 14:08:09 [311960] Failure in adding the v2c available in license file '1007393165790515547_provisional.v2c' (error 0x7000002b)
+2026-08-01 14:08:09 [311960] Fridge is not supported in this machine
+2026-08-01 14:08:09 [311960] Failure in adding the v2c available in license file '1086912966762999631_provisional.v2c' (error 0x7000002b)
+2026-08-01 14:08:09 [311960] Fridge is not supported in this machine
+2026-08-01 14:08:09 [311960] Failure in adding the v2c available in license file '1125200886191590463_provisional.v2c' (error 0x7000002b)
+2026-08-01 14:09:58 [348612] Failed to mount fridge (error 0xffff)
+2026-08-01 14:09:58 [348612] Failed to remount user fridge (error 0xffff)
+2026-08-01 14:09:58 [348612] Failed to access directory 'C:\ProgramData/SafeNet Sentinel/Sentinel LDK/ac0db2dc-6d2d-6838-bdd0-9f739a2d1e7c/.46494431/' (syserr 5/ERROR_ACCESS_DENIED)
+2026-08-01 14:09:58 [348612] Failed to detect the machine SSID
+2026-08-01 14:09:58 [348612] Fridge is not supported in this machine
+2026-08-01 14:09:58 [348612] Failure in adding the v2c available in license file '1007393165790515547_provisional.v2c' (error 0x7000002b)
+2026-08-01 14:09:58 [348612] Fridge is not supported in this machine
+2026-08-01 14:09:58 [348612] Failure in adding the v2c available in license file '1086912966762999631_provisional.v2c' (error 0x7000002b)
+2026-08-01 14:09:58 [348612] Fridge is not supported in this machine
+2026-08-01 14:09:58 [348612] Failure in adding the v2c available in license file '1125200886191590463_provisional.v2c' (error 0x7000002b)
+2026-08-01 14:19:41 [269032] Failed to mount fridge (error 0xffff)
+2026-08-01 14:19:41 [269032] Failed to remount user fridge (error 0xffff)
+2026-08-01 14:19:41 [269032] Failed to access directory 'C:\ProgramData/SafeNet Sentinel/Sentinel LDK/ac0db2dc-6d2d-6838-bdd0-9f739a2d1e7c/.46494431/' (syserr 5/ERROR_ACCESS_DENIED)
+2026-08-01 14:19:41 [269032] Failed to detect the machine SSID
+2026-08-01 14:19:41 [269032] Fridge is not supported in this machine
+2026-08-01 14:19:41 [269032] Failure in adding the v2c available in license file '1007393165790515547_provisional.v2c' (error 0x7000002b)
+2026-08-01 14:19:41 [269032] Fridge is not supported in this machine
+2026-08-01 14:19:41 [269032] Failure in adding the v2c available in license file '1086912966762999631_provisional.v2c' (error 0x7000002b)
+2026-08-01 14:19:41 [269032] Fridge is not supported in this machine
+2026-08-01 14:19:41 [269032] Failure in adding the v2c available in license file '1125200886191590463_provisional.v2c' (error 0x7000002b)
+2026-08-01 17:09:44 [48384] Failed to mount fridge (error 0xffff)
+2026-08-01 17:09:44 [48384] Failed to remount user fridge (error 0xffff)
+2026-08-01 17:09:44 [48384] Failed to access directory 'C:\ProgramData/SafeNet Sentinel/Sentinel LDK/ac0db2dc-6d2d-6838-bdd0-9f739a2d1e7c/.46494431/' (syserr 5/ERROR_ACCESS_DENIED)
+2026-08-01 17:09:44 [48384] Failed to detect the machine SSID
+2026-08-01 17:09:44 [48384] Fridge is not supported in this machine
+2026-08-01 17:09:44 [48384] Failure in adding the v2c available in license file '1007393165790515547_provisional.v2c' (error 0x7000002b)
+2026-08-01 17:09:44 [48384] Fridge is not supported in this machine
+2026-08-01 17:09:44 [48384] Failure in adding the v2c available in license file '1086912966762999631_provisional.v2c' (error 0x7000002b)
+2026-08-01 17:09:44 [48384] Fridge is not supported in this machine
+2026-08-01 17:09:44 [48384] Failure in adding the v2c available in license file '1125200886191590463_provisional.v2c' (error 0x7000002b)
+2026-08-01 17:14:05 [314624] Failed to mount fridge (error 0xffff)
+2026-08-01 17:14:05 [314624] Failed to remount user fridge (error 0xffff)
+2026-08-01 17:14:05 [314624] Failed to access directory 'C:\ProgramData/SafeNet Sentinel/Sentinel LDK/ac0db2dc-6d2d-6838-bdd0-9f739a2d1e7c/.46494431/' (syserr 5/ERROR_ACCESS_DENIED)
+2026-08-01 17:14:05 [314624] Failed to detect the machine SSID
+2026-08-01 17:14:05 [314624] Fridge is not supported in this machine
+2026-08-01 17:14:05 [314624] Failure in adding the v2c available in license file '1007393165790515547_provisional.v2c' (error 0x7000002b)
+2026-08-01 17:14:05 [314624] Fridge is not supported in this machine
+2026-08-01 17:14:05 [314624] Failure in adding the v2c available in license file '1086912966762999631_provisional.v2c' (error 0x7000002b)
+2026-08-01 17:14:05 [314624] Fridge is not supported in this machine
+2026-08-01 17:14:05 [314624] Failure in adding the v2c available in license file '1125200886191590463_provisional.v2c' (error 0x7000002b)
+2026-08-03 23:43:12 [50864] Failed to mount fridge (error 0xffff)
+2026-08-03 23:43:12 [50864] Failed to remount user fridge (error 0xffff)
+2026-08-03 23:43:12 [50864] Failed to access directory 'C:\ProgramData/SafeNet Sentinel/Sentinel LDK/ac0db2dc-6d2d-6838-bdd0-9f739a2d1e7c/.46494431/' (syserr 5/ERROR_ACCESS_DENIED)
+2026-08-03 23:43:12 [50864] Failed to detect the machine SSID
+2026-08-03 23:43:12 [50864] Fridge is not supported in this machine
+2026-08-03 23:43:12 [50864] Failure in adding the v2c available in license file '1007393165790515547_provisional.v2c' (error 0x7000002b)
+2026-08-03 23:43:12 [50864] Fridge is not supported in this machine
+2026-08-03 23:43:12 [50864] Failure in adding the v2c available in license file '1086912966762999631_provisional.v2c' (error 0x7000002b)
+2026-08-03 23:43:12 [50864] Fridge is not supported in this machine
+2026-08-03 23:43:12 [50864] Failure in adding the v2c available in license file '1125200886191590463_provisional.v2c' (error 0x7000002b)
+2026-08-03 23:48:02 [434948] Failed to mount fridge (error 0xffff)
+2026-08-03 23:48:02 [434948] Failed to remount user fridge (error 0xffff)
+2026-08-03 23:48:02 [434948] Failed to access directory 'C:\ProgramData/SafeNet Sentinel/Sentinel LDK/ac0db2dc-6d2d-6838-bdd0-9f739a2d1e7c/.46494431/' (syserr 5/ERROR_ACCESS_DENIED)
+2026-08-03 23:48:02 [434948] Failed to detect the machine SSID
+2026-08-03 23:48:02 [434948] Fridge is not supported in this machine
+2026-08-03 23:48:02 [434948] Failure in adding the v2c available in license file '1007393165790515547_provisional.v2c' (error 0x7000002b)
+2026-08-03 23:48:02 [434948] Fridge is not supported in this machine
+2026-08-03 23:48:02 [434948] Failure in adding the v2c available in license file '1086912966762999631_provisional.v2c' (error 0x7000002b)
+2026-08-03 23:48:02 [434948] Fridge is not supported in this machine
+2026-08-03 23:48:02 [434948] Failure in adding the v2c available in license file '1125200886191590463_provisional.v2c' (error 0x7000002b)
