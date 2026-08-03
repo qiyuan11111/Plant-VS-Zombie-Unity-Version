@@ -140,7 +140,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 3749434802
+      path: 483995498
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -149,7 +149,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1181910024
+      path: 2245033680
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
