@@ -1,9 +1,9 @@
 using System;
-using Script.Model;
+using PvZ.Core.Entities;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Script.Presentation
+namespace PvZ.Presentation
 {
     /// <summary>
     /// Configures an entity instance for non-gameplay presentation contexts.

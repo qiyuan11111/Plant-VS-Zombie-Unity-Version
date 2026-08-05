@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Script.Combat;
+using PvZ.Core.Combat;
 
 namespace Tests.EditMode
 {

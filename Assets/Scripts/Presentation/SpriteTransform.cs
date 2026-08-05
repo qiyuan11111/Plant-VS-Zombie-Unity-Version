@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Script.Model;
+using PvZ.Core.Entities;
 
-namespace Script
+namespace PvZ.Presentation
 {
     [ExecuteAlways]
     [DisallowMultipleComponent]

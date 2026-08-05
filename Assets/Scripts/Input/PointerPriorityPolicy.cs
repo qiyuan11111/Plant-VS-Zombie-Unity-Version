@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-namespace Script.InputModule
+namespace PvZ.Input
 {
     internal static class PointerPriorityPolicy
     {

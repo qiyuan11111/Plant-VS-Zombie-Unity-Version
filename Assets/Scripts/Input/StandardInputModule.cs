@@ -1,8 +1,8 @@
-using Script.Manager;
+using PvZ.Gameplay.Board;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Script.InputModule
+namespace PvZ.Input
 {
     [AddComponentMenu("Event/Standard Input Module")]
     public sealed class StandardInputModule : StandaloneInputModule

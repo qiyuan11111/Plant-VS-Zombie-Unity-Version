@@ -1,6 +1,6 @@
 using System;
 
-namespace Script.Combat
+namespace PvZ.Core.Combat
 {
     public readonly struct DamageResult
     {

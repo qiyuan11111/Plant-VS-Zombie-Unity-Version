@@ -1,6 +1,6 @@
 using System;
 
-namespace Prefab.Object.SeedCard.Script
+namespace PvZ.Gameplay.SeedCards
 {
     public sealed class SeedCardCooldown
     {

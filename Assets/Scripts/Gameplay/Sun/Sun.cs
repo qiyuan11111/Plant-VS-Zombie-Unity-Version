@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Script.Manager;
-using Script.Model;
+using PvZ.Audio;
+using PvZ.Core.Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
-namespace Prefab.Object.Sun.Script
+namespace PvZ.Gameplay.Sun
 {
     public class Sun : WorldObject, IPointerClickHandler
     {

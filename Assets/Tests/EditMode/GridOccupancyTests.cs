@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
-using Script.Manager;
-using Script.Model;
+using PvZ.Gameplay.Board;
+using PvZ.Gameplay.Plants;
 using UnityEngine;
 
 namespace Tests.EditMode

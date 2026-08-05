@@ -1,7 +1,7 @@
 using System;
-using Script.Model;
+using PvZ.Core.Entities;
 
-namespace Script.Combat
+namespace PvZ.Core.Combat
 {
     public enum DamageType
     {
