@@ -37,6 +37,53 @@ namespace Tests.EditMode
         }
 
         [Test]
+        public void AllPlants_AlignTheirShadowAnchorsToTheSamePoint()
+        {
+            var config = Resources.Load<GameConfigObject>("GameConfigObject");
+            Assert.That(config, Is.Not.Null);
+            config.Init();
+
+            var cardRoot = new GameObject("CardRoot").transform;
+            try
+            {
+                foreach (GameConfigObject.PlantType type in System.Enum.GetValues(
+                             typeof(GameConfigObject.PlantType)))
+                {
+                    var definition = config.GetPlantDefinition(type);
+                    var instance = Object.Instantiate(definition.PresentationPrefab, cardRoot, false);
+                    var plant = instance.GetComponent<PlantEntity>();
+
+                    Assert.That(plant, Is.Not.Null, type.ToString());
+                    Assert.That(plant.ShadowAnchor, Is.Not.Null, type.ToString());
+
+                    var cardAnchorPosition = new Vector3(0f, 5f, 0f);
+                    plant.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+                    plant.transform.localPosition = cardAnchorPosition;
+                    plant.AlignShadowAnchorToParentPosition(cardAnchorPosition);
+                    var anchorPosition = cardRoot.InverseTransformPoint(plant.ShadowAnchor.position);
+                    Assert.That(anchorPosition.x, Is.EqualTo(0f).Within(0.001f), type.ToString());
+                    Assert.That(anchorPosition.y, Is.EqualTo(5f).Within(0.001f), type.ToString());
+                    Assert.That(anchorPosition.z, Is.EqualTo(0f).Within(0.001f), type.ToString());
+                }
+            }
+            finally
+            {
+                Object.DestroyImmediate(cardRoot.gameObject);
+            }
+        }
+
+        [Test]
+        public void PlantShadowSprite_IsCenteredOnItsPrefabOrigin()
+        {
+            var config = Resources.Load<GameConfigObject>("GameConfigObject");
+            Assert.That(config, Is.Not.Null);
+
+            var shadowSprite = config.PlanteShadow.transform.Find("plantshadow");
+            Assert.That(shadowSprite, Is.Not.Null);
+            Assert.That(shadowSprite.localPosition, Is.EqualTo(Vector3.zero));
+        }
+
+        [Test]
         public void PresentationPrefab_HasProductionGlowAndParallelBlinkLayers()
         {
             var config = Resources.Load<GameConfigObject>("GameConfigObject");

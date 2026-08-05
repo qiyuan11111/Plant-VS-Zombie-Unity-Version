@@ -1,5 +1,6 @@
 using System;
 using PvZ.Core.Entities;
+using PvZ.Gameplay.Plants;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ namespace PvZ.Presentation
     /// </summary>
     public static class EntityPresentation
     {
+        private static readonly Vector3 CardShadowAnchorPosition = new(0f, 5f, 0f);
         private static readonly Vector3 PreviewScale = new(1.025f, 1.025f, 1f);
 
         public static GameEntity ConfigureCardIcon(GameEntity entity, int animationFrame = 1)
@@ -21,7 +23,8 @@ namespace PvZ.Presentation
                 .SetColliderState(false);
 
             entity.SetLocalScale(new Vector3(0.5f, 0.5f, 1f))
-                .SetLocalPosition(new Vector3(0f, 5f, 0f));
+                .SetLocalPosition(CardShadowAnchorPosition);
+            AlignPlantShadowAnchor(entity, CardShadowAnchorPosition);
 
             Freeze(entity, animationFrame);
             return entity;
@@ -120,6 +123,14 @@ namespace PvZ.Presentation
         private static void EnsureEntity(GameEntity entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
+        }
+
+        private static void AlignPlantShadowAnchor(GameEntity entity, Vector3 anchorPosition)
+        {
+            if (entity is PlantEntity plant)
+            {
+                plant.AlignShadowAnchorToParentPosition(anchorPosition);
+            }
         }
     }
 }

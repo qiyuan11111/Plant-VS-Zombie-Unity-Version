@@ -41,7 +41,10 @@ namespace PvZ.Gameplay.Board
 
         public void SetCursorPosition(Vector3 worldPosition)
         {
-            if (_cursorPreview != null) _cursorPreview.SetPosition(worldPosition);
+            if (_cursorPreview is PlantEntity plant)
+            {
+                plant.AlignShadowAnchorToWorldPosition(worldPosition);
+            }
         }
 
         public void ShowGrid(GridManager.Grid grid)
@@ -50,6 +53,10 @@ namespace PvZ.Gameplay.Board
 
             _gridPreview.SetSortingLayer("plant-" + grid.Point.y);
             _gridPreview.SetLocalPosition(grid.Position);
+            if (_gridPreview is PlantEntity plant)
+            {
+                plant.AlignShadowAnchorToParentPosition(grid.Position);
+            }
             _gridPreview.gameObject.SetActive(true);
         }
 
