@@ -12,8 +12,6 @@ namespace PvZ.Gameplay.Plants.Types
     {
         private const string MouthPath = "component/basic/head/pod/mouth";
         private static readonly int Shoot = Animator.StringToHash("shoot");
-        public override Vector3 SpritePosition => new(39.45f, 47.75f, 0f);
-
         // public override int sunlight => 100;
         // public override float cdTime => 0.5f;
 

@@ -19,11 +19,14 @@ public static class SunFlowerPrefabOptimizer
     private const string Blink1SpritePath = "Assets/Prefab/Plant/SunFlower/Sprite/SunFlower_blink1.png";
     private const string Blink2SpritePath = "Assets/Prefab/Plant/SunFlower/Sprite/SunFlower_blink2.png";
     private const string HeadPath = "component/basic/head/SunFlower_head";
+    private const string BasicPath = "component/basic";
     private const string LegacyNestedHeadPath = "component/basic/head/face/SunFlower_head";
     private const string LegacyBlinkRootPath = "component/basic/head/blink";
     private const string LegacyNestedBlinkRootPath = "component/basic/head/face/blink";
     private const string LegacyFacePath = "component/basic/head/face";
-    private const string OptimizationVersion = "sunflower-structure-v11-head-owns-blink";
+    private const int DefaultPoseFrame = 5;
+    private const string OptimizationVersion = "sunflower-structure-v13-idle-frame-5";
+    private static readonly Vector2 SpritePosition = new(40.4f, 42.6f);
 
     private static readonly Dictionary<string, string> PartPaths = new()
     {
@@ -252,6 +255,9 @@ public static class SunFlowerPrefabOptimizer
         var collider = GetOrAddComponent<BoxCollider2D>(root);
         GetOrAddComponent<SpriteGroup>(root);
 
+        var basic = GetOrCreatePath(root.transform, BasicPath);
+        ConfigureSpritePosition(basic, SpritePosition);
+
         animator.runtimeAnimatorController = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(ControllerPath);
 
         collider.isTrigger = false;
@@ -288,6 +294,7 @@ public static class SunFlowerPrefabOptimizer
 
     private static void ConfigureParts(Transform root, AnimationClip clip)
     {
+        var defaultPoseTime = GetDefaultPoseTime(clip);
         var bindingsByPath = new Dictionary<string, List<EditorCurveBinding>>();
         foreach (var binding in AnimationUtility.GetCurveBindings(clip))
         {
@@ -321,7 +328,7 @@ public static class SunFlowerPrefabOptimizer
                     var curve = AnimationUtility.GetEditorCurve(clip, binding);
                     if (curve == null || curve.length == 0) continue;
 
-                    var value = curve.Evaluate(0f);
+                    var value = curve.Evaluate(defaultPoseTime);
                     switch (binding.propertyName)
                     {
                         case "position.x": spriteTransform.position.x = value; break;
@@ -350,20 +357,21 @@ public static class SunFlowerPrefabOptimizer
             throw new MissingReferenceException("SunFlower head hierarchy is incomplete.");
         }
 
-        var firstFramePosition = new Vector2(
-            EvaluateFirstFrame(clip, HeadPath, "position.x", 0f),
-            EvaluateFirstFrame(clip, HeadPath, "position.y", 0f));
-        var firstFrameScale = new Vector2(
-            EvaluateFirstFrame(clip, HeadPath, "scale.x", 100f),
-            EvaluateFirstFrame(clip, HeadPath, "scale.y", 100f));
+        var defaultPoseTime = GetDefaultPoseTime(clip);
+        var defaultPosePosition = new Vector2(
+            EvaluateFrame(clip, HeadPath, "position.x", defaultPoseTime, 0f),
+            EvaluateFrame(clip, HeadPath, "position.y", defaultPoseTime, 0f));
+        var defaultPoseScale = new Vector2(
+            EvaluateFrame(clip, HeadPath, "scale.x", defaultPoseTime, 100f),
+            EvaluateFrame(clip, HeadPath, "scale.y", defaultPoseTime, 100f));
 
         var headTransform = GetOrAddComponent<SpriteTransform>(head.gameObject);
         headTransform.enabled = true;
-        headTransform.position = firstFramePosition;
-        headTransform.scale = firstFrameScale;
+        headTransform.position = defaultPosePosition;
+        headTransform.scale = defaultPoseScale;
         headTransform.updatePosition = true;
         headTransform.providesChildSpritePosition = true;
-        headTransform.childSpritePosition = firstFramePosition;
+        headTransform.spritePosition = defaultPosePosition;
         head.localRotation = Quaternion.identity;
         head.localScale = Vector3.one;
         headTransform.Apply();
@@ -371,10 +379,34 @@ public static class SunFlowerPrefabOptimizer
         EditorUtility.SetDirty(headTransform);
     }
 
-    private static float EvaluateFirstFrame(
+    private static void ConfigureSpritePosition(Transform target, Vector2 spritePosition)
+    {
+        var spriteTransform = GetOrAddComponent<SpriteTransform>(target.gameObject);
+        spriteTransform.enabled = true;
+        spriteTransform.position = Vector2.zero;
+        spriteTransform.scale = new Vector2(100f, 100f);
+        spriteTransform.skew = Vector2.zero;
+        spriteTransform.brightness = 1f;
+        spriteTransform.alpha = 1f;
+        spriteTransform.alphaCoef = 1f;
+        spriteTransform.updatePosition = false;
+        spriteTransform.providesChildSpritePosition = true;
+        spriteTransform.spritePosition = spritePosition;
+        EditorUtility.SetDirty(spriteTransform);
+    }
+
+    private static float GetDefaultPoseTime(AnimationClip clip)
+    {
+        return clip.frameRate > 0f
+            ? Mathf.Max(0, DefaultPoseFrame - 1) / clip.frameRate
+            : 0f;
+    }
+
+    private static float EvaluateFrame(
         AnimationClip clip,
         string path,
         string propertyName,
+        float time,
         float fallback)
     {
         foreach (var binding in AnimationUtility.GetCurveBindings(clip))
@@ -387,7 +419,7 @@ public static class SunFlowerPrefabOptimizer
             }
 
             var curve = AnimationUtility.GetEditorCurve(clip, binding);
-            if (curve != null && curve.length > 0) return curve.Evaluate(0f);
+            if (curve != null && curve.length > 0) return curve.Evaluate(time);
         }
 
         return fallback;

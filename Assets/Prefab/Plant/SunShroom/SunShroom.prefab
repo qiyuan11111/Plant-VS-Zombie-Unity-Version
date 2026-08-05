@@ -147,6 +147,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 900100000000000004}
+  - component: {fileID: 900100000000000016}
   m_Layer: 6
   m_Name: basic
   m_TagString: Untagged
@@ -171,6 +172,28 @@ Transform:
   - {fileID: 900100000000000008}
   m_Father: {fileID: 900100000000000002}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &900100000000000016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900100000000000003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0}
+  scale: {x: 100, y: 100}
+  skew: {x: 0, y: 0}
+  brightness: 1
+  isBright: 0
+  alpha: 1
+  alphaCoef: 1
+  updatePosition: 0
+  providesChildSpritePosition: 1
+  spritePosition: {x: 42.275, y: 45.875}
 --- !u!1 &900100000000000005
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,4 +983,4 @@ MonoBehaviour:
   alphaCoef: 1
   updatePosition: 1
   providesChildSpritePosition: 1
-  childSpritePosition: {x: 41.7, y: 56.35}
+  spritePosition: {x: 41.7, y: 56.35}

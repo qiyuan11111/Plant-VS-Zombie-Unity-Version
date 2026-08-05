@@ -45,18 +45,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  material: {fileID: 0}
-  hasMaterial: 0
+  m_Name: 
+  m_EditorClassIdentifier: 
   position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 0
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &910000000000000001
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ Transform:
   m_GameObject: {fileID: 910000000000000003}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -17, z: 0}
+  m_LocalPosition: {x: 2.1, y: -20.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -166,16 +166,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
   position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 0
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &2564857282439900853
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +185,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9179900113399978219}
-  - component: {fileID: 8069444785675027017}
   m_Layer: 6
   m_Name: component
   m_TagString: Untagged
@@ -211,28 +210,6 @@ Transform:
   - {fileID: 910000000000000002}
   m_Father: {fileID: 6100616670632725206}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8069444785675027017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2564857282439900853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
-  skew: {x: 0, y: 0}
-  brightness: 0
-  isBright: 0
-  alpha: 0
-  alphaCoef: 0
-  updatePosition: 0
 --- !u!1 &5261390541940053444
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,16 +256,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
   position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 0
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &6100616670353949066
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +293,7 @@ Transform:
   m_GameObject: {fileID: 6100616670353949066}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.2000031, y: -13.300006, z: 0}
+  m_LocalPosition: {x: 1.85, y: -17.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -386,16 +363,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
-  skew: {x: 0, y: 0}
-  brightness: 0
+  position: {x: 41.3, y: 65.5}
+  scale: {x: 55.5405, y: 55.5405}
+  skew: {x: -0.3165, y: -0.3165}
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &6100616670557935543
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +400,7 @@ Transform:
   m_GameObject: {fileID: 6100616670557935543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.9499986, y: 2.2499938, z: 0}
+  m_LocalPosition: {x: -1.2, y: -2.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -493,16 +470,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 38.25, y: 50}
+  scale: {x: 55.5405, y: 55.5405}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &6100616670573988965
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +507,7 @@ Transform:
   m_GameObject: {fileID: 6100616670573988965}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.10000088, y: -5.6999984, z: 0}
+  m_LocalPosition: {x: 0.85, y: -10.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -600,16 +577,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 40.3, y: 57.95}
+  scale: {x: 55.5405, y: 55.5405}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &6100616670584786733
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +614,7 @@ Transform:
   m_GameObject: {fileID: 6100616670584786733}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.250004, y: -12.299997, z: 0}
+  m_LocalPosition: {x: 20.95, y: -16.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -707,16 +684,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 60.4, y: 64.65}
+  scale: {x: 55.5405, y: 55.5405}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &6100616670632725194
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,7 +763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fdb6e2e03f7c0b4bbc623b77f952943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childSpriteTransforms: []
+  maxHealth: 100
   shadowTransform: {fileID: 910000000000000004}
 --- !u!61 &6100616670632725195
 BoxCollider2D:
@@ -843,8 +820,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6845d262a71244e493cd8039a380c71e, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6100616670674902347
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,7 +850,7 @@ Transform:
   m_GameObject: {fileID: 6100616670674902347}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.600004, y: 22.150013, z: 0}
+  m_LocalPosition: {x: 24.2, y: 18.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -943,16 +920,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 24.2, y: -18.6}
+  scale: {x: 55.4993, y: 50}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!222 &6100616670674902345
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -989,7 +966,7 @@ Transform:
   m_GameObject: {fileID: 6100616670855778067}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.3999975, y: 18.150007, z: 0}
+  m_LocalPosition: {x: 1.2, y: 14.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1059,16 +1036,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 1.2, y: -14.6}
+  scale: {x: 55.4993, y: 50}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!222 &6100616670855778065
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1104,7 +1081,7 @@ Transform:
   m_GameObject: {fileID: 6100616672063913060}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.149998, y: -4.850002, z: 0}
+  m_LocalPosition: {x: -10.35, y: -9.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1174,16 +1151,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 29.1, y: 57.2}
+  scale: {x: 55.5405, y: 55.5405}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &6100616672076282298
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,7 +1188,7 @@ Transform:
   m_GameObject: {fileID: 6100616672076282298}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.75, y: -17.249992, z: 0}
+  m_LocalPosition: {x: -14, y: -21.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1281,16 +1258,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 25.45, y: 69.65}
+  scale: {x: 55.5405, y: 55.5405}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &6100616672131985224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,7 +1295,7 @@ Transform:
   m_GameObject: {fileID: 6100616672131985224}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.300002, y: -3.4000003, z: 0}
+  m_LocalPosition: {x: 11.05, y: -7.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1388,16 +1365,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 50.5, y: 55.65}
+  scale: {x: 55.5405, y: 55.5405}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &6100616672289469948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1425,7 +1402,7 @@ Transform:
   m_GameObject: {fileID: 6100616672289469948}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.30000266, y: -6.699992, z: 0}
+  m_LocalPosition: {x: 0.35, y: -11.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1495,16 +1472,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 39.8, y: 58.95}
+  scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &6100616672291064424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,7 +1509,7 @@ Transform:
   m_GameObject: {fileID: 6100616672291064424}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.899996, y: 20.950003, z: 0}
+  m_LocalPosition: {x: -21.4, y: 17.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1602,16 +1579,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
-  skew: {x: 0, y: 0}
-  brightness: 0
+  position: {x: -21.4, y: -17.5}
+  scale: {x: 99.7406, y: 99.7406}
+  skew: {x: -14.7711, y: -14.7711}
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &6252327462186539546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,7 +1615,7 @@ Transform:
   m_GameObject: {fileID: 6252327462186539546}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.85, y: -0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1658,18 +1635,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
-  position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  position: {x: 37.6, y: 48.7}
+  scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 1
   providesChildSpritePosition: 1
-  childSpritePosition: {x: 0, y: 0}
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &6532773474092720366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1717,16 +1692,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
   position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 0
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &7246728155691998238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1773,16 +1748,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
   position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 0
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &7724594221593856548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,16 +1802,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
   position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 0
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &8440569953551213620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,13 +1859,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  hasMaterial: 0
   position: {x: 0, y: 0}
-  scale: {x: 0, y: 0}
+  scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
-  brightness: 0
+  brightness: 1
   isBright: 0
-  alpha: 0
-  alphaCoef: 0
+  alpha: 1
+  alphaCoef: 1
   updatePosition: 0
+  providesChildSpritePosition: 1
+  spritePosition: {x: 39.45, y: 47.75}

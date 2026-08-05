@@ -17,6 +17,7 @@ public static class SunShroomPrefabOptimizer
     private const string SunClipPath = "Assets/Prefab/Plant/SunShroom/Animation/sun.anim";
     private const string ControllerPath = "Assets/Prefab/Plant/SunShroom/Animation/SunShroom.controller";
     private const string BodyContainerPath = "component/basic/body";
+    private const string BasicPath = "component/basic";
     private const string BodyPath = "component/basic/body/SunShroom_body";
     private const string AnchorsPath = "component/anchors";
     private const string AnchorPath = "component/anchors/Sun_Anchor";
@@ -26,7 +27,8 @@ public static class SunShroomPrefabOptimizer
     private const string SleepPath = "component/basic/body/SunShroom_body/SunShroom_sleep";
     private const string OldBlinkPath = "component/basic/body/blink";
     private const string BlinkPath = "component/basic/body/SunShroom_body/blink";
-    private const string OptimizationVersion = "sunshroom-structure-v5-xml-animation-values";
+    private const string OptimizationVersion = "sunshroom-structure-v6-sprite-position-provider";
+    private static readonly Vector2 SpritePosition = new(42.275f, 45.875f);
 
     [InitializeOnLoadMethod]
     private static void SchedulePendingOptimization()
@@ -223,6 +225,7 @@ public static class SunShroomPrefabOptimizer
         var root = PrefabUtility.LoadPrefabContents(PrefabPath);
         try
         {
+            var basic = RequireTransform(root.transform, BasicPath);
             var bodyContainer = RequireTransform(root.transform, BodyContainerPath);
             var body = RequireTransform(root.transform, BodyPath);
             var anchors = RequireTransform(root.transform, AnchorsPath);
@@ -257,6 +260,8 @@ public static class SunShroomPrefabOptimizer
             bodyContainer.localRotation = Quaternion.identity;
             bodyContainer.localScale = Vector3.one;
 
+            ConfigureSpritePosition(basic, SpritePosition);
+
             var bodyTransform = GetOrAddSpriteTransform(body);
             ConfigureVisualTransform(
                 body,
@@ -264,7 +269,7 @@ public static class SunShroomPrefabOptimizer
                 new Vector2(41.7f, 56.35f),
                 new Vector2(79.998779296875f, 79.998779296875f));
             bodyTransform.providesChildSpritePosition = true;
-            bodyTransform.childSpritePosition = bodyTransform.position;
+            bodyTransform.spritePosition = bodyTransform.position;
             bodyTransform.Apply();
             bodyTransform.RefreshDescendantPositionReferences();
 
@@ -321,10 +326,26 @@ public static class SunShroomPrefabOptimizer
         spriteTransform.alphaCoef = 1f;
         spriteTransform.updatePosition = true;
         spriteTransform.providesChildSpritePosition = false;
-        spriteTransform.childSpritePosition = Vector2.zero;
+        spriteTransform.spritePosition = Vector2.zero;
         target.localRotation = Quaternion.identity;
         target.localScale = Vector3.one;
         spriteTransform.Apply();
+        EditorUtility.SetDirty(spriteTransform);
+    }
+
+    private static void ConfigureSpritePosition(Transform target, Vector2 spritePosition)
+    {
+        var spriteTransform = GetOrAddSpriteTransform(target);
+        spriteTransform.enabled = true;
+        spriteTransform.position = Vector2.zero;
+        spriteTransform.scale = new Vector2(100f, 100f);
+        spriteTransform.skew = Vector2.zero;
+        spriteTransform.brightness = 1f;
+        spriteTransform.alpha = 1f;
+        spriteTransform.alphaCoef = 1f;
+        spriteTransform.updatePosition = false;
+        spriteTransform.providesChildSpritePosition = true;
+        spriteTransform.spritePosition = spritePosition;
         EditorUtility.SetDirty(spriteTransform);
     }
 

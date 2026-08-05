@@ -24,6 +24,11 @@ namespace Tests.EditMode
             Assert.That(prefab, Is.Not.Null);
             Assert.That(prefab.GetComponent<Blink>(), Is.Not.Null);
 
+            var basicTransform = prefab.transform.Find("component/basic").GetComponent<SpriteTransform>();
+            Assert.That(basicTransform, Is.Not.Null);
+            Assert.That(basicTransform.providesChildSpritePosition, Is.True);
+            Assert.That(basicTransform.spritePosition, Is.EqualTo(new Vector2(42.275f, 45.875f)));
+
             var bodyContainer = prefab.transform.Find(BodyContainerPath);
             var body = prefab.transform.Find(BodyPath);
             var sleep = prefab.transform.Find(SleepPath);
@@ -42,7 +47,7 @@ namespace Tests.EditMode
                 new Vector2(79.998779296875f, 79.998779296875f));
             var bodyTransform = body.GetComponent<SpriteTransform>();
             Assert.That(bodyTransform.providesChildSpritePosition, Is.True);
-            Assert.That(bodyTransform.childSpritePosition, Is.EqualTo(bodyTransform.position));
+            Assert.That(bodyTransform.spritePosition, Is.EqualTo(bodyTransform.position));
 
             AssertRawTransform(blink1, new Vector2(41.6f, 54f), null);
             AssertRawTransform(blink2, new Vector2(41.45f, 53.9f), null);

@@ -10,8 +10,6 @@ namespace PvZ.Gameplay.Plants.Types
         [SerializeField] private SunProducer sunProducer;
         [SerializeField] private Blink blink;
 
-        public override Vector3 SpritePosition => new(42.275f, 45.875f, 0f);
-
         public override string GetChineseName()
         {
             return "阳光菇";

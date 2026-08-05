@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using PvZ.Gameplay.Plants;
@@ -92,15 +93,21 @@ namespace Tests.EditMode
 
             var prefab = config.GetPlantDefinition(GameConfigObject.PlantType.SunFlower).PresentationPrefab;
             Assert.That(prefab.GetComponent<Blink>(), Is.Not.Null);
+            var basicTransform = prefab.transform.Find("component/basic").GetComponent<SpriteTransform>();
+            Assert.That(basicTransform, Is.Not.Null);
+            Assert.That(basicTransform.providesChildSpritePosition, Is.True);
+            Assert.That(basicTransform.spritePosition, Is.EqualTo(new Vector2(40.4f, 42.6f)));
             Assert.That(prefab.transform.Find("component/basic/head/face"), Is.Null);
             var head = prefab.transform.Find("component/basic/head/SunFlower_head");
             Assert.That(head, Is.Not.Null);
             var headTransform = head.GetComponent<SpriteTransform>();
             Assert.That(headTransform, Is.Not.Null);
-            Assert.That(headTransform.position, Is.EqualTo(new Vector2(37.1f, 35.7f)));
-            Assert.That(headTransform.scale, Is.EqualTo(new Vector2(100f, 89f)));
+            Assert.That(headTransform.position.x, Is.EqualTo(40.97259f).Within(0.0002f));
+            Assert.That(headTransform.position.y, Is.EqualTo(29.84815f).Within(0.0002f));
+            Assert.That(headTransform.scale.x, Is.EqualTo(100f).Within(0.0002f));
+            Assert.That(headTransform.scale.y, Is.EqualTo(100.70281f).Within(0.0002f));
             Assert.That(headTransform.providesChildSpritePosition, Is.True);
-            Assert.That(headTransform.childSpritePosition, Is.EqualTo(headTransform.position));
+            Assert.That(headTransform.spritePosition, Is.EqualTo(headTransform.position));
             var blink1 = head.Find("blink/SunFlower_blink1");
             var blink2 = head.Find("blink/SunFlower_blink2");
             Assert.That(blink1, Is.Not.Null);
@@ -142,6 +149,53 @@ namespace Tests.EditMode
         }
 
         [Test]
+        public void PresentationPrefab_DefaultPoseMatchesIdleFifthFrame()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
+                "Assets/Prefab/Plant/SunFlower/SunFlower.prefab");
+            var idle = AssetDatabase.LoadAssetAtPath<AnimationClip>(
+                "Assets/Prefab/Plant/SunFlower/Animation/idle.anim");
+            Assert.That(prefab, Is.Not.Null);
+            Assert.That(idle, Is.Not.Null);
+
+            var sampleTime = 4f / idle.frameRate;
+            var animatedTransforms = new HashSet<SpriteTransform>();
+            foreach (var binding in AnimationUtility.GetCurveBindings(idle))
+            {
+                if (binding.type != typeof(SpriteTransform)) continue;
+
+                var target = prefab.transform.Find(binding.path);
+                Assert.That(target, Is.Not.Null, binding.path);
+                var spriteTransform = target.GetComponent<SpriteTransform>();
+                Assert.That(spriteTransform, Is.Not.Null, binding.path);
+                var curve = AnimationUtility.GetEditorCurve(idle, binding);
+                Assert.That(curve, Is.Not.Null, $"{binding.path}: {binding.propertyName}");
+
+                var actual = GetAnimatedValue(spriteTransform, binding.propertyName);
+                if (float.IsNaN(actual)) continue;
+
+                Assert.That(actual, Is.EqualTo(curve.Evaluate(sampleTime)).Within(0.0002f),
+                    $"{binding.path}: {binding.propertyName}");
+                animatedTransforms.Add(spriteTransform);
+            }
+
+            foreach (var spriteTransform in animatedTransforms)
+            {
+                var provider = FindPositionProvider(spriteTransform.transform.parent);
+                var origin = provider != null ? provider.spritePosition : Vector2.zero;
+                var expectedLocalPosition = new Vector3(
+                    spriteTransform.position.x - origin.x,
+                    -(spriteTransform.position.y - origin.y),
+                    spriteTransform.transform.localPosition.z);
+
+                Assert.That(spriteTransform.transform.localPosition.x,
+                    Is.EqualTo(expectedLocalPosition.x).Within(0.0002f), spriteTransform.name);
+                Assert.That(spriteTransform.transform.localPosition.y,
+                    Is.EqualTo(expectedLocalPosition.y).Within(0.0002f), spriteTransform.name);
+            }
+        }
+
+        [Test]
         public void PresentationAnimations_TargetExistingHierarchyNodes()
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
@@ -169,6 +223,39 @@ namespace Tests.EditMode
                         $"{clip.name} targets missing hierarchy path '{binding.path}'.");
                 }
             }
+        }
+
+        private static float GetAnimatedValue(SpriteTransform spriteTransform, string propertyName)
+        {
+            switch (propertyName)
+            {
+                case "position.x": return spriteTransform.position.x;
+                case "position.y": return spriteTransform.position.y;
+                case "scale.x": return spriteTransform.scale.x;
+                case "scale.y": return spriteTransform.scale.y;
+                case "skew.x": return spriteTransform.skew.x;
+                case "skew.y": return spriteTransform.skew.y;
+                case "brightness": return spriteTransform.brightness;
+                case "alpha": return spriteTransform.alpha;
+                case "alphaCoef": return spriteTransform.alphaCoef;
+                default: return float.NaN;
+            }
+        }
+
+        private static SpriteTransform FindPositionProvider(Transform parent)
+        {
+            while (parent != null)
+            {
+                var spriteTransform = parent.GetComponent<SpriteTransform>();
+                if (spriteTransform != null && spriteTransform.providesChildSpritePosition)
+                {
+                    return spriteTransform;
+                }
+
+                parent = parent.parent;
+            }
+
+            return null;
         }
     }
 }

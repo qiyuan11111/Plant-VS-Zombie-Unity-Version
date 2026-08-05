@@ -12,7 +12,7 @@ namespace PvZ.Presentation
     /// </summary>
     public static class EntityPresentation
     {
-        private static readonly Vector3 CardShadowAnchorPosition = new(0f, 5f, 0f);
+        private static readonly Vector3 CardShadowAnchorPosition = new(0f,-6f, 0f);
         private static readonly Vector3 PreviewScale = new(1.025f, 1.025f, 1f);
 
         public static GameEntity ConfigureCardIcon(GameEntity entity, int animationFrame = 1)

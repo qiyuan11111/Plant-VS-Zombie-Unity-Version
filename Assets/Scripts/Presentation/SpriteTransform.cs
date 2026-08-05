@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Serialization;
-using PvZ.Core.Entities;
 
 namespace PvZ.Presentation
 {
@@ -49,14 +48,14 @@ namespace PvZ.Presentation
         [Tooltip("Use this transform's static FLA position as the origin for descendant SpriteTransforms.")]
         public bool providesChildSpritePosition;
 
-        [Tooltip("Static FLA attachment position used only by descendant SpriteTransforms.")]
-        public Vector2 childSpritePosition;
+        [FormerlySerializedAs("childSpritePosition")]
+        [Tooltip("FLA coordinate-space origin used by descendant SpriteTransforms.")]
+        public Vector2 spritePosition;
 
         private Transform _cachedTransform;
         private SpriteRenderer _spriteRenderer;
         private MaterialPropertyBlock _materialProperties;
-        private SpriteTransform _childSpritePositionProvider;
-        private EntitySprite _entitySpritePositionProvider;
+        private SpriteTransform _spritePositionProvider;
         private SpriteGroup _scheduler;
         private bool _isDestroying;
         private bool _positionReferenceResolved;
@@ -130,25 +129,18 @@ namespace PvZ.Presentation
             if (_positionReferenceResolved) return;
 
             _positionReferenceResolved = true;
-            _childSpritePositionProvider = null;
-            _entitySpritePositionProvider = null;
+            _spritePositionProvider = null;
 
             // Start at the parent deliberately: a sub-animation root is positioned
             // in its parent's FLA space, while only its descendants use the static
-            // childSpritePosition defined on that root.
+            // spritePosition defined on that root.
             var parent = _cachedTransform.parent;
             while (parent != null)
             {
                 if (parent.TryGetComponent<SpriteTransform>(out var spriteTransform) &&
                     spriteTransform.providesChildSpritePosition)
                 {
-                    _childSpritePositionProvider = spriteTransform;
-                    return;
-                }
-
-                if (parent.TryGetComponent<EntitySprite>(out var entitySprite))
-                {
-                    _entitySpritePositionProvider = entitySprite;
+                    _spritePositionProvider = spriteTransform;
                     return;
                 }
 
@@ -274,8 +266,7 @@ namespace PvZ.Presentation
             _cachedTransform = null;
             _spriteRenderer = null;
             _materialProperties = null;
-            _childSpritePositionProvider = null;
-            _entitySpritePositionProvider = null;
+            _spritePositionProvider = null;
             _positionReferenceResolved = false;
 
             _hasSkewX = false;
@@ -306,8 +297,7 @@ namespace PvZ.Presentation
 
         public void RefreshPositionReference()
         {
-            _childSpritePositionProvider = null;
-            _entitySpritePositionProvider = null;
+            _spritePositionProvider = null;
             _positionReferenceResolved = false;
 
             if (_cachedTransform != null)
@@ -440,14 +430,9 @@ namespace PvZ.Presentation
 
         private Vector3 ResolveLocalPosition()
         {
-            if (_childSpritePositionProvider != null)
+            if (_spritePositionProvider != null)
             {
-                return ToLocalPosition(position, _childSpritePositionProvider.childSpritePosition);
-            }
-
-            if (_entitySpritePositionProvider != null)
-            {
-                return ToLocalPosition(position, (Vector2)_entitySpritePositionProvider.SpritePosition);
+                return ToLocalPosition(position, _spritePositionProvider.spritePosition);
             }
 
             return new Vector3(position.x, -position.y, 0f);

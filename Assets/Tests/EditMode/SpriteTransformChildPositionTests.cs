@@ -1,24 +1,82 @@
 using NUnit.Framework;
 using PvZ.Presentation;
-using PvZ.Core.Entities;
+using UnityEditor;
 using UnityEngine;
 
 namespace Tests.EditMode
 {
     public sealed class SpriteTransformChildPositionTests
     {
+        [TestCase("Assets/Prefab/Plant/PeaShooterSingle/PeaShooterSingle.prefab", 39.45f, 47.75f)]
+        [TestCase("Assets/Prefab/Plant/SunFlower/SunFlower.prefab", 40.4f, 42.6f)]
+        [TestCase("Assets/Prefab/Plant/SunShroom/SunShroom.prefab", 42.275f, 45.875f)]
+        public void PlantPrefab_BasicOwnsSpritePosition(string prefabPath, float x, float y)
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+            Assert.That(prefab, Is.Not.Null);
+
+            var basic = prefab.transform.Find("component/basic");
+            Assert.That(basic, Is.Not.Null);
+
+            var spriteTransform = basic.GetComponent<SpriteTransform>();
+            Assert.That(spriteTransform, Is.Not.Null);
+            Assert.That(spriteTransform.providesChildSpritePosition, Is.True);
+            Assert.That(spriteTransform.spritePosition, Is.EqualTo(new Vector2(x, y)));
+        }
+
         [Test]
-        public void Apply_ConvertsRawFlaPositionRelativeToPlantSpritePosition()
+        public void PeaShooterPrefab_DefaultPoseMatchesIdleFirstFrame()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
+                "Assets/Prefab/Plant/PeaShooterSingle/PeaShooterSingle.prefab");
+            var idle = AssetDatabase.LoadAssetAtPath<AnimationClip>(
+                "Assets/Prefab/Plant/PeaShooterSingle/Animation/idle.anim");
+            var headIdle = AssetDatabase.LoadAssetAtPath<AnimationClip>(
+                "Assets/Prefab/Plant/PeaShooterSingle/Animation/head_idle.anim");
+
+            Assert.That(prefab, Is.Not.Null);
+            Assert.That(idle, Is.Not.Null);
+            Assert.That(headIdle, Is.Not.Null);
+
+            AssertFirstFrame(prefab.transform, idle);
+            AssertFirstFrame(prefab.transform, headIdle);
+
+            foreach (var spriteTransform in prefab.GetComponentsInChildren<SpriteTransform>(true))
+            {
+                Assert.That(spriteTransform.scale.x, Is.Not.Zero, spriteTransform.name);
+                Assert.That(spriteTransform.scale.y, Is.Not.Zero, spriteTransform.name);
+                Assert.That(spriteTransform.brightness, Is.EqualTo(1f), spriteTransform.name);
+                Assert.That(spriteTransform.alpha, Is.EqualTo(1f), spriteTransform.name);
+                Assert.That(spriteTransform.alphaCoef, Is.EqualTo(1f), spriteTransform.name);
+
+                if (!spriteTransform.updatePosition) continue;
+
+                var provider = FindPositionProvider(spriteTransform.transform.parent);
+                var origin = provider != null ? provider.spritePosition : Vector2.zero;
+                var delta = spriteTransform.position - origin;
+                var expected = new Vector3(delta.x, -delta.y, 0f);
+                Assert.That(spriteTransform.transform.localPosition.x,
+                    Is.EqualTo(expected.x).Within(0.0001f), spriteTransform.name);
+                Assert.That(spriteTransform.transform.localPosition.y,
+                    Is.EqualTo(expected.y).Within(0.0001f), spriteTransform.name);
+            }
+        }
+
+        [Test]
+        public void Apply_ConvertsRawFlaPositionRelativeToSpriteTransformPosition()
         {
             var root = new GameObject("plant");
+            var basic = new GameObject("basic");
             var child = new GameObject("child");
 
             try
             {
                 root.AddComponent<SpriteGroup>();
-                var entitySprite = root.AddComponent<TestEntitySprite>();
-                entitySprite.SpritePosition = new Vector3(40.2f, 52.25f, 0f);
-                child.transform.SetParent(root.transform, false);
+                basic.transform.SetParent(root.transform, false);
+                var basicTransform = basic.AddComponent<SpriteTransform>();
+                basicTransform.providesChildSpritePosition = true;
+                basicTransform.spritePosition = new Vector2(40.2f, 52.25f);
+                child.transform.SetParent(basic.transform, false);
 
                 var spriteTransform = child.AddComponent<SpriteTransform>();
                 spriteTransform.position = new Vector2(69.65f, 55.5405f);
@@ -38,6 +96,7 @@ namespace Tests.EditMode
         public void ChildPositionProvider_OwnTransformUsesPlant_AndDescendantsUseStaticPosition()
         {
             var root = new GameObject("plant");
+            var basic = new GameObject("basic");
             var head = new GameObject("head");
             var pod = new GameObject("pod");
             var blink = new GameObject("blink");
@@ -45,15 +104,17 @@ namespace Tests.EditMode
             try
             {
                 root.AddComponent<SpriteGroup>();
-                var entitySprite = root.AddComponent<TestEntitySprite>();
-                entitySprite.SpritePosition = new Vector3(40.2f, 52.25f, 0f);
+                basic.transform.SetParent(root.transform, false);
+                var basicTransform = basic.AddComponent<SpriteTransform>();
+                basicTransform.providesChildSpritePosition = true;
+                basicTransform.spritePosition = new Vector2(40.2f, 52.25f);
 
-                head.transform.SetParent(root.transform, false);
+                head.transform.SetParent(basic.transform, false);
                 var headTransform = head.AddComponent<SpriteTransform>();
                 headTransform.position = new Vector2(37.6f, 48.7f);
                 headTransform.updatePosition = true;
                 headTransform.providesChildSpritePosition = true;
-                headTransform.childSpritePosition = Vector2.zero;
+                headTransform.spritePosition = Vector2.zero;
                 headTransform.Apply();
 
                 pod.transform.SetParent(head.transform, false);
@@ -181,8 +242,55 @@ namespace Tests.EditMode
             }
         }
 
-        private sealed class TestEntitySprite : EntitySprite
+        private static void AssertFirstFrame(Transform root, AnimationClip clip)
         {
+            foreach (var binding in AnimationUtility.GetCurveBindings(clip))
+            {
+                if (binding.type != typeof(SpriteTransform)) continue;
+
+                var target = root.Find(binding.path);
+                Assert.That(target, Is.Not.Null, binding.path);
+                var spriteTransform = target.GetComponent<SpriteTransform>();
+                Assert.That(spriteTransform, Is.Not.Null, binding.path);
+
+                var curve = AnimationUtility.GetEditorCurve(clip, binding);
+                Assert.That(curve, Is.Not.Null, $"{binding.path}/{binding.propertyName}");
+                var expected = curve.Evaluate(0f);
+                var actual = binding.propertyName switch
+                {
+                    "position.x" => spriteTransform.position.x,
+                    "position.y" => spriteTransform.position.y,
+                    "scale.x" => spriteTransform.scale.x,
+                    "scale.y" => spriteTransform.scale.y,
+                    "skew.x" => spriteTransform.skew.x,
+                    "skew.y" => spriteTransform.skew.y,
+                    "brightness" => spriteTransform.brightness,
+                    "alpha" => spriteTransform.alpha,
+                    "alphaCoef" => spriteTransform.alphaCoef,
+                    _ => float.NaN
+                };
+
+                if (float.IsNaN(actual)) continue;
+                Assert.That(actual, Is.EqualTo(expected).Within(0.0001f),
+                    $"{binding.path}/{binding.propertyName}");
+            }
         }
+
+        private static SpriteTransform FindPositionProvider(Transform parent)
+        {
+            while (parent != null)
+            {
+                var spriteTransform = parent.GetComponent<SpriteTransform>();
+                if (spriteTransform != null && spriteTransform.providesChildSpritePosition)
+                {
+                    return spriteTransform;
+                }
+
+                parent = parent.parent;
+            }
+
+            return null;
+        }
+
     }
 }
