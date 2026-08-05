@@ -1448,8 +1448,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3807032334296917773}
-  blink1Sprite: {fileID: 21300000, guid: e70d5c3ea6d84786bd756db1e93d1523, type: 3}
-  blink2Sprite: {fileID: 21300000, guid: 2a7d0e04eae74c2ab55e8bb4aa102177, type: 3}
   minimumIntervalSeconds: 2.5
   maximumIntervalSeconds: 5.5
 --- !u!1 &3807032334355023008

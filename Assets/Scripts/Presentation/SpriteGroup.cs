@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Script
+namespace PvZ.Presentation
 {
     public class SpriteGroup : SpriteImage
     {

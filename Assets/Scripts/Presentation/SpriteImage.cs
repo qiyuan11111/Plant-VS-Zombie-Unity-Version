@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace Script
+namespace PvZ.Presentation
 {
     public class SpriteImage : MonoBehaviour
     {

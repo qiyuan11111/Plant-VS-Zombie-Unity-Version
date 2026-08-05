@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using LitJson;
-using Script;
+using PvZ.Presentation;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,7 +13,7 @@ public abstract class AnimGenerator : MonoBehaviour
 
     public abstract Type getPropertyType(string prop);
 
-    public GameObject gameObject;
+    public new GameObject gameObject;
 
     protected abstract string getPrefabName();
 

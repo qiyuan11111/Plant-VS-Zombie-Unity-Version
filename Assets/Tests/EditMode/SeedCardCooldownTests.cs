@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Prefab.Object.SeedCard.Script;
+using PvZ.Gameplay.SeedCards;
 
 namespace Tests.EditMode
 {

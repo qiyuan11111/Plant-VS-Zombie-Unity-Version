@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using Script;
-using Script.Model;
+using PvZ.Presentation;
+using PvZ.Core.Entities;
 using UnityEngine;
 
 namespace Tests.EditMode

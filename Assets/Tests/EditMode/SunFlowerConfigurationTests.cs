@@ -1,9 +1,10 @@
 using System.Linq;
 using NUnit.Framework;
-using Prefab.Plant.SunFlower.Script;
-using Prefab.Plant.SunShroom.Script;
-using Script;
-using Script.Util;
+using PvZ.Gameplay.Plants;
+using PvZ.Gameplay.Plants.Types;
+using PvZ.Gameplay.Plants.Abilities;
+using PvZ.Presentation;
+using PvZ.Config;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -43,7 +44,7 @@ namespace Tests.EditMode
             config.Init();
 
             var prefab = config.GetPlantDefinition(GameConfigObject.PlantType.SunFlower).PresentationPrefab;
-            Assert.That(prefab.GetComponent<SunFlowerBlink>(), Is.Not.Null);
+            Assert.That(prefab.GetComponent<Blink>(), Is.Not.Null);
             Assert.That(prefab.transform.Find("component/basic/head/face"), Is.Null);
             var head = prefab.transform.Find("component/basic/head/SunFlower_head");
             Assert.That(head, Is.Not.Null);

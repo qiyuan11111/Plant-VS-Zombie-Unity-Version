@@ -1,10 +1,10 @@
-using Script.Model;
-using Script.Presentation;
-using Script.Util;
+using PvZ.Core.Entities;
+using PvZ.Gameplay.Plants;
+using PvZ.Presentation;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Prefab.Object.SeedCard.Script
+namespace PvZ.Gameplay.SeedCards
 {
     public enum SeedCardVisualState
     {

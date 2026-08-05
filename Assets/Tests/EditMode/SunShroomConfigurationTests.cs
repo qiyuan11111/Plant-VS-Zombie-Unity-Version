@@ -1,7 +1,7 @@
 using System.Linq;
 using NUnit.Framework;
-using Prefab.Plant.SunShroom.Script;
-using Script;
+using PvZ.Gameplay.Plants.Abilities;
+using PvZ.Presentation;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -22,6 +22,7 @@ namespace Tests.EditMode
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
             Assert.That(prefab, Is.Not.Null);
+            Assert.That(prefab.GetComponent<Blink>(), Is.Not.Null);
 
             var bodyContainer = prefab.transform.Find(BodyContainerPath);
             var body = prefab.transform.Find(BodyPath);

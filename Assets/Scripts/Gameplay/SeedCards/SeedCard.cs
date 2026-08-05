@@ -1,11 +1,11 @@
 using System;
-using Script.Manager;
-using Script.Model;
-using Script.Util;
+using PvZ.Core.Entities;
+using PvZ.Gameplay.Board;
+using PvZ.Gameplay.Plants;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Prefab.Object.SeedCard.Script
+namespace PvZ.Gameplay.SeedCards
 {
     public class SeedCard : WorldObject, IPointerClickHandler
     {

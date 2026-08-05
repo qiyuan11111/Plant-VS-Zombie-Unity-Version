@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Prefab.Plant.SunFlower.Script;
-using Prefab.Plant.SunShroom.Script;
-using Script;
+using PvZ.Gameplay.Plants.Types;
+using PvZ.Gameplay.Plants.Abilities;
+using PvZ.Presentation;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -247,7 +247,7 @@ public static class SunFlowerPrefabOptimizer
 
         var sunFlower = GetOrAddComponent<SunFlower>(root);
         var producer = GetOrAddComponent<SunProducer>(root);
-        var blink = GetOrAddComponent<SunFlowerBlink>(root);
+        var blink = GetOrAddComponent<Blink>(root);
         var animator = GetOrAddComponent<Animator>(root);
         var collider = GetOrAddComponent<BoxCollider2D>(root);
         GetOrAddComponent<SpriteGroup>(root);
@@ -281,10 +281,6 @@ public static class SunFlowerPrefabOptimizer
 
         var blinkData = new SerializedObject(blink);
         blinkData.FindProperty("animator").objectReferenceValue = animator;
-        blinkData.FindProperty("blink1Sprite").objectReferenceValue =
-            AssetDatabase.LoadAssetAtPath<Sprite>(Blink1SpritePath);
-        blinkData.FindProperty("blink2Sprite").objectReferenceValue =
-            AssetDatabase.LoadAssetAtPath<Sprite>(Blink2SpritePath);
         blinkData.FindProperty("minimumIntervalSeconds").floatValue = 2.5f;
         blinkData.FindProperty("maximumIntervalSeconds").floatValue = 5.5f;
         blinkData.ApplyModifiedPropertiesWithoutUndo();
