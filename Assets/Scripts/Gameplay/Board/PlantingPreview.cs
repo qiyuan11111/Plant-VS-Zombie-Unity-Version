@@ -55,7 +55,8 @@ namespace PvZ.Gameplay.Board
             _gridPreview.SetLocalPosition(grid.Position);
             if (_gridPreview is PlantEntity plant)
             {
-                plant.AlignShadowAnchorToParentPosition(grid.Position);
+                var groundPosition = PlantEntity.GetBoardGroundPosition(grid.Position);
+                plant.AlignShadowAnchorToParentPosition(groundPosition);
             }
             _gridPreview.gameObject.SetActive(true);
         }
