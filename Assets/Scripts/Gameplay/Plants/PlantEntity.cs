@@ -11,6 +11,8 @@ namespace PvZ.Gameplay.Plants
     public abstract class PlantEntity : Character
     {
         private const string ShadowAnchorName = "Shadow_Anchor";
+        private const float LegacyGroundOffsetY = -17f;
+        private static readonly Vector3 BoardScale = new(1.025f, 1.025f, 1f);
 
         [SerializeField] private Transform shadowTransform;
         private GridManager.Grid _occupiedGrid;
@@ -39,10 +41,11 @@ namespace PvZ.Gameplay.Plants
                 .SetSortingLayer("plant-" + grid.Point.y)
                 .SetColliderState(true);
 
-            var gridAnchorPosition = new Vector3(grid.Position.x, grid.Position.y, 10f);
-            SetLocalScale(new Vector3(1.025f, 1.025f, 1f));
-            SetLocalPosition(gridAnchorPosition);
-            AlignShadowAnchorToParentPosition(gridAnchorPosition);
+            var gridCenterPosition = new Vector3(grid.Position.x, grid.Position.y, 10f);
+            var groundPosition = GetBoardGroundPosition(grid.Position, gridCenterPosition.z);
+            SetLocalScale(BoardScale);
+            SetLocalPosition(gridCenterPosition);
+            AlignShadowAnchorToParentPosition(groundPosition);
             SetName(GetEnglishName() + "-" + grid.Point.x + "-" + grid.Point.y);
 
             EnsureShadow();
@@ -54,6 +57,19 @@ namespace PvZ.Gameplay.Plants
 
         protected virtual void OnEnteredBoard()
         {
+        }
+
+        /// <summary>
+        /// Grid coordinates were authored as plant artwork centers. The shared
+        /// ground line therefore stays one legacy foot offset below each center,
+        /// while individual artwork is corrected through its shadow anchor.
+        /// </summary>
+        public static Vector3 GetBoardGroundPosition(Vector2 gridCenter, float z = 0f)
+        {
+            return new Vector3(
+                gridCenter.x,
+                gridCenter.y + LegacyGroundOffsetY * BoardScale.y,
+                z);
         }
 
         /// <summary>

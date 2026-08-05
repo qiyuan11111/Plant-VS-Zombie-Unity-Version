@@ -74,6 +74,49 @@ namespace Tests.EditMode
         }
 
         [Test]
+        public void BoardAlignment_PreservesLegacyVisualCentersAndSharesOneGroundLine()
+        {
+            var config = Resources.Load<GameConfigObject>("GameConfigObject");
+            Assert.That(config, Is.Not.Null);
+            config.Init();
+
+            var boardRoot = new GameObject("BoardRoot").transform;
+            var gridCenter = new Vector3(100f, 200f, 10f);
+            var groundPosition = PlantEntity.GetBoardGroundPosition(gridCenter, gridCenter.z);
+            try
+            {
+                Assert.That(groundPosition.x, Is.EqualTo(gridCenter.x));
+                Assert.That(groundPosition.y, Is.EqualTo(182.575f).Within(0.001f));
+                Assert.That(groundPosition.z, Is.EqualTo(gridCenter.z));
+
+                foreach (GameConfigObject.PlantType type in System.Enum.GetValues(
+                             typeof(GameConfigObject.PlantType)))
+                {
+                    var prefab = config.GetPlantDefinition(type).PresentationPrefab;
+                    var instance = Object.Instantiate(prefab, boardRoot, false);
+                    var plant = instance.GetComponent<PlantEntity>();
+
+                    Assert.That(plant, Is.Not.Null, type.ToString());
+                    plant.transform.localScale = new Vector3(1.025f, 1.025f, 1f);
+                    plant.transform.localPosition = gridCenter;
+                    plant.AlignShadowAnchorToParentPosition(groundPosition);
+
+                    var alignedGround = boardRoot.InverseTransformPoint(plant.ShadowAnchor.position);
+                    Assert.That(alignedGround.x, Is.EqualTo(groundPosition.x).Within(0.001f), type.ToString());
+                    Assert.That(alignedGround.y, Is.EqualTo(groundPosition.y).Within(0.001f), type.ToString());
+                    Assert.That(plant.transform.localPosition.x,
+                        Is.EqualTo(gridCenter.x).Within(1f), type.ToString());
+                    Assert.That(plant.transform.localPosition.y,
+                        Is.EqualTo(gridCenter.y).Within(1f), type.ToString());
+                }
+            }
+            finally
+            {
+                Object.DestroyImmediate(boardRoot.gameObject);
+            }
+        }
+
+        [Test]
         public void PlantShadowSprite_IsCenteredOnItsPrefabOrigin()
         {
             var config = Resources.Load<GameConfigObject>("GameConfigObject");
