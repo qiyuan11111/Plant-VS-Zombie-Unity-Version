@@ -21,7 +21,7 @@ namespace PvZ.Presentation
                 .SetColliderState(false);
 
             entity.SetLocalScale(new Vector3(0.5f, 0.5f, 1f))
-                .SetLocalPosition(new Vector3(0f, -0.3f, 0f));
+                .SetLocalPosition(new Vector3(0f, 5f, 0f));
 
             Freeze(entity, animationFrame);
             return entity;

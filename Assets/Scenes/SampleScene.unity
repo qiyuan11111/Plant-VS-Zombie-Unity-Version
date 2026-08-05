@@ -122,6 +122,79 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &224071269
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1987009393}
+    m_Modifications:
+    - target: {fileID: 3807032334296917772, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_Name
+      value: SunFlower
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7100000000000000001, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 13b7c69b577c547469034415641d0f87, type: 3}
 --- !u!1 &406526189
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,6 +1421,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf43ea8dab184719bacc0c41e1d2da4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1693745682 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3807032334296917774, guid: 13b7c69b577c547469034415641d0f87, type: 3}
+  m_PrefabInstance: {fileID: 224071269}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1771236163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,7 +1515,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1693745682}
   m_Father: {fileID: 2011606523}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1594,6 +1673,7 @@ MonoBehaviour:
   maxNaturalSunCount: 30
   naturalSunXRange: {x: -600, y: 600}
   naturalSunYRange: {x: -500, y: 500}
+  sunPointPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &2126844787
 GameObject:
   m_ObjectHideFlags: 0
