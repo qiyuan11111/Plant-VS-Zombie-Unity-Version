@@ -3,6 +3,7 @@ using NUnit.Framework;
 using PvZ.Gameplay.Plants;
 using PvZ.Gameplay.Plants.Types;
 using PvZ.Gameplay.Plants.Abilities;
+using PvZ.Gameplay.World;
 using PvZ.Presentation;
 using PvZ.Config;
 using UnityEditor;
@@ -34,6 +35,28 @@ namespace Tests.EditMode
         public void Definition_DefaultCardIconFrame_IsFirstFrame()
         {
             Assert.That(new PlantDefinition().CardIconFrame, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void AllPlants_DefaultToLargeShadowPreset()
+        {
+            var config = Resources.Load<GameConfigObject>("GameConfigObject");
+            Assert.That(config, Is.Not.Null);
+            config.Init();
+
+            Assert.That(Shadow.GetScale(ShadowSizePreset.Large), Is.EqualTo(0.7f));
+            Assert.That(Shadow.GetScale(ShadowSizePreset.Small), Is.EqualTo(0.5f));
+            Assert.That(
+                Shadow.GetScale(ShadowSizePreset.Large),
+                Is.GreaterThan(Shadow.GetScale(ShadowSizePreset.Small)));
+
+            foreach (GameConfigObject.PlantType type in System.Enum.GetValues(
+                         typeof(GameConfigObject.PlantType)))
+            {
+                var plant = config.GetPlantDefinition(type).Prefab.GetComponent<PlantEntity>();
+                Assert.That(plant, Is.Not.Null, type.ToString());
+                Assert.That(plant.ShadowSize, Is.EqualTo(ShadowSizePreset.Large), type.ToString());
+            }
         }
 
         [Test]

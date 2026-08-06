@@ -15,12 +15,14 @@ namespace PvZ.Gameplay.Plants
         private static readonly Vector3 BoardScale = new(1.025f, 1.025f, 1f);
 
         [SerializeField] private Transform shadowTransform;
+        [SerializeField] private ShadowSizePreset shadowSize = ShadowSizePreset.Large;
         private GridManager.Grid _occupiedGrid;
         private Shadow _shadow;
         private bool _isOnBoard;
 
         public bool IsOnBoard => _isOnBoard;
         public Transform ShadowAnchor => ResolveShadowAnchor();
+        public ShadowSizePreset ShadowSize => shadowSize;
 
         public PlantEntity EnterBoard(GridManager.Grid grid)
         {
@@ -112,7 +114,7 @@ namespace PvZ.Gameplay.Plants
                 throw new MissingComponentException($"{shadowPrefab.name} requires a Shadow component.");
             }
 
-            _shadow.Initialize(0.7f);
+            _shadow.Initialize(shadowSize);
         }
 
         private Transform RequireShadowAnchor()
