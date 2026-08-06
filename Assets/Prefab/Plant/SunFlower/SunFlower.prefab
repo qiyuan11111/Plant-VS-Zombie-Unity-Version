@@ -1358,6 +1358,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   shadowTransform: {fileID: 7100000000000000025}
+  shadowSize: 0
+  shadowOffset: {x: 0, y: 5}
+  drawsShadow: 1
   sunProducer: {fileID: 7200000000000000002}
   blink: {fileID: 3670718413270380522}
 --- !u!114 &7200000000000000002

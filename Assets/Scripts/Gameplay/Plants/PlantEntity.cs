@@ -11,18 +11,22 @@ namespace PvZ.Gameplay.Plants
     public abstract class PlantEntity : Character
     {
         private const string ShadowAnchorName = "Shadow_Anchor";
-        private const float LegacyGroundOffsetY = -17f;
-        private static readonly Vector3 BoardScale = new(1.025f, 1.025f, 1f);
+        private static readonly Vector3 BoardScale = Vector3.one;
 
         [SerializeField] private Transform shadowTransform;
         [SerializeField] private ShadowSizePreset shadowSize = ShadowSizePreset.Large;
+        [SerializeField] private Vector2 shadowOffset = new(0f, 5f);
+        [SerializeField] private bool drawsShadow = true;
         private GridManager.Grid _occupiedGrid;
         private Shadow _shadow;
         private bool _isOnBoard;
 
         public bool IsOnBoard => _isOnBoard;
         public Transform ShadowAnchor => ResolveShadowAnchor();
+        public Transform GroundAnchor => ResolveShadowAnchor();
         public ShadowSizePreset ShadowSize => shadowSize;
+        public Vector2 ShadowOffset => shadowOffset;
+        public bool DrawsShadow => drawsShadow;
 
         public PlantEntity EnterBoard(GridManager.Grid grid)
         {
@@ -44,10 +48,10 @@ namespace PvZ.Gameplay.Plants
                 .SetColliderState(true);
 
             var gridCenterPosition = new Vector3(grid.Position.x, grid.Position.y, 10f);
-            var groundPosition = GetBoardGroundPosition(grid.Position, gridCenterPosition.z);
+            var groundPosition = new Vector3(grid.GroundPosition.x, grid.GroundPosition.y, gridCenterPosition.z);
             SetLocalScale(BoardScale);
             SetLocalPosition(gridCenterPosition);
-            AlignShadowAnchorToParentPosition(groundPosition);
+            AlignGroundAnchorToParentPosition(groundPosition);
             SetName(GetEnglishName() + "-" + grid.Point.x + "-" + grid.Point.y);
 
             EnsureShadow();
@@ -62,15 +66,14 @@ namespace PvZ.Gameplay.Plants
         }
 
         /// <summary>
-        /// Grid coordinates were authored as plant artwork centers. The shared
-        /// ground line therefore stays one legacy foot offset below each center,
-        /// while individual artwork is corrected through its shadow anchor.
+        /// Converts a normal-lawn cell center to the original plant ground point.
+        /// New code should prefer Grid.GroundPosition so pool and roof geometry is retained.
         /// </summary>
         public static Vector3 GetBoardGroundPosition(Vector2 gridCenter, float z = 0f)
         {
             return new Vector3(
                 gridCenter.x,
-                gridCenter.y + LegacyGroundOffsetY * BoardScale.y,
+                gridCenter.y - 24f,
                 z);
         }
 
@@ -79,7 +82,7 @@ namespace PvZ.Gameplay.Plants
         /// in the plant parent's coordinate space. The plant artwork is deliberately
         /// not centered; every presentation context aligns the same ground point.
         /// </summary>
-        public PlantEntity AlignShadowAnchorToParentPosition(Vector3 anchorPosition)
+        public PlantEntity AlignGroundAnchorToParentPosition(Vector3 anchorPosition)
         {
             var anchor = RequireShadowAnchor();
             var root = transform;
@@ -92,18 +95,29 @@ namespace PvZ.Gameplay.Plants
             return this;
         }
 
-        public PlantEntity AlignShadowAnchorToWorldPosition(Vector3 anchorPosition)
+        public PlantEntity AlignGroundAnchorToWorldPosition(Vector3 anchorPosition)
         {
             var parent = transform.parent;
-            return AlignShadowAnchorToParentPosition(parent != null
+            return AlignGroundAnchorToParentPosition(parent != null
                 ? parent.InverseTransformPoint(anchorPosition)
                 : anchorPosition);
         }
 
+        public PlantEntity AlignShadowAnchorToParentPosition(Vector3 anchorPosition)
+        {
+            return AlignGroundAnchorToParentPosition(anchorPosition);
+        }
+
+        public PlantEntity AlignShadowAnchorToWorldPosition(Vector3 anchorPosition)
+        {
+            return AlignGroundAnchorToWorldPosition(anchorPosition);
+        }
+
         private void EnsureShadow()
         {
-            if (_shadow != null) return;
-            var shadowPosition = RequireShadowAnchor().position;
+            if (_shadow != null || !drawsShadow) return;
+            var anchorPosition = RequireShadowAnchor().position;
+            var shadowPosition = anchorPosition + new Vector3(shadowOffset.x, shadowOffset.y, 0f);
             var shadowPrefab = MainGameManager.Instance.GetObjectByType(GameConfigObject.ObjectType.PlanteShadow);
             var shadowObject = Instantiate(shadowPrefab, shadowPosition, Quaternion.identity, Transform);
             _shadow = shadowObject.GetComponent<Shadow>();
@@ -114,7 +128,8 @@ namespace PvZ.Gameplay.Plants
                 throw new MissingComponentException($"{shadowPrefab.name} requires a Shadow component.");
             }
 
-            _shadow.Initialize(shadowSize);
+            var drawNightShadow = GridManager.Instance != null && GridManager.Instance.IsNight;
+            _shadow.Initialize(shadowSize, drawNightShadow);
         }
 
         private Transform RequireShadowAnchor()

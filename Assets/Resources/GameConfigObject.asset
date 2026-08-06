@@ -18,16 +18,22 @@ MonoBehaviour:
     sunPrice: 25
     cooldown: 5
     cardIconFrame: 1
+    cardIconScale: 0.5
+    cardIconAnchorPosition: {x: 0, y: -11}
   - type: 1
     prefab: {fileID: 6100616670632725194, guid: f82741bcb459acf4882c2b4f0c741017, type: 3}
     sunPrice: 100
     cooldown: 0.5
     cardIconFrame: 1
+    cardIconScale: 0.5
+    cardIconAnchorPosition: {x: 0, y: -11}
   - type: 2
     prefab: {fileID: 3807032334296917772, guid: 13b7c69b577c547469034415641d0f87, type: 3}
     sunPrice: 50
     cooldown: 5
     cardIconFrame: 5
+    cardIconScale: 0.5
+    cardIconAnchorPosition: {x: 0, y: -11}
   ZombieNormal: {fileID: 5634576352058383807, guid: 43e0cd8660f85924caf47f1b88329c4a, type: 3}
   Card: {fileID: 5784924986378957517, guid: 555cb2e475817a442b49304743fdd90e, type: 3}
   Sun: {fileID: 5634576352058383807, guid: 43e0cd8660f85924caf47f1b88329c4a, type: 3}

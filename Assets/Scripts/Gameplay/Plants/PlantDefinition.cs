@@ -13,6 +13,8 @@ namespace PvZ.Gameplay.Plants
         [SerializeField, Min(0)] private int sunPrice;
         [SerializeField, Min(0f)] private float cooldown;
         [SerializeField, Min(1)] private int cardIconFrame = 1;
+        [SerializeField, Min(0.01f)] private float cardIconScale = 0.5f;
+        [SerializeField] private Vector2 cardIconAnchorPosition = new(0f, -11f);
 
         public GameConfigObject.PlantType Type => type;
         public GameObject Prefab => prefab;
@@ -20,5 +22,7 @@ namespace PvZ.Gameplay.Plants
         public int SunPrice => sunPrice;
         public float Cooldown => cooldown;
         public int CardIconFrame => Mathf.Max(1, cardIconFrame);
+        public float CardIconScale => Mathf.Max(0.01f, cardIconScale);
+        public Vector2 CardIconAnchorPosition => cardIconAnchorPosition;
     }
 }

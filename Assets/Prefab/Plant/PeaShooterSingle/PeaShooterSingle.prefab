@@ -765,6 +765,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   shadowTransform: {fileID: 910000000000000004}
+  shadowSize: 0
+  shadowOffset: {x: 0, y: 5}
+  drawsShadow: 1
 --- !u!61 &6100616670632725195
 BoxCollider2D:
   m_ObjectHideFlags: 0

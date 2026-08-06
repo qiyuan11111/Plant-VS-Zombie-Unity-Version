@@ -43,7 +43,8 @@ namespace PvZ.Gameplay.Board
         {
             if (_cursorPreview is PlantEntity plant)
             {
-                plant.AlignShadowAnchorToWorldPosition(worldPosition);
+                var groundPosition = worldPosition + (Vector3)BoardGeometry.CursorToGroundOffset;
+                plant.AlignGroundAnchorToWorldPosition(groundPosition);
             }
         }
 
@@ -55,8 +56,7 @@ namespace PvZ.Gameplay.Board
             _gridPreview.SetLocalPosition(grid.Position);
             if (_gridPreview is PlantEntity plant)
             {
-                var groundPosition = PlantEntity.GetBoardGroundPosition(grid.Position);
-                plant.AlignShadowAnchorToParentPosition(groundPosition);
+                plant.AlignGroundAnchorToParentPosition(grid.GroundPosition);
             }
             _gridPreview.gameObject.SetActive(true);
         }

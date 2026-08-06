@@ -39,24 +39,33 @@ namespace Tests.EditMode
         }
 
         [Test]
-        public void AllPlants_DefaultToLargeShadowPreset()
+        public void Plants_UseOriginalShadowPresetsAndOffsets()
         {
             var config = Resources.Load<GameConfigObject>("GameConfigObject");
             Assert.That(config, Is.Not.Null);
             config.Init();
 
-            Assert.That(Shadow.GetScale(ShadowSizePreset.Large), Is.EqualTo(0.7f));
+            Assert.That(Shadow.GetScale(ShadowSizePreset.Large), Is.EqualTo(1f));
             Assert.That(Shadow.GetScale(ShadowSizePreset.Small), Is.EqualTo(0.5f));
             Assert.That(
                 Shadow.GetScale(ShadowSizePreset.Large),
                 Is.GreaterThan(Shadow.GetScale(ShadowSizePreset.Small)));
 
-            foreach (GameConfigObject.PlantType type in System.Enum.GetValues(
-                         typeof(GameConfigObject.PlantType)))
+            var sunShroom = config.GetPlantDefinition(GameConfigObject.PlantType.SunShroom)
+                .Prefab.GetComponent<PlantEntity>();
+            Assert.That(sunShroom.ShadowSize, Is.EqualTo(ShadowSizePreset.Small));
+            Assert.That(sunShroom.ShadowOffset, Is.EqualTo(new Vector2(0f, 14f)));
+
+            foreach (var type in new[]
+                     {
+                         GameConfigObject.PlantType.PeaShooterSingle,
+                         GameConfigObject.PlantType.SunFlower
+                     })
             {
                 var plant = config.GetPlantDefinition(type).Prefab.GetComponent<PlantEntity>();
                 Assert.That(plant, Is.Not.Null, type.ToString());
                 Assert.That(plant.ShadowSize, Is.EqualTo(ShadowSizePreset.Large), type.ToString());
+                Assert.That(plant.ShadowOffset, Is.EqualTo(new Vector2(0f, 5f)), type.ToString());
             }
         }
 
@@ -109,7 +118,7 @@ namespace Tests.EditMode
             try
             {
                 Assert.That(groundPosition.x, Is.EqualTo(gridCenter.x));
-                Assert.That(groundPosition.y, Is.EqualTo(182.575f).Within(0.001f));
+                Assert.That(groundPosition.y, Is.EqualTo(176f).Within(0.001f));
                 Assert.That(groundPosition.z, Is.EqualTo(gridCenter.z));
 
                 foreach (GameConfigObject.PlantType type in System.Enum.GetValues(
@@ -120,17 +129,13 @@ namespace Tests.EditMode
                     var plant = instance.GetComponent<PlantEntity>();
 
                     Assert.That(plant, Is.Not.Null, type.ToString());
-                    plant.transform.localScale = new Vector3(1.025f, 1.025f, 1f);
+                    plant.transform.localScale = Vector3.one;
                     plant.transform.localPosition = gridCenter;
                     plant.AlignShadowAnchorToParentPosition(groundPosition);
 
                     var alignedGround = boardRoot.InverseTransformPoint(plant.ShadowAnchor.position);
                     Assert.That(alignedGround.x, Is.EqualTo(groundPosition.x).Within(0.001f), type.ToString());
                     Assert.That(alignedGround.y, Is.EqualTo(groundPosition.y).Within(0.001f), type.ToString());
-                    Assert.That(plant.transform.localPosition.x,
-                        Is.EqualTo(gridCenter.x).Within(1f), type.ToString());
-                    Assert.That(plant.transform.localPosition.y,
-                        Is.EqualTo(gridCenter.y).Within(1f), type.ToString());
                 }
             }
             finally
@@ -148,6 +153,17 @@ namespace Tests.EditMode
             var shadowSprite = config.PlanteShadow.transform.Find("plantshadow");
             Assert.That(shadowSprite, Is.Not.Null);
             Assert.That(shadowSprite.localPosition, Is.EqualTo(Vector3.zero));
+            Assert.That(shadowSprite.localScale, Is.EqualTo(Vector3.one));
+            var sprite = shadowSprite.GetComponent<SpriteRenderer>().sprite;
+            Assert.That(sprite.rect.size, Is.EqualTo(new Vector2(86f, 36f)));
+        }
+
+        [Test]
+        public void PlantDefinition_DefaultCardLayoutMatchesOriginalPacket()
+        {
+            var definition = new PlantDefinition();
+            Assert.That(definition.CardIconScale, Is.EqualTo(0.5f));
+            Assert.That(definition.CardIconAnchorPosition, Is.EqualTo(new Vector2(0f, -11f)));
         }
 
         [Test]

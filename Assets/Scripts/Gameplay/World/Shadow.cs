@@ -1,4 +1,5 @@
 using PvZ.Core.Entities;
+using UnityEngine;
 
 namespace PvZ.Gameplay.World
 {
@@ -10,9 +11,12 @@ namespace PvZ.Gameplay.World
 
     public class Shadow : WorldObject
     {
-        public const float LargeScale = 0.7f;
+        public const float LargeScale = 1f;
         public const float SmallScale = 0.5f;
 
+        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private Sprite daySprite;
+        [SerializeField] private Sprite nightSprite;
         private float _size;
         
         public override string GetChineseName()
@@ -47,11 +51,36 @@ namespace PvZ.Gameplay.World
             return Initialize(GetScale(preset));
         }
 
+        public Shadow Initialize(ShadowSizePreset preset, bool useNightSprite)
+        {
+            SetNight(useNightSprite);
+            return Initialize(GetScale(preset));
+        }
+
         public Shadow Initialize(float size)
         {
             SetSize(size);
             SetSortingLayer("shadow");
             return this;
+        }
+
+        public Shadow SetNight(bool useNightSprite)
+        {
+            ResolveSpriteRenderer();
+            var sprite = useNightSprite && nightSprite != null ? nightSprite : daySprite;
+            if (sprite != null) spriteRenderer.sprite = sprite;
+            return this;
+        }
+
+        private void ResolveSpriteRenderer()
+        {
+            if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>(true);
+            if (spriteRenderer == null)
+            {
+                throw new MissingComponentException($"{name} requires a SpriteRenderer.");
+            }
+
+            if (daySprite == null) daySprite = spriteRenderer.sprite;
         }
     }
 }

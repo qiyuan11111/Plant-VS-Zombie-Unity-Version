@@ -12,21 +12,26 @@ namespace PvZ.Presentation
     /// </summary>
     public static class EntityPresentation
     {
-        private static readonly Vector3 CardShadowAnchorPosition = new(0f,-6f, 0f);
-        private static readonly Vector3 PreviewScale = new(1.025f, 1.025f, 1f);
+        private static readonly Vector3 PreviewScale = Vector3.one;
 
-        public static GameEntity ConfigureCardIcon(GameEntity entity, int animationFrame = 1)
+        public static GameEntity ConfigureCardIcon(GameEntity entity, PlantDefinition definition)
         {
             EnsureEntity(entity);
+            if (definition == null) throw new ArgumentNullException(nameof(definition));
             entity.GetComponentRoot()
                 .SetSortingLayer("card")
                 .SetColliderState(false);
 
-            entity.SetLocalScale(new Vector3(0.5f, 0.5f, 1f))
-                .SetLocalPosition(CardShadowAnchorPosition);
-            AlignPlantShadowAnchor(entity, CardShadowAnchorPosition);
+            var anchor = new Vector3(
+                definition.CardIconAnchorPosition.x,
+                definition.CardIconAnchorPosition.y,
+                0f);
+            var scale = definition.CardIconScale;
+            entity.SetLocalScale(new Vector3(scale, scale, 1f))
+                .SetLocalPosition(anchor);
+            AlignPlantGroundAnchor(entity, anchor);
 
-            Freeze(entity, animationFrame);
+            Freeze(entity, definition.CardIconFrame);
             return entity;
         }
 
@@ -125,11 +130,11 @@ namespace PvZ.Presentation
             if (entity == null) throw new ArgumentNullException(nameof(entity));
         }
 
-        private static void AlignPlantShadowAnchor(GameEntity entity, Vector3 anchorPosition)
+        private static void AlignPlantGroundAnchor(GameEntity entity, Vector3 anchorPosition)
         {
             if (entity is PlantEntity plant)
             {
-                plant.AlignShadowAnchorToParentPosition(anchorPosition);
+                plant.AlignGroundAnchorToParentPosition(anchorPosition);
             }
         }
     }
