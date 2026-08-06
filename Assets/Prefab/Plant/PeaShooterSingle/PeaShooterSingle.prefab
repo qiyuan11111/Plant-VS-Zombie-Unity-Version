@@ -368,7 +368,7 @@ Transform:
   m_GameObject: {fileID: 6100616670557935543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.2, y: -2.25, z: 0}
+  m_LocalPosition: {x: -1.25, y: -2.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -438,8 +438,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 38.25, y: 50}
-  scale: {x: 55.5405, y: 55.5405}
+  position: {x: 38.2, y: 50}
+  scale: {x: 55.540466, y: 55.540466}
   skew: {x: 0, y: 0}
   brightness: 1
   isBright: 0
@@ -475,7 +475,7 @@ Transform:
   m_GameObject: {fileID: 6100616670573988965}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.85, y: -10.2, z: 0}
+  m_LocalPosition: {x: 0.8, y: -10.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -545,8 +545,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 40.3, y: 57.95}
-  scale: {x: 55.5405, y: 55.5405}
+  position: {x: 40.25, y: 57.9}
+  scale: {x: 55.540466, y: 55.540466}
   skew: {x: 0, y: 0}
   brightness: 1
   isBright: 0

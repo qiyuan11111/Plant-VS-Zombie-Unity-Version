@@ -17,7 +17,7 @@ public static class PeaShooterSinglePrefabOptimizer
     private const string HeadIdleClipPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/head_idle.anim";
     private const string ShootClipPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/shoot.anim";
     private const string ControllerPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/PeaShooterSingle.controller";
-    private const string OptimizationVersion = "pea-shooter-single-animation-v1-independent-head";
+    private const string OptimizationVersion = "pea-shooter-single-animation-v2-linear-xml-curves";
     private const float FrameRate = 12f;
 
     private static readonly Dictionary<string, string> PartPaths = new()
@@ -177,7 +177,12 @@ public static class PeaShooterSinglePrefabOptimizer
         bool loopTime,
         AnimationEvent[] events)
     {
-        clip.frameRate = FrameRate;
+        var changed = false;
+        if (!Mathf.Approximately(clip.frameRate, FrameRate))
+        {
+            clip.frameRate = FrameRate;
+            changed = true;
+        }
         var expectedBindings = new HashSet<EditorCurveBinding>();
 
         for (var objectIndex = 0; objectIndex < objects.Count; objectIndex++)
@@ -194,13 +199,7 @@ public static class PeaShooterSinglePrefabOptimizer
             for (var propertyIndex = 0; propertyIndex < properties.Count; propertyIndex++)
             {
                 var property = properties[propertyIndex].ToString();
-                var curve = new AnimationCurve();
-                for (var frameIndex = 0; frameIndex < frames.Count; frameIndex++)
-                {
-                    var frame = frames[frameIndex];
-                    var time = ParseFloat(frame["fram"]) / FrameRate;
-                    curve.AddKey(new Keyframe(time, ParseFloat(frame[property])));
-                }
+                var curve = BuildLinearCurve(frames, property);
 
                 var bindingType = property == "m_IsActive" ? typeof(GameObject) : typeof(SpriteTransform);
                 var binding = EditorCurveBinding.FloatCurve(path, bindingType, property);
@@ -209,18 +208,22 @@ public static class PeaShooterSinglePrefabOptimizer
                 if (!CurvesEqual(existingCurve, curve))
                 {
                     AnimationUtility.SetEditorCurve(clip, binding, curve);
+                    changed = true;
                 }
             }
         }
 
         foreach (var binding in AnimationUtility.GetCurveBindings(clip))
         {
-            if (!expectedBindings.Contains(binding)) AnimationUtility.SetEditorCurve(clip, binding, null);
+            if (expectedBindings.Contains(binding)) continue;
+            AnimationUtility.SetEditorCurve(clip, binding, null);
+            changed = true;
         }
 
         foreach (var binding in AnimationUtility.GetObjectReferenceCurveBindings(clip))
         {
             AnimationUtility.SetObjectReferenceCurve(clip, binding, null);
+            changed = true;
         }
 
         var settings = AnimationUtility.GetAnimationClipSettings(clip);
@@ -228,12 +231,14 @@ public static class PeaShooterSinglePrefabOptimizer
         {
             settings.loopTime = loopTime;
             AnimationUtility.SetAnimationClipSettings(clip, settings);
+            changed = true;
         }
         if (!EventsEqual(AnimationUtility.GetAnimationEvents(clip), events))
         {
             AnimationUtility.SetAnimationEvents(clip, events);
+            changed = true;
         }
-        EditorUtility.SetDirty(clip);
+        if (changed) EditorUtility.SetDirty(clip);
     }
 
     private static bool ClipMatchesSource(
@@ -260,13 +265,7 @@ public static class PeaShooterSinglePrefabOptimizer
                 var bindingType = property == "m_IsActive" ? typeof(GameObject) : typeof(SpriteTransform);
                 var binding = EditorCurveBinding.FloatCurve(path, bindingType, property);
                 var curve = AnimationUtility.GetEditorCurve(clip, binding);
-                var expectedCurve = new AnimationCurve();
-                for (var frameIndex = 0; frameIndex < frames.Count; frameIndex++)
-                {
-                    var expectedTime = ParseFloat(frames[frameIndex]["fram"]) / FrameRate;
-                    var expectedValue = ParseFloat(frames[frameIndex][property]);
-                    expectedCurve.AddKey(new Keyframe(expectedTime, expectedValue));
-                }
+                var expectedCurve = BuildLinearCurve(frames, property);
                 if (!CurvesEqual(curve, expectedCurve)) return false;
             }
         }
@@ -576,6 +575,28 @@ public static class PeaShooterSinglePrefabOptimizer
     private static float ParseFloat(JsonData value)
     {
         return float.Parse(value.ToString(), NumberStyles.Float, CultureInfo.InvariantCulture);
+    }
+
+    private static AnimationCurve BuildLinearCurve(JsonData frames, string property)
+    {
+        var curve = new AnimationCurve();
+        for (var frameIndex = 0; frameIndex < frames.Count; frameIndex++)
+        {
+            var frame = frames[frameIndex];
+            var time = ParseFloat(frame["fram"]) / FrameRate;
+            curve.AddKey(new Keyframe(time, ParseFloat(frame[property])));
+        }
+
+        // The XML stores sampled transforms and has no easing metadata. Linear
+        // intervals keep independently keyed pieces, especially the two stalk
+        // sprites and the head anchor, joined between source samples.
+        for (var keyIndex = 0; keyIndex < curve.length; keyIndex++)
+        {
+            AnimationUtility.SetKeyLeftTangentMode(curve, keyIndex, AnimationUtility.TangentMode.Linear);
+            AnimationUtility.SetKeyRightTangentMode(curve, keyIndex, AnimationUtility.TangentMode.Linear);
+        }
+
+        return curve;
     }
 
     private static bool CurvesEqual(AnimationCurve left, AnimationCurve right)
