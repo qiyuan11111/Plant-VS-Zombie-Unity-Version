@@ -85,40 +85,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 910000000000000004}
-  m_Father: {fileID: 9179900113399978219}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &910000000000000003
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 910000000000000004}
-  m_Layer: 6
-  m_Name: Shadow_Anchor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &910000000000000004
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 910000000000000003}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.1, y: -20.8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 910000000000000002}
+  m_Father: {fileID: 9179900113399978219}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1841043043943351922
 GameObject:
@@ -764,7 +732,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  shadowTransform: {fileID: 910000000000000004}
+  shadowSize: 0
+  shadowImageTopLeft: {x: -3, y: 51}
+  drawsShadow: 1
 --- !u!61 &6100616670632725195
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -921,7 +891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 24.2, y: -18.6}
-  scale: {x: 55.4993, y: 50}
+  scale: {x: 55.499268, y: 50}
   skew: {x: 0, y: 0}
   brightness: 1
   isBright: 0
@@ -1037,7 +1007,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 1.2, y: -14.6}
-  scale: {x: 55.4993, y: 50}
+  scale: {x: 55.499268, y: 50}
   skew: {x: 0, y: 0}
   brightness: 1
   isBright: 0
@@ -1581,7 +1551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: -21.4, y: -17.5}
   scale: {x: 99.7406, y: 99.7406}
-  skew: {x: -14.7711, y: -14.7711}
+  skew: {x: -14.771103, y: -14.771103}
   brightness: 1
   isBright: 0
   alpha: 1
@@ -1838,7 +1808,7 @@ Transform:
   m_GameObject: {fileID: 8440569953551213620}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 39.45, y: -47.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

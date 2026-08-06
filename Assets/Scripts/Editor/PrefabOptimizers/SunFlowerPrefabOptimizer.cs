@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PvZ.Gameplay.Plants;
 using PvZ.Gameplay.Plants.Types;
 using PvZ.Gameplay.Plants.Abilities;
 using PvZ.Presentation;
@@ -25,7 +26,7 @@ public static class SunFlowerPrefabOptimizer
     private const string LegacyNestedBlinkRootPath = "component/basic/head/face/blink";
     private const string LegacyFacePath = "component/basic/head/face";
     private const int DefaultPoseFrame = 5;
-    private const string OptimizationVersion = "sunflower-structure-v13-idle-frame-5";
+    private const string OptimizationVersion = "sunflower-structure-v14-original-ground-anchor";
     private static readonly Vector2 SpritePosition = new(40.4f, 42.6f);
 
     private static readonly Dictionary<string, string> PartPaths = new()
@@ -267,8 +268,11 @@ public static class SunFlowerPrefabOptimizer
         var anchors = GetOrCreatePath(root.transform, "component/anchors");
         var sunAnchor = GetOrCreateChild(anchors, "Sun_Anchor");
         sunAnchor.localPosition = new Vector3(0f, 25f, 0f);
-        var shadowAnchor = GetOrCreateChild(anchors, "Shadow_Anchor");
-        shadowAnchor.localPosition = new Vector3(0f, -17f, 0f);
+        var legacyShadowAnchor = anchors.Find("Shadow_Anchor");
+        if (legacyShadowAnchor != null)
+        {
+            UnityEngine.Object.DestroyImmediate(legacyShadowAnchor.gameObject);
+        }
 
         var producerData = new SerializedObject(producer);
         producerData.FindProperty("productionAnchor").objectReferenceValue = sunAnchor;
@@ -282,7 +286,6 @@ public static class SunFlowerPrefabOptimizer
         var flowerData = new SerializedObject(sunFlower);
         flowerData.FindProperty("sunProducer").objectReferenceValue = producer;
         flowerData.FindProperty("blink").objectReferenceValue = blink;
-        flowerData.FindProperty("shadowTransform").objectReferenceValue = shadowAnchor;
         flowerData.ApplyModifiedPropertiesWithoutUndo();
 
         var blinkData = new SerializedObject(blink);
@@ -392,6 +395,7 @@ public static class SunFlowerPrefabOptimizer
         spriteTransform.updatePosition = false;
         spriteTransform.providesChildSpritePosition = true;
         spriteTransform.spritePosition = spritePosition;
+        target.localPosition = new Vector3(spritePosition.x, -spritePosition.y, 0f);
         EditorUtility.SetDirty(spriteTransform);
     }
 

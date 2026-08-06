@@ -1539,6 +1539,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d1ea568b1e945d186ccc73275a2bbc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  terrain: 0
+  isNight: 0
+  highGroundCells: []
 --- !u!1 &2036146108
 GameObject:
   m_ObjectHideFlags: 0

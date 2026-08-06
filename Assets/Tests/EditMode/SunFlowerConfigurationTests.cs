@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 using PvZ.Gameplay.Plants;
 using PvZ.Gameplay.Plants.Types;
@@ -26,92 +27,97 @@ namespace Tests.EditMode
 
             Assert.That(definition.SunPrice, Is.EqualTo(50));
             Assert.That(definition.Cooldown, Is.EqualTo(5f));
-            Assert.That(definition.CardIconFrame, Is.EqualTo(5));
+            Assert.That(definition.PresentationNormalizedTime, Is.EqualTo(0.15f));
             Assert.That(definition.Prefab, Is.Not.Null);
             Assert.That(definition.Prefab.GetComponent<SunFlower>(), Is.Not.Null);
             Assert.That(definition.Prefab.GetComponent<SunProducer>(), Is.Not.Null);
         }
 
         [Test]
-        public void Definition_DefaultCardIconFrame_IsFirstFrame()
+        public void Definition_DefaultPresentationTime_IsFirstFrame()
         {
-            Assert.That(new PlantDefinition().CardIconFrame, Is.EqualTo(1));
+            Assert.That(new PlantDefinition().PresentationNormalizedTime, Is.EqualTo(0f));
         }
 
         [Test]
-        public void AllPlants_DefaultToLargeShadowPreset()
+        public void Plants_UseOriginalShadowPresetsAndOffsets()
         {
             var config = Resources.Load<GameConfigObject>("GameConfigObject");
             Assert.That(config, Is.Not.Null);
             config.Init();
 
-            Assert.That(Shadow.GetScale(ShadowSizePreset.Large), Is.EqualTo(0.7f));
+            Assert.That(Shadow.GetScale(ShadowSizePreset.Large), Is.EqualTo(1f));
             Assert.That(Shadow.GetScale(ShadowSizePreset.Small), Is.EqualTo(0.5f));
             Assert.That(
                 Shadow.GetScale(ShadowSizePreset.Large),
                 Is.GreaterThan(Shadow.GetScale(ShadowSizePreset.Small)));
 
-            foreach (GameConfigObject.PlantType type in System.Enum.GetValues(
-                         typeof(GameConfigObject.PlantType)))
+            var sunShroom = config.GetPlantDefinition(GameConfigObject.PlantType.SunShroom)
+                .Prefab.GetComponent<PlantEntity>();
+            Assert.That(sunShroom.ShadowSize, Is.EqualTo(ShadowSizePreset.Small));
+            Assert.That(sunShroom.ShadowImageTopLeft, Is.EqualTo(new Vector2(-3f, 42f)));
+            Assert.That(sunShroom.ShadowCenterLocalPosition, Is.EqualTo(new Vector3(40f, -60f, 0f)));
+
+            foreach (var type in new[]
+                     {
+                         GameConfigObject.PlantType.PeaShooterSingle,
+                         GameConfigObject.PlantType.SunFlower
+                     })
             {
                 var plant = config.GetPlantDefinition(type).Prefab.GetComponent<PlantEntity>();
                 Assert.That(plant, Is.Not.Null, type.ToString());
                 Assert.That(plant.ShadowSize, Is.EqualTo(ShadowSizePreset.Large), type.ToString());
+                Assert.That(plant.ShadowImageTopLeft,
+                    Is.EqualTo(new Vector2(-3f, 51f)), type.ToString());
+                Assert.That(plant.ShadowCenterLocalPosition,
+                    Is.EqualTo(new Vector3(40f, -69f, 0f)), type.ToString());
             }
         }
 
         [Test]
-        public void AllPlants_AlignTheirShadowAnchorsToTheSamePoint()
+        public void AllPlantPrefabs_UseTheirRootAsTheOriginalDrawOrigin()
         {
             var config = Resources.Load<GameConfigObject>("GameConfigObject");
             Assert.That(config, Is.Not.Null);
             config.Init();
 
-            var cardRoot = new GameObject("CardRoot").transform;
+            var parent = new GameObject("Parent").transform;
             try
             {
                 foreach (GameConfigObject.PlantType type in System.Enum.GetValues(
                              typeof(GameConfigObject.PlantType)))
                 {
                     var definition = config.GetPlantDefinition(type);
-                    var instance = Object.Instantiate(definition.PresentationPrefab, cardRoot, false);
+                    var instance = Object.Instantiate(definition.PresentationPrefab, parent, false);
                     var plant = instance.GetComponent<PlantEntity>();
 
                     Assert.That(plant, Is.Not.Null, type.ToString());
-                    Assert.That(plant.ShadowAnchor, Is.Not.Null, type.ToString());
-
-                    var cardAnchorPosition = new Vector3(0f, 5f, 0f);
-                    plant.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
-                    plant.transform.localPosition = cardAnchorPosition;
-                    plant.AlignShadowAnchorToParentPosition(cardAnchorPosition);
-                    var anchorPosition = cardRoot.InverseTransformPoint(plant.ShadowAnchor.position);
-                    Assert.That(anchorPosition.x, Is.EqualTo(0f).Within(0.001f), type.ToString());
-                    Assert.That(anchorPosition.y, Is.EqualTo(5f).Within(0.001f), type.ToString());
-                    Assert.That(anchorPosition.z, Is.EqualTo(0f).Within(0.001f), type.ToString());
+                    var basic = instance.transform.Find("component/basic")
+                        ?.GetComponent<SpriteTransform>();
+                    Assert.That(basic, Is.Not.Null, type.ToString());
+                    Assert.That(basic.transform.localPosition.x,
+                        Is.EqualTo(basic.spritePosition.x).Within(0.001f), type.ToString());
+                    Assert.That(basic.transform.localPosition.y,
+                        Is.EqualTo(-basic.spritePosition.y).Within(0.001f), type.ToString());
                 }
             }
             finally
             {
-                Object.DestroyImmediate(cardRoot.gameObject);
+                Object.DestroyImmediate(parent.gameObject);
             }
         }
 
         [Test]
-        public void BoardAlignment_PreservesLegacyVisualCentersAndSharesOneGroundLine()
+        public void BoardPlacement_UsesGridLogicalOriginWithoutPlantSpecificCorrection()
         {
             var config = Resources.Load<GameConfigObject>("GameConfigObject");
             Assert.That(config, Is.Not.Null);
             config.Init();
 
             var boardRoot = new GameObject("BoardRoot").transform;
-            var gridCenter = new Vector3(100f, 200f, 10f);
-            var groundPosition = PlantEntity.GetBoardGroundPosition(gridCenter, gridCenter.z);
+            var logicalOrigin = new Vector3(100f, 200f, 10f);
             try
             {
-                Assert.That(groundPosition.x, Is.EqualTo(gridCenter.x));
-                Assert.That(groundPosition.y, Is.EqualTo(182.575f).Within(0.001f));
-                Assert.That(groundPosition.z, Is.EqualTo(gridCenter.z));
-
                 foreach (GameConfigObject.PlantType type in System.Enum.GetValues(
                              typeof(GameConfigObject.PlantType)))
                 {
@@ -120,17 +126,9 @@ namespace Tests.EditMode
                     var plant = instance.GetComponent<PlantEntity>();
 
                     Assert.That(plant, Is.Not.Null, type.ToString());
-                    plant.transform.localScale = new Vector3(1.025f, 1.025f, 1f);
-                    plant.transform.localPosition = gridCenter;
-                    plant.AlignShadowAnchorToParentPosition(groundPosition);
-
-                    var alignedGround = boardRoot.InverseTransformPoint(plant.ShadowAnchor.position);
-                    Assert.That(alignedGround.x, Is.EqualTo(groundPosition.x).Within(0.001f), type.ToString());
-                    Assert.That(alignedGround.y, Is.EqualTo(groundPosition.y).Within(0.001f), type.ToString());
-                    Assert.That(plant.transform.localPosition.x,
-                        Is.EqualTo(gridCenter.x).Within(1f), type.ToString());
-                    Assert.That(plant.transform.localPosition.y,
-                        Is.EqualTo(gridCenter.y).Within(1f), type.ToString());
+                    plant.transform.localScale = Vector3.one;
+                    plant.transform.localPosition = logicalOrigin;
+                    Assert.That(plant.transform.localPosition, Is.EqualTo(logicalOrigin), type.ToString());
                 }
             }
             finally
@@ -148,6 +146,94 @@ namespace Tests.EditMode
             var shadowSprite = config.PlanteShadow.transform.Find("plantshadow");
             Assert.That(shadowSprite, Is.Not.Null);
             Assert.That(shadowSprite.localPosition, Is.EqualTo(Vector3.zero));
+            Assert.That(shadowSprite.localScale, Is.EqualTo(Vector3.one));
+            var sprite = shadowSprite.GetComponent<SpriteRenderer>().sprite;
+            Assert.That(sprite.rect.size, Is.EqualTo(new Vector2(86f, 36f)));
+        }
+
+        [Test]
+        public void PlantDefinition_DefaultCardLayoutMatchesOriginalPacket()
+        {
+            var definition = new PlantDefinition();
+            Assert.That(definition.SeedPacketScale, Is.EqualTo(0.5f));
+            Assert.That(definition.SeedPacketDrawOffset, Is.EqualTo(new Vector2(5f, 9f)));
+        }
+
+        [Test]
+        public void CardPresentation_ConvertsOriginalTopLeftDrawOffsetToPacketLocalSpace()
+        {
+            var config = Resources.Load<GameConfigObject>("GameConfigObject");
+            Assert.That(config, Is.Not.Null);
+            config.Init();
+
+            var packet = new GameObject("Packet", typeof(RectTransform)).GetComponent<RectTransform>();
+            packet.sizeDelta = new Vector2(50f, 70f);
+            packet.pivot = new Vector2(0.5f, 0.5f);
+            var definition = config.GetPlantDefinition(GameConfigObject.PlantType.PeaShooterSingle);
+            var instance = Object.Instantiate(definition.PresentationPrefab, packet, false);
+            try
+            {
+                var plant = instance.GetComponent<PlantEntity>();
+                var drawOriginMethod = typeof(EntityPresentation).GetMethod(
+                    "GetSeedPacketDrawOrigin",
+                    BindingFlags.NonPublic | BindingFlags.Static);
+                Assert.That(drawOriginMethod, Is.Not.Null);
+                var drawOrigin = (Vector3)drawOriginMethod.Invoke(null, new object[]
+                {
+                    plant,
+                    definition.SeedPacketDrawOffset
+                });
+
+                Assert.That(drawOrigin, Is.EqualTo(new Vector3(-20f, 26f, 0f)));
+                Assert.That(definition.SeedPacketScale, Is.EqualTo(0.5f));
+            }
+            finally
+            {
+                Object.DestroyImmediate(packet.gameObject);
+            }
+        }
+
+        [Test]
+        public void CardPresentation_SamplesOriginalSunflowerNormalizedTime()
+        {
+            var config = Resources.Load<GameConfigObject>("GameConfigObject");
+            Assert.That(config, Is.Not.Null);
+            config.Init();
+
+            var definition = config.GetPlantDefinition(GameConfigObject.PlantType.SunFlower);
+            var instance = Object.Instantiate(definition.PresentationPrefab);
+            try
+            {
+                var animator = instance.GetComponent<Animator>();
+                Assert.That(animator, Is.Not.Null);
+                var sampleMethod = typeof(EntityPresentation).GetMethod(
+                    "SampleAnimatorTime",
+                    BindingFlags.NonPublic | BindingFlags.Static);
+                Assert.That(sampleMethod, Is.Not.Null);
+                sampleMethod.Invoke(null, new object[]
+                {
+                    animator,
+                    definition.PresentationNormalizedTime
+                });
+
+                var idle = AssetDatabase.LoadAssetAtPath<AnimationClip>(
+                    "Assets/Prefab/Plant/SunFlower/Animation/idle.anim");
+                Assert.That(idle, Is.Not.Null);
+
+                var binding = AnimationUtility.GetCurveBindings(idle).First(candidate =>
+                    candidate.type == typeof(SpriteTransform) &&
+                    candidate.path == "component/basic/head/SunFlower_head" &&
+                    candidate.propertyName == "position.x");
+                var curve = AnimationUtility.GetEditorCurve(idle, binding);
+                var head = instance.transform.Find(binding.path).GetComponent<SpriteTransform>();
+
+                Assert.That(head.position.x,
+                    Is.EqualTo(curve.Evaluate(idle.length * 0.15f)).Within(0.0002f));
+            }
+            finally
+            {
+                Object.DestroyImmediate(instance);
+            }
         }
 
         [Test]

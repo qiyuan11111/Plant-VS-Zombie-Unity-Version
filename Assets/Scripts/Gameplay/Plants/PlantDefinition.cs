@@ -12,13 +12,17 @@ namespace PvZ.Gameplay.Plants
         [SerializeField] private GameObject presentationPrefab;
         [SerializeField, Min(0)] private int sunPrice;
         [SerializeField, Min(0f)] private float cooldown;
-        [SerializeField, Min(1)] private int cardIconFrame = 1;
+        [SerializeField, Range(0f, 1f)] private float presentationNormalizedTime;
+        [SerializeField, Min(0.01f)] private float seedPacketScale = 0.5f;
+        [SerializeField] private Vector2 seedPacketDrawOffset = new(5f, 9f);
 
         public GameConfigObject.PlantType Type => type;
         public GameObject Prefab => prefab;
         public GameObject PresentationPrefab => presentationPrefab != null ? presentationPrefab : prefab;
         public int SunPrice => sunPrice;
         public float Cooldown => cooldown;
-        public int CardIconFrame => Mathf.Max(1, cardIconFrame);
+        public float PresentationNormalizedTime => Mathf.Clamp01(presentationNormalizedTime);
+        public float SeedPacketScale => Mathf.Max(0.01f, seedPacketScale);
+        public Vector2 SeedPacketDrawOffset => seedPacketDrawOffset;
     }
 }

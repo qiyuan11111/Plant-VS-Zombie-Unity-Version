@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using PvZ.Core;
 using PvZ.Core.Entities;
@@ -10,43 +9,30 @@ namespace PvZ.Gameplay.Board
 {
     public class GridManager : SceneSingleton<GridManager>, IPointerClickHandler
     {
-        private static readonly List<float> XAxis = new()
-        {
-            -401f,
-            -321.3f, //162
-            -241f, //159
-            -161f, //161
-            -81f, //161
-            1f, //163
-            78.5f, //158
-            160.5f, //37.1
-            239.5f, //38.5
-        };
-
-        private static readonly List<float> YAxis = new()
-        {
-            168.5f, //(340)
-            68f, //-200
-            -32f, //201
-            -132.5f, //201
-            -234.2f
-        };
+        [SerializeField] private BoardTerrain terrain = BoardTerrain.FrontYard;
+        [SerializeField] private bool isNight;
+        [SerializeField] private List<Vector2Int> highGroundCells = new();
 
         private int _rowNum, _colNum;
 
         private Grid[,] _gridMap;
 
-        private void CreatGrids()
+        public BoardTerrain Terrain => terrain;
+        public bool IsNight => isNight;
+
+        private void CreateGrids()
         {
-            for (var i = 0; i < XAxis.Count; i++)
+            for (var column = 0; column < _rowNum; column++)
             {
-                for (var j = 0; j < YAxis.Count; j++)
+                for (var row = 0; row < _colNum; row++)
                 {
-                    float x = XAxis[i], y = YAxis[j];
-                    var point = new Vector2Int(i, j);
-                    var position = new Vector2(x, y);
-                    var grid = new Grid(point, position);
-                    _gridMap[i, j] = grid;
+                    var point = new Vector2Int(column, row);
+                    var geometry = BoardGeometry.GetCell(
+                        terrain,
+                        column,
+                        row,
+                        highGroundCells.Contains(point));
+                    _gridMap[column, row] = new Grid(point, geometry);
                 }
             }
         }
@@ -60,34 +46,10 @@ namespace PvZ.Gameplay.Board
 
         public Grid GetGridByWorldPosition(Vector3 worldPosition)
         {
-            int row = -1, col = -1;
             Vector2 localPosition = transform.InverseTransformPoint(worldPosition);
-
-            var minDistance = float.MaxValue;
-            for (var i = 0; i < XAxis.Count; i++)
-            {
-                var distance = Math.Abs(localPosition.x - XAxis[i]);
-                if (!(distance < 41f) || !(distance < minDistance)) continue;
-                minDistance = distance;
-                row = i;
-            }
-
-            minDistance = float.MaxValue;
-            for (var i = 0; i < YAxis.Count; i++)
-            {
-                var distance = Math.Abs(localPosition.y - YAxis[i]);
-                if (!(distance < 51f) || !(distance < minDistance)) continue;
-                minDistance = distance;
-                col = i;
-            }
-
-
-            if (row <= -1 || col <= -1 || row >= _rowNum || col >= _colNum)
-            {
-                return Grid.None;
-            }
-
-            return _gridMap[row, col];
+            return BoardGeometry.TryLocalPositionToCell(terrain, localPosition, out var point)
+                ? GetGridByPoint(point)
+                : Grid.None;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -104,11 +66,11 @@ namespace PvZ.Gameplay.Board
 
         protected override void OnReferencesValidated()
         {
-            _rowNum = XAxis.Count;
-            _colNum = YAxis.Count;
+            _rowNum = BoardGeometry.ColumnCount;
+            _colNum = BoardGeometry.GetRowCount(terrain);
             _gridMap = new Grid[_rowNum, _colNum];
 
-            CreatGrids();
+            CreateGrids();
         }
 
         protected override bool ValidateDependencies()
@@ -128,6 +90,8 @@ namespace PvZ.Gameplay.Board
             ///  网格的坐标(0,1)
             /// </summary>
             public Vector2 Position;
+            public Vector2 LogicalOrigin;
+            public Vector2 Size;
 
             private PlantEntity _plant;
             private readonly bool _acceptsOccupant;
@@ -166,11 +130,27 @@ namespace PvZ.Gameplay.Board
             {
             }
 
+            public Grid(Vector2Int point, BoardCellGeometry geometry)
+                : this(point, geometry.Center, true)
+            {
+                LogicalOrigin = geometry.LogicalOrigin;
+                Size = geometry.Size;
+            }
+
             private Grid(Vector2Int point, Vector2 position, bool acceptsOccupant)
             {
                 Point = point;
                 Position = position;
+                LogicalOrigin = position + new Vector2(-40f, 50f);
+                Size = new Vector2(80f, 100f);
                 _acceptsOccupant = acceptsOccupant;
+            }
+
+            public bool Contains(Vector2 localPosition)
+            {
+                var delta = localPosition - Position;
+                return Mathf.Abs(delta.x) < Size.x * 0.5f &&
+                       Mathf.Abs(delta.y) < Size.y * 0.5f;
             }
         }
     }

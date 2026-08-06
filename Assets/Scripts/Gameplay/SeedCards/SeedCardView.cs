@@ -84,7 +84,7 @@ namespace PvZ.Gameplay.SeedCards
 
             try
             {
-                EntityPresentation.ConfigureCardIcon(_plantIcon, definition.CardIconFrame);
+                EntityPresentation.ConfigureCardIcon(_plantIcon, definition);
             }
             catch
             {
