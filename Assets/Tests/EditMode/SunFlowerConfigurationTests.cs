@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 using PvZ.Gameplay.Plants;
 using PvZ.Gameplay.Plants.Types;
@@ -26,16 +27,16 @@ namespace Tests.EditMode
 
             Assert.That(definition.SunPrice, Is.EqualTo(50));
             Assert.That(definition.Cooldown, Is.EqualTo(5f));
-            Assert.That(definition.CardIconFrame, Is.EqualTo(5));
+            Assert.That(definition.PresentationNormalizedTime, Is.EqualTo(0.15f));
             Assert.That(definition.Prefab, Is.Not.Null);
             Assert.That(definition.Prefab.GetComponent<SunFlower>(), Is.Not.Null);
             Assert.That(definition.Prefab.GetComponent<SunProducer>(), Is.Not.Null);
         }
 
         [Test]
-        public void Definition_DefaultCardIconFrame_IsFirstFrame()
+        public void Definition_DefaultPresentationTime_IsFirstFrame()
         {
-            Assert.That(new PlantDefinition().CardIconFrame, Is.EqualTo(1));
+            Assert.That(new PlantDefinition().PresentationNormalizedTime, Is.EqualTo(0f));
         }
 
         [Test]
@@ -70,7 +71,7 @@ namespace Tests.EditMode
         }
 
         [Test]
-        public void AllPlants_AlignTheirShadowAnchorsToTheSamePoint()
+        public void AllPlants_DeriveTheirGroundAnchorsFromTheOriginalDrawOrigin()
         {
             var config = Resources.Load<GameConfigObject>("GameConfigObject");
             Assert.That(config, Is.Not.Null);
@@ -88,6 +89,19 @@ namespace Tests.EditMode
 
                     Assert.That(plant, Is.Not.Null, type.ToString());
                     Assert.That(plant.ShadowAnchor, Is.Not.Null, type.ToString());
+
+                    var basic = instance.transform.Find("component/basic")
+                        ?.GetComponent<SpriteTransform>();
+                    Assert.That(basic, Is.Not.Null, type.ToString());
+
+                    var expectedLocalAnchor = PlantEntity.GetGroundAnchorLocalPosition(
+                        basic.spritePosition);
+                    var actualLocalAnchor = plant.transform.InverseTransformPoint(
+                        plant.GroundAnchor.position);
+                    Assert.That(actualLocalAnchor.x,
+                        Is.EqualTo(expectedLocalAnchor.x).Within(0.001f), type.ToString());
+                    Assert.That(actualLocalAnchor.y,
+                        Is.EqualTo(expectedLocalAnchor.y).Within(0.001f), type.ToString());
 
                     var cardAnchorPosition = new Vector3(0f, 5f, 0f);
                     plant.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
@@ -164,6 +178,49 @@ namespace Tests.EditMode
             var definition = new PlantDefinition();
             Assert.That(definition.CardIconScale, Is.EqualTo(0.5f));
             Assert.That(definition.CardIconAnchorPosition, Is.EqualTo(new Vector2(0f, -11f)));
+        }
+
+        [Test]
+        public void CardPresentation_SamplesOriginalSunflowerNormalizedTime()
+        {
+            var config = Resources.Load<GameConfigObject>("GameConfigObject");
+            Assert.That(config, Is.Not.Null);
+            config.Init();
+
+            var definition = config.GetPlantDefinition(GameConfigObject.PlantType.SunFlower);
+            var instance = Object.Instantiate(definition.PresentationPrefab);
+            try
+            {
+                var animator = instance.GetComponent<Animator>();
+                Assert.That(animator, Is.Not.Null);
+                var sampleMethod = typeof(EntityPresentation).GetMethod(
+                    "SampleAnimatorTime",
+                    BindingFlags.NonPublic | BindingFlags.Static);
+                Assert.That(sampleMethod, Is.Not.Null);
+                sampleMethod.Invoke(null, new object[]
+                {
+                    animator,
+                    definition.PresentationNormalizedTime
+                });
+
+                var idle = AssetDatabase.LoadAssetAtPath<AnimationClip>(
+                    "Assets/Prefab/Plant/SunFlower/Animation/idle.anim");
+                Assert.That(idle, Is.Not.Null);
+
+                var binding = AnimationUtility.GetCurveBindings(idle).First(candidate =>
+                    candidate.type == typeof(SpriteTransform) &&
+                    candidate.path == "component/basic/head/SunFlower_head" &&
+                    candidate.propertyName == "position.x");
+                var curve = AnimationUtility.GetEditorCurve(idle, binding);
+                var head = instance.transform.Find(binding.path).GetComponent<SpriteTransform>();
+
+                Assert.That(head.position.x,
+                    Is.EqualTo(curve.Evaluate(idle.length * 0.15f)).Within(0.0002f));
+            }
+            finally
+            {
+                Object.DestroyImmediate(instance);
+            }
         }
 
         [Test]

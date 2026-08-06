@@ -17,21 +17,21 @@ MonoBehaviour:
     prefab: {fileID: 2647483252324358559, guid: 73cb07c4af754974eacec24ad9e6500a, type: 3}
     sunPrice: 25
     cooldown: 5
-    cardIconFrame: 1
+    presentationNormalizedTime: 0
     cardIconScale: 0.5
     cardIconAnchorPosition: {x: 0, y: -11}
   - type: 1
     prefab: {fileID: 6100616670632725194, guid: f82741bcb459acf4882c2b4f0c741017, type: 3}
     sunPrice: 100
     cooldown: 0.5
-    cardIconFrame: 1
+    presentationNormalizedTime: 0
     cardIconScale: 0.5
     cardIconAnchorPosition: {x: 0, y: -11}
   - type: 2
     prefab: {fileID: 3807032334296917772, guid: 13b7c69b577c547469034415641d0f87, type: 3}
     sunPrice: 50
     cooldown: 5
-    cardIconFrame: 5
+    presentationNormalizedTime: 0.15
     cardIconScale: 0.5
     cardIconAnchorPosition: {x: 0, y: -11}
   ZombieNormal: {fileID: 5634576352058383807, guid: 43e0cd8660f85924caf47f1b88329c4a, type: 3}

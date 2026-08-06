@@ -26,10 +26,10 @@ namespace PvZ.Gameplay.Board
             {
                 _cursorPreview = EntityPresentation.ConfigureCursorPreview(
                     CreatePlant(plantPrefab, previewParent),
-                    definition.CardIconFrame);
+                    definition.PresentationNormalizedTime);
                 _gridPreview = EntityPresentation.ConfigureGridPreview(
                     CreatePlant(plantPrefab, previewParent),
-                    definition.CardIconFrame);
+                    definition.PresentationNormalizedTime);
                 _gridPreview.gameObject.SetActive(false);
             }
             catch

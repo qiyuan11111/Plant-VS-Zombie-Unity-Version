@@ -45,7 +45,13 @@ namespace PvZ.Gameplay.Board
         private const float LawnMinX = 40f;
         private const float LawnMinY = 80f;
         private static readonly Vector2 FirstLogicalOrigin = new(-440f, 220f);
-        private static readonly Vector2 PlantGroundOffset = new(40f, -74f);
+
+        // Original plant-local point used by the planting effect and by the
+        // seed-packet transform. Source coordinates use Y down.
+        public static readonly Vector2 PlantGroundSourcePosition = new(40f, 74f);
+        private static readonly Vector2 PlantGroundOffset = new(
+            PlantGroundSourcePosition.x,
+            -PlantGroundSourcePosition.y);
 
         // CursorObject draws an ordinary plant so the pointer is plant-local (35, 60).
         public static readonly Vector2 CursorToGroundOffset = new(5f, -14f);

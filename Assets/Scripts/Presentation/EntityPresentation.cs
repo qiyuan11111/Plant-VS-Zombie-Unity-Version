@@ -31,11 +31,11 @@ namespace PvZ.Presentation
                 .SetLocalPosition(anchor);
             AlignPlantGroundAnchor(entity, anchor);
 
-            Freeze(entity, definition.CardIconFrame);
+            Freeze(entity, definition.PresentationNormalizedTime);
             return entity;
         }
 
-        public static GameEntity ConfigureCursorPreview(GameEntity entity, int animationFrame = 1)
+        public static GameEntity ConfigureCursorPreview(GameEntity entity, float normalizedTime = 0f)
         {
             EnsureEntity(entity);
             entity.GetComponentRoot()
@@ -45,11 +45,11 @@ namespace PvZ.Presentation
             entity.SetLocalScale(PreviewScale)
                 .SetName(entity.GetEnglishName() + "-Mouse");
 
-            Freeze(entity, animationFrame);
+            Freeze(entity, normalizedTime);
             return entity;
         }
 
-        public static GameEntity ConfigureGridPreview(GameEntity entity, int animationFrame = 1)
+        public static GameEntity ConfigureGridPreview(GameEntity entity, float normalizedTime = 0f)
         {
             EnsureEntity(entity);
             entity.GetComponentRoot()
@@ -59,15 +59,15 @@ namespace PvZ.Presentation
             entity.SetLocalScale(PreviewScale)
                 .SetName(entity.GetEnglishName() + "-Grid");
 
-            Freeze(entity, animationFrame);
+            Freeze(entity, normalizedTime);
             return entity;
         }
 
-        private static void Freeze(GameEntity entity, int animationFrame = 1)
+        private static void Freeze(GameEntity entity, float normalizedTime)
         {
             foreach (var animator in entity.GetComponentsInChildren<Animator>(true))
             {
-                SampleAnimatorFrame(animator, animationFrame);
+                SampleAnimatorTime(animator, normalizedTime);
                 animator.enabled = false;
             }
 
@@ -78,7 +78,7 @@ namespace PvZ.Presentation
             entity.enabled = false;
         }
 
-        private static void SampleAnimatorFrame(Animator animator, int animationFrame)
+        private static void SampleAnimatorTime(Animator animator, float normalizedTime)
         {
             if (animator.runtimeAnimatorController == null) return;
 
@@ -87,42 +87,16 @@ namespace PvZ.Presentation
             // for properties that the active animation does not bind.
             animator.Update(0f);
 
-            var zeroBasedFrame = Mathf.Max(0, animationFrame - 1);
-            if (zeroBasedFrame == 0) return;
+            var sampleTime = Mathf.Clamp01(normalizedTime);
+            if (sampleTime <= 0f) return;
 
             for (var layerIndex = 0; layerIndex < animator.layerCount; layerIndex++)
             {
-                var clipInfo = animator.GetCurrentAnimatorClipInfo(layerIndex);
-                var clip = GetDominantClip(clipInfo);
-                if (clip == null || clip.frameRate <= 0f || clip.length <= 0f) continue;
-
-                // Looping clips contain length * frameRate distinct display frames;
-                // clamping below 1 normalized time avoids wrapping an oversized
-                // configured frame back to the first pose.
-                var lastFrame = Mathf.Max(0, Mathf.CeilToInt(clip.length * clip.frameRate) - 1);
-                var frame = Mathf.Min(zeroBasedFrame, lastFrame);
-                var normalizedTime = frame / clip.frameRate / clip.length;
                 var state = animator.GetCurrentAnimatorStateInfo(layerIndex);
-                animator.Play(state.fullPathHash, layerIndex, normalizedTime);
+                animator.Play(state.fullPathHash, layerIndex, sampleTime);
             }
 
             animator.Update(0f);
-        }
-
-        private static AnimationClip GetDominantClip(AnimatorClipInfo[] clipInfo)
-        {
-            AnimationClip dominantClip = null;
-            var dominantWeight = float.MinValue;
-
-            foreach (var candidate in clipInfo)
-            {
-                if (candidate.clip == null || candidate.weight <= dominantWeight) continue;
-
-                dominantClip = candidate.clip;
-                dominantWeight = candidate.weight;
-            }
-
-            return dominantClip;
         }
 
         private static void EnsureEntity(GameEntity entity)

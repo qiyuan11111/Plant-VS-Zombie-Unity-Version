@@ -78,6 +78,20 @@ namespace PvZ.Gameplay.Plants
         }
 
         /// <summary>
+        /// Converts the original plant-local ground point into a prefab-local
+        /// anchor. Presentation prefabs normalize their FLA coordinates around
+        /// the basic SpriteTransform's static spritePosition, not around the
+        /// original Reanimation draw origin.
+        /// </summary>
+        public static Vector3 GetGroundAnchorLocalPosition(Vector2 basicSpritePosition)
+        {
+            return new Vector3(
+                BoardGeometry.PlantGroundSourcePosition.x - basicSpritePosition.x,
+                basicSpritePosition.y - BoardGeometry.PlantGroundSourcePosition.y,
+                0f);
+        }
+
+        /// <summary>
         /// Moves the plant root so its shadow anchor lands on a position expressed
         /// in the plant parent's coordinate space. The plant artwork is deliberately
         /// not centered; every presentation context aligns the same ground point.

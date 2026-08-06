@@ -53,7 +53,8 @@ outside the current three-plant/front-yard implementation; it does not mean undi
 | Reference behavior | Status | Unity implementation |
 |---|---|---|
 | 50x70 packet | Implemented | `Card.prefab` |
-| Default portrait scale 0.5 and origin offset `(5,9)` | Implemented through ground anchor `(0,-11)` | `PlantDefinition` / `EntityPresentation` |
+| Default portrait scale 0.5 and origin offset `(5,9)` | Implemented through ground anchor `(0,-11)` derived from each prefab's `basic.spritePosition` | `PlantDefinition` / `PlantEntity` / `EntityPresentation` |
+| Cached portrait pose (`0.0`, sunflower `0.15`) | Implemented with normalized animation time | `PlantDefinition` / `EntityPresentation` |
 | Per-plant portrait scale and offset | Implemented as data fields | `PlantDefinition` |
 | Potato/chomper/etc. precomposed `packet_plants` atlas | Deferred until those plant types exist |
 | Imitater washed-out filters and special less-washed-out list | Deferred with Imitater |
@@ -78,5 +79,7 @@ outside the current three-plant/front-yard implementation; it does not mean undi
 
 The audit coverage for the stated boundary is complete: every reference branch is either
 implemented or explicitly listed as deferred. Runtime parity is only claimed for the
-current three plants on the normal front-yard board. Unity compilation and EditMode tests
-must still be run in Unity 2022.3.57f1c2 on a machine with that editor installed.
+current three plants on the normal front-yard board. Unity 2022.3.57f1c2 batch compilation
+and the placement/card/shadow EditMode tests pass. The full EditMode suite is 49/50 because
+the pre-existing `LegacyEmptyAttachment_DoesNotCollapseDescendantRenderer` test remains
+unrelatedly failing.

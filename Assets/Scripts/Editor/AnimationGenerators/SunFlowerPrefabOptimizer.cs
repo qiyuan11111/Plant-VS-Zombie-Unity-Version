@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PvZ.Gameplay.Plants;
 using PvZ.Gameplay.Plants.Types;
 using PvZ.Gameplay.Plants.Abilities;
 using PvZ.Presentation;
@@ -25,7 +26,7 @@ public static class SunFlowerPrefabOptimizer
     private const string LegacyNestedBlinkRootPath = "component/basic/head/face/blink";
     private const string LegacyFacePath = "component/basic/head/face";
     private const int DefaultPoseFrame = 5;
-    private const string OptimizationVersion = "sunflower-structure-v13-idle-frame-5";
+    private const string OptimizationVersion = "sunflower-structure-v14-original-ground-anchor";
     private static readonly Vector2 SpritePosition = new(40.4f, 42.6f);
 
     private static readonly Dictionary<string, string> PartPaths = new()
@@ -268,7 +269,7 @@ public static class SunFlowerPrefabOptimizer
         var sunAnchor = GetOrCreateChild(anchors, "Sun_Anchor");
         sunAnchor.localPosition = new Vector3(0f, 25f, 0f);
         var shadowAnchor = GetOrCreateChild(anchors, "Shadow_Anchor");
-        shadowAnchor.localPosition = new Vector3(0f, -17f, 0f);
+        shadowAnchor.localPosition = PlantEntity.GetGroundAnchorLocalPosition(SpritePosition);
 
         var producerData = new SerializedObject(producer);
         producerData.FindProperty("productionAnchor").objectReferenceValue = sunAnchor;
