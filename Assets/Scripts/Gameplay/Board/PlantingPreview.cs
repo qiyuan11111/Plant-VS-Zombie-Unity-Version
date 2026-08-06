@@ -43,9 +43,20 @@ namespace PvZ.Gameplay.Board
         {
             if (_cursorPreview is PlantEntity plant)
             {
-                plant.transform.position = worldPosition +
-                                           (Vector3)BoardGeometry.CursorPlantDrawOriginOffset;
+                plant.SetLocalPosition(GetLocalCursorDrawOrigin(plant.transform.parent, worldPosition));
             }
+        }
+
+        internal static Vector3 GetLocalCursorDrawOrigin(Transform previewParent, Vector3 pointerWorldPosition)
+        {
+            if (previewParent == null) throw new ArgumentNullException(nameof(previewParent));
+
+            // CursorObject's offsets are expressed in the original 800x600 logical
+            // coordinate system. The Grid is below a scaled Canvas, so the pointer
+            // must enter that local space before the source-pixel offset is applied.
+            var localPointerPosition = previewParent.InverseTransformPoint(pointerWorldPosition);
+            localPointerPosition += (Vector3)BoardGeometry.CursorPlantDrawOriginOffset;
+            return localPointerPosition;
         }
 
         public void ShowGrid(GridManager.Grid grid)
