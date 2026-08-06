@@ -91,7 +91,6 @@ namespace PvZ.Gameplay.Board
             /// </summary>
             public Vector2 Position;
             public Vector2 LogicalOrigin;
-            public Vector2 GroundPosition;
             public Vector2 Size;
 
             private PlantEntity _plant;
@@ -135,7 +134,6 @@ namespace PvZ.Gameplay.Board
                 : this(point, geometry.Center, true)
             {
                 LogicalOrigin = geometry.LogicalOrigin;
-                GroundPosition = geometry.Ground;
                 Size = geometry.Size;
             }
 
@@ -144,7 +142,6 @@ namespace PvZ.Gameplay.Board
                 Point = point;
                 Position = position;
                 LogicalOrigin = position + new Vector2(-40f, 50f);
-                GroundPosition = position + new Vector2(0f, -24f);
                 Size = new Vector2(80f, 100f);
                 _acceptsOccupant = acceptsOccupant;
             }

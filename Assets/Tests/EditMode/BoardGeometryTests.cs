@@ -14,7 +14,6 @@ namespace Tests.EditMode
 
             Assert.That(first.LogicalOrigin, Is.EqualTo(new Vector2(-440f, 220f)));
             Assert.That(first.Center, Is.EqualTo(new Vector2(-400f, 170f)));
-            Assert.That(first.Ground, Is.EqualTo(new Vector2(-400f, 146f)));
             Assert.That(first.Size, Is.EqualTo(new Vector2(80f, 100f)));
             Assert.That(last.LogicalOrigin, Is.EqualTo(new Vector2(200f, -180f)));
             Assert.That(last.Center, Is.EqualTo(new Vector2(240f, -230f)));
@@ -50,13 +49,14 @@ namespace Tests.EditMode
 
             Assert.That(high.LogicalOrigin.y - normal.LogicalOrigin.y, Is.EqualTo(30f));
             Assert.That(high.Center.y - normal.Center.y, Is.EqualTo(30f));
-            Assert.That(high.Ground.y - normal.Ground.y, Is.EqualTo(30f));
         }
 
         [Test]
-        public void CursorHotspot_MapsToOriginalPlantGroundPoint()
+        public void CursorHotspot_MapsDirectlyToOriginalPlantDrawOrigin()
         {
-            Assert.That(BoardGeometry.CursorToGroundOffset, Is.EqualTo(new Vector2(5f, -14f)));
+            Assert.That(
+                BoardGeometry.CursorPlantDrawOriginOffset,
+                Is.EqualTo(new Vector2(-35f, 60f)));
         }
 
         [Test]

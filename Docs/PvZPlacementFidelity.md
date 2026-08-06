@@ -25,10 +25,10 @@ outside the current three-plant/front-yard implementation; it does not mean undi
 | Roof 85-pixel rows and first-five-column slope | Implemented geometry; no roof scene yet | `BoardGeometry` |
 | 30-pixel high-ground adjustment | Implemented configuration | `GridManager.highGroundCells` |
 | Exact cell hit rectangles | Implemented | `Grid.Contains` |
-| Plant logical origin and 80x80 logical box | Logical origin stored; existing artwork remains ground-anchor driven | `Grid.LogicalOrigin` |
-| Plant visual ground at logical `(40,74)` | Implemented | `Grid.GroundPosition` |
+| Plant logical origin and 80x80 logical box | Implemented; prefab root is the original `mX,mY` draw origin | `Grid.LogicalOrigin` / `PlantEntity` |
+| FLA/reanim coordinates share the plant's source-pixel scale | Implemented directly; no gameplay GroundAnchor conversion | plant prefabs / `SpriteTransform` |
 | Planting particle/effect point `(41,74)` | Deferred; planting particles are not implemented | — |
-| Ordinary cursor hotspot at plant-local `(35,60)` | Implemented | `BoardGeometry.CursorToGroundOffset` |
+| Ordinary held plant draw origin at mouse `(-35,-60)` in source Y-down coordinates | Implemented as Unity `(-35,+60)` | `BoardGeometry.CursorPlantDrawOriginOffset` |
 | Snapped translucent preview uses grid origin plus draw-height offset | Ground alignment implemented; draw-height profiles deferred | `PlantingPreview` |
 | Flying/grave-buster cursor hit Y `+15` | Deferred until those plant types exist | — |
 | Spikeweed/spikerock cursor hit Y `-15` | Deferred until those plant types exist | — |
@@ -53,7 +53,7 @@ outside the current three-plant/front-yard implementation; it does not mean undi
 | Reference behavior | Status | Unity implementation |
 |---|---|---|
 | 50x70 packet | Implemented | `Card.prefab` |
-| Default portrait scale 0.5 and origin offset `(5,9)` | Implemented through ground anchor `(0,-11)` derived from each prefab's `basic.spritePosition` | `PlantDefinition` / `PlantEntity` / `EntityPresentation` |
+| Default portrait scale 0.5 and origin offset `(5,9)` | Implemented directly from the packet's top-left | `PlantDefinition` / `EntityPresentation` |
 | Cached portrait pose (`0.0`, sunflower `0.15`) | Implemented with normalized animation time | `PlantDefinition` / `EntityPresentation` |
 | Per-plant portrait scale and offset | Implemented as data fields | `PlantDefinition` |
 | Potato/chomper/etc. precomposed `packet_plants` atlas | Deferred until those plant types exist |
@@ -67,8 +67,8 @@ outside the current three-plant/front-yard implementation; it does not mean undi
 |---|---|---|
 | Full 86x36 day texture, center pivot, Full Rect, no compression | Implemented | `plantshadow.png` and `.meta` |
 | Full 86x36 night texture and stage switch | Implemented | `plantshadow2.png`, `Shadow.SetNight`, `GridManager.isNight` |
-| Ordinary scale 1 and center 5 pixels above ground | Implemented | pea shooter and sunflower profiles |
-| Small sun-shroom scale 0.5 and center 14 pixels above ground | Implemented for current small state | sun-shroom prefab |
+| Ordinary source call `(-3,51)`, scale 1; full-image center `(40,69)` | Implemented directly | pea shooter and sunflower profiles |
+| Small sun-shroom source call `(-3,42)`, scale 0.5; scale center `(40,60)` | Implemented for current small state | sun-shroom prefab |
 | Sun-shroom growth interpolation from 0.5 to 1.0 | Deferred until growth state exists |
 | Per-plant X/Y and scale table | Configuration path exists; values deferred with each plant type |
 | No-shadow plant list and bungee/Zen Garden suppression | `drawsShadow` path exists; values deferred with those modes/types |
@@ -80,6 +80,6 @@ outside the current three-plant/front-yard implementation; it does not mean undi
 The audit coverage for the stated boundary is complete: every reference branch is either
 implemented or explicitly listed as deferred. Runtime parity is only claimed for the
 current three plants on the normal front-yard board. Unity 2022.3.57f1c2 batch compilation
-and the placement/card/shadow EditMode tests pass. The full EditMode suite is 49/50 because
+and the placement/card/shadow EditMode tests pass. The full EditMode suite is 50/51 because
 the pre-existing `LegacyEmptyAttachment_DoesNotCollapseDescendantRenderer` test remains
 unrelatedly failing.

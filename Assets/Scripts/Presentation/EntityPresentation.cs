@@ -22,14 +22,10 @@ namespace PvZ.Presentation
                 .SetSortingLayer("card")
                 .SetColliderState(false);
 
-            var anchor = new Vector3(
-                definition.CardIconAnchorPosition.x,
-                definition.CardIconAnchorPosition.y,
-                0f);
-            var scale = definition.CardIconScale;
+            var drawOrigin = GetSeedPacketDrawOrigin(entity, definition.SeedPacketDrawOffset);
+            var scale = definition.SeedPacketScale;
             entity.SetLocalScale(new Vector3(scale, scale, 1f))
-                .SetLocalPosition(anchor);
-            AlignPlantGroundAnchor(entity, anchor);
+                .SetLocalPosition(drawOrigin);
 
             Freeze(entity, definition.PresentationNormalizedTime);
             return entity;
@@ -104,12 +100,19 @@ namespace PvZ.Presentation
             if (entity == null) throw new ArgumentNullException(nameof(entity));
         }
 
-        private static void AlignPlantGroundAnchor(GameEntity entity, Vector3 anchorPosition)
+        private static Vector3 GetSeedPacketDrawOrigin(GameEntity entity, Vector2 sourceOffset)
         {
-            if (entity is PlantEntity plant)
+            if (entity.transform.parent is RectTransform packet)
             {
-                plant.AlignGroundAnchorToParentPosition(anchorPosition);
+                return new Vector3(
+                    packet.rect.xMin + sourceOffset.x,
+                    packet.rect.yMax - sourceOffset.y,
+                    0f);
             }
+
+            // Non-UI callers can define their parent origin as the packet's
+            // top-left. This also keeps isolated tests deterministic.
+            return new Vector3(sourceOffset.x, -sourceOffset.y, 0f);
         }
     }
 }

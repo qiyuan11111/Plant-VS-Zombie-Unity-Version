@@ -10,22 +10,19 @@ namespace PvZ.Gameplay.Plants
 
     public abstract class PlantEntity : Character
     {
-        private const string ShadowAnchorName = "Shadow_Anchor";
         private static readonly Vector3 BoardScale = Vector3.one;
 
-        [SerializeField] private Transform shadowTransform;
         [SerializeField] private ShadowSizePreset shadowSize = ShadowSizePreset.Large;
-        [SerializeField] private Vector2 shadowOffset = new(0f, 5f);
+        [SerializeField] private Vector2 shadowImageTopLeft = new(-3f, 51f);
         [SerializeField] private bool drawsShadow = true;
         private GridManager.Grid _occupiedGrid;
         private Shadow _shadow;
         private bool _isOnBoard;
 
         public bool IsOnBoard => _isOnBoard;
-        public Transform ShadowAnchor => ResolveShadowAnchor();
-        public Transform GroundAnchor => ResolveShadowAnchor();
         public ShadowSizePreset ShadowSize => shadowSize;
-        public Vector2 ShadowOffset => shadowOffset;
+        public Vector2 ShadowImageTopLeft => shadowImageTopLeft;
+        public Vector3 ShadowCenterLocalPosition => Shadow.SourceTopLeftToUnityCenter(shadowImageTopLeft);
         public bool DrawsShadow => drawsShadow;
 
         public PlantEntity EnterBoard(GridManager.Grid grid)
@@ -47,11 +44,8 @@ namespace PvZ.Gameplay.Plants
                 .SetSortingLayer("plant-" + grid.Point.y)
                 .SetColliderState(true);
 
-            var gridCenterPosition = new Vector3(grid.Position.x, grid.Position.y, 10f);
-            var groundPosition = new Vector3(grid.GroundPosition.x, grid.GroundPosition.y, gridCenterPosition.z);
             SetLocalScale(BoardScale);
-            SetLocalPosition(gridCenterPosition);
-            AlignGroundAnchorToParentPosition(groundPosition);
+            SetLocalPosition(new Vector3(grid.LogicalOrigin.x, grid.LogicalOrigin.y, 10f));
             SetName(GetEnglishName() + "-" + grid.Point.x + "-" + grid.Point.y);
 
             EnsureShadow();
@@ -65,75 +59,13 @@ namespace PvZ.Gameplay.Plants
         {
         }
 
-        /// <summary>
-        /// Converts a normal-lawn cell center to the original plant ground point.
-        /// New code should prefer Grid.GroundPosition so pool and roof geometry is retained.
-        /// </summary>
-        public static Vector3 GetBoardGroundPosition(Vector2 gridCenter, float z = 0f)
-        {
-            return new Vector3(
-                gridCenter.x,
-                gridCenter.y - 24f,
-                z);
-        }
-
-        /// <summary>
-        /// Converts the original plant-local ground point into a prefab-local
-        /// anchor. Presentation prefabs normalize their FLA coordinates around
-        /// the basic SpriteTransform's static spritePosition, not around the
-        /// original Reanimation draw origin.
-        /// </summary>
-        public static Vector3 GetGroundAnchorLocalPosition(Vector2 basicSpritePosition)
-        {
-            return new Vector3(
-                BoardGeometry.PlantGroundSourcePosition.x - basicSpritePosition.x,
-                basicSpritePosition.y - BoardGeometry.PlantGroundSourcePosition.y,
-                0f);
-        }
-
-        /// <summary>
-        /// Moves the plant root so its shadow anchor lands on a position expressed
-        /// in the plant parent's coordinate space. The plant artwork is deliberately
-        /// not centered; every presentation context aligns the same ground point.
-        /// </summary>
-        public PlantEntity AlignGroundAnchorToParentPosition(Vector3 anchorPosition)
-        {
-            var anchor = RequireShadowAnchor();
-            var root = transform;
-            var parent = root.parent;
-            var currentAnchorPosition = parent != null
-                ? parent.InverseTransformPoint(anchor.position)
-                : anchor.position;
-
-            root.localPosition += anchorPosition - currentAnchorPosition;
-            return this;
-        }
-
-        public PlantEntity AlignGroundAnchorToWorldPosition(Vector3 anchorPosition)
-        {
-            var parent = transform.parent;
-            return AlignGroundAnchorToParentPosition(parent != null
-                ? parent.InverseTransformPoint(anchorPosition)
-                : anchorPosition);
-        }
-
-        public PlantEntity AlignShadowAnchorToParentPosition(Vector3 anchorPosition)
-        {
-            return AlignGroundAnchorToParentPosition(anchorPosition);
-        }
-
-        public PlantEntity AlignShadowAnchorToWorldPosition(Vector3 anchorPosition)
-        {
-            return AlignGroundAnchorToWorldPosition(anchorPosition);
-        }
-
         private void EnsureShadow()
         {
             if (_shadow != null || !drawsShadow) return;
-            var anchorPosition = RequireShadowAnchor().position;
-            var shadowPosition = anchorPosition + new Vector3(shadowOffset.x, shadowOffset.y, 0f);
             var shadowPrefab = MainGameManager.Instance.GetObjectByType(GameConfigObject.ObjectType.PlanteShadow);
-            var shadowObject = Instantiate(shadowPrefab, shadowPosition, Quaternion.identity, Transform);
+            var shadowObject = Instantiate(shadowPrefab, Transform, false);
+            shadowObject.transform.localPosition = ShadowCenterLocalPosition;
+            shadowObject.transform.localRotation = Quaternion.identity;
             _shadow = shadowObject.GetComponent<Shadow>();
 
             if (_shadow == null)
@@ -144,30 +76,6 @@ namespace PvZ.Gameplay.Plants
 
             var drawNightShadow = GridManager.Instance != null && GridManager.Instance.IsNight;
             _shadow.Initialize(shadowSize, drawNightShadow);
-        }
-
-        private Transform RequireShadowAnchor()
-        {
-            var anchor = ResolveShadowAnchor();
-            if (anchor != null) return anchor;
-
-            throw new MissingReferenceException(
-                $"{name} requires a child transform named {ShadowAnchorName}.");
-        }
-
-        private Transform ResolveShadowAnchor()
-        {
-            if (shadowTransform != null) return shadowTransform;
-
-            foreach (var child in GetComponentsInChildren<Transform>(true))
-            {
-                if (child.name != ShadowAnchorName) continue;
-
-                shadowTransform = child;
-                break;
-            }
-
-            return shadowTransform;
         }
 
         protected virtual void OnDestroy()

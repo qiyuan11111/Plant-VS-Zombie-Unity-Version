@@ -11,17 +11,15 @@ namespace PvZ.Gameplay.Board
 
     public readonly struct BoardCellGeometry
     {
-        public BoardCellGeometry(Vector2 logicalOrigin, Vector2 center, Vector2 ground, Vector2 size)
+        public BoardCellGeometry(Vector2 logicalOrigin, Vector2 center, Vector2 size)
         {
             LogicalOrigin = logicalOrigin;
             Center = center;
-            Ground = ground;
             Size = size;
         }
 
         public Vector2 LogicalOrigin { get; }
         public Vector2 Center { get; }
-        public Vector2 Ground { get; }
         public Vector2 Size { get; }
     }
 
@@ -46,15 +44,10 @@ namespace PvZ.Gameplay.Board
         private const float LawnMinY = 80f;
         private static readonly Vector2 FirstLogicalOrigin = new(-440f, 220f);
 
-        // Original plant-local point used by the planting effect and by the
-        // seed-packet transform. Source coordinates use Y down.
-        public static readonly Vector2 PlantGroundSourcePosition = new(40f, 74f);
-        private static readonly Vector2 PlantGroundOffset = new(
-            PlantGroundSourcePosition.x,
-            -PlantGroundSourcePosition.y);
-
-        // CursorObject draws an ordinary plant so the pointer is plant-local (35, 60).
-        public static readonly Vector2 CursorToGroundOffset = new(5f, -14f);
+        // CursorObject is positioned at mouse-(25,35), then an ordinary held
+        // plant is drawn at (-10,-25). Converted from source Y-down to Unity
+        // Y-up, the reanimation draw origin is therefore mouse+(-35,+60).
+        public static readonly Vector2 CursorPlantDrawOriginOffset = new(-35f, 60f);
 
         public static int GetRowCount(BoardTerrain terrain)
         {
@@ -89,7 +82,6 @@ namespace PvZ.Gameplay.Board
             return new BoardCellGeometry(
                 origin,
                 origin + new Vector2(CellWidth * 0.5f, -cellHeight * 0.5f),
-                origin + PlantGroundOffset,
                 new Vector2(CellWidth, cellHeight));
         }
 

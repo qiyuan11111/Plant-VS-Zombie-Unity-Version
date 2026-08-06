@@ -45,11 +45,11 @@ namespace PvZ.Presentation
 
         public bool updatePosition;
 
-        [Tooltip("Use this transform's static FLA position as the origin for descendant SpriteTransforms.")]
+        [Tooltip("Internal FLA/sub-animation pivot for descendant SpriteTransforms. Never use this value for board, card, cursor, or shadow placement.")]
         public bool providesChildSpritePosition;
 
         [FormerlySerializedAs("childSpritePosition")]
-        [Tooltip("FLA coordinate-space origin used by descendant SpriteTransforms.")]
+        [Tooltip("Internal source-space pivot used only to convert descendant animation tracks into local coordinates.")]
         public Vector2 spritePosition;
 
         private Transform _cachedTransform;

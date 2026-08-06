@@ -43,8 +43,8 @@ namespace PvZ.Gameplay.Board
         {
             if (_cursorPreview is PlantEntity plant)
             {
-                var groundPosition = worldPosition + (Vector3)BoardGeometry.CursorToGroundOffset;
-                plant.AlignGroundAnchorToWorldPosition(groundPosition);
+                plant.transform.position = worldPosition +
+                                           (Vector3)BoardGeometry.CursorPlantDrawOriginOffset;
             }
         }
 
@@ -53,11 +53,9 @@ namespace PvZ.Gameplay.Board
             if (_gridPreview == null || grid == null) return;
 
             _gridPreview.SetSortingLayer("plant-" + grid.Point.y);
-            _gridPreview.SetLocalPosition(grid.Position);
-            if (_gridPreview is PlantEntity plant)
-            {
-                plant.AlignGroundAnchorToParentPosition(grid.GroundPosition);
-            }
+            // The original CursorPreview::BeginDraw translates directly to
+            // GridToPixelX/Y. A plant prefab root represents that draw origin.
+            _gridPreview.SetLocalPosition(grid.LogicalOrigin);
             _gridPreview.gameObject.SetActive(true);
         }
 

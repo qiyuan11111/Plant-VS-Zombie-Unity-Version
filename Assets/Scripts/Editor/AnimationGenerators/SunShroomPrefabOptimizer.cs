@@ -229,6 +229,11 @@ public static class SunShroomPrefabOptimizer
             var bodyContainer = RequireTransform(root.transform, BodyContainerPath);
             var body = RequireTransform(root.transform, BodyPath);
             var anchors = RequireTransform(root.transform, AnchorsPath);
+            var legacyShadowAnchor = anchors.Find("Shadow_Anchor");
+            if (legacyShadowAnchor != null)
+            {
+                UnityEngine.Object.DestroyImmediate(legacyShadowAnchor.gameObject);
+            }
             var sunAnchor = root.transform.Find(AnchorPath) ?? root.transform.Find(OldAnchorPath);
             if (sunAnchor == null) throw new MissingReferenceException("SunShroom sun anchor is missing.");
             var sleep = root.transform.Find(SleepPath) ?? root.transform.Find(OldSleepPath);
@@ -346,6 +351,7 @@ public static class SunShroomPrefabOptimizer
         spriteTransform.updatePosition = false;
         spriteTransform.providesChildSpritePosition = true;
         spriteTransform.spritePosition = spritePosition;
+        target.localPosition = new Vector3(spritePosition.x, -spritePosition.y, 0f);
         EditorUtility.SetDirty(spriteTransform);
     }
 

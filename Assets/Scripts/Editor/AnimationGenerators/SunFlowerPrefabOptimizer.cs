@@ -268,8 +268,11 @@ public static class SunFlowerPrefabOptimizer
         var anchors = GetOrCreatePath(root.transform, "component/anchors");
         var sunAnchor = GetOrCreateChild(anchors, "Sun_Anchor");
         sunAnchor.localPosition = new Vector3(0f, 25f, 0f);
-        var shadowAnchor = GetOrCreateChild(anchors, "Shadow_Anchor");
-        shadowAnchor.localPosition = PlantEntity.GetGroundAnchorLocalPosition(SpritePosition);
+        var legacyShadowAnchor = anchors.Find("Shadow_Anchor");
+        if (legacyShadowAnchor != null)
+        {
+            UnityEngine.Object.DestroyImmediate(legacyShadowAnchor.gameObject);
+        }
 
         var producerData = new SerializedObject(producer);
         producerData.FindProperty("productionAnchor").objectReferenceValue = sunAnchor;
@@ -283,7 +286,6 @@ public static class SunFlowerPrefabOptimizer
         var flowerData = new SerializedObject(sunFlower);
         flowerData.FindProperty("sunProducer").objectReferenceValue = producer;
         flowerData.FindProperty("blink").objectReferenceValue = blink;
-        flowerData.FindProperty("shadowTransform").objectReferenceValue = shadowAnchor;
         flowerData.ApplyModifiedPropertiesWithoutUndo();
 
         var blinkData = new SerializedObject(blink);
@@ -393,6 +395,7 @@ public static class SunFlowerPrefabOptimizer
         spriteTransform.updatePosition = false;
         spriteTransform.providesChildSpritePosition = true;
         spriteTransform.spritePosition = spritePosition;
+        target.localPosition = new Vector3(spritePosition.x, -spritePosition.y, 0f);
         EditorUtility.SetDirty(spriteTransform);
     }
 
