@@ -1376,7 +1376,7 @@ MonoBehaviour:
   initialDelaySeconds: 10
   initialDelayVariationSeconds: 2
   intervalSeconds: 24
-  intervalVariationSeconds: 3
+  intervalVariationSeconds: 1
   fallbackSunType: 1
 --- !u!61 &7200000000000000003
 BoxCollider2D:

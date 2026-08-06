@@ -105,6 +105,8 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &900100000000000001
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,6 +462,8 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &900200000000000007
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +569,8 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &2647483252324358559
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,7 +662,7 @@ MonoBehaviour:
   productionAnchor: {fileID: 900100000000000014}
   initialDelaySeconds: 10
   initialDelayVariationSeconds: 2
-  intervalSeconds: 24
+  intervalSeconds: 25
   intervalVariationSeconds: 3
   fallbackSunType: 0
 --- !u!61 &3655578370796775962
@@ -844,6 +850,8 @@ MonoBehaviour:
   alpha: 1
   alphaCoef: 1
   updatePosition: 1
+  providesChildSpritePosition: 0
+  spritePosition: {x: 0, y: 0}
 --- !u!1 &4358634213513046557
 GameObject:
   m_ObjectHideFlags: 0
