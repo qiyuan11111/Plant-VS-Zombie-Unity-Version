@@ -891,7 +891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 24.2, y: -18.6}
-  scale: {x: 55.4993, y: 50}
+  scale: {x: 55.499268, y: 50}
   skew: {x: 0, y: 0}
   brightness: 1
   isBright: 0
@@ -1007,7 +1007,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 1.2, y: -14.6}
-  scale: {x: 55.4993, y: 50}
+  scale: {x: 55.499268, y: 50}
   skew: {x: 0, y: 0}
   brightness: 1
   isBright: 0
@@ -1551,7 +1551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: -21.4, y: -17.5}
   scale: {x: 99.7406, y: 99.7406}
-  skew: {x: -14.7711, y: -14.7711}
+  skew: {x: -14.771103, y: -14.771103}
   brightness: 1
   isBright: 0
   alpha: 1
