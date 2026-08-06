@@ -60,6 +60,31 @@ namespace Tests.EditMode
         }
 
         [Test]
+        public void CursorHotspot_AppliesSourcePixelOffsetInPreviewParentSpace()
+        {
+            var parentObject = new GameObject("Scaled preview parent");
+            try
+            {
+                parentObject.transform.position = new Vector3(10f, 20f, 0f);
+                parentObject.transform.localScale = new Vector3(2f, 2f, 1f);
+                var pointerWorldPosition = new Vector3(210f, 120f, 5f);
+
+                var localDrawOrigin = PlantingPreview.GetLocalCursorDrawOrigin(
+                    parentObject.transform,
+                    pointerWorldPosition);
+
+                Assert.That(localDrawOrigin, Is.EqualTo(new Vector3(65f, 110f, 5f)));
+                Assert.That(
+                    parentObject.transform.TransformPoint(localDrawOrigin),
+                    Is.EqualTo(pointerWorldPosition + new Vector3(-70f, 120f, 0f)));
+            }
+            finally
+            {
+                Object.DestroyImmediate(parentObject);
+            }
+        }
+
+        [Test]
         public void HitConversion_UsesOriginalFrontYardAndRoofRules()
         {
             Assert.That(

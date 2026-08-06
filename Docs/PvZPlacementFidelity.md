@@ -28,7 +28,7 @@ outside the current three-plant/front-yard implementation; it does not mean undi
 | Plant logical origin and 80x80 logical box | Implemented; prefab root is the original `mX,mY` draw origin | `Grid.LogicalOrigin` / `PlantEntity` |
 | FLA/reanim coordinates share the plant's source-pixel scale | Implemented directly; no gameplay GroundAnchor conversion | plant prefabs / `SpriteTransform` |
 | Planting particle/effect point `(41,74)` | Deferred; planting particles are not implemented | — |
-| Ordinary held plant draw origin at mouse `(-35,-60)` in source Y-down coordinates | Implemented as Unity `(-35,+60)` | `BoardGeometry.CursorPlantDrawOriginOffset` |
+| Ordinary held plant draw origin at mouse `(-35,-60)` in source Y-down coordinates | Implemented as Unity Grid-local `(-35,+60)` after converting the pointer from world space | `PlantingPreview.GetLocalCursorDrawOrigin` |
 | Snapped translucent preview uses grid origin plus draw-height offset | Ground alignment implemented; draw-height profiles deferred | `PlantingPreview` |
 | Flying/grave-buster cursor hit Y `+15` | Deferred until those plant types exist | — |
 | Spikeweed/spikerock cursor hit Y `-15` | Deferred until those plant types exist | — |
