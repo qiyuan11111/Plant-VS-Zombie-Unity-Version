@@ -155,7 +155,12 @@ namespace PvZ.Gameplay.Sun
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (!CanCollect()) return;
+            if (eventData == null ||
+                eventData.button != PointerEventData.InputButton.Left ||
+                !CanCollect())
+            {
+                return;
+            }
 
             _isCollected = true;
             SetComponentState(false);

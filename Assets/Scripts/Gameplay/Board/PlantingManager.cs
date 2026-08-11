@@ -50,9 +50,14 @@ namespace PvZ.Gameplay.Board
             var prefab = card.Definition.Prefab;
             if (prefab == null) return false;
 
+            // Build the preview before committing the planting session. The
+            // constructor validates and instantiates presentation prefabs, so it
+            // can throw without leaving this manager stuck in Holding state.
+            var preview = new PlantingPreview(card.Definition, GridManager.Instance.transform);
+
             _selectedCard = card;
             _state = PlantingState.Holding;
-            _preview = new PlantingPreview(card.Definition, GridManager.Instance.transform);
+            _preview = preview;
 
             card.OnChoose();
             SoundManager.Instance.PlayEffect(GameSound.SoundType.SeedLift);
