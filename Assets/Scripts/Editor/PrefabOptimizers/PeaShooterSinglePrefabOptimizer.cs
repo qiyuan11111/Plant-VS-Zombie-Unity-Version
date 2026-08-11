@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using LitJson;
+using PvZ.Gameplay.Plants.Abilities;
 using PvZ.Gameplay.Plants.Types;
 using PvZ.Presentation;
 using UnityEditor;
@@ -17,8 +18,12 @@ public static class PeaShooterSinglePrefabOptimizer
     private const string IdleClipPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/idle.anim";
     private const string HeadIdleClipPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/head_idle.anim";
     private const string ShootClipPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/shoot.anim";
+    private const string BlinkClipPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/blink.anim";
     private const string ControllerPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/PeaShooterSingle.controller";
-    private const string OptimizationVersion = "pea-shooter-single-animation-v8-normalized-source-hash";
+    private const string Blink1SpritePath = "Assets/Prefab/Plant/PeaShooterSingle/Sprite/PeaShooter_blink1.png";
+    private const string Blink2SpritePath = "Assets/Prefab/Plant/PeaShooterSingle/Sprite/PeaShooter_blink2.png";
+    private const string HeadImagePath = "component/basic/head/pod/head";
+    private const string OptimizationVersion = "pea-shooter-single-animation-v9-source-blink-overlay-normalized-source-hash";
     private const float FrameRate = 12f;
     private const float IdleStateSpeed = 1.4f;
     private const float ShootStateSpeed = 2.8f;
@@ -40,6 +45,20 @@ public static class PeaShooterSinglePrefabOptimizer
         { "PeaShooterSingle_head/PeaShooterSingle_sprout", "component/basic/head/sprout" }
     };
 
+    private static readonly Dictionary<string, string> BlinkPartPaths = new()
+    {
+        { "PeaShooter_blink1", HeadImagePath + "/blink/PeaShooter_blink1" },
+        { "PeaShooter_blink2", HeadImagePath + "/blink/PeaShooter_blink2" }
+    };
+
+    // PeaShooterSingle1.fla, anim_blink frames 1-3. The bitmap center is
+    // derived from each 28x23 source image because Animate positions symbols
+    // from their top-left origin while Unity imports these sprites centered.
+    private static readonly Vector2 Blink1Position = new(45.325665f, 29.837154f);
+    private static readonly Vector2 Blink2Position = new(45.2199f, 29.782415f);
+    private static readonly Vector2 Blink1Scale = new(55.540466f, 55.540466f);
+    private static readonly Vector2 Blink2Scale = new(55.499268f, 55.499268f);
+
     [InitializeOnLoadMethod]
     private static void SchedulePendingOptimization()
     {
@@ -56,7 +75,9 @@ public static class PeaShooterSinglePrefabOptimizer
         }
 
         if (!File.Exists(GetAbsoluteSourcePath()) ||
-            AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath) == null)
+            AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath) == null ||
+            AssetImporter.GetAtPath(Blink1SpritePath) == null ||
+            AssetImporter.GetAtPath(Blink2SpritePath) == null)
         {
             return;
         }
@@ -86,9 +107,13 @@ public static class PeaShooterSinglePrefabOptimizer
 
     private static void OptimizePeaShooterSingle(JsonData source)
     {
+        EnsureSpriteImportSettings(Blink1SpritePath);
+        EnsureSpriteImportSettings(Blink2SpritePath);
+
         var idleClip = GetOrCreateClip(IdleClipPath, "idle");
         var headIdleClip = GetOrCreateClip(HeadIdleClipPath, "head_idle");
         var shootClip = GetOrCreateClip(ShootClipPath, "shoot");
+        var blinkClip = GetOrCreateClip(BlinkClipPath, "blink");
 
         SynchronizeClip(idleClip, source["idle"], true, Array.Empty<AnimationEvent>());
         SynchronizeClip(headIdleClip, source["head_idle"], true, Array.Empty<AnimationEvent>());
@@ -100,8 +125,9 @@ public static class PeaShooterSinglePrefabOptimizer
                 functionName = "ShootProjectilePea"
             }
         });
+        ConfigureBlinkClip(blinkClip);
 
-        var controller = ConfigureController(idleClip, headIdleClip, shootClip);
+        var controller = ConfigureController(idleClip, headIdleClip, shootClip, blinkClip);
         ConfigurePrefab(controller, idleClip, headIdleClip);
 
         var importer = AssetImporter.GetAtPath(PrefabPath);
@@ -111,7 +137,7 @@ public static class PeaShooterSinglePrefabOptimizer
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log("PeaShooterSingle prefab, controller and independent animation clips synchronized from JSON.");
+        Debug.Log("PeaShooterSingle prefab, independent animation clips and source blink overlay synchronized.");
     }
 
     private static bool IsCurrent(JsonData source)
@@ -122,15 +148,17 @@ public static class PeaShooterSinglePrefabOptimizer
         var idleClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(IdleClipPath);
         var headIdleClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(HeadIdleClipPath);
         var shootClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(ShootClipPath);
+        var blinkClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(BlinkClipPath);
         if (!ClipMatchesSource(idleClip, source["idle"], true, false) ||
             !ClipMatchesSource(headIdleClip, source["head_idle"], true, false) ||
-            !ClipMatchesSource(shootClip, source["shoot"], false, true))
+            !ClipMatchesSource(shootClip, source["shoot"], false, true) ||
+            !BlinkClipIsCurrent(blinkClip))
         {
             return false;
         }
 
         var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(ControllerPath);
-        if (!ControllerIsCurrent(controller, idleClip, headIdleClip, shootClip))
+        if (!ControllerIsCurrent(controller, idleClip, headIdleClip, shootClip, blinkClip))
         {
             return false;
         }
@@ -145,7 +173,8 @@ public static class PeaShooterSinglePrefabOptimizer
                headTransform.spritePosition == headAttachmentBasePosition &&
                PartPaths.Values.All(path => prefab.transform.Find(path) != null) &&
                FirstFrameMatchesPrefab(prefab.transform, idleClip) &&
-               FirstFrameMatchesPrefab(prefab.transform, headIdleClip);
+               FirstFrameMatchesPrefab(prefab.transform, headIdleClip) &&
+               PrefabBlinkIsCurrent(prefab, animator);
     }
 
     private static JsonData LoadSource()
@@ -183,6 +212,38 @@ public static class PeaShooterSinglePrefabOptimizer
         return Hash128.Compute(normalizedSource);
     }
 
+    private static void EnsureSpriteImportSettings(string assetPath)
+    {
+        var importer = AssetImporter.GetAtPath(assetPath) as TextureImporter;
+        if (importer == null)
+        {
+            throw new MissingReferenceException($"Missing PeaShooter blink texture: {assetPath}");
+        }
+
+        var settings = new TextureImporterSettings();
+        importer.ReadTextureSettings(settings);
+        var changed = importer.textureType != TextureImporterType.Sprite ||
+                      importer.spriteImportMode != SpriteImportMode.Single ||
+                      !Mathf.Approximately(importer.spritePixelsPerUnit, 1f) ||
+                      importer.mipmapEnabled ||
+                      !importer.alphaIsTransparency ||
+                      settings.spriteAlignment != (int)SpriteAlignment.Center ||
+                      settings.spritePivot != new Vector2(0.5f, 0.5f) ||
+                      settings.filterMode != FilterMode.Point;
+        if (!changed) return;
+
+        importer.textureType = TextureImporterType.Sprite;
+        importer.spriteImportMode = SpriteImportMode.Single;
+        importer.spritePixelsPerUnit = 1f;
+        importer.mipmapEnabled = false;
+        importer.alphaIsTransparency = true;
+        settings.spriteAlignment = (int)SpriteAlignment.Center;
+        settings.spritePivot = new Vector2(0.5f, 0.5f);
+        settings.filterMode = FilterMode.Point;
+        importer.SetTextureSettings(settings);
+        importer.SaveAndReimport();
+    }
+
     private static AnimationClip GetOrCreateClip(string path, string clipName)
     {
         var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
@@ -191,6 +252,83 @@ public static class PeaShooterSinglePrefabOptimizer
         clip = new AnimationClip { name = clipName };
         AssetDatabase.CreateAsset(clip, path);
         return clip;
+    }
+
+    private static void ConfigureBlinkClip(AnimationClip clip)
+    {
+        foreach (var binding in AnimationUtility.GetCurveBindings(clip))
+        {
+            AnimationUtility.SetEditorCurve(clip, binding, null);
+        }
+        foreach (var binding in AnimationUtility.GetObjectReferenceCurveBindings(clip))
+        {
+            AnimationUtility.SetObjectReferenceCurve(clip, binding, null);
+        }
+
+        clip.frameRate = FrameRate;
+        SetActiveCurve(clip, BlinkPartPaths["PeaShooter_blink1"], 0f, 1f, 0f, 1f, 0f);
+        SetActiveCurve(clip, BlinkPartPaths["PeaShooter_blink2"], 0f, 0f, 1f, 0f, 0f);
+        var settings = AnimationUtility.GetAnimationClipSettings(clip);
+        settings.loopTime = false;
+        AnimationUtility.SetAnimationClipSettings(clip, settings);
+        AnimationUtility.SetAnimationEvents(clip, Array.Empty<AnimationEvent>());
+        EditorUtility.SetDirty(clip);
+    }
+
+    private static void SetActiveCurve(
+        AnimationClip clip,
+        string path,
+        params float[] values)
+    {
+        AnimationUtility.SetEditorCurve(
+            clip,
+            EditorCurveBinding.FloatCurve(path, typeof(GameObject), "m_IsActive"),
+            BuildStepCurve(values));
+    }
+
+    private static AnimationCurve BuildStepCurve(params float[] values)
+    {
+        var curve = new AnimationCurve();
+        for (var index = 0; index < values.Length; index++)
+        {
+            curve.AddKey(index / FrameRate, values[index]);
+            AnimationUtility.SetKeyLeftTangentMode(
+                curve, index, AnimationUtility.TangentMode.Constant);
+            AnimationUtility.SetKeyRightTangentMode(
+                curve, index, AnimationUtility.TangentMode.Constant);
+        }
+        return curve;
+    }
+
+    private static bool BlinkClipIsCurrent(AnimationClip clip)
+    {
+        if (clip == null || !Mathf.Approximately(clip.frameRate, FrameRate) ||
+            AnimationUtility.GetAnimationClipSettings(clip).loopTime ||
+            AnimationUtility.GetObjectReferenceCurveBindings(clip).Length != 0 ||
+            AnimationUtility.GetAnimationEvents(clip).Length != 0)
+        {
+            return false;
+        }
+
+        var expectedCurves = new Dictionary<string, AnimationCurve>
+        {
+            { BlinkPartPaths["PeaShooter_blink1"], BuildStepCurve(0f, 1f, 0f, 1f, 0f) },
+            { BlinkPartPaths["PeaShooter_blink2"], BuildStepCurve(0f, 0f, 1f, 0f, 0f) }
+        };
+        var bindings = AnimationUtility.GetCurveBindings(clip);
+        if (bindings.Length != expectedCurves.Count) return false;
+
+        foreach (var binding in bindings)
+        {
+            if (binding.type != typeof(GameObject) ||
+                binding.propertyName != "m_IsActive" ||
+                !expectedCurves.TryGetValue(binding.path, out var expectedCurve) ||
+                !CurvesEqual(AnimationUtility.GetEditorCurve(clip, binding), expectedCurve))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static void SynchronizeClip(
@@ -303,7 +441,8 @@ public static class PeaShooterSinglePrefabOptimizer
     private static AnimatorController ConfigureController(
         AnimationClip idleClip,
         AnimationClip headIdleClip,
-        AnimationClip shootClip)
+        AnimationClip shootClip,
+        AnimationClip blinkClip)
     {
         var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(ControllerPath);
         if (controller == null)
@@ -312,9 +451,11 @@ public static class PeaShooterSinglePrefabOptimizer
         }
 
         EnsureTrigger(controller, "shoot");
+        EnsureTrigger(controller, "blink");
         ConfigureDefaultState(controller, "PeaShooterSingle", "idle", idleClip, IdleStateSpeed);
         ConfigureDefaultState(controller, "PeaShooterSingle_head", "head_idle", headIdleClip, IdleStateSpeed);
         RemoveShootStateFromHeadIdleLayer(controller);
+        ConfigureBlinkOverlayLayer(controller, blinkClip);
         ConfigureShootOverlayLayer(controller, shootClip);
         EditorUtility.SetDirty(controller);
         return controller;
@@ -382,6 +523,59 @@ public static class PeaShooterSinglePrefabOptimizer
         SaveLayer(controller, layer);
         EditorUtility.SetDirty(idleState);
         EditorUtility.SetDirty(stateMachine);
+    }
+
+    private static void ConfigureBlinkOverlayLayer(
+        AnimatorController controller,
+        AnimationClip blinkClip)
+    {
+        var layer = GetOrCreateLayer(controller, "PeaShooterSingle_blink");
+        layer.defaultWeight = 1f;
+        var stateMachine = layer.stateMachine;
+
+        var inactiveState = GetOrCreateState(stateMachine, "blink_idle");
+        inactiveState.motion = null;
+        inactiveState.speed = 1f;
+        inactiveState.writeDefaultValues = false;
+        stateMachine.defaultState = inactiveState;
+
+        var blinkState = GetOrCreateState(stateMachine, "blink");
+        blinkState.motion = blinkClip;
+        blinkState.speed = 1f;
+        blinkState.writeDefaultValues = false;
+
+        ClearTransitions(inactiveState);
+        ClearTransitions(blinkState);
+
+        var enterTransition = inactiveState.AddTransition(blinkState);
+        enterTransition.duration = 0f;
+        enterTransition.hasFixedDuration = true;
+        enterTransition.hasExitTime = false;
+        enterTransition.offset = 0f;
+        enterTransition.canTransitionToSelf = false;
+        enterTransition.AddCondition(AnimatorConditionMode.If, 0f, "blink");
+
+        var exitTransition = blinkState.AddTransition(inactiveState);
+        exitTransition.duration = 0f;
+        exitTransition.hasFixedDuration = true;
+        exitTransition.exitTime = 1f;
+        exitTransition.hasExitTime = true;
+        exitTransition.offset = 0f;
+        exitTransition.canTransitionToSelf = false;
+
+        SaveLayer(controller, layer);
+        EditorUtility.SetDirty(inactiveState);
+        EditorUtility.SetDirty(blinkState);
+        EditorUtility.SetDirty(stateMachine);
+    }
+
+    private static void ClearTransitions(AnimatorState state)
+    {
+        foreach (var transition in state.transitions)
+        {
+            state.RemoveTransition(transition);
+            UnityEngine.Object.DestroyImmediate(transition, true);
+        }
     }
 
     private static void ConfigureShootOverlayLayer(
@@ -510,19 +704,24 @@ public static class PeaShooterSinglePrefabOptimizer
         AnimatorController controller,
         AnimationClip idleClip,
         AnimationClip headIdleClip,
-        AnimationClip shootClip)
+        AnimationClip shootClip,
+        AnimationClip blinkClip)
     {
         var bodyIdleState = FindState(controller, "PeaShooterSingle", "idle");
         var headIdleState = FindState(controller, "PeaShooterSingle_head", "head_idle");
         if (!StateUsesClip(controller, "PeaShooterSingle", "idle", idleClip) ||
             !StateUsesClip(controller, "PeaShooterSingle_head", "head_idle", headIdleClip) ||
             !StateUsesClip(controller, "PeaShooterSingle_head_shoot", "shoot", shootClip) ||
+            !StateUsesClip(controller, "PeaShooterSingle_blink", "blink", blinkClip) ||
             bodyIdleState == null || bodyIdleState.writeDefaultValues ||
             !Mathf.Approximately(bodyIdleState.speed, IdleStateSpeed) ||
             headIdleState == null || headIdleState.writeDefaultValues ||
             !Mathf.Approximately(headIdleState.speed, IdleStateSpeed) ||
             !controller.parameters.Any(parameter =>
-                parameter.name == "shoot" && parameter.type == AnimatorControllerParameterType.Trigger))
+                parameter.name == "shoot" && parameter.type == AnimatorControllerParameterType.Trigger) ||
+            !controller.parameters.Any(parameter =>
+                parameter.name == "blink" && parameter.type == AnimatorControllerParameterType.Trigger) ||
+            !BlinkLayerIsCurrent(controller, blinkClip))
         {
             return false;
         }
@@ -564,6 +763,48 @@ public static class PeaShooterSinglePrefabOptimizer
                enterTransition.conditions[0].parameter == "shoot" &&
                enterTransition.conditions[0].mode == AnimatorConditionMode.If &&
                shootState.transitions.Length == 0;
+    }
+
+    private static bool BlinkLayerIsCurrent(
+        AnimatorController controller,
+        AnimationClip blinkClip)
+    {
+        var layer = controller.layers.SingleOrDefault(
+            candidate => candidate.name == "PeaShooterSingle_blink");
+        if (layer == null || !Mathf.Approximately(layer.defaultWeight, 1f))
+        {
+            return false;
+        }
+
+        var inactiveState = layer.stateMachine.defaultState;
+        var blinkState = layer.stateMachine.states
+            .Select(childState => childState.state)
+            .SingleOrDefault(state => state.name == "blink");
+        if (inactiveState == null || inactiveState.name != "blink_idle" ||
+            inactiveState.motion != null || inactiveState.writeDefaultValues ||
+            blinkState == null || blinkState.motion != blinkClip ||
+            blinkState.writeDefaultValues || !Mathf.Approximately(blinkState.speed, 1f))
+        {
+            return false;
+        }
+
+        var enterTransition = inactiveState.transitions.SingleOrDefault();
+        var exitTransition = blinkState.transitions.SingleOrDefault();
+        return enterTransition != null &&
+               enterTransition.destinationState == blinkState &&
+               !enterTransition.hasExitTime &&
+               enterTransition.hasFixedDuration &&
+               Mathf.Approximately(enterTransition.duration, 0f) &&
+               enterTransition.conditions.Length == 1 &&
+               enterTransition.conditions[0].parameter == "blink" &&
+               enterTransition.conditions[0].mode == AnimatorConditionMode.If &&
+               exitTransition != null &&
+               exitTransition.destinationState == inactiveState &&
+               exitTransition.hasExitTime &&
+               exitTransition.hasFixedDuration &&
+               Mathf.Approximately(exitTransition.exitTime, 1f) &&
+               Mathf.Approximately(exitTransition.duration, 0f) &&
+               exitTransition.conditions.Length == 0;
     }
 
     private static AnimatorState FindState(
@@ -661,11 +902,217 @@ public static class PeaShooterSinglePrefabOptimizer
             }
             changed |= ApplyFirstFrame(root.transform, idleClip);
             changed |= ApplyFirstFrame(root.transform, headIdleClip);
+            ConfigureBlinkParts(root, animator);
+            changed = true;
             if (changed) PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
         }
         finally
         {
             PrefabUtility.UnloadPrefabContents(root);
+        }
+    }
+
+    private static void ConfigureBlinkParts(GameObject root, Animator animator)
+    {
+        var headImage = root.transform.Find(HeadImagePath);
+        var headRenderer = headImage != null ? headImage.GetComponent<SpriteRenderer>() : null;
+        var headTransform = headImage != null ? headImage.GetComponent<SpriteTransform>() : null;
+        var blink1 = AssetDatabase.LoadAssetAtPath<Sprite>(Blink1SpritePath);
+        var blink2 = AssetDatabase.LoadAssetAtPath<Sprite>(Blink2SpritePath);
+        if (headRenderer == null || headRenderer.sharedMaterial == null ||
+            headTransform == null || blink1 == null || blink2 == null)
+        {
+            throw new MissingReferenceException(
+                "PeaShooter head, blink sprites or shared material are missing.");
+        }
+
+        headTransform.providesChildSpritePosition = true;
+        headTransform.spritePosition = headTransform.position;
+        headTransform.Apply();
+        EditorUtility.SetDirty(headTransform);
+
+        var blinkRoot = GetOrCreatePath(root.transform, HeadImagePath + "/blink");
+        blinkRoot.localRotation = Quaternion.identity;
+        blinkRoot.localScale = Vector3.one;
+        SetLayerRecursively(blinkRoot.gameObject, root.layer);
+
+        ConfigureBlinkPart(
+            root.transform,
+            BlinkPartPaths["PeaShooter_blink1"],
+            blink1,
+            headRenderer.sharedMaterial,
+            headRenderer.sortingLayerID,
+            Blink1Position,
+            Blink1Scale);
+        ConfigureBlinkPart(
+            root.transform,
+            BlinkPartPaths["PeaShooter_blink2"],
+            blink2,
+            headRenderer.sharedMaterial,
+            headRenderer.sortingLayerID,
+            Blink2Position,
+            Blink2Scale);
+        headTransform.RefreshDescendantPositionReferences();
+
+        var shooter = GetOrAddComponent<PeaShooterSingle>(root);
+        var blink = GetOrAddComponent<Blink>(root);
+        var shooterData = new SerializedObject(shooter);
+        shooterData.FindProperty("blink").objectReferenceValue = blink;
+        shooterData.ApplyModifiedPropertiesWithoutUndo();
+
+        var blinkData = new SerializedObject(blink);
+        blinkData.FindProperty("animator").objectReferenceValue = animator;
+        blinkData.FindProperty("minimumIntervalSeconds").floatValue = 2.5f;
+        blinkData.FindProperty("maximumIntervalSeconds").floatValue = 5.5f;
+        blinkData.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void ConfigureBlinkPart(
+        Transform root,
+        string path,
+        Sprite sprite,
+        Material sharedMaterial,
+        int sortingLayerId,
+        Vector2 position,
+        Vector2 scale)
+    {
+        var target = GetOrCreatePath(root, path);
+        SetLayerRecursively(target.gameObject, root.gameObject.layer);
+        target.localRotation = Quaternion.identity;
+        target.localScale = Vector3.one;
+
+        var renderer = GetOrAddComponent<SpriteRenderer>(target.gameObject);
+        renderer.sprite = sprite;
+        renderer.sharedMaterial = sharedMaterial;
+        renderer.sortingLayerID = sortingLayerId;
+        renderer.sortingOrder = 10;
+
+        var spriteTransform = GetOrAddComponent<SpriteTransform>(target.gameObject);
+        spriteTransform.enabled = true;
+        spriteTransform.position = position;
+        spriteTransform.scale = scale;
+        spriteTransform.skew = Vector2.zero;
+        spriteTransform.brightness = 1f;
+        spriteTransform.alpha = 1f;
+        spriteTransform.alphaCoef = 1f;
+        spriteTransform.updatePosition = true;
+        spriteTransform.RefreshPositionReference();
+        spriteTransform.Apply();
+
+        target.gameObject.SetActive(false);
+        EditorUtility.SetDirty(renderer);
+        EditorUtility.SetDirty(spriteTransform);
+    }
+
+    private static bool PrefabBlinkIsCurrent(GameObject root, Animator animator)
+    {
+        if (root == null || animator == null) return false;
+
+        var shooter = root.GetComponent<PeaShooterSingle>();
+        var blink = root.GetComponent<Blink>();
+        var headImage = root.transform.Find(HeadImagePath);
+        var headRenderer = headImage != null ? headImage.GetComponent<SpriteRenderer>() : null;
+        var headTransform = headImage != null ? headImage.GetComponent<SpriteTransform>() : null;
+        var blink1 = AssetDatabase.LoadAssetAtPath<Sprite>(Blink1SpritePath);
+        var blink2 = AssetDatabase.LoadAssetAtPath<Sprite>(Blink2SpritePath);
+        if (shooter == null || blink == null || headRenderer == null ||
+            headRenderer.sharedMaterial == null || headTransform == null ||
+            !headTransform.providesChildSpritePosition ||
+            headTransform.spritePosition != headTransform.position ||
+            blink1 == null || blink2 == null)
+        {
+            return false;
+        }
+
+        var shooterData = new SerializedObject(shooter);
+        var blinkData = new SerializedObject(blink);
+        if (shooterData.FindProperty("blink").objectReferenceValue != blink ||
+            blinkData.FindProperty("animator").objectReferenceValue != animator ||
+            !Mathf.Approximately(
+                blinkData.FindProperty("minimumIntervalSeconds").floatValue, 2.5f) ||
+            !Mathf.Approximately(
+                blinkData.FindProperty("maximumIntervalSeconds").floatValue, 5.5f))
+        {
+            return false;
+        }
+
+        return BlinkPartIsCurrent(
+                   root.transform.Find(BlinkPartPaths["PeaShooter_blink1"]),
+                   blink1,
+                   headRenderer.sharedMaterial,
+                   headRenderer.sortingLayerID,
+                   Blink1Position,
+                   Blink1Scale) &&
+               BlinkPartIsCurrent(
+                   root.transform.Find(BlinkPartPaths["PeaShooter_blink2"]),
+                   blink2,
+                   headRenderer.sharedMaterial,
+                   headRenderer.sortingLayerID,
+                   Blink2Position,
+                   Blink2Scale);
+    }
+
+    private static bool BlinkPartIsCurrent(
+        Transform target,
+        Sprite sprite,
+        Material sharedMaterial,
+        int sortingLayerId,
+        Vector2 position,
+        Vector2 scale)
+    {
+        var renderer = target != null ? target.GetComponent<SpriteRenderer>() : null;
+        var spriteTransform = target != null ? target.GetComponent<SpriteTransform>() : null;
+        return target != null &&
+               !target.gameObject.activeSelf &&
+               target.gameObject.layer == target.root.gameObject.layer &&
+               renderer != null &&
+               renderer.sprite == sprite &&
+               renderer.sharedMaterial == sharedMaterial &&
+               renderer.sortingLayerID == sortingLayerId &&
+               renderer.sortingOrder == 10 &&
+               spriteTransform != null &&
+               spriteTransform.enabled &&
+               spriteTransform.position == position &&
+               spriteTransform.scale == scale &&
+               spriteTransform.skew == Vector2.zero &&
+               Mathf.Approximately(spriteTransform.brightness, 1f) &&
+               Mathf.Approximately(spriteTransform.alpha, 1f) &&
+               Mathf.Approximately(spriteTransform.alphaCoef, 1f) &&
+               spriteTransform.updatePosition;
+    }
+
+    private static T GetOrAddComponent<T>(GameObject target) where T : Component
+    {
+        var component = target.GetComponent<T>();
+        return component != null ? component : target.AddComponent<T>();
+    }
+
+    private static Transform GetOrCreatePath(Transform root, string path)
+    {
+        var current = root;
+        foreach (var segment in path.Split('/'))
+        {
+            var child = current.Find(segment);
+            if (child == null)
+            {
+                var childObject = new GameObject(segment)
+                {
+                    layer = root.gameObject.layer
+                };
+                child = childObject.transform;
+                child.SetParent(current, false);
+            }
+            current = child;
+        }
+        return current;
+    }
+
+    private static void SetLayerRecursively(GameObject target, int layer)
+    {
+        target.layer = layer;
+        foreach (Transform child in target.transform)
+        {
+            SetLayerRecursively(child.gameObject, layer);
         }
     }
 

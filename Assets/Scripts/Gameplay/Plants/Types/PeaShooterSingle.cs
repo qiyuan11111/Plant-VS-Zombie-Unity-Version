@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using PvZ.Presentation;
 using PvZ.Gameplay.Plants;
+using PvZ.Gameplay.Plants.Abilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace PvZ.Gameplay.Plants.Types
 {
 
+    [RequireComponent(typeof(Blink))]
     public class PeaShooterSingle : PlantEntity, IPointerClickHandler
     {
         private const string MouthPath = "component/basic/head/pod/mouth";
         private static readonly int Shoot = Animator.StringToHash("shoot");
+
+        [SerializeField] private Blink blink;
         // public override int sunlight => 100;
         // public override float cdTime => 0.5f;
 
@@ -71,6 +75,38 @@ namespace PvZ.Gameplay.Plants.Types
             //     GameConfigObject.BulletType.ProjectilePea);
         }
 
+        protected override void OnEnteredBoard()
+        {
+            base.OnEnteredBoard();
+            ResolveBlink().StartBlinking();
+        }
+
+        protected override void OnDestroy()
+        {
+            if (blink != null)
+            {
+                blink.StopBlinking();
+            }
+
+            base.OnDestroy();
+        }
+
+        private Blink ResolveBlink()
+        {
+            if (blink == null)
+            {
+                blink = GetComponent<Blink>();
+            }
+
+            if (blink == null)
+            {
+                throw new MissingComponentException(
+                    $"{name} requires a {nameof(Blink)} component.");
+            }
+
+            return blink;
+        }
+
         // public override void SetDetectRegions()
         // {
         //     SetDetectRegion<ZombieEntity>(new DetectZombieCallback(this), new HandDetectZombieRegion(this, "DetectZombieRegion", "DetectZombieRegion"));
@@ -121,6 +157,15 @@ namespace PvZ.Gameplay.Plants.Types
         {
         }
 
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (blink == null)
+            {
+                blink = GetComponent<Blink>();
+            }
+        }
+#endif
 
     }
 

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
+using PvZ.Gameplay.Plants.Abilities;
 using PvZ.Gameplay.Plants.Types;
 using PvZ.Presentation;
 using UnityEditor;
@@ -56,6 +57,99 @@ namespace Tests.EditMode
             Assert.That(prefab.transform.Find("component/basic/head/pod/head"), Is.Not.Null);
             Assert.That(prefab.transform.Find("component/basic/head/pod/mouth"), Is.Not.Null);
             Assert.That(prefab.transform.Find("component/basic/head/sprout"), Is.Not.Null);
+        }
+
+        [Test]
+        public void BlinkClip_UsesOpeningFlaFramesAtTwelveFps()
+        {
+            var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>($"{AnimationDirectory}/blink.anim");
+            Assert.That(clip, Is.Not.Null);
+            Assert.That(clip.frameRate, Is.EqualTo(12f));
+            Assert.That(AnimationUtility.GetAnimationClipSettings(clip).loopTime, Is.False);
+            Assert.That(AnimationUtility.GetObjectReferenceCurveBindings(clip), Is.Empty);
+            Assert.That(AnimationUtility.GetAnimationEvents(clip), Is.Empty);
+
+            const string blinkRoot = "component/basic/head/pod/head/blink";
+            AssertStepCurve(
+                clip,
+                blinkRoot + "/PeaShooter_blink1",
+                0f, 1f, 0f, 1f, 0f);
+            AssertStepCurve(
+                clip,
+                blinkRoot + "/PeaShooter_blink2",
+                0f, 0f, 1f, 0f, 0f);
+        }
+
+        [Test]
+        public void Prefab_HasHeadRelativeBlinkSpritesAndBlinkAbility()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
+            var animator = prefab.GetComponent<Animator>();
+            var shooter = prefab.GetComponent<PeaShooterSingle>();
+            var blink = prefab.GetComponent<Blink>();
+            Assert.That(shooter, Is.Not.Null);
+            Assert.That(blink, Is.Not.Null);
+
+            var shooterData = new SerializedObject(shooter);
+            var blinkData = new SerializedObject(blink);
+            Assert.That(shooterData.FindProperty("blink").objectReferenceValue, Is.SameAs(blink));
+            Assert.That(blinkData.FindProperty("animator").objectReferenceValue, Is.SameAs(animator));
+            Assert.That(blinkData.FindProperty("minimumIntervalSeconds").floatValue,
+                Is.EqualTo(2.5f).Within(0.000001f));
+            Assert.That(blinkData.FindProperty("maximumIntervalSeconds").floatValue,
+                Is.EqualTo(5.5f).Within(0.000001f));
+
+            var head = prefab.transform.Find("component/basic/head/pod/head");
+            var headTransform = head.GetComponent<SpriteTransform>();
+            var headRenderer = head.GetComponent<SpriteRenderer>();
+            Assert.That(headTransform.providesChildSpritePosition, Is.True);
+            Assert.That(headTransform.spritePosition, Is.EqualTo(headTransform.position));
+
+            var blink1 = head.Find("blink/PeaShooter_blink1");
+            var blink2 = head.Find("blink/PeaShooter_blink2");
+            AssertBlinkPart(
+                blink1,
+                "PeaShooter_blink1",
+                headRenderer,
+                new Vector2(45.325665f, 29.837154f),
+                new Vector2(55.540466f, 55.540466f));
+            AssertBlinkPart(
+                blink2,
+                "PeaShooter_blink2",
+                headRenderer,
+                new Vector2(45.2199f, 29.782415f),
+                new Vector2(55.499268f, 55.499268f));
+        }
+
+        [Test]
+        public void Controller_HasIndependentTriggeredBlinkOverlay()
+        {
+            var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(ControllerPath);
+            AssertStateMotion(controller, "PeaShooterSingle_blink", "blink", "blink");
+            Assert.That(controller.parameters.Single(parameter => parameter.name == "blink").type,
+                Is.EqualTo(AnimatorControllerParameterType.Trigger));
+
+            var layer = controller.layers.Single(candidate => candidate.name == "PeaShooterSingle_blink");
+            var idle = layer.stateMachine.defaultState;
+            var blink = FindState(controller, "PeaShooterSingle_blink", "blink");
+            Assert.That(layer.defaultWeight, Is.EqualTo(1f).Within(0.000001f));
+            Assert.That(idle.name, Is.EqualTo("blink_idle"));
+            Assert.That(idle.motion, Is.Null);
+            Assert.That(idle.writeDefaultValues, Is.False);
+            Assert.That(blink.writeDefaultValues, Is.False);
+
+            var enter = idle.transitions.Single();
+            Assert.That(enter.destinationState, Is.SameAs(blink));
+            Assert.That(enter.hasExitTime, Is.False);
+            Assert.That(enter.duration, Is.EqualTo(0f).Within(0.000001f));
+            Assert.That(enter.conditions.Single().parameter, Is.EqualTo("blink"));
+
+            var exit = blink.transitions.Single();
+            Assert.That(exit.destinationState, Is.SameAs(idle));
+            Assert.That(exit.hasExitTime, Is.True);
+            Assert.That(exit.exitTime, Is.EqualTo(1f).Within(0.000001f));
+            Assert.That(exit.duration, Is.EqualTo(0f).Within(0.000001f));
+            Assert.That(exit.conditions, Is.Empty);
         }
 
         [Test]
@@ -252,6 +346,50 @@ namespace Tests.EditMode
             {
                 Object.DestroyImmediate(instance);
             }
+        }
+
+        private static void AssertStepCurve(
+            AnimationClip clip,
+            string path,
+            params float[] expectedValues)
+        {
+            var binding = AnimationUtility.GetCurveBindings(clip)
+                .Single(candidate => candidate.path == path &&
+                                     candidate.type == typeof(GameObject) &&
+                                     candidate.propertyName == "m_IsActive");
+            var curve = AnimationUtility.GetEditorCurve(clip, binding);
+            Assert.That(curve.keys.Length, Is.EqualTo(expectedValues.Length));
+            for (var index = 0; index < expectedValues.Length; index++)
+            {
+                Assert.That(curve.keys[index].time,
+                    Is.EqualTo(index / 12f).Within(0.000001f));
+                Assert.That(curve.keys[index].value,
+                    Is.EqualTo(expectedValues[index]).Within(0.000001f));
+                Assert.That(AnimationUtility.GetKeyLeftTangentMode(curve, index),
+                    Is.EqualTo(AnimationUtility.TangentMode.Constant));
+                Assert.That(AnimationUtility.GetKeyRightTangentMode(curve, index),
+                    Is.EqualTo(AnimationUtility.TangentMode.Constant));
+            }
+        }
+
+        private static void AssertBlinkPart(
+            Transform target,
+            string expectedSpriteName,
+            SpriteRenderer headRenderer,
+            Vector2 expectedPosition,
+            Vector2 expectedScale)
+        {
+            Assert.That(target, Is.Not.Null);
+            Assert.That(target.gameObject.activeSelf, Is.False);
+            var renderer = target.GetComponent<SpriteRenderer>();
+            var spriteTransform = target.GetComponent<SpriteTransform>();
+            Assert.That(renderer.sprite.name, Is.EqualTo(expectedSpriteName));
+            Assert.That(renderer.sharedMaterial, Is.SameAs(headRenderer.sharedMaterial));
+            Assert.That(renderer.sortingLayerID, Is.EqualTo(headRenderer.sortingLayerID));
+            Assert.That(renderer.sortingOrder, Is.EqualTo(10));
+            Assert.That(spriteTransform.position, Is.EqualTo(expectedPosition));
+            Assert.That(spriteTransform.scale, Is.EqualTo(expectedScale));
+            Assert.That(spriteTransform.updatePosition, Is.True);
         }
 
         private static void AssertFirstCurveValue(
