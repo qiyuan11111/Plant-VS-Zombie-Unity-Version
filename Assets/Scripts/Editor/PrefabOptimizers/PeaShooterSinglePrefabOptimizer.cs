@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using LitJson;
+using PvZ.Gameplay.Plants.Types;
 using PvZ.Presentation;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -17,8 +18,11 @@ public static class PeaShooterSinglePrefabOptimizer
     private const string HeadIdleClipPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/head_idle.anim";
     private const string ShootClipPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/shoot.anim";
     private const string ControllerPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/PeaShooterSingle.controller";
-    private const string OptimizationVersion = "pea-shooter-single-animation-v2-linear-xml-curves";
+    private const string OptimizationVersion = "pea-shooter-single-animation-v7-weighted-shoot-overlay";
     private const float FrameRate = 12f;
+    private const float IdleStateSpeed = 1.4f;
+    private const float ShootStateSpeed = 2.8f;
+    private const float SourceShootDelaySeconds = 0.32f;
 
     private static readonly Dictionary<string, string> PartPaths = new()
     {
@@ -92,7 +96,7 @@ public static class PeaShooterSinglePrefabOptimizer
         {
             new AnimationEvent
             {
-                time = 1f,
+                time = SourceShootDelaySeconds * ShootStateSpeed,
                 functionName = "ShootProjectilePea"
             }
         });
@@ -133,7 +137,12 @@ public static class PeaShooterSinglePrefabOptimizer
 
         var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
         var animator = prefab != null ? prefab.GetComponent<Animator>() : null;
+        var head = prefab != null ? prefab.transform.Find("component/basic/head") : null;
+        var headTransform = head != null ? head.GetComponent<SpriteTransform>() : null;
+        var headAttachmentBasePosition = GetHeadAttachmentBasePosition(idleClip);
         return animator != null && animator.runtimeAnimatorController == controller &&
+               headTransform != null && headTransform.providesChildSpritePosition &&
+               headTransform.spritePosition == headAttachmentBasePosition &&
                PartPaths.Values.All(path => prefab.transform.Find(path) != null) &&
                FirstFrameMatchesPrefab(prefab.transform, idleClip) &&
                FirstFrameMatchesPrefab(prefab.transform, headIdleClip);
@@ -274,7 +283,7 @@ public static class PeaShooterSinglePrefabOptimizer
         var events = AnimationUtility.GetAnimationEvents(clip);
         return expectsShootEvent
             ? events.Length == 1 && events[0].functionName == "ShootProjectilePea" &&
-              Mathf.Abs(events[0].time - 1f) <= 0.000001f
+              Mathf.Abs(events[0].time - SourceShootDelaySeconds * ShootStateSpeed) <= 0.000001f
             : events.Length == 0;
     }
 
@@ -290,9 +299,10 @@ public static class PeaShooterSinglePrefabOptimizer
         }
 
         EnsureTrigger(controller, "shoot");
-        ConfigureDefaultState(controller, "PeaShooterSingle", "idle", idleClip);
-        ConfigureDefaultState(controller, "PeaShooterSingle_head", "head_idle", headIdleClip);
-        ConfigureShootLayer(controller, shootClip);
+        ConfigureDefaultState(controller, "PeaShooterSingle", "idle", idleClip, IdleStateSpeed);
+        ConfigureDefaultState(controller, "PeaShooterSingle_head", "head_idle", headIdleClip, IdleStateSpeed);
+        RemoveShootStateFromHeadIdleLayer(controller);
+        ConfigureShootOverlayLayer(controller, shootClip);
         EditorUtility.SetDirty(controller);
         return controller;
     }
@@ -320,57 +330,113 @@ public static class PeaShooterSinglePrefabOptimizer
         AnimatorController controller,
         string layerName,
         string stateName,
-        AnimationClip clip)
+        AnimationClip clip,
+        float speed)
     {
         var layer = GetOrCreateLayer(controller, layerName);
         var state = GetOrCreateState(layer.stateMachine, stateName);
         state.motion = clip;
+        state.speed = speed;
+        state.writeDefaultValues = false;
         layer.stateMachine.defaultState = state;
         SaveLayer(controller, layer);
         EditorUtility.SetDirty(state);
         EditorUtility.SetDirty(layer.stateMachine);
     }
 
-    private static void ConfigureShootLayer(AnimatorController controller, AnimationClip shootClip)
+    private static void RemoveShootStateFromHeadIdleLayer(AnimatorController controller)
     {
-        var layer = GetOrCreateLayer(controller, "PeaShooterSingle_head_shoot");
+        var layer = GetOrCreateLayer(controller, "PeaShooterSingle_head");
         layer.defaultWeight = 1f;
         var stateMachine = layer.stateMachine;
-        var shootState = GetOrCreateState(stateMachine, "shoot");
-        shootState.motion = shootClip;
-
         var idleState = stateMachine.defaultState;
-        if (idleState == null || idleState == shootState)
+        if (idleState != null)
         {
-            idleState = GetOrCreateState(stateMachine, "shoot_idle");
-            stateMachine.defaultState = idleState;
+            foreach (AnimatorStateTransition transition in idleState.transitions)
+            {
+                idleState.RemoveTransition(transition);
+            }
         }
 
-        var hasEnterTransition = idleState.transitions.Any(transition =>
-            transition.destinationState == shootState &&
-            transition.conditions.Any(condition => condition.parameter == "shoot"));
-        if (!hasEnterTransition)
+        foreach (AnimatorState shootState in stateMachine.states
+                     .Select(childState => childState.state)
+                     .Where(state => state.name == "shoot")
+                     .ToArray())
         {
-            var transition = idleState.AddTransition(shootState);
-            transition.duration = 0.25f;
-            transition.hasExitTime = false;
-            transition.canTransitionToSelf = false;
-            transition.AddCondition(AnimatorConditionMode.If, 0f, "shoot");
-        }
-
-        if (!shootState.transitions.Any(transition => transition.destinationState == idleState))
-        {
-            var transition = shootState.AddTransition(idleState);
-            transition.duration = 0.25f;
-            transition.exitTime = 0.875f;
-            transition.hasExitTime = true;
-            transition.canTransitionToSelf = false;
+            stateMachine.RemoveState(shootState);
         }
 
         SaveLayer(controller, layer);
         EditorUtility.SetDirty(idleState);
+        EditorUtility.SetDirty(stateMachine);
+    }
+
+    private static void ConfigureShootOverlayLayer(
+        AnimatorController controller,
+        AnimationClip shootClip)
+    {
+        var layer = GetOrCreateLayer(controller, "PeaShooterSingle_head_shoot");
+        layer.defaultWeight = 0f;
+        var stateMachine = layer.stateMachine;
+
+        var inactiveState = GetOrCreateState(stateMachine, "shoot_idle");
+        inactiveState.motion = null;
+        inactiveState.speed = 1f;
+        inactiveState.writeDefaultValues = false;
+        stateMachine.defaultState = inactiveState;
+
+        var shootState = GetOrCreateState(stateMachine, "shoot");
+        shootState.motion = shootClip;
+        shootState.speed = ShootStateSpeed;
+        shootState.writeDefaultValues = false;
+        if (!shootState.behaviours.OfType<PeaShooterShootOverlayStateBehaviour>().Any())
+        {
+            shootState.AddStateMachineBehaviour<PeaShooterShootOverlayStateBehaviour>();
+        }
+
+        var enterTransition = inactiveState.transitions.FirstOrDefault(transition =>
+            transition.destinationState == shootState &&
+            transition.conditions.Length == 1 &&
+            transition.conditions[0].parameter == "shoot");
+        if (enterTransition == null)
+        {
+            enterTransition = inactiveState.AddTransition(shootState);
+            enterTransition.AddCondition(AnimatorConditionMode.If, 0f, "shoot");
+        }
+        foreach (AnimatorStateTransition transition in inactiveState.transitions)
+        {
+            if (transition != enterTransition) inactiveState.RemoveTransition(transition);
+        }
+        enterTransition.duration = 0f;
+        enterTransition.hasFixedDuration = true;
+        enterTransition.hasExitTime = false;
+        enterTransition.offset = 0f;
+        enterTransition.canTransitionToSelf = false;
+
+        foreach (AnimatorStateTransition transition in shootState.transitions)
+        {
+            shootState.RemoveTransition(transition);
+        }
+
+        SaveLayer(controller, layer);
+        MoveLayerToLast(controller, layer.stateMachine);
+        EditorUtility.SetDirty(inactiveState);
         EditorUtility.SetDirty(shootState);
         EditorUtility.SetDirty(stateMachine);
+    }
+
+    private static void MoveLayerToLast(
+        AnimatorController controller,
+        AnimatorStateMachine stateMachine)
+    {
+        var layers = controller.layers.ToList();
+        int index = layers.FindIndex(layer => layer.stateMachine == stateMachine);
+        if (index < 0 || index == layers.Count - 1) return;
+
+        var layer = layers[index];
+        layers.RemoveAt(index);
+        layers.Add(layer);
+        controller.layers = layers.ToArray();
     }
 
     private static AnimatorControllerLayer GetOrCreateLayer(AnimatorController controller, string layerName)
@@ -433,27 +499,71 @@ public static class PeaShooterSinglePrefabOptimizer
         AnimationClip headIdleClip,
         AnimationClip shootClip)
     {
+        var bodyIdleState = FindState(controller, "PeaShooterSingle", "idle");
+        var headIdleState = FindState(controller, "PeaShooterSingle_head", "head_idle");
         if (!StateUsesClip(controller, "PeaShooterSingle", "idle", idleClip) ||
             !StateUsesClip(controller, "PeaShooterSingle_head", "head_idle", headIdleClip) ||
             !StateUsesClip(controller, "PeaShooterSingle_head_shoot", "shoot", shootClip) ||
+            bodyIdleState == null || bodyIdleState.writeDefaultValues ||
+            !Mathf.Approximately(bodyIdleState.speed, IdleStateSpeed) ||
+            headIdleState == null || headIdleState.writeDefaultValues ||
+            !Mathf.Approximately(headIdleState.speed, IdleStateSpeed) ||
             !controller.parameters.Any(parameter =>
                 parameter.name == "shoot" && parameter.type == AnimatorControllerParameterType.Trigger))
         {
             return false;
         }
 
+        var headLayer = controller.layers.SingleOrDefault(layer => layer.name == "PeaShooterSingle_head");
+        if (headLayer == null || headLayer.stateMachine.defaultState != headIdleState ||
+            headIdleState.transitions.Length != 0 ||
+            headLayer.stateMachine.states.Any(childState => childState.state.name == "shoot"))
+        {
+            return false;
+        }
+
         var shootLayer = controller.layers.SingleOrDefault(layer => layer.name == "PeaShooterSingle_head_shoot");
-        if (shootLayer == null) return false;
-        var idleState = shootLayer.stateMachine.defaultState;
+        if (shootLayer == null ||
+            controller.layers[controller.layers.Length - 1].stateMachine != shootLayer.stateMachine ||
+            !Mathf.Approximately(shootLayer.defaultWeight, 0f))
+        {
+            return false;
+        }
+
+        var inactiveState = shootLayer.stateMachine.defaultState;
         var shootState = shootLayer.stateMachine.states
             .Select(childState => childState.state)
             .SingleOrDefault(state => state.name == "shoot");
-        if (idleState == null || shootState == null || idleState == shootState) return false;
+        if (inactiveState == null || inactiveState.name != "shoot_idle" ||
+            inactiveState.motion != null || inactiveState.writeDefaultValues ||
+            shootState == null || shootState == inactiveState || shootState.writeDefaultValues ||
+            !Mathf.Approximately(shootState.speed, ShootStateSpeed) ||
+            shootState.behaviours.OfType<PeaShooterShootOverlayStateBehaviour>().Count() != 1)
+        {
+            return false;
+        }
 
-        return idleState.transitions.Any(transition =>
-                   transition.destinationState == shootState &&
-                   transition.conditions.Any(condition => condition.parameter == "shoot")) &&
-               shootState.transitions.Any(transition => transition.destinationState == idleState);
+        var enterTransition = inactiveState.transitions.SingleOrDefault();
+        return enterTransition != null && enterTransition.destinationState == shootState &&
+               !enterTransition.hasExitTime && enterTransition.hasFixedDuration &&
+               Mathf.Approximately(enterTransition.duration, 0f) &&
+               enterTransition.conditions.Length == 1 &&
+               enterTransition.conditions[0].parameter == "shoot" &&
+               enterTransition.conditions[0].mode == AnimatorConditionMode.If &&
+               shootState.transitions.Length == 0;
+    }
+
+    private static AnimatorState FindState(
+        AnimatorController controller,
+        string layerName,
+        string stateName)
+    {
+        if (controller == null) return null;
+        return controller.layers
+            .Where(layer => layer.name == layerName)
+            .SelectMany(layer => layer.stateMachine.states)
+            .Select(childState => childState.state)
+            .SingleOrDefault(state => state.name == stateName);
     }
 
     private static bool FirstFrameMatchesPrefab(Transform root, AnimationClip clip)
@@ -479,6 +589,21 @@ public static class PeaShooterSinglePrefabOptimizer
             if (Mathf.Abs(actual - expected) > 0.000001f) return false;
         }
         return true;
+    }
+
+    private static Vector2 GetHeadAttachmentBasePosition(AnimationClip idleClip)
+    {
+        const string headPath = "component/basic/head";
+        var xBinding = EditorCurveBinding.FloatCurve(headPath, typeof(SpriteTransform), "position.x");
+        var yBinding = EditorCurveBinding.FloatCurve(headPath, typeof(SpriteTransform), "position.y");
+        var xCurve = AnimationUtility.GetEditorCurve(idleClip, xBinding);
+        var yCurve = AnimationUtility.GetEditorCurve(idleClip, yBinding);
+        if (xCurve == null || yCurve == null)
+        {
+            throw new InvalidDataException("PeaShooterSingle idle animation has no anim_stem position curves.");
+        }
+
+        return new Vector2(xCurve.Evaluate(0f), yCurve.Evaluate(0f));
     }
 
     private static void ConfigurePrefab(
@@ -509,6 +634,16 @@ public static class PeaShooterSinglePrefabOptimizer
             if (animator.applyRootMotion)
             {
                 animator.applyRootMotion = false;
+                changed = true;
+            }
+            var headTransform = root.transform.Find("component/basic/head").GetComponent<SpriteTransform>();
+            var headAttachmentBasePosition = GetHeadAttachmentBasePosition(idleClip);
+            if (!headTransform.providesChildSpritePosition ||
+                headTransform.spritePosition != headAttachmentBasePosition)
+            {
+                headTransform.providesChildSpritePosition = true;
+                headTransform.spritePosition = headAttachmentBasePosition;
+                EditorUtility.SetDirty(headTransform);
                 changed = true;
             }
             changed |= ApplyFirstFrame(root.transform, idleClip);
