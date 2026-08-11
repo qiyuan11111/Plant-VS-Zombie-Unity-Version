@@ -18,7 +18,7 @@ public static class PeaShooterSinglePrefabOptimizer
     private const string HeadIdleClipPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/head_idle.anim";
     private const string ShootClipPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/shoot.anim";
     private const string ControllerPath = "Assets/Prefab/Plant/PeaShooterSingle/Animation/PeaShooterSingle.controller";
-    private const string OptimizationVersion = "pea-shooter-single-animation-v7-weighted-shoot-overlay";
+    private const string OptimizationVersion = "pea-shooter-single-animation-v8-normalized-source-hash";
     private const float FrameRate = 12f;
     private const float IdleStateSpeed = 1.4f;
     private const float ShootStateSpeed = 2.8f;
@@ -166,8 +166,21 @@ public static class PeaShooterSinglePrefabOptimizer
 
     private static string BuildOptimizationMarker()
     {
-        var sourceHash = Hash128.Compute(File.ReadAllText(GetAbsoluteSourcePath()));
+        var sourceHash = ComputeSourceHash(File.ReadAllText(GetAbsoluteSourcePath()));
         return $"{OptimizationVersion}-{sourceHash}";
+    }
+
+    public static Hash128 ComputeSourceHash(string sourceText)
+    {
+        if (sourceText == null) throw new ArgumentNullException(nameof(sourceText));
+
+        // Git may check the JSON out as CRLF on Windows and LF on other
+        // platforms. Line endings do not change the animation data, so they
+        // must not make the generated prefab look stale.
+        var normalizedSource = sourceText
+            .Replace("\r\n", "\n")
+            .Replace('\r', '\n');
+        return Hash128.Compute(normalizedSource);
     }
 
     private static AnimationClip GetOrCreateClip(string path, string clipName)
