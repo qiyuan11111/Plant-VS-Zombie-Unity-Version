@@ -16,6 +16,8 @@ namespace Tests.EditMode
         private const string PrefabPath = "Assets/Prefab/Plant/PeaShooterSingle/PeaShooterSingle.prefab";
         private const string AnimationDirectory = "Assets/Prefab/Plant/PeaShooterSingle/Animation";
         private const string ControllerPath = AnimationDirectory + "/PeaShooterSingle.controller";
+        private const string BlinkSpriteDirectory =
+            "Assets/Prefab/Plant/PeaShooterSingle/Sprite";
 
         [Test]
         public void SourceHash_IsIndependentOfLineEndings()
@@ -111,14 +113,30 @@ namespace Tests.EditMode
                 blink1,
                 "PeaShooter_blink1",
                 headRenderer,
-                new Vector2(45.325665f, 29.837154f),
-                new Vector2(55.540466f, 55.540466f));
+                new Vector2(45.325665f, 30.587154f),
+                new Vector2(100f, 100f));
             AssertBlinkPart(
                 blink2,
                 "PeaShooter_blink2",
                 headRenderer,
-                new Vector2(45.2199f, 29.782415f),
-                new Vector2(55.499268f, 55.499268f));
+                new Vector2(45.2199f, 30.532415f),
+                new Vector2(100f, 100f));
+        }
+
+        [Test]
+        public void BlinkSprites_UseImageCenterAsUnityPivot()
+        {
+            foreach (var spriteName in new[] { "PeaShooter_blink1", "PeaShooter_blink2" })
+            {
+                var path = $"{BlinkSpriteDirectory}/{spriteName}.png";
+                var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+                Assert.That(importer, Is.Not.Null, path);
+                Assert.That(sprite, Is.Not.Null, path);
+                Assert.That(importer.spritePixelsPerUnit, Is.EqualTo(1f).Within(0.000001f), path);
+                Assert.That(sprite.pivot.x, Is.EqualTo(sprite.rect.width * 0.5f).Within(0.000001f), path);
+                Assert.That(sprite.pivot.y, Is.EqualTo(sprite.rect.height * 0.5f).Within(0.000001f), path);
+            }
         }
 
         [Test]
@@ -461,6 +479,11 @@ namespace Tests.EditMode
             Assert.That(spriteTransform.position, Is.EqualTo(expectedPosition));
             Assert.That(spriteTransform.scale, Is.EqualTo(expectedScale));
             Assert.That(spriteTransform.updatePosition, Is.True);
+            Assert.That(target.GetComponent<CenterInheritedSpritePivot>(), Is.Not.Null);
+            spriteTransform.Apply();
+            var renderedCenter = renderer.bounds.center;
+            Assert.That(target.position.x, Is.EqualTo(renderedCenter.x).Within(0.0001f));
+            Assert.That(target.position.y, Is.EqualTo(renderedCenter.y).Within(0.0001f));
         }
 
         private static void AssertFirstCurveValue(

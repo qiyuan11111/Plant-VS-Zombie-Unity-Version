@@ -87,6 +87,7 @@ namespace PvZ.Presentation
         private uint _observedParentHierarchyVersion;
         private uint _hierarchyVersion;
         private Affine2D _relativeToHierarchyParent = Affine2D.Identity;
+        private Vector3 _sourceLocalPosition;
         private Affine2D _localAffine = Affine2D.Identity;
         private Affine2D _rendererAffine = Affine2D.Identity;
         private Affine2D _descendantAffine = Affine2D.Identity;
@@ -422,6 +423,12 @@ namespace PvZ.Presentation
             ResolvePositionReference();
             var targetPosition = ResolveLocalPosition();
 
+            if (HasCenteredInheritedPivot())
+            {
+                _sourceLocalPosition = targetPosition;
+                return;
+            }
+
             if (_cachedTransform.localPosition != targetPosition)
             {
                 _cachedTransform.localPosition = targetPosition;
@@ -462,6 +469,50 @@ namespace PvZ.Presentation
                 : _hierarchyParent._hierarchyVersion;
             var parentHasTransform = _hierarchyParent != null &&
                                      _hierarchyParent._hasDescendantTransform;
+
+            if (HasCenteredInheritedPivot())
+            {
+                var inheritedAffine = parentHasTransform
+                    ? _hierarchyParent._descendantAffine
+                    : Affine2D.Identity;
+                var centeredPosition = inheritedAffine.TransformPoint(_sourceLocalPosition);
+                if (_cachedTransform.localPosition != centeredPosition)
+                {
+                    _cachedTransform.localPosition = centeredPosition;
+                }
+
+                var centeredRendererAffine = inheritedAffine.WithoutTranslation();
+                var centeredLocalChanged = !_hierarchyStateInitialized ||
+                                           _cachedHierarchySkew != skew ||
+                                           _cachedHierarchyScale != scale;
+                if (centeredLocalChanged)
+                {
+                    _localAffine = Affine2D.CreateSkew(skew) * Affine2D.CreateScale(scale);
+                    _cachedHierarchySkew = skew;
+                    _cachedHierarchyScale = scale;
+                }
+
+                var centeredDescendantAffine = centeredRendererAffine * _localAffine;
+                var centeredStateChanged = !_hierarchyStateInitialized ||
+                                           _hasDescendantTransform !=
+                                           (parentHasTransform || _localAffine != Affine2D.Identity) ||
+                                           _descendantAffine != centeredDescendantAffine;
+                _rendererAffine = centeredRendererAffine;
+                _descendantAffine = centeredDescendantAffine;
+                _hasDescendantTransform = parentHasTransform || _localAffine != Affine2D.Identity;
+                _observedParentHierarchyVersion = parentVersion;
+                _hierarchyStateInitialized = true;
+                if (centeredStateChanged)
+                {
+                    unchecked
+                    {
+                        _hierarchyVersion++;
+                        if (_hierarchyVersion == 0u) _hierarchyVersion = 1u;
+                    }
+                }
+                return;
+            }
+
             var parentChanged = !_hierarchyStateInitialized ||
                                 _observedParentHierarchyVersion != parentVersion;
             var relativeChanged = parentHasTransform && RefreshRelativeTransform();
@@ -575,6 +626,11 @@ namespace PvZ.Presentation
             return true;
         }
 
+        private bool HasCenteredInheritedPivot()
+        {
+            return TryGetComponent<CenterInheritedSpritePivot>(out _);
+        }
+
         private struct RelativeTransformState
         {
             public Transform Transform;
@@ -633,6 +689,21 @@ namespace PvZ.Presentation
                 return new Affine2D(
                     Mathf.Cos(skewY), -Mathf.Sin(skewX), 0f,
                     Mathf.Sin(skewY), Mathf.Cos(skewX), 0f);
+            }
+
+            public Vector3 TransformPoint(Vector3 point)
+            {
+                return new Vector3(
+                    _m00 * point.x + _m01 * point.y + _m02,
+                    _m10 * point.x + _m11 * point.y + _m12,
+                    point.z);
+            }
+
+            public Affine2D WithoutTranslation()
+            {
+                return new Affine2D(
+                    _m00, _m01, 0f,
+                    _m10, _m11, 0f);
             }
 
             public bool TryInverse(out Affine2D inverse)

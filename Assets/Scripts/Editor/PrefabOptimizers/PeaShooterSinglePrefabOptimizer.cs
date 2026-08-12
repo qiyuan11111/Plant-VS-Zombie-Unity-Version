@@ -23,7 +23,7 @@ public static class PeaShooterSinglePrefabOptimizer
     private const string Blink1SpritePath = "Assets/Prefab/Plant/PeaShooterSingle/Sprite/PeaShooter_blink1.png";
     private const string Blink2SpritePath = "Assets/Prefab/Plant/PeaShooterSingle/Sprite/PeaShooter_blink2.png";
     private const string HeadImagePath = "component/basic/head/pod/head";
-    private const string OptimizationVersion = "pea-shooter-single-animation-v9-source-blink-overlay-normalized-source-hash";
+    private const string OptimizationVersion = "pea-shooter-single-animation-v11-centered-blink-pivots";
     private const float FrameRate = 12f;
     private const float IdleStateSpeed = 1.4f;
     private const float ShootStateSpeed = 2.8f;
@@ -54,10 +54,12 @@ public static class PeaShooterSinglePrefabOptimizer
     // PeaShooterSingle1.fla, anim_blink frames 1-3. The bitmap center is
     // derived from each 28x23 source image because Animate positions symbols
     // from their top-left origin while Unity imports these sprites centered.
-    private static readonly Vector2 Blink1Position = new(45.325665f, 29.837154f);
-    private static readonly Vector2 Blink2Position = new(45.2199f, 29.782415f);
-    private static readonly Vector2 Blink1Scale = new(55.540466f, 55.540466f);
-    private static readonly Vector2 Blink2Scale = new(55.499268f, 55.499268f);
+    // These parts are children of anim_face and inherit its source scale, so
+    // their own local scale is identity rather than applying 55% a second time.
+    private static readonly Vector2 Blink1Position = new(45.325665f, 30.587154f);
+    private static readonly Vector2 Blink2Position = new(45.2199f, 30.532415f);
+    private static readonly Vector2 Blink1Scale = new(100f, 100f);
+    private static readonly Vector2 Blink2Scale = new(100f, 100f);
 
     [InitializeOnLoadMethod]
     private static void SchedulePendingOptimization()
@@ -142,6 +144,12 @@ public static class PeaShooterSinglePrefabOptimizer
 
     private static bool IsCurrent(JsonData source)
     {
+        if (!SpriteImportSettingsAreCurrent(Blink1SpritePath) ||
+            !SpriteImportSettingsAreCurrent(Blink2SpritePath))
+        {
+            return false;
+        }
+
         var importer = AssetImporter.GetAtPath(PrefabPath);
         if (importer == null || importer.userData != BuildOptimizationMarker()) return false;
 
@@ -220,18 +228,10 @@ public static class PeaShooterSinglePrefabOptimizer
             throw new MissingReferenceException($"Missing PeaShooter blink texture: {assetPath}");
         }
 
+        if (SpriteImportSettingsAreCurrent(importer)) return;
+
         var settings = new TextureImporterSettings();
         importer.ReadTextureSettings(settings);
-        var changed = importer.textureType != TextureImporterType.Sprite ||
-                      importer.spriteImportMode != SpriteImportMode.Single ||
-                      !Mathf.Approximately(importer.spritePixelsPerUnit, 1f) ||
-                      importer.mipmapEnabled ||
-                      !importer.alphaIsTransparency ||
-                      settings.spriteAlignment != (int)SpriteAlignment.Center ||
-                      settings.spritePivot != new Vector2(0.5f, 0.5f) ||
-                      settings.filterMode != FilterMode.Point;
-        if (!changed) return;
-
         importer.textureType = TextureImporterType.Sprite;
         importer.spriteImportMode = SpriteImportMode.Single;
         importer.spritePixelsPerUnit = 1f;
@@ -239,9 +239,32 @@ public static class PeaShooterSinglePrefabOptimizer
         importer.alphaIsTransparency = true;
         settings.spriteAlignment = (int)SpriteAlignment.Center;
         settings.spritePivot = new Vector2(0.5f, 0.5f);
+        settings.spritePixelsPerUnit = 1f;
         settings.filterMode = FilterMode.Point;
         importer.SetTextureSettings(settings);
         importer.SaveAndReimport();
+    }
+
+    private static bool SpriteImportSettingsAreCurrent(string assetPath)
+    {
+        return SpriteImportSettingsAreCurrent(
+            AssetImporter.GetAtPath(assetPath) as TextureImporter);
+    }
+
+    private static bool SpriteImportSettingsAreCurrent(TextureImporter importer)
+    {
+        if (importer == null) return false;
+
+        var settings = new TextureImporterSettings();
+        importer.ReadTextureSettings(settings);
+        return importer.textureType == TextureImporterType.Sprite &&
+               importer.spriteImportMode == SpriteImportMode.Single &&
+               Mathf.Approximately(importer.spritePixelsPerUnit, 1f) &&
+               !importer.mipmapEnabled &&
+               importer.alphaIsTransparency &&
+               settings.spriteAlignment == (int)SpriteAlignment.Center &&
+               settings.spritePivot == new Vector2(0.5f, 0.5f) &&
+               settings.filterMode == FilterMode.Point;
     }
 
     private static AnimationClip GetOrCreateClip(string path, string clipName)
@@ -1000,6 +1023,7 @@ public static class PeaShooterSinglePrefabOptimizer
         renderer.sortingOrder = 10;
 
         var spriteTransform = GetOrAddComponent<SpriteTransform>(target.gameObject);
+        GetOrAddComponent<CenterInheritedSpritePivot>(target.gameObject);
         spriteTransform.enabled = true;
         spriteTransform.position = position;
         spriteTransform.scale = scale;
@@ -1083,6 +1107,7 @@ public static class PeaShooterSinglePrefabOptimizer
                renderer.sortingLayerID == sortingLayerId &&
                renderer.sortingOrder == 10 &&
                spriteTransform != null &&
+               target.GetComponent<CenterInheritedSpritePivot>() != null &&
                spriteTransform.enabled &&
                spriteTransform.position == position &&
                spriteTransform.scale == scale &&
