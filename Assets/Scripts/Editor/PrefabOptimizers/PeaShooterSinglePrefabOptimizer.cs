@@ -530,7 +530,7 @@ public static class PeaShooterSinglePrefabOptimizer
         AnimationClip blinkClip)
     {
         var layer = GetOrCreateLayer(controller, "PeaShooterSingle_blink");
-        layer.defaultWeight = 1f;
+        layer.defaultWeight = 0f;
         var stateMachine = layer.stateMachine;
 
         var inactiveState = GetOrCreateState(stateMachine, "blink_idle");
@@ -543,6 +543,17 @@ public static class PeaShooterSinglePrefabOptimizer
         blinkState.motion = blinkClip;
         blinkState.speed = 1f;
         blinkState.writeDefaultValues = false;
+        foreach (var behaviour in blinkState.behaviours
+                     .Where(item => item is PeaShooterBlinkOverlayStateBehaviour)
+                     .Skip(1)
+                     .ToArray())
+        {
+            UnityEngine.Object.DestroyImmediate(behaviour, true);
+        }
+        if (!blinkState.behaviours.OfType<PeaShooterBlinkOverlayStateBehaviour>().Any())
+        {
+            blinkState.AddStateMachineBehaviour<PeaShooterBlinkOverlayStateBehaviour>();
+        }
 
         ClearTransitions(inactiveState);
         ClearTransitions(blinkState);
@@ -771,7 +782,7 @@ public static class PeaShooterSinglePrefabOptimizer
     {
         var layer = controller.layers.SingleOrDefault(
             candidate => candidate.name == "PeaShooterSingle_blink");
-        if (layer == null || !Mathf.Approximately(layer.defaultWeight, 1f))
+        if (layer == null || !Mathf.Approximately(layer.defaultWeight, 0f))
         {
             return false;
         }
@@ -783,7 +794,8 @@ public static class PeaShooterSinglePrefabOptimizer
         if (inactiveState == null || inactiveState.name != "blink_idle" ||
             inactiveState.motion != null || inactiveState.writeDefaultValues ||
             blinkState == null || blinkState.motion != blinkClip ||
-            blinkState.writeDefaultValues || !Mathf.Approximately(blinkState.speed, 1f))
+            blinkState.writeDefaultValues || !Mathf.Approximately(blinkState.speed, 1f) ||
+            blinkState.behaviours.OfType<PeaShooterBlinkOverlayStateBehaviour>().Count() != 1)
         {
             return false;
         }

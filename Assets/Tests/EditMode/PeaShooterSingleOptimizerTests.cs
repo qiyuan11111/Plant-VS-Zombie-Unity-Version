@@ -132,11 +132,14 @@ namespace Tests.EditMode
             var layer = controller.layers.Single(candidate => candidate.name == "PeaShooterSingle_blink");
             var idle = layer.stateMachine.defaultState;
             var blink = FindState(controller, "PeaShooterSingle_blink", "blink");
-            Assert.That(layer.defaultWeight, Is.EqualTo(1f).Within(0.000001f));
+            Assert.That(layer.defaultWeight, Is.EqualTo(0f).Within(0.000001f));
             Assert.That(idle.name, Is.EqualTo("blink_idle"));
             Assert.That(idle.motion, Is.Null);
             Assert.That(idle.writeDefaultValues, Is.False);
             Assert.That(blink.writeDefaultValues, Is.False);
+            Assert.That(blink.behaviours
+                    .OfType<PeaShooterBlinkOverlayStateBehaviour>().Count(),
+                Is.EqualTo(1));
 
             var enter = idle.transitions.Single();
             Assert.That(enter.destinationState, Is.SameAs(blink));
@@ -150,6 +153,74 @@ namespace Tests.EditMode
             Assert.That(exit.exitTime, Is.EqualTo(1f).Within(0.000001f));
             Assert.That(exit.duration, Is.EqualTo(0f).Within(0.000001f));
             Assert.That(exit.conditions, Is.Empty);
+        }
+
+        [Test]
+        public void BlinkTrigger_DoesNotPauseBodyOrHeadIdleLayers()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
+            var instance = Object.Instantiate(prefab);
+            try
+            {
+                var animator = instance.GetComponent<Animator>();
+                animator.enabled = true;
+                animator.Rebind();
+                animator.Update(0f);
+
+                int bodyLayer = animator.GetLayerIndex("PeaShooterSingle");
+                int headLayer = animator.GetLayerIndex("PeaShooterSingle_head");
+                int blinkLayer = animator.GetLayerIndex("PeaShooterSingle_blink");
+                int blinkState = Animator.StringToHash("blink");
+                int blinkIdleState = Animator.StringToHash("blink_idle");
+                var stalkTop = instance.transform.Find("component/basic/stalk/top")
+                    .GetComponent<SpriteTransform>();
+                var headPod = instance.transform.Find("component/basic/head/pod/head")
+                    .GetComponent<SpriteTransform>();
+
+                animator.Update(0.2f);
+                float bodyTimeBefore = animator.GetCurrentAnimatorStateInfo(bodyLayer).normalizedTime;
+                float headTimeBefore = animator.GetCurrentAnimatorStateInfo(headLayer).normalizedTime;
+                var poseBefore = new Vector2(stalkTop.position.x, headPod.position.y);
+
+                animator.SetTrigger("blink");
+                animator.Update(0.01f);
+                animator.Update(0.01f);
+
+                Assert.That(
+                    animator.GetCurrentAnimatorStateInfo(blinkLayer).shortNameHash == blinkState ||
+                    animator.GetNextAnimatorStateInfo(blinkLayer).shortNameHash == blinkState,
+                    Is.True);
+                Assert.That(animator.GetLayerWeight(blinkLayer), Is.EqualTo(1f).Within(0.000001f));
+
+                // The prefab's existing shoot clip can emit its projectile event while
+                // this isolated animation test has no gameplay dependencies attached.
+                LogAssert.Expect(LogType.Exception, new Regex("NullReferenceException"));
+                animator.Update(0.15f);
+                Assert.That(animator.GetCurrentAnimatorStateInfo(bodyLayer).normalizedTime,
+                    Is.GreaterThan(bodyTimeBefore));
+                Assert.That(animator.GetCurrentAnimatorStateInfo(headLayer).normalizedTime,
+                    Is.GreaterThan(headTimeBefore));
+                var poseDuringBlink = new Vector2(stalkTop.position.x, headPod.position.y);
+                Assert.That((poseDuringBlink - poseBefore).sqrMagnitude,
+                    Is.GreaterThan(0.000001f),
+                    "Blinking must not hold the evaluated idle pose.");
+
+                animator.Update(0.3f);
+                Assert.That(animator.GetCurrentAnimatorStateInfo(blinkLayer).shortNameHash,
+                    Is.EqualTo(blinkIdleState));
+                Assert.That(animator.GetLayerWeight(blinkLayer), Is.EqualTo(0f).Within(0.000001f));
+
+                var poseAfterBlink = new Vector2(stalkTop.position.x, headPod.position.y);
+                animator.Update(0.15f);
+                var poseLater = new Vector2(stalkTop.position.x, headPod.position.y);
+                Assert.That((poseLater - poseAfterBlink).sqrMagnitude,
+                    Is.GreaterThan(0.000001f),
+                    "Idle animation must keep moving after the blink overlay returns to idle.");
+            }
+            finally
+            {
+                Object.DestroyImmediate(instance);
+            }
         }
 
         [Test]
