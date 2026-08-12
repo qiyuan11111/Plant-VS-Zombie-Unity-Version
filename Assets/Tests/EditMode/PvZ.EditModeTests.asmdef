@@ -3,6 +3,7 @@
     "rootNamespace": "",
     "references": [
         "PvZ.Runtime",
+        "PvZ.Editor",
         "UnityEngine.UI"
     ],
     "includePlatforms": [

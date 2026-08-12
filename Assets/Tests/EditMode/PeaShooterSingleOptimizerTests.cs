@@ -18,6 +18,18 @@ namespace Tests.EditMode
         private const string ControllerPath = AnimationDirectory + "/PeaShooterSingle.controller";
 
         [Test]
+        public void SourceHash_IsIndependentOfLineEndings()
+        {
+            const string lf = "{\n\t\"idle\": []\n}\n";
+            const string crlf = "{\r\n\t\"idle\": []\r\n}\r\n";
+            const string cr = "{\r\t\"idle\": []\r}\r";
+
+            var expected = PeaShooterSinglePrefabOptimizer.ComputeSourceHash(lf);
+            Assert.That(PeaShooterSinglePrefabOptimizer.ComputeSourceHash(crlf), Is.EqualTo(expected));
+            Assert.That(PeaShooterSinglePrefabOptimizer.ComputeSourceHash(cr), Is.EqualTo(expected));
+        }
+
+        [Test]
         public void ShootClip_HasExactlyOneProjectileEvent()
         {
             var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>($"{AnimationDirectory}/shoot.anim");
