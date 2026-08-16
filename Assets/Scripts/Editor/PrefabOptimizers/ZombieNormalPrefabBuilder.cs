@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Xml;
 using PvZ.Config;
 using PvZ.Gameplay.Zombies;
 using PvZ.Presentation;
@@ -14,7 +16,9 @@ public static class ZombieNormalPrefabBuilder
     private const string SpritePath = BasePath + "/Sprite";
     private const string AnimationPath = BasePath + "/Animation";
     private const string SourceIdlePath = "Assets/StreamingAssets/generator/idle.anim";
+    private const string WalkXmlPath = "Assets/StreamingAssets/Zombie_anim_walk.xml";
     private const string IdlePath = AnimationPath + "/idle.anim";
+    private const string WalkPath = AnimationPath + "/walk.anim";
     private const string ControllerPath = AnimationPath + "/ZombieNormal.controller";
     private const string PrefabPath = BasePath + "/ZombieNormal.prefab";
     private const string SharedMaterialPath = "Assets/Material/LightnessSkew.mat";
@@ -63,17 +67,55 @@ public static class ZombieNormalPrefabBuilder
         AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
         ConfigureTextureImporters();
 
-        var idle = CreateIdleClip();
-        var controller = CreateController(idle);
+        var idle = CreateAnimationClip(SourceIdlePath, IdlePath);
+        var walk = CreateWalkAnimationClip(WalkXmlPath, WalkPath);
+        var controller = CreateController(idle, walk);
         var prefab = CreatePrefab(idle, controller);
         ConnectGameConfig(prefab);
-        Validate(prefab, idle, controller);
+        Validate(prefab, idle, walk, controller);
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
         Debug.Log($"Normal zombie prefab built successfully: {PrefabPath}", prefab);
     }
 
+    [MenuItem("Tools/PvZ/Verify Normal Zombie Walk Root Motion")]
+    public static void VerifyWalkRootMotionPlayback()
+    {
+        var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
+        if (prefab == null) throw new MissingReferenceException($"Missing prefab: {PrefabPath}");
+
+        var instance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+        if (instance == null) throw new InvalidOperationException("Failed to instantiate ZombieNormal for verification.");
+
+        try
+        {
+            var animator = instance.GetComponent<Animator>();
+            if (animator == null) throw new MissingComponentException("ZombieNormal Animator is missing.");
+
+            animator.Rebind();
+            animator.Play("walk", 0, 0f);
+            animator.Update(0f);
+            var startX = instance.transform.position.x;
+            for (var frame = 0; frame < 48; frame++)
+            {
+                animator.Update(1f / 12f);
+            }
+
+            var endX = instance.transform.position.x;
+            if (endX >= startX - 45f)
+            {
+                throw new InvalidOperationException(
+                    $"Walk root motion did not accumulate across the loop: {startX} -> {endX}.");
+            }
+
+            Debug.Log($"ZombieNormal walk root motion verified: {startX} -> {endX} after 48 frames.");
+        }
+        finally
+        {
+            UnityEngine.Object.DestroyImmediate(instance);
+        }
+    }
     private static void EnsureFolders()
     {
         EnsureFolder("Assets/Prefab", "Zombie");
@@ -108,16 +150,16 @@ public static class ZombieNormalPrefabBuilder
         }
     }
 
-    private static AnimationClip CreateIdleClip()
+    private static AnimationClip CreateAnimationClip(string sourcePath, string destinationPath)
     {
-        if (AssetDatabase.LoadAssetAtPath<AnimationClip>(IdlePath) == null)
+        if (AssetDatabase.LoadAssetAtPath<AnimationClip>(destinationPath) == null)
         {
             var sourceAbsolutePath = Path.Combine(
                 Application.dataPath,
-                SourceIdlePath.Substring("Assets/".Length));
+                sourcePath.Substring("Assets/".Length));
             var destinationAbsolutePath = Path.Combine(
                 Application.dataPath,
-                IdlePath.Substring("Assets/".Length));
+                destinationPath.Substring("Assets/".Length));
             if (!File.Exists(sourceAbsolutePath))
             {
                 throw new FileNotFoundException("Missing generated idle animation source.", sourceAbsolutePath);
@@ -126,9 +168,9 @@ public static class ZombieNormalPrefabBuilder
             File.Copy(sourceAbsolutePath, destinationAbsolutePath, false);
         }
 
-        AssetDatabase.ImportAsset(IdlePath, ImportAssetOptions.ForceSynchronousImport);
-        var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(IdlePath);
-        if (clip == null) throw new MissingReferenceException($"Failed to import idle clip: {IdlePath}");
+        AssetDatabase.ImportAsset(destinationPath, ImportAssetOptions.ForceSynchronousImport);
+        var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(destinationPath);
+        if (clip == null) throw new MissingReferenceException($"Failed to import animation clip: {destinationPath}");
 
         clip.frameRate = 12f;
         var settings = AnimationUtility.GetAnimationClipSettings(clip);
@@ -138,7 +180,132 @@ public static class ZombieNormalPrefabBuilder
         return clip;
     }
 
-    private static AnimatorController CreateController(AnimationClip idle)
+    private static AnimationClip CreateWalkAnimationClip(string xmlPath, string destinationPath)
+    {
+        var xmlAbsolutePath = Path.Combine(Application.dataPath, xmlPath.Substring("Assets/".Length));
+        if (!File.Exists(xmlAbsolutePath))
+        {
+            throw new FileNotFoundException("Missing normal zombie walk XML.", xmlAbsolutePath);
+        }
+
+        var document = new XmlDocument();
+        document.Load(xmlAbsolutePath);
+        var layers = document.SelectNodes("/animate/layer");
+        if (layers == null || layers.Count == 0)
+        {
+            throw new InvalidDataException($"Walk XML has no animation layers: {xmlPath}");
+        }
+
+        var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(destinationPath);
+        if (clip == null)
+        {
+            clip = new AnimationClip();
+            AssetDatabase.CreateAsset(clip, destinationPath);
+        }
+
+        foreach (var binding in AnimationUtility.GetCurveBindings(clip))
+        {
+            AnimationUtility.SetEditorCurve(clip, binding, null);
+        }
+        foreach (var binding in AnimationUtility.GetObjectReferenceCurveBindings(clip))
+        {
+            AnimationUtility.SetObjectReferenceCurve(clip, binding, null);
+        }
+
+        clip.name = "walk";
+        clip.frameRate = 12f;
+        foreach (XmlNode layer in layers)
+        {
+            var layerName = layer.Attributes?["name"]?.Value;
+            var frames = layer.SelectNodes("frame");
+            if (string.IsNullOrEmpty(layerName) || frames == null || frames.Count == 0)
+            {
+                throw new InvalidDataException("Walk XML contains an unnamed or empty layer.");
+            }
+
+            if (layerName == "_ground")
+            {
+                var initialGroundX = ParseXmlFloat(frames[0], "posx");
+                SetLinearCurve(
+                    clip,
+                    string.Empty,
+                    typeof(Transform),
+                    "m_LocalPosition.x",
+                    CreateXmlCurve(frames, "posx", value => -(value - initialGroundX)));
+                continue;
+            }
+
+            var targetPath = ResolveWalkLayerPath(layerName);
+            SetLinearCurve(clip, targetPath, typeof(SpriteTransform), "position.x", CreateXmlCurve(frames, "posx"));
+            SetLinearCurve(clip, targetPath, typeof(SpriteTransform), "position.y", CreateXmlCurve(frames, "posy"));
+            SetLinearCurve(clip, targetPath, typeof(SpriteTransform), "scale.x", CreateXmlCurve(frames, "scalex"));
+            SetLinearCurve(clip, targetPath, typeof(SpriteTransform), "scale.y", CreateXmlCurve(frames, "scaley"));
+            SetLinearCurve(clip, targetPath, typeof(SpriteTransform), "skew.x", CreateXmlCurve(frames, "skewx"));
+            SetLinearCurve(clip, targetPath, typeof(SpriteTransform), "skew.y", CreateXmlCurve(frames, "skewy"));
+        }
+
+        var settings = AnimationUtility.GetAnimationClipSettings(clip);
+        settings.loopTime = true;
+        AnimationUtility.SetAnimationClipSettings(clip, settings);
+        EditorUtility.SetDirty(clip);
+        AssetDatabase.SaveAssetIfDirty(clip);
+        return clip;
+    }
+
+    private static AnimationCurve CreateXmlCurve(
+        XmlNodeList frames,
+        string attribute,
+        Func<float, float> convert = null)
+    {
+        var keys = new Keyframe[frames.Count];
+        for (var i = 0; i < frames.Count; i++)
+        {
+            var frame = frames[i];
+            var time = ParseXmlFloat(frame, "index") / 12f;
+            var value = ParseXmlFloat(frame, attribute);
+            keys[i] = new Keyframe(time, convert == null ? value : convert(value));
+        }
+        return new AnimationCurve(keys);
+    }
+
+    private static float ParseXmlFloat(XmlNode node, string attribute)
+    {
+        var text = node.Attributes?[attribute]?.Value;
+        if (string.IsNullOrEmpty(text) ||
+            !float.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out var value))
+        {
+            throw new InvalidDataException($"Walk XML frame is missing a valid '{attribute}' value.");
+        }
+        return value;
+    }
+
+    private static void SetLinearCurve(
+        AnimationClip clip,
+        string path,
+        Type type,
+        string propertyName,
+        AnimationCurve curve)
+    {
+        for (var i = 0; i < curve.length; i++)
+        {
+            AnimationUtility.SetKeyLeftTangentMode(curve, i, AnimationUtility.TangentMode.Linear);
+            AnimationUtility.SetKeyRightTangentMode(curve, i, AnimationUtility.TangentMode.Linear);
+        }
+        AnimationUtility.SetEditorCurve(clip, EditorCurveBinding.FloatCurve(path, type, propertyName), curve);
+    }
+
+    private static string ResolveWalkLayerPath(string layerName)
+    {
+        return layerName switch
+        {
+            "anim_head1" => "Zombie_head",
+            "anim_head2" => "Zombie_jaw",
+            "anim_innerarm2" => "Zombie_innerarm_lower",
+            "anim_innerarm3" => "Zombie_innerarm_hand",
+            _ => layerName
+        };
+    }
+    private static AnimatorController CreateController(AnimationClip idle, AnimationClip walk)
     {
         var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(ControllerPath);
         if (controller == null)
@@ -147,28 +314,37 @@ public static class ZombieNormalPrefabBuilder
         }
 
         var stateMachine = controller.layers[0].stateMachine;
-        AnimatorState idleState = null;
-        foreach (var childState in stateMachine.states)
-        {
-            if (childState.state.name == "idle")
-            {
-                idleState = childState.state;
-                break;
-            }
-        }
-
-        idleState ??= stateMachine.AddState("idle");
+        var idleState = FindOrCreateState(stateMachine, "idle");
+        var walkState = FindOrCreateState(stateMachine, "walk");
         idleState.motion = idle;
+        walkState.motion = walk;
         idleState.writeDefaultValues = true;
-        stateMachine.defaultState = idleState;
+        walkState.writeDefaultValues = true;
+        stateMachine.defaultState = walkState;
         EditorUtility.SetDirty(idleState);
+        EditorUtility.SetDirty(walkState);
         EditorUtility.SetDirty(stateMachine);
         EditorUtility.SetDirty(controller);
         return controller;
     }
 
+    private static AnimatorState FindOrCreateState(AnimatorStateMachine stateMachine, string stateName)
+    {
+        foreach (var childState in stateMachine.states)
+        {
+            if (childState.state.name == stateName) return childState.state;
+        }
+
+        return stateMachine.AddState(stateName);
+    }
+
     private static GameObject CreatePrefab(AnimationClip idle, RuntimeAnimatorController controller)
     {
+        if (AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath) != null)
+        {
+            return UpdateExistingPrefab(idle, controller);
+        }
+
         var material = AssetDatabase.LoadAssetAtPath<Material>(SharedMaterialPath);
         if (material == null) throw new MissingReferenceException($"Missing sprite material: {SharedMaterialPath}");
 
@@ -180,7 +356,7 @@ public static class ZombieNormalPrefabBuilder
         {
             var animator = root.AddComponent<Animator>();
             animator.runtimeAnimatorController = controller;
-            animator.applyRootMotion = false;
+            animator.applyRootMotion = true;
             animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
 
             root.AddComponent<ZombieNormal>();
@@ -211,6 +387,35 @@ public static class ZombieNormalPrefabBuilder
         finally
         {
             UnityEngine.Object.DestroyImmediate(root);
+        }
+    }
+
+    private static GameObject UpdateExistingPrefab(
+        AnimationClip idle,
+        RuntimeAnimatorController controller)
+    {
+        var root = PrefabUtility.LoadPrefabContents(PrefabPath);
+        try
+        {
+            var animator = root.GetComponent<Animator>();
+            if (animator == null) throw new MissingComponentException("ZombieNormal Animator is missing.");
+
+            animator.runtimeAnimatorController = controller;
+            animator.applyRootMotion = true;
+            animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            idle.SampleAnimation(root, 0f);
+            foreach (var spriteTransform in root.GetComponentsInChildren<SpriteTransform>(true))
+            {
+                spriteTransform.Apply();
+            }
+
+            var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
+            if (prefab == null) throw new InvalidOperationException($"Failed to update prefab: {PrefabPath}");
+            return prefab;
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(root);
         }
     }
 
@@ -256,6 +461,7 @@ public static class ZombieNormalPrefabBuilder
     private static void Validate(
         GameObject prefab,
         AnimationClip idle,
+        AnimationClip walk,
         RuntimeAnimatorController controller)
     {
         if (prefab.GetComponent<ZombieNormal>() == null) throw new MissingComponentException("ZombieNormal component is missing.");
@@ -263,6 +469,10 @@ public static class ZombieNormalPrefabBuilder
         if (prefab.GetComponent<Animator>()?.runtimeAnimatorController != controller)
         {
             throw new MissingReferenceException("ZombieNormal Animator Controller is not assigned.");
+        }
+        if (!prefab.GetComponent<Animator>().applyRootMotion)
+        {
+            throw new InvalidOperationException("ZombieNormal must apply the walk clip's root motion.");
         }
 
         var expectedPaths = new HashSet<string>(StringComparer.Ordinal);
@@ -282,9 +492,39 @@ public static class ZombieNormalPrefabBuilder
             }
         }
 
+        ValidateWalkRootMotion(walk);
+
         if (prefab.GetComponentsInChildren<SpriteRenderer>(true).Length != Parts.Length)
         {
             throw new InvalidOperationException("ZombieNormal does not contain the expected number of sprite renderers.");
+        }
+    }
+
+    private static void ValidateWalkRootMotion(AnimationClip walk)
+    {
+        AnimationCurve rootMotion = null;
+        foreach (var binding in AnimationUtility.GetCurveBindings(walk))
+        {
+            if (string.IsNullOrEmpty(binding.path) &&
+                binding.type == typeof(Transform) &&
+                binding.propertyName == "m_LocalPosition.x")
+            {
+                rootMotion = AnimationUtility.GetEditorCurve(walk, binding);
+                break;
+            }
+        }
+
+        if (rootMotion == null || rootMotion.length < 2)
+        {
+            throw new MissingReferenceException("Walk animation has no root m_LocalPosition.x curve.");
+        }
+
+        var start = rootMotion.keys[0].value;
+        var end = rootMotion.keys[rootMotion.length - 1].value;
+        if (Mathf.Abs(start) > 0.001f || end >= -0.001f)
+        {
+            throw new InvalidOperationException(
+                $"Walk root motion must start at zero and move left, but is {start} -> {end}.");
         }
     }
 }
