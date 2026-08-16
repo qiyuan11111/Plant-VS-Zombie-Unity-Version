@@ -21,6 +21,7 @@ namespace PvZ.Core.Entities
 
         public virtual EntitySprite ResetRuntimeState()
         {
+            Transform = transform;
             CacheSpriteGroup();
             return this;
         }
