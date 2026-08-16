@@ -15,8 +15,8 @@ public static class ZombieNormalPrefabBuilder
     private const string BasePath = "Assets/Prefab/Zombie/ZombieNormal";
     private const string SpritePath = BasePath + "/Sprite";
     private const string AnimationPath = BasePath + "/Animation";
-    private const string SourceIdlePath = "Assets/StreamingAssets/generator/idle.anim";
-    private const string WalkXmlPath = "Assets/StreamingAssets/Zombie_anim_walk.xml";
+    private const string IdleXmlPath = "Assets/StreamingAssets/Zombie_anim_idle1.xml";
+    private const string WalkXmlPath = "Assets/StreamingAssets/Zombie_anim_walk1.xml";
     private const string IdlePath = AnimationPath + "/idle.anim";
     private const string WalkPath = AnimationPath + "/walk.anim";
     private const string ControllerPath = AnimationPath + "/ZombieNormal.controller";
@@ -54,10 +54,8 @@ public static class ZombieNormalPrefabBuilder
         new("Zombie_tie", 28),
         new("Zombie_jaw", 29),
         new("Zombie_outerarm_hand", 35),
-        new("Zombie_outerarm_hand2", 35),
         new("Zombie_outerarm_upper", 36),
         new("Zombie_outerarm_lower", 38),
-        new("Zombie_hair", 39)
     };
 
     [MenuItem("Tools/PvZ/Build Normal Zombie Prefab")]
@@ -67,8 +65,9 @@ public static class ZombieNormalPrefabBuilder
         AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
         ConfigureTextureImporters();
 
-        var idle = CreateAnimationClip(SourceIdlePath, IdlePath);
-        var walk = CreateWalkAnimationClip(WalkXmlPath, WalkPath);
+        var idle = AssetDatabase.LoadAssetAtPath<AnimationClip>(IdlePath);
+        if (idle == null) throw new MissingReferenceException($"Missing idle clip: {IdlePath}");
+        var walk = CreateReanimationClip(WalkXmlPath, WalkPath, "walk", true);
         var controller = CreateController(idle, walk);
         var prefab = CreatePrefab(idle, controller);
         ConnectGameConfig(prefab);
@@ -132,15 +131,20 @@ public static class ZombieNormalPrefabBuilder
 
     private static void ConfigureTextureImporters()
     {
+        var pixelsPerUnit = ReadWalkPixelsPerUnit();
         foreach (var part in Parts)
         {
             var path = $"{SpritePath}/{part.Name}.png";
             var importer = AssetImporter.GetAtPath(path) as TextureImporter;
             if (importer == null) throw new MissingReferenceException($"Missing zombie sprite: {path}");
+            if (!pixelsPerUnit.TryGetValue(part.Name, out var partPixelsPerUnit))
+            {
+                throw new InvalidDataException($"Walk XML has no size for zombie part: {part.Name}");
+            }
 
             importer.textureType = TextureImporterType.Sprite;
             importer.spriteImportMode = SpriteImportMode.Single;
-            importer.spritePixelsPerUnit = 1f;
+            importer.spritePixelsPerUnit = partPixelsPerUnit;
             importer.mipmapEnabled = false;
             importer.alphaIsTransparency = true;
             importer.filterMode = FilterMode.Point;
@@ -150,6 +154,84 @@ public static class ZombieNormalPrefabBuilder
         }
     }
 
+    private static Dictionary<string, float> ReadWalkPixelsPerUnit()
+    {
+        var xmlAbsolutePath = Path.Combine(Application.dataPath, WalkXmlPath.Substring("Assets/".Length));
+        if (!File.Exists(xmlAbsolutePath))
+        {
+            throw new FileNotFoundException("Missing normal zombie walk XML.", xmlAbsolutePath);
+        }
+
+        var document = new XmlDocument();
+        document.Load(xmlAbsolutePath);
+        var layers = document.SelectNodes("/animate/layer");
+        if (layers == null) throw new InvalidDataException($"Walk XML has no layers: {WalkXmlPath}");
+
+        var result = new Dictionary<string, float>(StringComparer.Ordinal);
+        foreach (XmlNode layer in layers)
+        {
+            var layerName = layer.Attributes?["name"]?.Value;
+            if (string.IsNullOrEmpty(layerName) || layerName == "_ground") continue;
+
+            var targetName = ResolveWalkLayerPath(layerName);
+            var texturePath = $"{SpritePath}/{targetName}.png";
+            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
+            if (texture == null) throw new MissingReferenceException($"Missing zombie texture: {texturePath}");
+
+            var authoredWidth = ParseXmlFloat(layer, "width");
+            var authoredHeight = ParseXmlFloat(layer, "height");
+            if (authoredWidth <= 0f || authoredHeight <= 0f)
+            {
+                throw new InvalidDataException($"Walk XML layer has an invalid size: {layerName}");
+            }
+
+            var widthRatio = texture.width / authoredWidth;
+            var heightRatio = texture.height / authoredHeight;
+            var ppu = ChoosePixelsPerUnit(targetName, widthRatio, heightRatio);
+            if (result.TryGetValue(targetName, out var existing) && !Mathf.Approximately(existing, ppu))
+            {
+                throw new InvalidDataException($"Walk XML gives conflicting sizes for {targetName}.");
+            }
+            result[targetName] = ppu;
+        }
+        return result;
+    }
+
+    private static float ChoosePixelsPerUnit(string partName, float widthRatio, float heightRatio)
+    {
+        if (Mathf.Abs(widthRatio - heightRatio) <= 0.0001f)
+        {
+            return (widthRatio + heightRatio) * 0.5f;
+        }
+
+        var widthSimple = NearestSimpleFraction(widthRatio);
+        var heightSimple = NearestSimpleFraction(heightRatio);
+        var widthError = Mathf.Abs(widthRatio - widthSimple);
+        var heightError = Mathf.Abs(heightRatio - heightSimple);
+        var chosen = widthError <= heightError ? widthSimple : heightSimple;
+        Debug.LogWarning(
+            $"{partName} has mismatched PPU ratios ({widthRatio} vs {heightRatio}); " +
+            $"using the more plausible simple value {chosen}.");
+        return chosen;
+    }
+
+    private static float NearestSimpleFraction(float value)
+    {
+        var best = value;
+        var bestError = float.PositiveInfinity;
+        for (var denominator = 1; denominator <= 12; denominator++)
+        {
+            var numerator = Mathf.RoundToInt(value * denominator);
+            var candidate = (float)numerator / denominator;
+            var error = Mathf.Abs(value - candidate);
+            if (error < bestError - 0.000001f)
+            {
+                best = candidate;
+                bestError = error;
+            }
+        }
+        return best;
+    }
     private static AnimationClip CreateAnimationClip(string sourcePath, string destinationPath)
     {
         if (AssetDatabase.LoadAssetAtPath<AnimationClip>(destinationPath) == null)
@@ -180,7 +262,11 @@ public static class ZombieNormalPrefabBuilder
         return clip;
     }
 
-    private static AnimationClip CreateWalkAnimationClip(string xmlPath, string destinationPath)
+    private static AnimationClip CreateReanimationClip(
+        string xmlPath,
+        string destinationPath,
+        string clipName,
+        bool includeRootMotion)
     {
         var xmlAbsolutePath = Path.Combine(Application.dataPath, xmlPath.Substring("Assets/".Length));
         if (!File.Exists(xmlAbsolutePath))
@@ -212,7 +298,7 @@ public static class ZombieNormalPrefabBuilder
             AnimationUtility.SetObjectReferenceCurve(clip, binding, null);
         }
 
-        clip.name = "walk";
+        clip.name = clipName;
         clip.frameRate = 12f;
         foreach (XmlNode layer in layers)
         {
@@ -225,6 +311,10 @@ public static class ZombieNormalPrefabBuilder
 
             if (layerName == "_ground")
             {
+                if (!includeRootMotion)
+                {
+                    throw new InvalidDataException($"Unexpected _ground layer in {xmlPath}.");
+                }
                 var initialGroundX = ParseXmlFloat(frames[0], "posx");
                 SetLinearCurve(
                     clip,
@@ -300,6 +390,7 @@ public static class ZombieNormalPrefabBuilder
         {
             "anim_head1" => "Zombie_head",
             "anim_head2" => "Zombie_jaw",
+            "anim_innerarm1" => "Zombie_innerarm_upper",
             "anim_innerarm2" => "Zombie_innerarm_lower",
             "anim_innerarm3" => "Zombie_innerarm_hand",
             _ => layerName
@@ -403,6 +494,7 @@ public static class ZombieNormalPrefabBuilder
             animator.runtimeAnimatorController = controller;
             animator.applyRootMotion = true;
             animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            SynchronizeParts(root.transform);
             idle.SampleAnimation(root, 0f);
             foreach (var spriteTransform in root.GetComponentsInChildren<SpriteTransform>(true))
             {
@@ -419,6 +511,30 @@ public static class ZombieNormalPrefabBuilder
         }
     }
 
+    private static void SynchronizeParts(Transform root)
+    {
+        var expectedNames = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var part in Parts) expectedNames.Add(part.Name);
+
+        for (var index = root.childCount - 1; index >= 0; index--)
+        {
+            var child = root.GetChild(index);
+            if (child.GetComponent<SpriteTransform>() != null && !expectedNames.Contains(child.name))
+            {
+                UnityEngine.Object.DestroyImmediate(child.gameObject);
+            }
+        }
+
+        var material = AssetDatabase.LoadAssetAtPath<Material>(SharedMaterialPath);
+        if (material == null) throw new MissingReferenceException($"Missing sprite material: {SharedMaterialPath}");
+        var zombieLayer = LayerMask.NameToLayer("Zombie");
+        if (zombieLayer < 0) throw new InvalidOperationException("The project has no Zombie layer.");
+
+        foreach (var part in Parts)
+        {
+            if (root.Find(part.Name) == null) CreatePart(root, part, zombieLayer, material);
+        }
+    }
     private static void CreatePart(Transform root, Part part, int layer, Material material)
     {
         var spritePath = $"{SpritePath}/{part.Name}.png";
@@ -492,6 +608,25 @@ public static class ZombieNormalPrefabBuilder
             }
         }
 
+        var expectedPartNames = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var part in Parts) expectedPartNames.Add(part.Name);
+var walkPaths = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var binding in AnimationUtility.GetCurveBindings(walk))
+        {
+            if (!string.IsNullOrEmpty(binding.path) && binding.type == typeof(SpriteTransform))
+            {
+                walkPaths.Add(binding.path);
+            }
+        }
+        if (!expectedPartNames.SetEquals(walkPaths))
+        {
+            throw new InvalidOperationException("Walk XML bindings do not exactly match the prefab part set.");
+        }
+
+        if (prefab.GetComponentsInChildren<SpriteTransform>(true).Length != Parts.Length)
+        {
+            throw new InvalidOperationException("ZombieNormal does not contain exactly the XML part count.");
+        }
         ValidateWalkRootMotion(walk);
 
         if (prefab.GetComponentsInChildren<SpriteRenderer>(true).Length != Parts.Length)
