@@ -43,7 +43,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/SunFlower_head
+    path: component/basic/__AffineContent/head/SunFlower_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -73,7 +73,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/SunFlower_toppetals
+    path: component/basic/__AffineContent/head/SunFlower_toppetals
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -103,7 +103,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/SunFlower_bottompetals
+    path: component/basic/__AffineContent/head/SunFlower_bottompetals
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -133,7 +133,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal1
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal1
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -163,7 +163,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal2
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal2
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -193,7 +193,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal3
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal3
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -223,7 +223,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal4
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal4
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -253,7 +253,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal5
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal5
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -283,7 +283,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal6
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal6
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -313,7 +313,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal7
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal7
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -343,7 +343,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal8
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal8
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -373,7 +373,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal9
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal9
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -403,7 +403,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal1
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal1
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -433,7 +433,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal2
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal2
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -463,7 +463,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal3
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal3
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -493,7 +493,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal4
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal4
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -523,7 +523,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal5
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal5
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -553,7 +553,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal6
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal6
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -583,7 +583,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal7
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal7
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -613,7 +613,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal8
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal8
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -643,7 +643,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/stalk/top
+    path: component/basic/__AffineContent/stalk/top
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -673,7 +673,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/stalk/bottom
+    path: component/basic/__AffineContent/stalk/bottom
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -703,7 +703,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/frontleaf/frontleaf
+    path: component/basic/__AffineContent/leaf/frontleaf/frontleaf
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -733,7 +733,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/frontleaf/left_tip
+    path: component/basic/__AffineContent/leaf/frontleaf/left_tip
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -763,7 +763,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/frontleaf/right_tip
+    path: component/basic/__AffineContent/leaf/frontleaf/right_tip
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -793,7 +793,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/backleaf/backleaf
+    path: component/basic/__AffineContent/leaf/backleaf/backleaf
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -823,7 +823,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/backleaf/left_tip
+    path: component/basic/__AffineContent/leaf/backleaf/left_tip
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -853,7 +853,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/backleaf/right_tip
+    path: component/basic/__AffineContent/leaf/backleaf/right_tip
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -883,7 +883,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/SunFlower_head/blink/SunFlower_blink1
+    path: component/basic/__AffineContent/head/SunFlower_head/__AffineContent/blink/SunFlower_blink1
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -913,7 +913,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/SunFlower_head/blink/SunFlower_blink2
+    path: component/basic/__AffineContent/head/SunFlower_head/__AffineContent/blink/SunFlower_blink2
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -926,7 +926,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 2141908711
+      path: 215962454
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -935,7 +935,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1748662208
+      path: 4239212717
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -944,7 +944,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 220474314
+      path: 3007829502
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -953,7 +953,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3442995682
+      path: 3151697039
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -962,7 +962,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1413390424
+      path: 584205621
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -971,7 +971,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 590975182
+      path: 1440052643
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -980,7 +980,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3176990061
+      path: 3417432064
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -989,7 +989,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3394909691
+      path: 3166097558
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -998,7 +998,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1397974081
+      path: 633307436
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1007,7 +1007,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 609506519
+      path: 1387835834
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1016,7 +1016,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3035318598
+      path: 3255282731
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1025,7 +1025,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3287054800
+      path: 3036716221
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1034,7 +1034,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 955735186
+      path: 703985021
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1043,7 +1043,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2717781288
+      path: 2969347271
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1052,7 +1052,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3606658494
+      path: 3355153489
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1061,7 +1061,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1218291741
+      path: 1503592946
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1070,7 +1070,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1067096203
+      path: 781726052
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1079,7 +1079,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2794703153
+      path: 3079758046
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1088,7 +1088,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3516201383
+      path: 3231076424
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1097,7 +1097,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1093395510
+      path: 1344884185
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1106,7 +1106,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3721348054
+      path: 2388558394
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1115,7 +1115,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2126090106
+      path: 2343101232
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1124,7 +1124,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 4264842118
+      path: 1789093099
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1133,7 +1133,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1925666226
+      path: 2177612859
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1142,7 +1142,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 134767021
+      path: 2627688128
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1151,7 +1151,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 128830168
+      path: 2989820874
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1160,7 +1160,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2539834440
+      path: 586812762
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1169,7 +1169,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1434836790
+      path: 2794010303
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1178,7 +1178,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 483995498
+      path: 2981844098
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1187,7 +1187,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2245033680
+      path: 682755384
       attribute: 3648444131
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -1243,7 +1243,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/SunFlower_head
+    path: component/basic/__AffineContent/head/SunFlower_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1273,7 +1273,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/SunFlower_toppetals
+    path: component/basic/__AffineContent/head/SunFlower_toppetals
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1303,7 +1303,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/SunFlower_bottompetals
+    path: component/basic/__AffineContent/head/SunFlower_bottompetals
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1333,7 +1333,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal1
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal1
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1363,7 +1363,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal2
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal2
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1393,7 +1393,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal3
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal3
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1423,7 +1423,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal4
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal4
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1453,7 +1453,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal5
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal5
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1483,7 +1483,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal6
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal6
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1513,7 +1513,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal7
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal7
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1543,7 +1543,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal8
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal8
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1573,7 +1573,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/right/SunFlower_rightpetal9
+    path: component/basic/__AffineContent/head/petals/right/SunFlower_rightpetal9
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1603,7 +1603,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal1
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal1
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1633,7 +1633,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal2
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal2
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1663,7 +1663,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal3
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal3
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1693,7 +1693,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal4
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal4
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1723,7 +1723,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal5
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal5
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1753,7 +1753,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal6
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal6
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1783,7 +1783,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal7
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal7
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1813,7 +1813,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/petals/left/SunFlower_leftpetal8
+    path: component/basic/__AffineContent/head/petals/left/SunFlower_leftpetal8
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1843,7 +1843,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/stalk/top
+    path: component/basic/__AffineContent/stalk/top
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1873,7 +1873,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/stalk/bottom
+    path: component/basic/__AffineContent/stalk/bottom
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1903,7 +1903,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/frontleaf/frontleaf
+    path: component/basic/__AffineContent/leaf/frontleaf/frontleaf
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1933,7 +1933,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/frontleaf/left_tip
+    path: component/basic/__AffineContent/leaf/frontleaf/left_tip
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1963,7 +1963,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/frontleaf/right_tip
+    path: component/basic/__AffineContent/leaf/frontleaf/right_tip
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1993,7 +1993,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/backleaf/backleaf
+    path: component/basic/__AffineContent/leaf/backleaf/backleaf
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2023,7 +2023,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/backleaf/left_tip
+    path: component/basic/__AffineContent/leaf/backleaf/left_tip
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2053,7 +2053,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/leaf/backleaf/right_tip
+    path: component/basic/__AffineContent/leaf/backleaf/right_tip
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2083,7 +2083,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/SunFlower_head/blink/SunFlower_blink1
+    path: component/basic/__AffineContent/head/SunFlower_head/__AffineContent/blink/SunFlower_blink1
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2113,7 +2113,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: brightness
-    path: component/basic/head/SunFlower_head/blink/SunFlower_blink2
+    path: component/basic/__AffineContent/head/SunFlower_head/__AffineContent/blink/SunFlower_blink2
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16

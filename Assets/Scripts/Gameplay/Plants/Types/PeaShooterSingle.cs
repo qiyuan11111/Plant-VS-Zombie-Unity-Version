@@ -12,10 +12,17 @@ namespace PvZ.Gameplay.Plants.Types
     [RequireComponent(typeof(Blink))]
     public class PeaShooterSingle : PlantEntity, IPointerClickHandler
     {
-        private const string MouthPath = "component/basic/head/pod/mouth";
+        private const string NativeMouthPath =
+            "component/basic/__AffineContent/head/__AffineContent/mouth";
+        private const string PreviousAllNativeMouthPath =
+            "component/basic/__AffineContent/head/__AffineContent/pod/__AffineContent/mouth";
+        private const string PreviousNativeMouthPath =
+            "component/basic/head/__AffineContent/pod/mouth";
+        private const string LegacyMouthPath = "component/basic/head/pod/mouth";
         private static readonly int Shoot = Animator.StringToHash("shoot");
 
         [SerializeField] private Blink blink;
+        [SerializeField] private Transform projectileSpawnAnchor;
         // public override int sunlight => 100;
         // public override float cdTime => 0.5f;
 
@@ -70,9 +77,28 @@ namespace PvZ.Gameplay.Plants.Types
 
         public void ShootProjectilePea()
         {
-            Vector3 position = Transform.Find(MouthPath).position;
+            Vector3 position = ResolveProjectileSpawnAnchor().position;
             // BulletManager.instance.InstantiateBullet(this, position + new Vector3(30, 6, 0),
             //     GameConfigObject.BulletType.ProjectilePea);
+        }
+
+        private Transform ResolveProjectileSpawnAnchor()
+        {
+            if (projectileSpawnAnchor == null)
+            {
+                projectileSpawnAnchor = Transform.Find(NativeMouthPath) ??
+                                          Transform.Find(PreviousAllNativeMouthPath) ??
+                                          Transform.Find(PreviousNativeMouthPath) ??
+                                          Transform.Find(LegacyMouthPath);
+            }
+
+            if (projectileSpawnAnchor == null)
+            {
+                throw new MissingReferenceException(
+                    $"{name} has no projectile spawn anchor assigned.");
+            }
+
+            return projectileSpawnAnchor;
         }
 
         protected override void OnEnteredBoard()
