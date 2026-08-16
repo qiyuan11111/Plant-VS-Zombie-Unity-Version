@@ -274,7 +274,10 @@ public static class SunShroomPrefabOptimizer
                 new Vector2(41.7f, 56.35f),
                 new Vector2(79.998779296875f, 79.998779296875f));
             bodyTransform.providesChildSpritePosition = true;
+            bodyTransform.providesChildSpriteAffine = true;
             bodyTransform.spritePosition = bodyTransform.position;
+            bodyTransform.spriteScale = bodyTransform.scale;
+            bodyTransform.spriteSkew = bodyTransform.skew;
             bodyTransform.Apply();
             bodyTransform.RefreshDescendantPositionReferences();
 
@@ -292,6 +295,13 @@ public static class SunShroomPrefabOptimizer
                 new Vector2(41.45f, 54.2f),
                 new Vector2(82.14111328125f, 84.442138671875f));
             sleep.gameObject.SetActive(false);
+
+            foreach (var spriteTransform in root.GetComponentsInChildren<SpriteTransform>(true))
+            {
+                SpriteTransformHierarchyMigration.EnsureNativeHierarchy(spriteTransform);
+                spriteTransform.RefreshPositionReference();
+                spriteTransform.Apply();
+            }
 
             PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
         }
@@ -331,6 +341,7 @@ public static class SunShroomPrefabOptimizer
         spriteTransform.alphaCoef = 1f;
         spriteTransform.updatePosition = true;
         spriteTransform.providesChildSpritePosition = false;
+        spriteTransform.providesChildSpriteAffine = false;
         spriteTransform.spritePosition = Vector2.zero;
         target.localRotation = Quaternion.identity;
         target.localScale = Vector3.one;

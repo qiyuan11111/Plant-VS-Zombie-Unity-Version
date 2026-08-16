@@ -70,7 +70,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: component/basic/head/pod/head/blink/PeaShooter_blink1
+    path: component/basic/__AffineContent/head/__AffineContent/head/__AffineContent/blink/PeaShooter_blink1
     classID: 1
     script: {fileID: 0}
     flags: 16
@@ -127,7 +127,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: component/basic/head/pod/head/blink/PeaShooter_blink2
+    path: component/basic/__AffineContent/head/__AffineContent/head/__AffineContent/blink/PeaShooter_blink2
     classID: 1
     script: {fileID: 0}
     flags: 16
@@ -140,7 +140,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 2707965897
+      path: 698059239
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -149,7 +149,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 945886835
+      path: 2962413661
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -232,7 +232,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: component/basic/head/pod/head/blink/PeaShooter_blink1
+    path: component/basic/__AffineContent/head/__AffineContent/head/__AffineContent/blink/PeaShooter_blink1
     classID: 1
     script: {fileID: 0}
     flags: 16
@@ -289,7 +289,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: component/basic/head/pod/head/blink/PeaShooter_blink2
+    path: component/basic/__AffineContent/head/__AffineContent/head/__AffineContent/blink/PeaShooter_blink2
     classID: 1
     script: {fileID: 0}
     flags: 16

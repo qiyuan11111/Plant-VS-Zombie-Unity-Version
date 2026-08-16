@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Text.RegularExpressions;
 using NUnit.Framework;
 using PvZ.Gameplay.Plants.Abilities;
 using PvZ.Gameplay.Plants.Types;
@@ -16,6 +15,15 @@ namespace Tests.EditMode
         private const string PrefabPath = "Assets/Prefab/Plant/PeaShooterSingle/PeaShooterSingle.prefab";
         private const string AnimationDirectory = "Assets/Prefab/Plant/PeaShooterSingle/Animation";
         private const string ControllerPath = AnimationDirectory + "/PeaShooterSingle.controller";
+        private const string BasicPath = "component/basic";
+        private const string BasicVisualPath = BasicPath + "/__AffineContent";
+        private const string HeadAttachmentPath = BasicVisualPath + "/head";
+        private const string HeadAttachmentVisualPath = HeadAttachmentPath + "/__AffineContent";
+        private const string HeadPath = HeadAttachmentVisualPath + "/head";
+        private const string MouthPath = HeadAttachmentVisualPath + "/mouth";
+        private const string SproutPath = HeadAttachmentVisualPath + "/sprout";
+        private const string StalkTopPath = BasicVisualPath + "/stalk/__AffineContent/top";
+        private const string StalkBottomPath = BasicVisualPath + "/stalk/__AffineContent/bottom";
         private const string BlinkSpriteDirectory =
             "Assets/Prefab/Plant/PeaShooterSingle/Sprite";
 
@@ -56,9 +64,9 @@ namespace Tests.EditMode
 
             var shootParameter = controller.parameters.Single(parameter => parameter.name == "shoot");
             Assert.That(shootParameter.type, Is.EqualTo(AnimatorControllerParameterType.Trigger));
-            Assert.That(prefab.transform.Find("component/basic/head/pod/head"), Is.Not.Null);
-            Assert.That(prefab.transform.Find("component/basic/head/pod/mouth"), Is.Not.Null);
-            Assert.That(prefab.transform.Find("component/basic/head/sprout"), Is.Not.Null);
+            Assert.That(prefab.transform.Find(HeadPath), Is.Not.Null);
+            Assert.That(prefab.transform.Find(MouthPath), Is.Not.Null);
+            Assert.That(prefab.transform.Find(SproutPath), Is.Not.Null);
         }
 
         [Test]
@@ -68,10 +76,12 @@ namespace Tests.EditMode
             Assert.That(clip, Is.Not.Null);
             Assert.That(clip.frameRate, Is.EqualTo(12f));
             Assert.That(AnimationUtility.GetAnimationClipSettings(clip).loopTime, Is.False);
+            Assert.That(AnimationUtility.GetAnimationClipSettings(clip).stopTime,
+                Is.EqualTo(4f / 12f).Within(0.000001f));
             Assert.That(AnimationUtility.GetObjectReferenceCurveBindings(clip), Is.Empty);
             Assert.That(AnimationUtility.GetAnimationEvents(clip), Is.Empty);
 
-            const string blinkRoot = "component/basic/head/pod/head/blink";
+            const string blinkRoot = HeadPath + "/__AffineContent/blink";
             AssertStepCurve(
                 clip,
                 blinkRoot + "/PeaShooter_blink1",
@@ -101,26 +111,34 @@ namespace Tests.EditMode
             Assert.That(blinkData.FindProperty("maximumIntervalSeconds").floatValue,
                 Is.EqualTo(5.5f).Within(0.000001f));
 
-            var head = prefab.transform.Find("component/basic/head/pod/head");
+            var head = prefab.transform.Find(HeadPath);
             var headTransform = head.GetComponent<SpriteTransform>();
-            var headRenderer = head.GetComponent<SpriteRenderer>();
+            var headRenderer = headTransform.VisualRenderer;
             Assert.That(headTransform.providesChildSpritePosition, Is.True);
-            Assert.That(headTransform.spritePosition, Is.EqualTo(headTransform.position));
+            Assert.That(headTransform.providesChildSpriteAffine, Is.True);
+            Assert.That(headTransform.spritePosition, Is.EqualTo(new Vector2(38.55f, 34.05f)));
+            Assert.That(headTransform.spriteScale,
+                Is.EqualTo(new Vector2(55.499268f, 50f)));
+            Assert.That(headTransform.spriteSkew, Is.EqualTo(Vector2.zero));
 
-            var blink1 = head.Find("blink/PeaShooter_blink1");
-            var blink2 = head.Find("blink/PeaShooter_blink2");
+            var blink1 = head.Find("__AffineContent/blink/PeaShooter_blink1");
+            var blink2 = head.Find("__AffineContent/blink/PeaShooter_blink2");
             AssertBlinkPart(
                 blink1,
                 "PeaShooter_blink1",
                 headRenderer,
-                new Vector2(45.325665f, 30.587154f),
-                new Vector2(100f, 100f));
+                new Vector2(45.3f, 29.85f),
+                new Vector2(55.540466f, 55.540466f),
+                new Vector2(12.162323f, 8.4f),
+                new Vector2(1.0007423f, 1.1108093f));
             AssertBlinkPart(
                 blink2,
                 "PeaShooter_blink2",
                 headRenderer,
-                new Vector2(45.2199f, 30.532415f),
-                new Vector2(100f, 100f));
+                new Vector2(45.2199f, 29.782415f),
+                new Vector2(55.499268f, 55.499268f),
+                new Vector2(12.017996f, 8.53517f),
+                new Vector2(1f, 1.1099854f));
         }
 
         [Test]
@@ -150,14 +168,14 @@ namespace Tests.EditMode
             var layer = controller.layers.Single(candidate => candidate.name == "PeaShooterSingle_blink");
             var idle = layer.stateMachine.defaultState;
             var blink = FindState(controller, "PeaShooterSingle_blink", "blink");
-            Assert.That(layer.defaultWeight, Is.EqualTo(0f).Within(0.000001f));
+            Assert.That(layer.defaultWeight, Is.EqualTo(1f).Within(0.000001f));
             Assert.That(idle.name, Is.EqualTo("blink_idle"));
             Assert.That(idle.motion, Is.Null);
+            Assert.That(idle.speed, Is.EqualTo(1f).Within(0.000001f));
+            Assert.That(idle.cycleOffset, Is.EqualTo(0f).Within(0.000001f));
             Assert.That(idle.writeDefaultValues, Is.False);
             Assert.That(blink.writeDefaultValues, Is.False);
-            Assert.That(blink.behaviours
-                    .OfType<PeaShooterBlinkOverlayStateBehaviour>().Count(),
-                Is.EqualTo(1));
+            Assert.That(blink.behaviours, Is.Empty);
 
             var enter = idle.transitions.Single();
             Assert.That(enter.destinationState, Is.SameAs(blink));
@@ -165,12 +183,12 @@ namespace Tests.EditMode
             Assert.That(enter.duration, Is.EqualTo(0f).Within(0.000001f));
             Assert.That(enter.conditions.Single().parameter, Is.EqualTo("blink"));
 
-            var exit = blink.transitions.Single();
-            Assert.That(exit.destinationState, Is.SameAs(idle));
-            Assert.That(exit.hasExitTime, Is.True);
-            Assert.That(exit.exitTime, Is.EqualTo(1f).Within(0.000001f));
-            Assert.That(exit.duration, Is.EqualTo(0f).Within(0.000001f));
-            Assert.That(exit.conditions, Is.Empty);
+            var restart = blink.transitions.Single();
+            Assert.That(restart.destinationState, Is.SameAs(blink));
+            Assert.That(restart.hasExitTime, Is.False);
+            Assert.That(restart.canTransitionToSelf, Is.True);
+            Assert.That(restart.duration, Is.EqualTo(0f).Within(0.000001f));
+            Assert.That(restart.conditions.Single().parameter, Is.EqualTo("blink"));
         }
 
         [Test]
@@ -189,10 +207,13 @@ namespace Tests.EditMode
                 int headLayer = animator.GetLayerIndex("PeaShooterSingle_head");
                 int blinkLayer = animator.GetLayerIndex("PeaShooterSingle_blink");
                 int blinkState = Animator.StringToHash("blink");
-                int blinkIdleState = Animator.StringToHash("blink_idle");
-                var stalkTop = instance.transform.Find("component/basic/stalk/top")
+                var blink1 = instance.transform.Find(
+                    HeadPath + "/__AffineContent/blink/PeaShooter_blink1");
+                var blink2 = instance.transform.Find(
+                    HeadPath + "/__AffineContent/blink/PeaShooter_blink2");
+                var stalkTop = instance.transform.Find(StalkTopPath)
                     .GetComponent<SpriteTransform>();
-                var headPod = instance.transform.Find("component/basic/head/pod/head")
+                var headPod = instance.transform.Find(HeadPath)
                     .GetComponent<SpriteTransform>();
 
                 animator.Update(0.2f);
@@ -212,7 +233,6 @@ namespace Tests.EditMode
 
                 // The prefab's existing shoot clip can emit its projectile event while
                 // this isolated animation test has no gameplay dependencies attached.
-                LogAssert.Expect(LogType.Exception, new Regex("NullReferenceException"));
                 animator.Update(0.15f);
                 Assert.That(animator.GetCurrentAnimatorStateInfo(bodyLayer).normalizedTime,
                     Is.GreaterThan(bodyTimeBefore));
@@ -225,8 +245,26 @@ namespace Tests.EditMode
 
                 animator.Update(0.3f);
                 Assert.That(animator.GetCurrentAnimatorStateInfo(blinkLayer).shortNameHash,
-                    Is.EqualTo(blinkIdleState));
-                Assert.That(animator.GetLayerWeight(blinkLayer), Is.EqualTo(0f).Within(0.000001f));
+                    Is.EqualTo(blinkState));
+                Assert.That(animator.GetLayerWeight(blinkLayer), Is.EqualTo(1f).Within(0.000001f));
+
+                Assert.That(blink1.gameObject.activeSelf, Is.False,
+                    "The first blink sprite did not apply the clip's final key.");
+                Assert.That(blink2.gameObject.activeSelf, Is.False,
+                    "The half-closed blink sprite did not apply the clip's final key.");
+
+                animator.SetTrigger("blink");
+                animator.Update(0.02f);
+                Assert.That(animator.GetCurrentAnimatorStateInfo(blinkLayer).normalizedTime,
+                    Is.LessThan(0.2f),
+                    "The blink trigger did not restart the held blink state.");
+                animator.Update(0.15f);
+                animator.Update(0.3f);
+                Assert.That(animator.GetCurrentAnimatorStateInfo(blinkLayer).shortNameHash,
+                    Is.EqualTo(blinkState),
+                    "The blink overlay did not finish a second cycle.");
+                Assert.That(blink1.gameObject.activeSelf, Is.False);
+                Assert.That(blink2.gameObject.activeSelf, Is.False);
 
                 var poseAfterBlink = new Vector2(stalkTop.position.x, headPod.position.y);
                 animator.Update(0.15f);
@@ -271,13 +309,13 @@ namespace Tests.EditMode
         public void IdleStalkPositionCurves_KeepXmlReferenceSamples()
         {
             var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>($"{AnimationDirectory}/idle.anim");
-            AssertCurveValues(clip, "component/basic/stalk/top", "position.x",
+            AssertCurveValues(clip, StalkTopPath, "position.x",
                 38.2f, 39.2f, 40.55f, 43.2f, 46.75f, 43.5f, 40.5f, 39.2f, 38.2f);
-            AssertCurveValues(clip, "component/basic/stalk/top", "position.y",
+            AssertCurveValues(clip, StalkTopPath, "position.y",
                 50f, 45.9f, 45.05f, 45.95f, 47.35f, 45.95f, 45.05f, 45.9f, 50f);
-            AssertCurveValues(clip, "component/basic/stalk/bottom", "position.x",
+            AssertCurveValues(clip, StalkBottomPath, "position.x",
                 40.25f, 41.3f, 43.35f, 41.2f, 40.25f);
-            AssertCurveValues(clip, "component/basic/stalk/bottom", "position.y",
+            AssertCurveValues(clip, StalkBottomPath, "position.y",
                 57.9f, 56.95f, 58.4f, 56.95f, 57.9f);
         }
 
@@ -285,25 +323,69 @@ namespace Tests.EditMode
         public void HeadAttachmentAndCurves_UseSourceReanimationCoordinates()
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
-            var head = prefab.transform.Find("component/basic/head").GetComponent<SpriteTransform>();
+            var head = prefab.transform.Find(HeadAttachmentPath).GetComponent<SpriteTransform>();
             Assert.That(head.providesChildSpritePosition, Is.True);
+            Assert.That(head.providesChildSpriteAffine, Is.True);
             Assert.That(head.spritePosition.x, Is.EqualTo(37.6f).Within(0.000001f));
             Assert.That(head.spritePosition.y, Is.EqualTo(48.7f).Within(0.000001f));
+            Assert.That(head.spriteScale, Is.EqualTo(new Vector2(100f, 100f)));
+            Assert.That(head.spriteSkew, Is.EqualTo(Vector2.zero));
 
             var idle = AssetDatabase.LoadAssetAtPath<AnimationClip>($"{AnimationDirectory}/idle.anim");
-            AssertFirstCurveValue(idle, "component/basic/head", "position.x", 37.6f);
-            AssertFirstCurveValue(idle, "component/basic/head", "position.y", 48.7f);
+            AssertFirstCurveValue(idle, HeadAttachmentPath, "position.x", 37.6f);
+            AssertFirstCurveValue(idle, HeadAttachmentPath, "position.y", 48.7f);
 
             var headIdle = AssetDatabase.LoadAssetAtPath<AnimationClip>($"{AnimationDirectory}/head_idle.anim");
-            AssertFirstCurveValue(headIdle, "component/basic/head/pod/head", "position.x", 38.55f);
-            AssertFirstCurveValue(headIdle, "component/basic/head/pod/head", "position.y", 34.05f);
-            AssertFirstCurveValue(headIdle, "component/basic/head/pod/mouth", "position.x", 61.55f);
-            AssertFirstCurveValue(headIdle, "component/basic/head/sprout", "position.x", 15.95f);
+            AssertFirstCurveValue(headIdle, HeadPath, "position.x", 38.55f);
+            AssertFirstCurveValue(headIdle, HeadPath, "position.y", 34.05f);
+            AssertFirstCurveValue(headIdle, MouthPath, "position.x", 61.55f);
+            AssertFirstCurveValue(headIdle, SproutPath, "position.x", 15.95f);
 
             var shoot = AssetDatabase.LoadAssetAtPath<AnimationClip>($"{AnimationDirectory}/shoot.anim");
-            AssertFirstCurveValue(shoot, "component/basic/head/pod/head", "position.y", 32f);
-            AssertFirstCurveValue(shoot, "component/basic/head/pod/mouth", "position.y", 27.5f);
-            AssertFirstCurveValue(shoot, "component/basic/head/sprout", "position.x", 15.7f);
+            AssertFirstCurveValue(shoot, HeadPath, "position.y", 32f);
+            AssertFirstCurveValue(shoot, MouthPath, "position.y", 27.5f);
+            AssertFirstCurveValue(shoot, SproutPath, "position.x", 15.7f);
+        }
+
+        [Test]
+        public void HeadSubAnimation_InheritsLiveAttachmentMotion()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
+            var instance = Object.Instantiate(prefab);
+            try
+            {
+                var animator = instance.GetComponent<Animator>();
+                if (animator != null) animator.enabled = false;
+
+                var attachment = instance.transform.Find(HeadAttachmentPath)
+                    .GetComponent<SpriteTransform>();
+                var head = instance.transform.Find(HeadPath)
+                    .GetComponent<SpriteTransform>();
+                attachment.Apply();
+                head.Apply();
+                var localBefore = head.transform.localPosition;
+                var worldBefore = head.transform.position;
+
+                attachment.position += new Vector2(2.5f, -1.75f);
+                attachment.Apply();
+                head.Apply();
+                var expectedWorld = attachment.NativeContent.TransformPoint(localBefore);
+
+                Assert.That(head.transform.localPosition.x,
+                    Is.EqualTo(localBefore.x).Within(0.0001f));
+                Assert.That(head.transform.localPosition.y,
+                    Is.EqualTo(localBefore.y).Within(0.0001f));
+                Assert.That(head.transform.position.x,
+                    Is.EqualTo(expectedWorld.x).Within(0.0001f));
+                Assert.That(head.transform.position.y,
+                    Is.EqualTo(expectedWorld.y).Within(0.0001f));
+                Assert.That(Vector3.Distance(head.transform.position, worldBefore),
+                    Is.GreaterThan(0.1f));
+            }
+            finally
+            {
+                Object.DestroyImmediate(instance);
+            }
         }
 
         [Test]
@@ -359,9 +441,9 @@ namespace Tests.EditMode
                 int shootState = Animator.StringToHash("shoot");
                 int headIdleState = Animator.StringToHash("head_idle");
                 int shootIdleState = Animator.StringToHash("shoot_idle");
-                var stalkTop = instance.transform.Find("component/basic/stalk/top")
+                var stalkTop = instance.transform.Find(StalkTopPath)
                     .GetComponent<SpriteTransform>();
-                var headAttachment = instance.transform.Find("component/basic/head")
+                var headAttachment = instance.transform.Find(HeadAttachmentPath)
                     .GetComponent<SpriteTransform>();
 
                 animator.Update(0.25f);
@@ -374,7 +456,6 @@ namespace Tests.EditMode
                 float stalkPositionBeforeShoot = stalkTop.position.x;
                 float attachmentPositionBeforeShoot = headAttachment.position.x;
 
-                LogAssert.Expect(LogType.Exception, new Regex("NullReferenceException"));
                 animator.SetTrigger(shootTrigger);
                 animator.Update(0.01f);
                 animator.Update(0.01f);
@@ -413,9 +494,9 @@ namespace Tests.EditMode
                     "A latched shoot trigger immediately entered shoot again after returning to the empty overlay.");
                 Assert.That(animator.GetLayerWeight(shootLayer), Is.EqualTo(0f).Within(0.000001f));
 
-                var headPod = instance.transform.Find("component/basic/head/pod/head")
+                var headPod = instance.transform.Find(HeadPath)
                     .GetComponent<SpriteTransform>();
-                var mouth = instance.transform.Find("component/basic/head/pod/mouth")
+                var mouth = instance.transform.Find(MouthPath)
                     .GetComponent<SpriteTransform>();
                 Vector4 headPoseBefore = new(
                     headPod.position.x,
@@ -466,24 +547,60 @@ namespace Tests.EditMode
             string expectedSpriteName,
             SpriteRenderer headRenderer,
             Vector2 expectedPosition,
-            Vector2 expectedScale)
+            Vector2 expectedScale,
+            Vector2 expectedLocalPosition,
+            Vector2 expectedLocalScale)
         {
             Assert.That(target, Is.Not.Null);
             Assert.That(target.gameObject.activeSelf, Is.False);
-            var renderer = target.GetComponent<SpriteRenderer>();
             var spriteTransform = target.GetComponent<SpriteTransform>();
+            var renderer = spriteTransform.VisualRenderer;
             Assert.That(renderer.sprite.name, Is.EqualTo(expectedSpriteName));
             Assert.That(renderer.sharedMaterial, Is.SameAs(headRenderer.sharedMaterial));
             Assert.That(renderer.sortingLayerID, Is.EqualTo(headRenderer.sortingLayerID));
             Assert.That(renderer.sortingOrder, Is.EqualTo(10));
             Assert.That(spriteTransform.position, Is.EqualTo(expectedPosition));
             Assert.That(spriteTransform.scale, Is.EqualTo(expectedScale));
+            Assert.That(target.localPosition.x,
+                Is.EqualTo(expectedLocalPosition.x).Within(0.0001f));
+            Assert.That(target.localPosition.y,
+                Is.EqualTo(expectedLocalPosition.y).Within(0.0001f));
+            Assert.That(target.localScale.x,
+                Is.EqualTo(expectedLocalScale.x).Within(0.0001f));
+            Assert.That(target.localScale.y,
+                Is.EqualTo(expectedLocalScale.y).Within(0.0001f));
             Assert.That(spriteTransform.updatePosition, Is.True);
-            Assert.That(target.GetComponent<CenterInheritedSpritePivot>(), Is.Not.Null);
-            spriteTransform.Apply();
-            var renderedCenter = renderer.bounds.center;
-            Assert.That(target.position.x, Is.EqualTo(renderedCenter.x).Within(0.0001f));
-            Assert.That(target.position.y, Is.EqualTo(renderedCenter.y).Within(0.0001f));
+            Assert.That(spriteTransform.NativeContent, Is.Not.Null);
+        }
+
+        [Test]
+        public void Prefab_UsesOneNativeContentLayerPerSpriteTransform()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
+            var spriteTransforms = prefab.GetComponentsInChildren<SpriteTransform>(true);
+
+            Assert.That(spriteTransforms, Is.Not.Empty);
+            Assert.That(prefab.transform.Find(BasicPath)?.GetComponent<SpriteTransform>(), Is.Not.Null);
+            var headContent = prefab.transform.Find(HeadAttachmentVisualPath);
+            Assert.That(headContent, Is.Not.Null);
+            Assert.That(headContent.Find("pod"), Is.Null);
+            Assert.That(prefab.transform.Find(HeadPath)?.parent, Is.SameAs(headContent));
+            Assert.That(prefab.transform.Find(MouthPath)?.parent, Is.SameAs(headContent));
+            Assert.That(prefab.transform.Find(SproutPath)?.parent, Is.SameAs(headContent));
+            foreach (var spriteTransform in spriteTransforms)
+            {
+                var path = AnimationUtility.CalculateTransformPath(
+                    spriteTransform.transform, prefab.transform);
+                Assert.That(spriteTransform.NativeContent, Is.Not.Null,
+                    path);
+                Assert.That(spriteTransform.NativeContent.parent, Is.SameAs(spriteTransform.transform),
+                    path);
+                Assert.That(spriteTransform.NativeContent.localPosition, Is.EqualTo(Vector3.zero),
+                    path);
+                Assert.That(spriteTransform.GetComponent<SpriteRenderer>(), Is.Null,
+                    path);
+                Assert.That(spriteTransform.transform.childCount, Is.EqualTo(1), path);
+            }
         }
 
         private static void AssertFirstCurveValue(

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PvZ.Gameplay.Plants;
 using PvZ.Gameplay.Plants.Types;
 using PvZ.Gameplay.Plants.Abilities;
@@ -7,6 +8,7 @@ using PvZ.Presentation;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
+using ComponentUtility = UnityEditorInternal.ComponentUtility;
 
 public static class SunFlowerPrefabOptimizer
 {
@@ -19,109 +21,56 @@ public static class SunFlowerPrefabOptimizer
     private const string SharedMaterialPath = "Assets/Prefab/Plant/SunFlower/Material/LightnessSkew 1.mat";
     private const string Blink1SpritePath = "Assets/Prefab/Plant/SunFlower/Sprite/SunFlower_blink1.png";
     private const string Blink2SpritePath = "Assets/Prefab/Plant/SunFlower/Sprite/SunFlower_blink2.png";
-    private const string HeadPath = "component/basic/head/SunFlower_head";
+    private const string NativeContent = SpriteTransform.NativeContentName;
     private const string BasicPath = "component/basic";
+    private const string BasicVisualPath = BasicPath + "/" + NativeContent;
+    private const string HeadPath = BasicVisualPath + "/head/SunFlower_head";
+    private const string HeadVisualPath = HeadPath + "/" + NativeContent;
     private const string LegacyNestedHeadPath = "component/basic/head/face/SunFlower_head";
     private const string LegacyBlinkRootPath = "component/basic/head/blink";
     private const string LegacyNestedBlinkRootPath = "component/basic/head/face/blink";
     private const string LegacyFacePath = "component/basic/head/face";
     private const int DefaultPoseFrame = 5;
-    private const string OptimizationVersion = "sunflower-structure-v14-original-ground-anchor";
+    private const string OptimizationVersion = "sunflower-structure-v18-global-source-affine";
     private static readonly Vector2 SpritePosition = new(40.4f, 42.6f);
 
     private static readonly Dictionary<string, string> PartPaths = new()
     {
         { "SunFlower_head", HeadPath },
-        { "SunFlower_toppetals", "component/basic/head/SunFlower_toppetals" },
-        { "SunFlower_bottompetals", "component/basic/head/SunFlower_bottompetals" },
-        { "SunFlower_rightpetal1", "component/basic/head/petals/right/SunFlower_rightpetal1" },
-        { "SunFlower_rightpetal2", "component/basic/head/petals/right/SunFlower_rightpetal2" },
-        { "SunFlower_rightpetal3", "component/basic/head/petals/right/SunFlower_rightpetal3" },
-        { "SunFlower_rightpetal4", "component/basic/head/petals/right/SunFlower_rightpetal4" },
-        { "SunFlower_rightpetal5", "component/basic/head/petals/right/SunFlower_rightpetal5" },
-        { "SunFlower_rightpetal6", "component/basic/head/petals/right/SunFlower_rightpetal6" },
-        { "SunFlower_rightpetal7", "component/basic/head/petals/right/SunFlower_rightpetal7" },
-        { "SunFlower_rightpetal8", "component/basic/head/petals/right/SunFlower_rightpetal8" },
-        { "SunFlower_rightpetal9", "component/basic/head/petals/right/SunFlower_rightpetal9" },
-        { "SunFlower_leftpetal1", "component/basic/head/petals/left/SunFlower_leftpetal1" },
-        { "SunFlower_leftpetal2", "component/basic/head/petals/left/SunFlower_leftpetal2" },
-        { "SunFlower_leftpetal3", "component/basic/head/petals/left/SunFlower_leftpetal3" },
-        { "SunFlower_leftpetal4", "component/basic/head/petals/left/SunFlower_leftpetal4" },
-        { "SunFlower_leftpetal5", "component/basic/head/petals/left/SunFlower_leftpetal5" },
-        { "SunFlower_leftpetal6", "component/basic/head/petals/left/SunFlower_leftpetal6" },
-        { "SunFlower_leftpetal7", "component/basic/head/petals/left/SunFlower_leftpetal7" },
-        { "SunFlower_leftpetal8", "component/basic/head/petals/left/SunFlower_leftpetal8" },
-        { "SunFlower_stalk_top", "component/basic/stalk/top" },
-        { "SunFlower_stalk_bottom", "component/basic/stalk/bottom" },
-        { "SunFlower_frontleaf", "component/basic/leaf/frontleaf/frontleaf" },
-        { "SunFlower_frontleaf_left_tip", "component/basic/leaf/frontleaf/left_tip" },
-        { "SunFlower_frontleaf_right_tip", "component/basic/leaf/frontleaf/right_tip" },
-        { "SunFlower_backleaf", "component/basic/leaf/backleaf/backleaf" },
-        { "SunFlower_backleaf_left_tip", "component/basic/leaf/backleaf/left_tip" },
-        { "SunFlower_backleaf_right_tip", "component/basic/leaf/backleaf/right_tip" }
+        { "SunFlower_toppetals", BasicVisualPath + "/head/SunFlower_toppetals" },
+        { "SunFlower_bottompetals", BasicVisualPath + "/head/SunFlower_bottompetals" },
+        { "SunFlower_rightpetal1", BasicVisualPath + "/head/petals/right/SunFlower_rightpetal1" },
+        { "SunFlower_rightpetal2", BasicVisualPath + "/head/petals/right/SunFlower_rightpetal2" },
+        { "SunFlower_rightpetal3", BasicVisualPath + "/head/petals/right/SunFlower_rightpetal3" },
+        { "SunFlower_rightpetal4", BasicVisualPath + "/head/petals/right/SunFlower_rightpetal4" },
+        { "SunFlower_rightpetal5", BasicVisualPath + "/head/petals/right/SunFlower_rightpetal5" },
+        { "SunFlower_rightpetal6", BasicVisualPath + "/head/petals/right/SunFlower_rightpetal6" },
+        { "SunFlower_rightpetal7", BasicVisualPath + "/head/petals/right/SunFlower_rightpetal7" },
+        { "SunFlower_rightpetal8", BasicVisualPath + "/head/petals/right/SunFlower_rightpetal8" },
+        { "SunFlower_rightpetal9", BasicVisualPath + "/head/petals/right/SunFlower_rightpetal9" },
+        { "SunFlower_leftpetal1", BasicVisualPath + "/head/petals/left/SunFlower_leftpetal1" },
+        { "SunFlower_leftpetal2", BasicVisualPath + "/head/petals/left/SunFlower_leftpetal2" },
+        { "SunFlower_leftpetal3", BasicVisualPath + "/head/petals/left/SunFlower_leftpetal3" },
+        { "SunFlower_leftpetal4", BasicVisualPath + "/head/petals/left/SunFlower_leftpetal4" },
+        { "SunFlower_leftpetal5", BasicVisualPath + "/head/petals/left/SunFlower_leftpetal5" },
+        { "SunFlower_leftpetal6", BasicVisualPath + "/head/petals/left/SunFlower_leftpetal6" },
+        { "SunFlower_leftpetal7", BasicVisualPath + "/head/petals/left/SunFlower_leftpetal7" },
+        { "SunFlower_leftpetal8", BasicVisualPath + "/head/petals/left/SunFlower_leftpetal8" },
+        { "SunFlower_stalk_top", BasicVisualPath + "/stalk/top" },
+        { "SunFlower_stalk_bottom", BasicVisualPath + "/stalk/bottom" },
+        { "SunFlower_frontleaf", BasicVisualPath + "/leaf/frontleaf/frontleaf" },
+        { "SunFlower_frontleaf_left_tip", BasicVisualPath + "/leaf/frontleaf/left_tip" },
+        { "SunFlower_frontleaf_right_tip", BasicVisualPath + "/leaf/frontleaf/right_tip" },
+        { "SunFlower_backleaf", BasicVisualPath + "/leaf/backleaf/backleaf" },
+        { "SunFlower_backleaf_left_tip", BasicVisualPath + "/leaf/backleaf/left_tip" },
+        { "SunFlower_backleaf_right_tip", BasicVisualPath + "/leaf/backleaf/right_tip" }
     };
 
     private static readonly Dictionary<string, string> BlinkPartPaths = new()
     {
-        { "SunFlower_blink1", "component/basic/head/SunFlower_head/blink/SunFlower_blink1" },
-        { "SunFlower_blink2", "component/basic/head/SunFlower_head/blink/SunFlower_blink2" }
+        { "SunFlower_blink1", HeadVisualPath + "/blink/SunFlower_blink1" },
+        { "SunFlower_blink2", HeadVisualPath + "/blink/SunFlower_blink2" }
     };
-
-    [InitializeOnLoadMethod]
-    private static void SchedulePendingOptimization()
-    {
-        EditorApplication.delayCall += OptimizePendingAssets;
-    }
-
-    private static void OptimizePendingAssets()
-    {
-        if (EditorApplication.isCompiling || EditorApplication.isUpdating || EditorApplication.isPlayingOrWillChangePlaymode)
-        {
-            EditorApplication.delayCall += OptimizePendingAssets;
-            return;
-        }
-
-        var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
-        var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(IdleClipPath);
-        if (prefab == null || clip == null) return;
-
-        if (AssetDatabase.LoadAssetAtPath<Sprite>(Blink1SpritePath) == null ||
-            AssetDatabase.LoadAssetAtPath<Sprite>(Blink2SpritePath) == null)
-        {
-            EditorApplication.delayCall += OptimizePendingAssets;
-            return;
-        }
-
-        var sharedMaterial = AssetDatabase.LoadAssetAtPath<Material>(SharedMaterialPath);
-        var requiresOptimization = prefab.GetComponent<SunFlower>() == null ||
-                                   prefab.transform.Find("component/basic/head") == null ||
-                                   HasInvalidSharedMaterial(prefab.transform, sharedMaterial) ||
-                                   AssetImporter.GetAtPath(PrefabPath).userData != OptimizationVersion;
-        if (!requiresOptimization)
-        {
-            foreach (var binding in AnimationUtility.GetCurveBindings(clip))
-            {
-                if (binding.path.StartsWith("SunFlower_", StringComparison.Ordinal) ||
-                    binding.type == typeof(Transform) ||
-                    binding.type == typeof(SpriteRenderer))
-                {
-                    requiresOptimization = true;
-                    break;
-                }
-            }
-        }
-
-        if (!requiresOptimization) return;
-
-        try
-        {
-            OptimizeSunFlower();
-        }
-        catch (Exception exception)
-        {
-            Debug.LogException(exception);
-        }
-    }
 
     [MenuItem("Tools/PvZ/Optimize SunFlower Prefab")]
     public static void OptimizeSunFlower()
@@ -139,6 +88,7 @@ public static class SunFlowerPrefabOptimizer
 
         ConvertAnimationBindings(clip);
         MigrateHeadAnimationBindings(clip);
+        MigrateBasicContentBindings(clip);
 
         var root = PrefabUtility.LoadPrefabContents(PrefabPath);
         try
@@ -149,6 +99,7 @@ public static class SunFlowerPrefabOptimizer
             ConfigureParts(root.transform, clip);
             ConfigureHeadMotion(root.transform, clip);
             ConfigureBlinkParts(root.transform);
+            MigrateToNativeHierarchy(root.transform);
             ConfigureAnchors(root.transform);
 
             PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
@@ -190,7 +141,9 @@ public static class SunFlowerPrefabOptimizer
             var existingTarget = root.Find(part.Value);
             if (existingTarget != null) continue;
 
-            if (!originalParts.TryGetValue(part.Key, out var partTransform))
+            var legacyTargetPath = BasicPath + part.Value.Substring(BasicVisualPath.Length);
+            var partTransform = root.Find(legacyTargetPath);
+            if (partTransform == null && !originalParts.TryGetValue(part.Key, out partTransform))
             {
                 throw new MissingReferenceException($"SunFlower prefab is missing part '{part.Key}'.");
             }
@@ -212,17 +165,7 @@ public static class SunFlowerPrefabOptimizer
             throw new MissingReferenceException("SunFlower head hierarchy is incomplete.");
         }
 
-        var blinkRoot = head.Find("blink") ??
-                        root.Find(LegacyNestedBlinkRootPath) ??
-                        root.Find(LegacyBlinkRootPath);
-        if (blinkRoot == null)
-        {
-            blinkRoot = GetOrCreateChild(head, "blink");
-        }
-        else if (blinkRoot.parent != head)
-        {
-            blinkRoot.SetParent(head, false);
-        }
+        ConsolidateBlinkHierarchy(root, head);
 
         var legacyFace = root.Find(LegacyFacePath);
         if (legacyFace == null) return;
@@ -236,6 +179,58 @@ public static class SunFlowerPrefabOptimizer
         if (legacyFace.childCount == 0)
         {
             UnityEngine.Object.DestroyImmediate(legacyFace.gameObject);
+        }
+    }
+
+    private static void ConsolidateBlinkHierarchy(Transform root, Transform head)
+    {
+        var nativeHeadContent = head.Find(NativeContent);
+        var blinkRoots = root.GetComponentsInChildren<Transform>(true)
+            .Where(item => item.name == "blink")
+            .ToList();
+        var blinkRoot = nativeHeadContent?.Find("blink") ??
+                        head.Find("blink") ??
+                        root.Find(LegacyNestedBlinkRootPath) ??
+                        root.Find(LegacyBlinkRootPath) ??
+                        blinkRoots.FirstOrDefault();
+        if (blinkRoot == null)
+        {
+            blinkRoot = GetOrCreateChild(head, "blink");
+            blinkRoots.Add(blinkRoot);
+        }
+        else if (blinkRoot.parent != head && blinkRoot.parent != nativeHeadContent)
+        {
+            blinkRoot.SetParent(head, false);
+        }
+
+        foreach (var sourceName in BlinkPartPaths.Keys)
+        {
+            var candidates = root.GetComponentsInChildren<Transform>(true)
+                .Where(item => item.name == sourceName)
+                .ToArray();
+            var selected = candidates.FirstOrDefault(item =>
+                               item.GetComponent<SpriteTransform>()?.NativeContent != null) ??
+                           candidates.FirstOrDefault();
+            if (selected != null && selected.parent != blinkRoot)
+            {
+                selected.SetParent(blinkRoot, false);
+            }
+
+            foreach (var duplicate in candidates)
+            {
+                if (duplicate != selected)
+                {
+                    UnityEngine.Object.DestroyImmediate(duplicate.gameObject);
+                }
+            }
+        }
+
+        foreach (var duplicateRoot in blinkRoots)
+        {
+            if (duplicateRoot != blinkRoot)
+            {
+                UnityEngine.Object.DestroyImmediate(duplicateRoot.gameObject);
+            }
         }
     }
 
@@ -267,7 +262,7 @@ public static class SunFlowerPrefabOptimizer
 
         var anchors = GetOrCreatePath(root.transform, "component/anchors");
         var sunAnchor = GetOrCreateChild(anchors, "Sun_Anchor");
-        sunAnchor.localPosition = new Vector3(0f, 25f, 0f);
+        sunAnchor.localPosition = Vector3.zero;
         var legacyShadowAnchor = anchors.Find("Shadow_Anchor");
         if (legacyShadowAnchor != null)
         {
@@ -367,6 +362,9 @@ public static class SunFlowerPrefabOptimizer
         var defaultPoseScale = new Vector2(
             EvaluateFrame(clip, HeadPath, "scale.x", defaultPoseTime, 100f),
             EvaluateFrame(clip, HeadPath, "scale.y", defaultPoseTime, 100f));
+        var defaultPoseSkew = new Vector2(
+            EvaluateFrame(clip, HeadPath, "skew.x", defaultPoseTime, 0f),
+            EvaluateFrame(clip, HeadPath, "skew.y", defaultPoseTime, 0f));
 
         var headTransform = GetOrAddComponent<SpriteTransform>(head.gameObject);
         headTransform.enabled = true;
@@ -374,7 +372,10 @@ public static class SunFlowerPrefabOptimizer
         headTransform.scale = defaultPoseScale;
         headTransform.updatePosition = true;
         headTransform.providesChildSpritePosition = true;
+        headTransform.providesChildSpriteAffine = true;
         headTransform.spritePosition = defaultPosePosition;
+        headTransform.spriteScale = defaultPoseScale;
+        headTransform.spriteSkew = defaultPoseSkew;
         head.localRotation = Quaternion.identity;
         head.localScale = Vector3.one;
         headTransform.Apply();
@@ -429,23 +430,6 @@ public static class SunFlowerPrefabOptimizer
         return fallback;
     }
 
-    private static bool HasInvalidSharedMaterial(Transform root, Material sharedMaterial)
-    {
-        if (sharedMaterial == null) return true;
-
-        foreach (var targetPath in EnumerateVisualPartPaths())
-        {
-            var target = root.Find(targetPath);
-            var renderer = target != null ? target.GetComponent<SpriteRenderer>() : null;
-            if (renderer == null || renderer.sprite == null || renderer.sharedMaterial != sharedMaterial)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private static void EnsureSharedMaterial(Transform root)
     {
         var sharedMaterial = AssetDatabase.LoadAssetAtPath<Material>(SharedMaterialPath);
@@ -457,7 +441,10 @@ public static class SunFlowerPrefabOptimizer
         foreach (var part in PartPaths)
         {
             var target = root.Find(part.Value);
-            var renderer = target != null ? target.GetComponent<SpriteRenderer>() : null;
+            var spriteTransform = target != null ? target.GetComponent<SpriteTransform>() : null;
+            var renderer = spriteTransform != null
+                ? spriteTransform.VisualRenderer
+                : target != null ? target.GetComponent<SpriteRenderer>() : null;
             if (renderer == null || renderer.sprite == null)
             {
                 throw new MissingReferenceException($"SunFlower part '{part.Value}' requires a SpriteRenderer and Sprite.");
@@ -486,13 +473,17 @@ public static class SunFlowerPrefabOptimizer
             BlinkPartPaths["SunFlower_blink1"],
             blink1,
             sharedMaterial,
-            new Vector2(39.1f, 31.5f));
+            new Vector2(42.97259f, 26.39815f),
+            new Vector2(80f, 80.56224f),
+            16);
         ConfigureBlinkPart(
             root,
             BlinkPartPaths["SunFlower_blink2"],
             blink2,
             sharedMaterial,
-            new Vector2(39.1f, 31.5f));
+            new Vector2(42.97259f, 26.39815f),
+            new Vector2(80f, 80.56224f),
+            15);
     }
 
     private static void EnsureCenteredSpritePivot(string assetPath)
@@ -520,7 +511,9 @@ public static class SunFlowerPrefabOptimizer
         string path,
         Sprite sprite,
         Material sharedMaterial,
-        Vector2 animationPosition)
+        Vector2 animationPosition,
+        Vector2 animationScale,
+        int sortingOrder)
     {
         var target = GetOrCreatePath(root, path);
         SetLayerRecursively(target.gameObject, root.gameObject.layer);
@@ -528,17 +521,19 @@ public static class SunFlowerPrefabOptimizer
         var renderer = GetOrAddComponent<SpriteRenderer>(target.gameObject);
         renderer.sprite = sprite;
         renderer.sharedMaterial = sharedMaterial;
-        renderer.sortingOrder = 10;
+        renderer.sortingOrder = sortingOrder;
 
         var spriteTransform = GetOrAddComponent<SpriteTransform>(target.gameObject);
         spriteTransform.enabled = true;
         spriteTransform.position = animationPosition;
-        spriteTransform.scale = new Vector2(100f, 100f);
+        spriteTransform.scale = animationScale;
         spriteTransform.skew = Vector2.zero;
         spriteTransform.brightness = 1f;
         spriteTransform.alpha = 1f;
         spriteTransform.alphaCoef = 1f;
         spriteTransform.updatePosition = true;
+        EnsureNativeHierarchy(spriteTransform);
+        renderer = spriteTransform.VisualRenderer;
         spriteTransform.Apply();
 
         target.gameObject.SetActive(false);
@@ -637,6 +632,99 @@ public static class SunFlowerPrefabOptimizer
     {
         foreach (var path in PartPaths.Values) yield return path;
         foreach (var path in BlinkPartPaths.Values) yield return path;
+    }
+
+    private static void MigrateToNativeHierarchy(Transform root)
+    {
+        var spriteTransforms = root.GetComponentsInChildren<SpriteTransform>(true)
+            .OrderByDescending(item => GetDepth(item.transform))
+            .ToArray();
+
+        foreach (var spriteTransform in spriteTransforms)
+        {
+            EnsureNativeHierarchy(spriteTransform);
+        }
+
+        foreach (var spriteTransform in spriteTransforms.OrderBy(item => GetDepth(item.transform)))
+        {
+            spriteTransform.RefreshPositionReference();
+            spriteTransform.Apply();
+            EditorUtility.SetDirty(spriteTransform);
+        }
+    }
+
+    private static bool EnsureNativeHierarchy(SpriteTransform spriteTransform)
+    {
+        var pivot = spriteTransform.transform;
+        var content = spriteTransform.NativeContent;
+        var changed = false;
+
+        if (content == null || content.parent != pivot)
+        {
+            content = pivot.Find(NativeContent);
+        }
+
+        if (content == null)
+        {
+            content = new GameObject(NativeContent) { layer = pivot.gameObject.layer }.transform;
+            content.SetParent(pivot, false);
+            changed = true;
+        }
+        else if (content.gameObject.layer != pivot.gameObject.layer)
+        {
+            content.gameObject.layer = pivot.gameObject.layer;
+            changed = true;
+        }
+
+        var directChildren = new List<Transform>();
+        foreach (Transform child in pivot)
+        {
+            if (child != content) directChildren.Add(child);
+        }
+
+        foreach (var child in directChildren)
+        {
+            child.SetParent(content, false);
+            changed = true;
+        }
+
+        var pivotRenderer = pivot.GetComponent<SpriteRenderer>();
+        var contentRenderer = content.GetComponent<SpriteRenderer>();
+        if (pivotRenderer != null)
+        {
+            ComponentUtility.CopyComponent(pivotRenderer);
+            if (contentRenderer == null)
+            {
+                ComponentUtility.PasteComponentAsNew(content.gameObject);
+            }
+            else
+            {
+                ComponentUtility.PasteComponentValues(contentRenderer);
+            }
+
+            UnityEngine.Object.DestroyImmediate(pivotRenderer);
+            changed = true;
+        }
+
+        if (spriteTransform.NativeContent != content)
+        {
+            spriteTransform.ConfigureNativeHierarchy(content);
+            changed = true;
+        }
+
+        return changed;
+    }
+
+    private static int GetDepth(Transform target)
+    {
+        var depth = 0;
+        while (target.parent != null)
+        {
+            depth++;
+            target = target.parent;
+        }
+
+        return depth;
     }
 
     private static void ClearClip(AnimationClip clip)
@@ -823,6 +911,19 @@ public static class SunFlowerPrefabOptimizer
     private static void ConfigureAnchors(Transform root)
     {
         var anchors = root.Find("component/anchors");
+        var sunAnchor = anchors != null ? anchors.Find("Sun_Anchor") : null;
+        var head = root.Find(HeadPath);
+        if (anchors == null || sunAnchor == null || head == null)
+        {
+            throw new MissingReferenceException("SunFlower production anchor hierarchy is incomplete.");
+        }
+
+        // The sun is centered on its root Transform. Keep production independent
+        // from the animated head, but place its fixed origin at the default head
+        // center instead of the old unconverted (0, 25) plant-space value.
+        sunAnchor.localPosition = anchors.InverseTransformPoint(head.position);
+        sunAnchor.localRotation = Quaternion.identity;
+        sunAnchor.localScale = Vector3.one;
         SetLayerRecursively(anchors.gameObject, root.gameObject.layer);
     }
 
@@ -877,6 +978,31 @@ public static class SunFlowerPrefabOptimizer
 
             var migratedBinding = binding;
             migratedBinding.path = HeadPath;
+            migrations.Add((binding, migratedBinding, AnimationUtility.GetEditorCurve(clip, binding)));
+        }
+
+        foreach (var migration in migrations)
+        {
+            AnimationUtility.SetEditorCurve(clip, migration.OldBinding, null);
+            AnimationUtility.SetEditorCurve(clip, migration.NewBinding, migration.Curve);
+        }
+    }
+
+    private static void MigrateBasicContentBindings(AnimationClip clip)
+    {
+        var legacyPrefix = BasicPath + "/";
+        var nativePrefix = BasicVisualPath + "/";
+        var migrations = new List<(EditorCurveBinding OldBinding, EditorCurveBinding NewBinding, AnimationCurve Curve)>();
+        foreach (var binding in AnimationUtility.GetCurveBindings(clip))
+        {
+            if (!binding.path.StartsWith(legacyPrefix, StringComparison.Ordinal) ||
+                binding.path.StartsWith(nativePrefix, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            var migratedBinding = binding;
+            migratedBinding.path = BasicVisualPath + binding.path.Substring(BasicPath.Length);
             migrations.Add((binding, migratedBinding, AnimationUtility.GetEditorCurve(clip, binding)));
         }
 

@@ -47,25 +47,76 @@ namespace Tests.EditMode
                 new Vector2(79.998779296875f, 79.998779296875f));
             var bodyTransform = body.GetComponent<SpriteTransform>();
             Assert.That(bodyTransform.providesChildSpritePosition, Is.True);
+            Assert.That(bodyTransform.providesChildSpriteAffine, Is.True);
             Assert.That(bodyTransform.spritePosition, Is.EqualTo(bodyTransform.position));
+            Assert.That(bodyTransform.spriteScale, Is.EqualTo(bodyTransform.scale));
+            Assert.That(bodyTransform.spriteSkew, Is.EqualTo(bodyTransform.skew));
 
             AssertRawTransform(blink1, new Vector2(41.6f, 54f), null);
             AssertRawTransform(blink2, new Vector2(41.45f, 53.9f), null);
             Assert.That(blink1.gameObject.activeSelf, Is.False);
             Assert.That(blink2.gameObject.activeSelf, Is.False);
-            Assert.That(blink1.localPosition, Is.EqualTo(new Vector3(-0.1f, 2.35f, 0f)));
-            Assert.That(blink2.localPosition, Is.EqualTo(new Vector3(-0.25f, 2.45f, 0f)));
+            Assert.That(blink1.localPosition.x, Is.EqualTo(-0.1250057f).Within(0.0001f));
+            Assert.That(blink1.localPosition.y, Is.EqualTo(2.9375443f).Within(0.0001f));
+            Assert.That(blink2.localPosition.x, Is.EqualTo(-0.31250566f).Within(0.0001f));
+            Assert.That(blink2.localPosition.y, Is.EqualTo(3.0625443f).Within(0.0001f));
 
             AssertRawTransform(sleep, new Vector2(41.45f, 54.2f),
                 new Vector2(82.14111328125f, 84.442138671875f));
             Assert.That(sleep.gameObject.activeSelf, Is.False);
             Assert.That(sleep.parent, Is.SameAs(body));
-            Assert.That(sleep.localPosition, Is.EqualTo(new Vector3(-0.25f, 2.15f, 0f)));
+            Assert.That(sleep.localPosition.x, Is.EqualTo(-0.31250566f).Within(0.0001f));
+            Assert.That(sleep.localPosition.y, Is.EqualTo(2.687535f).Within(0.0001f));
 
-            foreach (var transform in prefab.GetComponentsInChildren<Transform>(true))
+            foreach (var spriteTransform in prefab.GetComponentsInChildren<SpriteTransform>(true))
             {
-                Assert.That(transform.localScale, Is.EqualTo(Vector3.one), transform.name);
-                Assert.That(transform.localRotation, Is.EqualTo(Quaternion.identity), transform.name);
+                Assert.That(spriteTransform.NativeContent, Is.Not.Null, spriteTransform.name);
+                Assert.That(spriteTransform.NativeContent.localPosition, Is.EqualTo(Vector3.zero),
+                    spriteTransform.name);
+                Assert.That(spriteTransform.NativeContent.localScale, Is.EqualTo(Vector3.one),
+                    spriteTransform.name);
+            }
+        }
+
+        [Test]
+        public void BlinkSprites_InheritBodyMovement()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
+            Assert.That(prefab, Is.Not.Null);
+            var instance = Object.Instantiate(prefab);
+
+            try
+            {
+                var body = instance.transform.Find(BodyPath);
+                var blink = instance.transform.Find(BlinkPath + "/SunShroom_blink1");
+                Assert.That(body, Is.Not.Null);
+                Assert.That(blink, Is.Not.Null);
+
+                var bodyTransform = body.GetComponent<SpriteTransform>();
+                var blinkTransform = blink.GetComponent<SpriteTransform>();
+                bodyTransform.Apply();
+                blinkTransform.Apply();
+
+                var initialBodyWorldPosition = body.position;
+                var initialBlinkWorldPosition = blink.position;
+                var initialBlinkLocalPosition = blink.localPosition;
+
+                bodyTransform.position += new Vector2(5f, -3f);
+                bodyTransform.Apply();
+                blinkTransform.Apply();
+
+                var bodyMovement = body.position - initialBodyWorldPosition;
+                var blinkMovement = blink.position - initialBlinkWorldPosition;
+                Assert.That(blink.localPosition.x,
+                    Is.EqualTo(initialBlinkLocalPosition.x).Within(0.0001f));
+                Assert.That(blink.localPosition.y,
+                    Is.EqualTo(initialBlinkLocalPosition.y).Within(0.0001f));
+                Assert.That(blinkMovement.x, Is.EqualTo(bodyMovement.x).Within(0.0001f));
+                Assert.That(blinkMovement.y, Is.EqualTo(bodyMovement.y).Within(0.0001f));
+            }
+            finally
+            {
+                Object.DestroyImmediate(instance);
             }
         }
 
