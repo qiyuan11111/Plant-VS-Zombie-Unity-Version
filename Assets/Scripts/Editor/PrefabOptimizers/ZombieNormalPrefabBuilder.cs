@@ -24,6 +24,11 @@ public static class ZombieNormalPrefabBuilder
     private const string SharedMaterialPath = "Assets/Material/LightnessSkew.mat";
     private const string GameConfigPath = "Assets/Resources/GameConfigObject.asset";
     private const string SortingLayer = "zombie-0";
+    private const string ComponentPath = "component";
+    private const string BasicPath = ComponentPath + "/basic";
+    private const string BasicVisualPath = BasicPath + "/" + SpriteTransform.NativeContentName;
+    private const string AnchorsPath = ComponentPath + "/anchors";
+    private const string PartPathPrefix = BasicVisualPath + "/";
 
     private readonly struct Part
     {
@@ -67,9 +72,10 @@ public static class ZombieNormalPrefabBuilder
 
         var idle = AssetDatabase.LoadAssetAtPath<AnimationClip>(IdlePath);
         if (idle == null) throw new MissingReferenceException($"Missing idle clip: {IdlePath}");
+        MigrateClipBindingsToStandardHierarchy(idle);
         var walk = CreateReanimationClip(WalkXmlPath, WalkPath, "walk", true);
         var controller = CreateController(idle, walk);
-        var prefab = CreatePrefab(idle, controller);
+        var prefab = CreatePrefab(walk, controller);
         ConnectGameConfig(prefab);
         Validate(prefab, idle, walk, controller);
 
@@ -325,7 +331,7 @@ public static class ZombieNormalPrefabBuilder
                 continue;
             }
 
-            var targetPath = ResolveWalkLayerPath(layerName);
+            var targetPath = PartPathPrefix + ResolveWalkLayerPath(layerName);
             SetLinearCurve(clip, targetPath, typeof(SpriteTransform), "position.x", CreateXmlCurve(frames, "posx"));
             SetLinearCurve(clip, targetPath, typeof(SpriteTransform), "position.y", CreateXmlCurve(frames, "posy"));
             SetLinearCurve(clip, targetPath, typeof(SpriteTransform), "scale.x", CreateXmlCurve(frames, "scalex"));
@@ -384,6 +390,49 @@ public static class ZombieNormalPrefabBuilder
         AnimationUtility.SetEditorCurve(clip, EditorCurveBinding.FloatCurve(path, type, propertyName), curve);
     }
 
+    private static void MigrateClipBindingsToStandardHierarchy(AnimationClip clip)
+    {
+        var partNames = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var part in Parts) partNames.Add(part.Name);
+
+        foreach (var oldBinding in AnimationUtility.GetCurveBindings(clip))
+        {
+            if (!partNames.Contains(oldBinding.path)) continue;
+            var curve = AnimationUtility.GetEditorCurve(clip, oldBinding);
+            var newBinding = oldBinding;
+            newBinding.path = PartPathPrefix + oldBinding.path;
+            AnimationUtility.SetEditorCurve(clip, oldBinding, null);
+            AnimationUtility.SetEditorCurve(clip, newBinding, curve);
+        }
+
+        foreach (var oldBinding in AnimationUtility.GetObjectReferenceCurveBindings(clip))
+        {
+            if (!partNames.Contains(oldBinding.path)) continue;
+            var keys = AnimationUtility.GetObjectReferenceCurve(clip, oldBinding);
+            var newBinding = oldBinding;
+            newBinding.path = PartPathPrefix + oldBinding.path;
+            AnimationUtility.SetObjectReferenceCurve(clip, oldBinding, null);
+            AnimationUtility.SetObjectReferenceCurve(clip, newBinding, keys);
+        }
+
+        EditorUtility.SetDirty(clip);
+        AssetDatabase.SaveAssetIfDirty(clip);
+    }
+
+    private static Vector2 ReadWalkSourceOrigin()
+    {
+        var xmlAbsolutePath = Path.Combine(Application.dataPath, WalkXmlPath.Substring("Assets/".Length));
+        var document = new XmlDocument();
+        document.Load(xmlAbsolutePath);
+        var firstGroundFrame = document.SelectSingleNode("/animate/layer[@name='_ground']/frame[1]");
+        if (firstGroundFrame == null)
+        {
+            throw new InvalidDataException("Walk XML has no _ground origin frame.");
+        }
+        return new Vector2(
+            ParseXmlFloat(firstGroundFrame, "posx"),
+            ParseXmlFloat(firstGroundFrame, "posy"));
+    }
     private static string ResolveWalkLayerPath(string layerName)
     {
         return layerName switch
@@ -429,11 +478,11 @@ public static class ZombieNormalPrefabBuilder
         return stateMachine.AddState(stateName);
     }
 
-    private static GameObject CreatePrefab(AnimationClip idle, RuntimeAnimatorController controller)
+    private static GameObject CreatePrefab(AnimationClip defaultPose, RuntimeAnimatorController controller)
     {
         if (AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath) != null)
         {
-            return UpdateExistingPrefab(idle, controller);
+            return UpdateExistingPrefab(defaultPose, controller);
         }
 
         var material = AssetDatabase.LoadAssetAtPath<Material>(SharedMaterialPath);
@@ -453,19 +502,14 @@ public static class ZombieNormalPrefabBuilder
             root.AddComponent<ZombieNormal>();
             root.AddComponent<SpriteGroup>();
 
-            var collider = root.AddComponent<BoxCollider2D>();
-            collider.isTrigger = true;
-            collider.offset = new Vector2(35f, -65f);
-            collider.size = new Vector2(45f, 105f);
+            ConfigureCollider(root);
+            SynchronizeParts(root.transform);
 
-            foreach (var part in Parts)
-            {
-                CreatePart(root.transform, part, zombieLayer, material);
-            }
+
 
             // Apply the authored first frame so the prefab thumbnail and scene view
             // match the state that the Animator produces at runtime.
-            idle.SampleAnimation(root, 0f);
+            defaultPose.SampleAnimation(root, 0f);
             foreach (var spriteTransform in root.GetComponentsInChildren<SpriteTransform>(true))
             {
                 spriteTransform.Apply();
@@ -482,7 +526,7 @@ public static class ZombieNormalPrefabBuilder
     }
 
     private static GameObject UpdateExistingPrefab(
-        AnimationClip idle,
+        AnimationClip defaultPose,
         RuntimeAnimatorController controller)
     {
         var root = PrefabUtility.LoadPrefabContents(PrefabPath);
@@ -495,7 +539,8 @@ public static class ZombieNormalPrefabBuilder
             animator.applyRootMotion = true;
             animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
             SynchronizeParts(root.transform);
-            idle.SampleAnimation(root, 0f);
+            ConfigureCollider(root);
+            defaultPose.SampleAnimation(root, 0f);
             foreach (var spriteTransform in root.GetComponentsInChildren<SpriteTransform>(true))
             {
                 spriteTransform.Apply();
@@ -513,29 +558,118 @@ public static class ZombieNormalPrefabBuilder
 
     private static void SynchronizeParts(Transform root)
     {
-        var expectedNames = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var part in Parts) expectedNames.Add(part.Name);
-
-        for (var index = root.childCount - 1; index >= 0; index--)
-        {
-            var child = root.GetChild(index);
-            if (child.GetComponent<SpriteTransform>() != null && !expectedNames.Contains(child.name))
-            {
-                UnityEngine.Object.DestroyImmediate(child.gameObject);
-            }
-        }
-
         var material = AssetDatabase.LoadAssetAtPath<Material>(SharedMaterialPath);
         if (material == null) throw new MissingReferenceException($"Missing sprite material: {SharedMaterialPath}");
         var zombieLayer = LayerMask.NameToLayer("Zombie");
         if (zombieLayer < 0) throw new InvalidOperationException("The project has no Zombie layer.");
 
-        foreach (var part in Parts)
+        root.gameObject.layer = zombieLayer;
+        var component = GetOrCreateChild(root, "component", zombieLayer);
+        var basic = GetOrCreateChild(component, "basic", zombieLayer);
+        var anchors = GetOrCreateChild(component, "anchors", zombieLayer);
+        SetIdentity(component);
+        SetIdentity(basic);
+        SetIdentity(anchors);
+
+        var basicTransform = basic.GetComponent<SpriteTransform>();
+        if (basicTransform == null) basicTransform = basic.gameObject.AddComponent<SpriteTransform>();
+        basicTransform.position = Vector2.zero;
+        basicTransform.scale = new Vector2(100f, 100f);
+        basicTransform.skew = Vector2.zero;
+        basicTransform.brightness = 1f;
+        basicTransform.alpha = 1f;
+        basicTransform.alphaCoef = 1f;
+        basicTransform.updatePosition = false;
+        basicTransform.providesChildSpritePosition = true;
+        basicTransform.providesChildSpriteAffine = false;
+        basicTransform.spritePosition = ReadWalkSourceOrigin();
+        basicTransform.spriteScale = new Vector2(100f, 100f);
+        basicTransform.spriteSkew = Vector2.zero;
+
+        var basicContent = GetOrCreateChild(basic, SpriteTransform.NativeContentName, zombieLayer);
+        SetIdentity(basicContent);
+        basicTransform.ConfigureNativeHierarchy(basicContent);
+
+        var expectedNames = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var part in Parts) expectedNames.Add(part.Name);
+
+        var existingTransforms = root.GetComponentsInChildren<SpriteTransform>(true);
+        foreach (var spriteTransform in existingTransforms)
         {
-            if (root.Find(part.Name) == null) CreatePart(root, part, zombieLayer, material);
+            if (spriteTransform == basicTransform) continue;
+            if (!expectedNames.Contains(spriteTransform.name))
+            {
+                UnityEngine.Object.DestroyImmediate(spriteTransform.gameObject);
+            }
         }
+
+        for (var partIndex = 0; partIndex < Parts.Length; partIndex++)
+        {
+            var part = Parts[partIndex];
+            Transform target = null;
+            foreach (var spriteTransform in root.GetComponentsInChildren<SpriteTransform>(true))
+            {
+                if (spriteTransform != basicTransform && spriteTransform.name == part.Name)
+                {
+                    target = spriteTransform.transform;
+                    break;
+                }
+            }
+
+            if (target == null)
+            {
+                target = CreatePart(basicContent, part, zombieLayer, material).transform;
+            }
+            else if (target.parent != basicContent)
+            {
+                target.SetParent(basicContent, false);
+            }
+
+            target.SetSiblingIndex(partIndex);
+            SetLayerRecursively(target.gameObject, zombieLayer);
+        }
+
+        basicTransform.RefreshDescendantPositionReferences();
     }
-    private static void CreatePart(Transform root, Part part, int layer, Material material)
+
+    private static Transform GetOrCreateChild(Transform parent, string name, int layer)
+    {
+        var child = parent.Find(name);
+        if (child != null && child.parent == parent)
+        {
+            child.gameObject.layer = layer;
+            return child;
+        }
+
+        var childObject = new GameObject(name) { layer = layer };
+        child = childObject.transform;
+        child.SetParent(parent, false);
+        return child;
+    }
+
+    private static void SetIdentity(Transform target)
+    {
+        target.localPosition = Vector3.zero;
+        target.localRotation = Quaternion.identity;
+        target.localScale = Vector3.one;
+    }
+
+    private static void SetLayerRecursively(GameObject target, int layer)
+    {
+        target.layer = layer;
+        foreach (Transform child in target.transform) SetLayerRecursively(child.gameObject, layer);
+    }
+
+    private static void ConfigureCollider(GameObject root)
+    {
+        var collider = root.GetComponent<BoxCollider2D>();
+        if (collider == null) collider = root.AddComponent<BoxCollider2D>();
+        var sourceOrigin = ReadWalkSourceOrigin();
+        collider.isTrigger = true;
+        collider.offset = new Vector2(35f - sourceOrigin.x, -65f + sourceOrigin.y);
+        collider.size = new Vector2(45f, 105f);
+    }
+    private static GameObject CreatePart(Transform root, Part part, int layer, Material material)
     {
         var spritePath = $"{SpritePath}/{part.Name}.png";
         var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
@@ -563,6 +697,7 @@ public static class ZombieNormalPrefabBuilder
         renderer.drawMode = SpriteDrawMode.Simple;
 
         spriteTransform.ConfigureNativeHierarchy(content.transform);
+        return pivot;
     }
 
     private static void ConnectGameConfig(GameObject prefab)
@@ -591,26 +726,41 @@ public static class ZombieNormalPrefabBuilder
             throw new InvalidOperationException("ZombieNormal must apply the walk clip's root motion.");
         }
 
-        var expectedPaths = new HashSet<string>(StringComparer.Ordinal);
+        var component = prefab.transform.Find(ComponentPath);
+        var basic = prefab.transform.Find(BasicPath);
+        var basicVisual = prefab.transform.Find(BasicVisualPath);
+        var anchors = prefab.transform.Find(AnchorsPath);
+        if (component == null || basic == null || basicVisual == null || anchors == null)
+        {
+            throw new MissingReferenceException(
+                "ZombieNormal must contain component/basic/__AffineContent and component/anchors.");
+        }
+        if (prefab.transform.childCount != 1 || component.parent != prefab.transform)
+        {
+            throw new InvalidOperationException("ZombieNormal root must have component as its only direct child.");
+        }
+
+        var basicTransform = basic.GetComponent<SpriteTransform>();
+        if (basicTransform == null || basicTransform.NativeContent != basicVisual)
+        {
+            throw new MissingComponentException("ZombieNormal basic container has no valid SpriteTransform hierarchy.");
+        }
+        if (!basicTransform.providesChildSpritePosition || basicTransform.updatePosition ||
+            Vector2.Distance(basicTransform.spritePosition, ReadWalkSourceOrigin()) > 0.0001f)
+        {
+            throw new InvalidOperationException("ZombieNormal basic container has an invalid source origin configuration.");
+        }
+
         foreach (var binding in AnimationUtility.GetCurveBindings(idle))
         {
             if (string.IsNullOrEmpty(binding.path)) continue;
-            expectedPaths.Add(binding.path);
+            var target = prefab.transform.Find(binding.path);
+            if (target == null) throw new MissingReferenceException($"Idle animation target is missing: {binding.path}");
         }
 
-        foreach (var path in expectedPaths)
-        {
-            var target = prefab.transform.Find(path);
-            if (target == null) throw new MissingReferenceException($"Idle animation target is missing: {path}");
-            if (target.GetComponent<SpriteTransform>() == null)
-            {
-                throw new MissingComponentException($"Idle animation target has no SpriteTransform: {path}");
-            }
-        }
-
-        var expectedPartNames = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var part in Parts) expectedPartNames.Add(part.Name);
-var walkPaths = new HashSet<string>(StringComparer.Ordinal);
+        var expectedPartPaths = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var part in Parts) expectedPartPaths.Add(PartPathPrefix + part.Name);
+        var walkPaths = new HashSet<string>(StringComparer.Ordinal);
         foreach (var binding in AnimationUtility.GetCurveBindings(walk))
         {
             if (!string.IsNullOrEmpty(binding.path) && binding.type == typeof(SpriteTransform))
@@ -618,23 +768,43 @@ var walkPaths = new HashSet<string>(StringComparer.Ordinal);
                 walkPaths.Add(binding.path);
             }
         }
-        if (!expectedPartNames.SetEquals(walkPaths))
+        if (!expectedPartPaths.SetEquals(walkPaths))
         {
-            throw new InvalidOperationException("Walk XML bindings do not exactly match the prefab part set.");
+            throw new InvalidOperationException("Walk XML bindings do not exactly match the standard prefab part paths.");
         }
 
-        if (prefab.GetComponentsInChildren<SpriteTransform>(true).Length != Parts.Length)
+        foreach (var part in Parts)
         {
-            throw new InvalidOperationException("ZombieNormal does not contain exactly the XML part count.");
+            var target = prefab.transform.Find(PartPathPrefix + part.Name);
+            if (target == null || target.parent != basicVisual)
+            {
+                throw new MissingReferenceException($"Zombie part is not under the standard basic visual container: {part.Name}");
+            }
+            if (target.GetComponent<SpriteTransform>() == null)
+            {
+                throw new MissingComponentException($"Zombie part has no SpriteTransform: {part.Name}");
+            }
         }
-        ValidateWalkRootMotion(walk);
 
+        if (prefab.GetComponentsInChildren<SpriteTransform>(true).Length != Parts.Length + 1)
+        {
+            throw new InvalidOperationException("ZombieNormal must contain one basic transform plus the exact XML part count.");
+        }
         if (prefab.GetComponentsInChildren<SpriteRenderer>(true).Length != Parts.Length)
         {
             throw new InvalidOperationException("ZombieNormal does not contain the expected number of sprite renderers.");
         }
-    }
 
+        var collider = prefab.GetComponent<BoxCollider2D>();
+        var origin = ReadWalkSourceOrigin();
+        var expectedOffset = new Vector2(35f - origin.x, -65f + origin.y);
+        if (collider == null || Vector2.Distance(collider.offset, expectedOffset) > 0.0001f)
+        {
+            throw new InvalidOperationException("ZombieNormal collider is not expressed in the standard source-origin coordinates.");
+        }
+
+        ValidateWalkRootMotion(walk);
+    }
     private static void ValidateWalkRootMotion(AnimationClip walk)
     {
         AnimationCurve rootMotion = null;

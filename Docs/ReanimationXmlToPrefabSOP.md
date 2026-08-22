@@ -184,13 +184,28 @@ Compression           = Uncompressed
 
 ## 9. 创建或同步 Prefab
 
-推荐部件结构：
+角色和植物类 Reanimation 的标准结构：
 
 ```text
-<AssetId>（根对象）
-└─ <PartName>（SpriteTransform）
-   └─ __AffineContent（SpriteRenderer）
+<AssetId>（Animator、业务组件、Collider）
+└─ component（纯 Transform，表现层唯一入口）
+   ├─ basic（SpriteTransform，提供源动画坐标原点）
+   │  └─ __AffineContent（纯 Transform）
+   │     └─ <语义分组，可选>
+   │        └─ <PartName>（SpriteTransform）
+   │           └─ __AffineContent（SpriteRenderer）
+   └─ anchors（纯 Transform）
+      └─ <玩法挂点，可选>
 ```
+
+要求：
+
+- 根对象只直接包含 `component` 这一个表现层入口；
+- `basic` 必须具有容器型 `SpriteTransform`，其 `__AffineContent` 不挂 `SpriteRenderer`；
+- 可见部件必须位于 `basic/__AffineContent` 下，允许按 `head/body/leaf/petals` 等语义继续分组；
+- `anchors` 与 `basic` 同级，用于阳光、射击、阴影或其他玩法挂点，不能混入动画图片层；
+- AnimationClip 必须绑定完整标准路径，不能继续绑定根对象下的短路径；
+- 简单物品若项目现有同类 Prefab 明确采用扁平结构，可以由资源配置声明例外，不能把例外反过来当作角色标准。
 
 `SpriteTransform` 通用初始值：
 
@@ -203,6 +218,21 @@ alpha          = 1
 alphaCoef      = 1
 updatePosition = true
 ```
+
+容器型 `basic` 通常使用：
+
+```text
+position                    = (0, 0)
+scale                       = (100, 100)
+skew                        = (0, 0)
+updatePosition              = false
+providesChildSpritePosition = true
+spritePosition              = XML 定义的源坐标原点
+spriteScale                 = (100, 100)
+spriteSkew                  = (0, 0)
+```
+
+若 XML 有 `_ground`，其第一帧 `(posx,posy)` 通常可作为移动角色的源坐标原点；必须通过实际 Prefab 和碰撞体对齐验证，不能对所有资源一概套用。
 
 随后按资源配置设置：
 
@@ -386,6 +416,9 @@ ReanimationPrefabBuilder
 - [ ] 可见层、控制层和未知层已分类。
 - [ ] 所有可见层都有唯一 PNG 映射。
 - [ ] Prefab 部件名称集合与期望集合完全一致。
+- [ ] 角色/植物根对象只通过 `component` 进入表现层。
+- [ ] `basic`、容器 `__AffineContent` 和 `anchors` 的层级与职责正确。
+- [ ] 动画绑定使用完整标准路径，没有残留根节点下的旧短路径。
 - [ ] 每张图片的 PPU 均由原始像素尺寸和 XML `width/height` 算出。
 - [ ] 多动画引用同一 PNG 时 PPU 一致。
 - [ ] 每个 Clip 的 FPS、Loop 和切线符合配置。
