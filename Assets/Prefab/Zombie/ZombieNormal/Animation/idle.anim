@@ -79,7 +79,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -145,7 +145,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -211,7 +211,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -277,7 +277,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -343,7 +343,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -409,7 +409,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -475,7 +475,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -541,7 +541,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -607,7 +607,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -673,7 +673,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -739,7 +739,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -805,7 +805,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -889,7 +889,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -973,7 +973,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1057,7 +1057,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1141,7 +1141,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1225,7 +1225,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1309,7 +1309,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1393,7 +1393,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1477,7 +1477,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1561,7 +1561,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1645,7 +1645,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1729,7 +1729,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1813,7 +1813,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1897,7 +1897,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -1981,7 +1981,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2065,7 +2065,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2149,7 +2149,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2233,7 +2233,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2317,7 +2317,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2383,7 +2383,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2449,7 +2449,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2515,7 +2515,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2581,7 +2581,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2647,7 +2647,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2713,7 +2713,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2779,7 +2779,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2845,7 +2845,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2911,7 +2911,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -2977,7 +2977,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3043,7 +3043,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3109,7 +3109,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3175,7 +3175,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3241,7 +3241,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3307,7 +3307,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3373,7 +3373,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3439,7 +3439,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3505,7 +3505,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3571,7 +3571,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3637,7 +3637,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3703,7 +3703,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3769,7 +3769,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3835,7 +3835,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3901,7 +3901,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -3967,7 +3967,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4033,7 +4033,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4099,7 +4099,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4165,7 +4165,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4231,7 +4231,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4297,7 +4297,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4363,7 +4363,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4429,7 +4429,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4495,7 +4495,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4561,7 +4561,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4627,7 +4627,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4693,7 +4693,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4759,7 +4759,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4825,7 +4825,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4891,7 +4891,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -4957,7 +4957,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5023,7 +5023,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5089,7 +5089,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5173,7 +5173,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5257,7 +5257,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5341,7 +5341,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5425,7 +5425,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5509,7 +5509,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5593,7 +5593,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5659,7 +5659,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5725,7 +5725,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5791,7 +5791,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5857,7 +5857,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5923,7 +5923,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -5989,7 +5989,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6055,7 +6055,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6121,7 +6121,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6187,7 +6187,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6253,7 +6253,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6319,7 +6319,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6385,7 +6385,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6469,7 +6469,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6553,7 +6553,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6637,7 +6637,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6721,7 +6721,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6805,7 +6805,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6889,7 +6889,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -6902,7 +6902,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 2864916147
+      path: 1850498804
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -6911,7 +6911,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2864916147
+      path: 1850498804
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -6920,7 +6920,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2864916147
+      path: 1850498804
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -6929,7 +6929,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2864916147
+      path: 1850498804
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -6938,7 +6938,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2864916147
+      path: 1850498804
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -6947,7 +6947,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2864916147
+      path: 1850498804
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -6956,7 +6956,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3389424140
+      path: 243923531
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -6965,7 +6965,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3389424140
+      path: 243923531
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -6974,7 +6974,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3389424140
+      path: 243923531
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -6983,7 +6983,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3389424140
+      path: 243923531
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -6992,7 +6992,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3389424140
+      path: 243923531
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7001,7 +7001,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3389424140
+      path: 243923531
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7010,7 +7010,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2952511465
+      path: 1103708176
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7019,7 +7019,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2952511465
+      path: 1103708176
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7028,7 +7028,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2952511465
+      path: 1103708176
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7037,7 +7037,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2952511465
+      path: 1103708176
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7046,7 +7046,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2952511465
+      path: 1103708176
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7055,7 +7055,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2952511465
+      path: 1103708176
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7064,7 +7064,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2200015344
+      path: 1023819425
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7073,7 +7073,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2200015344
+      path: 1023819425
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7082,7 +7082,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2200015344
+      path: 1023819425
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7091,7 +7091,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2200015344
+      path: 1023819425
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7100,7 +7100,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2200015344
+      path: 1023819425
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7109,7 +7109,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2200015344
+      path: 1023819425
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7118,7 +7118,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2935612618
+      path: 283003803
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7127,7 +7127,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2935612618
+      path: 283003803
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7136,7 +7136,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2935612618
+      path: 283003803
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7145,7 +7145,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2935612618
+      path: 283003803
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7154,7 +7154,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2935612618
+      path: 283003803
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7163,7 +7163,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2935612618
+      path: 283003803
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7172,7 +7172,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3894456815
+      path: 4109563682
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7181,7 +7181,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3894456815
+      path: 4109563682
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7190,7 +7190,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3894456815
+      path: 4109563682
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7199,7 +7199,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3894456815
+      path: 4109563682
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7208,7 +7208,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3894456815
+      path: 4109563682
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7217,7 +7217,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3894456815
+      path: 4109563682
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7226,7 +7226,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2307040920
+      path: 1292754655
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7235,7 +7235,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2307040920
+      path: 1292754655
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7244,7 +7244,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2307040920
+      path: 1292754655
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7253,7 +7253,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2307040920
+      path: 1292754655
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7262,7 +7262,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2307040920
+      path: 1292754655
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7271,7 +7271,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2307040920
+      path: 1292754655
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7280,7 +7280,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3656470530
+      path: 935571451
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7289,7 +7289,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3656470530
+      path: 935571451
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7298,7 +7298,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3656470530
+      path: 935571451
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7307,7 +7307,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3656470530
+      path: 935571451
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7316,7 +7316,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3656470530
+      path: 935571451
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7325,7 +7325,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3913744935
+      path: 768113248
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7334,7 +7334,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3913744935
+      path: 768113248
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7343,7 +7343,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3913744935
+      path: 768113248
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7352,7 +7352,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3913744935
+      path: 768113248
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7361,7 +7361,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3913744935
+      path: 768113248
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7370,7 +7370,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3913744935
+      path: 768113248
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7379,7 +7379,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3298947530
+      path: 3049869
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7388,7 +7388,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3298947530
+      path: 3049869
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7397,7 +7397,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3298947530
+      path: 3049869
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7406,7 +7406,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3298947530
+      path: 3049869
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7415,7 +7415,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3298947530
+      path: 3049869
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7424,7 +7424,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3298947530
+      path: 3049869
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7433,7 +7433,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2758038901
+      path: 1626025266
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7442,7 +7442,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2758038901
+      path: 1626025266
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7451,7 +7451,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2758038901
+      path: 1626025266
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7460,7 +7460,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2758038901
+      path: 1626025266
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7469,7 +7469,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2758038901
+      path: 1626025266
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7478,7 +7478,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2758038901
+      path: 1626025266
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7487,7 +7487,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2491108545
+      path: 2292779532
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7496,7 +7496,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2491108545
+      path: 2292779532
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7505,7 +7505,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2491108545
+      path: 2292779532
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7514,7 +7514,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2491108545
+      path: 2292779532
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7523,7 +7523,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2491108545
+      path: 2292779532
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7532,7 +7532,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2491108545
+      path: 2292779532
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7541,7 +7541,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2267403614
+      path: 1135258905
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7550,7 +7550,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2267403614
+      path: 1135258905
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7559,7 +7559,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2267403614
+      path: 1135258905
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7568,7 +7568,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2267403614
+      path: 1135258905
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7577,7 +7577,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2267403614
+      path: 1135258905
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7586,7 +7586,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2267403614
+      path: 1135258905
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7595,7 +7595,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3890246113
+      path: 594479526
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7604,7 +7604,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3890246113
+      path: 594479526
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7613,7 +7613,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3890246113
+      path: 594479526
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7622,7 +7622,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3890246113
+      path: 594479526
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7631,7 +7631,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3890246113
+      path: 594479526
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7640,7 +7640,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3890246113
+      path: 594479526
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7649,7 +7649,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1053668745
+      path: 3506391664
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7658,7 +7658,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1053668745
+      path: 3506391664
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7667,7 +7667,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1053668745
+      path: 3506391664
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7676,7 +7676,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1053668745
+      path: 3506391664
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7685,7 +7685,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1053668745
+      path: 3506391664
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7694,7 +7694,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1053668745
+      path: 3506391664
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7703,7 +7703,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3656470530
+      path: 935571451
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7712,7 +7712,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1221024354
+      path: 2801116571
       attribute: 3668744040
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7721,7 +7721,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1221024354
+      path: 2801116571
       attribute: 2913708030
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7730,7 +7730,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1221024354
+      path: 2801116571
       attribute: 15435667
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7739,7 +7739,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1221024354
+      path: 2801116571
       attribute: 2012002053
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7748,7 +7748,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1221024354
+      path: 2801116571
       attribute: 3658027350
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7757,7 +7757,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1221024354
+      path: 2801116571
       attribute: 2903384512
       script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
       typeID: 114
@@ -7849,7 +7849,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -7915,7 +7915,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -7981,7 +7981,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8047,7 +8047,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8113,7 +8113,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8179,7 +8179,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerarm_lower
+    path: component/basic/__AffineContent/Zombie_outerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8245,7 +8245,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8311,7 +8311,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8377,7 +8377,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8443,7 +8443,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8509,7 +8509,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8575,7 +8575,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerarm_upper
+    path: component/basic/__AffineContent/Zombie_outerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8659,7 +8659,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8743,7 +8743,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8827,7 +8827,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8911,7 +8911,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -8995,7 +8995,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -9079,7 +9079,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerarm_hand
+    path: component/basic/__AffineContent/Zombie_outerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -9163,7 +9163,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -9247,7 +9247,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -9331,7 +9331,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -9415,7 +9415,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -9499,7 +9499,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -9583,7 +9583,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_jaw
+    path: component/basic/__AffineContent/Zombie_jaw
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -9667,7 +9667,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -9751,7 +9751,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -9835,7 +9835,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -9919,7 +9919,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10003,7 +10003,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10087,7 +10087,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_tie
+    path: component/basic/__AffineContent/Zombie_tie
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10153,7 +10153,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10219,7 +10219,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10285,7 +10285,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10351,7 +10351,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10417,7 +10417,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10483,7 +10483,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_body
+    path: component/basic/__AffineContent/Zombie_body
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10549,7 +10549,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10615,7 +10615,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10681,7 +10681,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10747,7 +10747,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10813,7 +10813,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10879,7 +10879,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerleg_lower
+    path: component/basic/__AffineContent/Zombie_outerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -10945,7 +10945,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11011,7 +11011,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11077,7 +11077,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11143,7 +11143,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11209,7 +11209,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11275,7 +11275,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerleg_foot
+    path: component/basic/__AffineContent/Zombie_outerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11341,7 +11341,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11407,7 +11407,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11473,7 +11473,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11539,7 +11539,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11605,7 +11605,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11671,7 +11671,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_outerleg_upper
+    path: component/basic/__AffineContent/Zombie_outerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11737,7 +11737,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11803,7 +11803,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11869,7 +11869,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -11935,7 +11935,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12001,7 +12001,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12067,7 +12067,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerleg_foot
+    path: component/basic/__AffineContent/Zombie_innerleg_foot
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12133,7 +12133,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12199,7 +12199,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12265,7 +12265,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12331,7 +12331,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12397,7 +12397,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12463,7 +12463,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerleg_lower
+    path: component/basic/__AffineContent/Zombie_innerleg_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12529,7 +12529,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12595,7 +12595,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12661,7 +12661,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12727,7 +12727,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12793,7 +12793,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12859,7 +12859,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerleg_upper
+    path: component/basic/__AffineContent/Zombie_innerleg_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -12943,7 +12943,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13027,7 +13027,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13111,7 +13111,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13195,7 +13195,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13279,7 +13279,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13363,7 +13363,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_head
+    path: component/basic/__AffineContent/Zombie_head
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13429,7 +13429,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13495,7 +13495,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13561,7 +13561,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13627,7 +13627,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13693,7 +13693,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13759,7 +13759,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerarm_upper
+    path: component/basic/__AffineContent/Zombie_innerarm_upper
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13825,7 +13825,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13891,7 +13891,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -13957,7 +13957,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -14023,7 +14023,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -14089,7 +14089,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -14155,7 +14155,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerarm_lower
+    path: component/basic/__AffineContent/Zombie_innerarm_lower
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -14239,7 +14239,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.x
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -14323,7 +14323,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: position.y
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -14407,7 +14407,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.x
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -14491,7 +14491,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: scale.y
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -14575,7 +14575,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.x
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
@@ -14659,7 +14659,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: skew.y
-    path: Zombie_innerarm_hand
+    path: component/basic/__AffineContent/Zombie_innerarm_hand
     classID: 114
     script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
     flags: 16
