@@ -43,20 +43,15 @@ namespace PvZ.Gameplay.Board
         {
             if (_cursorPreview is PlantEntity plant)
             {
-                plant.SetLocalPosition(GetLocalCursorDrawOrigin(plant.transform.parent, worldPosition));
+                plant.SetLocalPosition(GetLocalCursorPosition(plant.transform.parent, worldPosition));
             }
         }
 
-        internal static Vector3 GetLocalCursorDrawOrigin(Transform previewParent, Vector3 pointerWorldPosition)
+        internal static Vector3 GetLocalCursorPosition(Transform previewParent, Vector3 pointerWorldPosition)
         {
             if (previewParent == null) throw new ArgumentNullException(nameof(previewParent));
 
-            // CursorObject's offsets are expressed in the original 800x600 logical
-            // coordinate system. The Grid is below a scaled Canvas, so the pointer
-            // must enter that local space before the source-pixel offset is applied.
-            var localPointerPosition = previewParent.InverseTransformPoint(pointerWorldPosition);
-            localPointerPosition += (Vector3)BoardGeometry.CursorPlantDrawOriginOffset;
-            return localPointerPosition;
+            return previewParent.InverseTransformPoint(pointerWorldPosition);
         }
 
         public void ShowGrid(GridManager.Grid grid)
@@ -64,9 +59,7 @@ namespace PvZ.Gameplay.Board
             if (_gridPreview == null || grid == null) return;
 
             _gridPreview.SetSortingLayer("plant-" + grid.Point.y);
-            // The original CursorPreview::BeginDraw translates directly to
-            // GridToPixelX/Y. A plant prefab root represents that draw origin.
-            _gridPreview.SetLocalPosition(grid.LogicalOrigin);
+            _gridPreview.SetLocalPosition(grid.Position);
             _gridPreview.gameObject.SetActive(true);
         }
 

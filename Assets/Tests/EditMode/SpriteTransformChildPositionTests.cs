@@ -7,10 +7,10 @@ namespace Tests.EditMode
 {
     public sealed class SpriteTransformChildPositionTests
     {
-        [TestCase("Assets/Prefab/Plant/PeaShooterSingle/PeaShooterSingle.prefab", 39.45f, 47.75f)]
-        [TestCase("Assets/Prefab/Plant/SunFlower/SunFlower.prefab", 40.4f, 42.6f)]
-        [TestCase("Assets/Prefab/Plant/SunShroom/SunShroom.prefab", 42.275f, 45.875f)]
-        public void PlantPrefab_BasicOwnsSpritePosition(string prefabPath, float x, float y)
+        [TestCase("Assets/Prefab/Plant/PeaShooterSingle/PeaShooterSingle.prefab")]
+        [TestCase("Assets/Prefab/Plant/SunFlower/SunFlower.prefab")]
+        [TestCase("Assets/Prefab/Plant/SunShroom/SunShroom.prefab")]
+        public void PlantPrefab_TopLevelAnimationRootIsCentered(string prefabPath)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
             Assert.That(prefab, Is.Not.Null);
@@ -20,8 +20,11 @@ namespace Tests.EditMode
 
             var spriteTransform = basic.GetComponent<SpriteTransform>();
             Assert.That(spriteTransform, Is.Not.Null);
-            Assert.That(spriteTransform.providesChildSpritePosition, Is.True);
-            Assert.That(spriteTransform.spritePosition, Is.EqualTo(new Vector2(x, y)));
+            Assert.That(prefab.transform.localPosition, Is.EqualTo(Vector3.zero));
+            Assert.That(basic.localPosition, Is.EqualTo(Vector3.zero));
+            Assert.That(spriteTransform.providesChildSpritePosition, Is.False);
+            Assert.That(spriteTransform.providesChildSpriteAffine, Is.False);
+            Assert.That(spriteTransform.spritePosition, Is.EqualTo(Vector2.zero));
         }
 
         [Test]

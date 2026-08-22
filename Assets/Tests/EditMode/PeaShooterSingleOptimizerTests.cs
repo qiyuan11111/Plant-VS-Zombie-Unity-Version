@@ -116,7 +116,7 @@ namespace Tests.EditMode
             var headRenderer = headTransform.VisualRenderer;
             Assert.That(headTransform.providesChildSpritePosition, Is.True);
             Assert.That(headTransform.providesChildSpriteAffine, Is.True);
-            Assert.That(headTransform.spritePosition, Is.EqualTo(new Vector2(38.55f, 34.05f)));
+            Assert.That(headTransform.spritePosition, Is.EqualTo(new Vector2(-0.9f, -13.7f)));
             Assert.That(headTransform.spriteScale,
                 Is.EqualTo(new Vector2(55.499268f, 50f)));
             Assert.That(headTransform.spriteSkew, Is.EqualTo(Vector2.zero));
@@ -127,7 +127,7 @@ namespace Tests.EditMode
                 blink1,
                 "PeaShooter_blink1",
                 headRenderer,
-                new Vector2(45.3f, 29.85f),
+                new Vector2(5.85f, -17.9f),
                 new Vector2(55.540466f, 55.540466f),
                 new Vector2(12.162323f, 8.4f),
                 new Vector2(1.0007423f, 1.1108093f));
@@ -135,7 +135,7 @@ namespace Tests.EditMode
                 blink2,
                 "PeaShooter_blink2",
                 headRenderer,
-                new Vector2(45.2199f, 29.782415f),
+                new Vector2(5.7699f, -17.967585f),
                 new Vector2(55.499268f, 55.499268f),
                 new Vector2(12.017996f, 8.53517f),
                 new Vector2(1f, 1.1099854f));
@@ -310,13 +310,13 @@ namespace Tests.EditMode
         {
             var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>($"{AnimationDirectory}/idle.anim");
             AssertCurveValues(clip, StalkTopPath, "position.x",
-                38.2f, 39.2f, 40.55f, 43.2f, 46.75f, 43.5f, 40.5f, 39.2f, 38.2f);
+                -1.25f, -0.25f, 1.1f, 3.75f, 7.3f, 4.05f, 1.05f, -0.25f, -1.25f);
             AssertCurveValues(clip, StalkTopPath, "position.y",
-                50f, 45.9f, 45.05f, 45.95f, 47.35f, 45.95f, 45.05f, 45.9f, 50f);
+                2.25f, -1.85f, -2.7f, -1.8f, -0.4f, -1.8f, -2.7f, -1.85f, 2.25f);
             AssertCurveValues(clip, StalkBottomPath, "position.x",
-                40.25f, 41.3f, 43.35f, 41.2f, 40.25f);
+                0.8f, 1.85f, 3.9f, 1.75f, 0.8f);
             AssertCurveValues(clip, StalkBottomPath, "position.y",
-                57.9f, 56.95f, 58.4f, 56.95f, 57.9f);
+                10.15f, 9.2f, 10.65f, 9.2f, 10.15f);
         }
 
         [Test]
@@ -326,25 +326,25 @@ namespace Tests.EditMode
             var head = prefab.transform.Find(HeadAttachmentPath).GetComponent<SpriteTransform>();
             Assert.That(head.providesChildSpritePosition, Is.True);
             Assert.That(head.providesChildSpriteAffine, Is.True);
-            Assert.That(head.spritePosition.x, Is.EqualTo(37.6f).Within(0.000001f));
-            Assert.That(head.spritePosition.y, Is.EqualTo(48.7f).Within(0.000001f));
+            Assert.That(head.spritePosition.x, Is.EqualTo(-1.85f).Within(0.000001f));
+            Assert.That(head.spritePosition.y, Is.EqualTo(0.95f).Within(0.000001f));
             Assert.That(head.spriteScale, Is.EqualTo(new Vector2(100f, 100f)));
             Assert.That(head.spriteSkew, Is.EqualTo(Vector2.zero));
 
             var idle = AssetDatabase.LoadAssetAtPath<AnimationClip>($"{AnimationDirectory}/idle.anim");
-            AssertFirstCurveValue(idle, HeadAttachmentPath, "position.x", 37.6f);
-            AssertFirstCurveValue(idle, HeadAttachmentPath, "position.y", 48.7f);
+            AssertFirstCurveValue(idle, HeadAttachmentPath, "position.x", -1.85f);
+            AssertFirstCurveValue(idle, HeadAttachmentPath, "position.y", 0.95f);
 
             var headIdle = AssetDatabase.LoadAssetAtPath<AnimationClip>($"{AnimationDirectory}/head_idle.anim");
-            AssertFirstCurveValue(headIdle, HeadPath, "position.x", 38.55f);
-            AssertFirstCurveValue(headIdle, HeadPath, "position.y", 34.05f);
-            AssertFirstCurveValue(headIdle, MouthPath, "position.x", 61.55f);
-            AssertFirstCurveValue(headIdle, SproutPath, "position.x", 15.95f);
+            AssertFirstCurveValue(headIdle, HeadPath, "position.x", -0.9f);
+            AssertFirstCurveValue(headIdle, HeadPath, "position.y", -13.7f);
+            AssertFirstCurveValue(headIdle, MouthPath, "position.x", 22.1f);
+            AssertFirstCurveValue(headIdle, SproutPath, "position.x", -23.5f);
 
             var shoot = AssetDatabase.LoadAssetAtPath<AnimationClip>($"{AnimationDirectory}/shoot.anim");
-            AssertFirstCurveValue(shoot, HeadPath, "position.y", 32f);
-            AssertFirstCurveValue(shoot, MouthPath, "position.y", 27.5f);
-            AssertFirstCurveValue(shoot, SproutPath, "position.x", 15.7f);
+            AssertFirstCurveValue(shoot, HeadPath, "position.y", -15.75f);
+            AssertFirstCurveValue(shoot, MouthPath, "position.y", -20.25f);
+            AssertFirstCurveValue(shoot, SproutPath, "position.x", -23.75f);
         }
 
         [Test]

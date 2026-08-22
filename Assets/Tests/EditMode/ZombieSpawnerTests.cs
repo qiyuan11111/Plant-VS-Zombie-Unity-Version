@@ -5,6 +5,7 @@ using PvZ.Bootstrap;
 using PvZ.Config;
 using PvZ.Gameplay.Zombies;
 using PvZ.Presentation;
+using UnityEditor;
 using UnityEngine;
 
 namespace Tests.EditMode
@@ -46,6 +47,30 @@ namespace Tests.EditMode
             }
 
             _objects.Clear();
+        }
+
+        [Test]
+        public void NormalZombiePrefab_UsesCenteredRootContract()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
+                "Assets/Prefab/Zombie/ZombieNormal/ZombieNormal.prefab");
+            Assert.That(prefab, Is.Not.Null);
+            Assert.That(prefab.transform.localPosition, Is.EqualTo(Vector3.zero));
+            Assert.That(prefab.transform.localRotation, Is.EqualTo(Quaternion.identity));
+            Assert.That(prefab.transform.localScale, Is.EqualTo(Vector3.one));
+
+            var collider = prefab.GetComponent<BoxCollider2D>();
+            Assert.That(collider, Is.Not.Null);
+            Assert.That(collider.offset, Is.EqualTo(new Vector2(-8.125f, 2.475f)));
+            Assert.That(collider.size, Is.EqualTo(new Vector2(45f, 105f)));
+
+            foreach (var spriteTransform in prefab.GetComponentsInChildren<SpriteTransform>(true))
+            {
+                Assert.That(spriteTransform.providesChildSpritePosition, Is.False,
+                    spriteTransform.name);
+                Assert.That(spriteTransform.providesChildSpriteAffine, Is.False,
+                    spriteTransform.name);
+            }
         }
 
         [Test]

@@ -8,6 +8,7 @@ using PvZ.Gameplay.Plants.Abilities;
 using PvZ.Gameplay.World;
 using PvZ.Presentation;
 using PvZ.Config;
+using PvZ.Gameplay.Board;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -113,7 +114,7 @@ namespace Tests.EditMode
         }
 
         [Test]
-        public void Plants_UseOriginalShadowPresetsAndOffsets()
+        public void Plants_UseCenteredRootShadowPositions()
         {
             var config = Resources.Load<GameConfigObject>("GameConfigObject");
             Assert.That(config, Is.Not.Null);
@@ -128,8 +129,8 @@ namespace Tests.EditMode
             var sunShroom = config.GetPlantDefinition(GameConfigObject.PlantType.SunShroom)
                 .Prefab.GetComponent<PlantEntity>();
             Assert.That(sunShroom.ShadowSize, Is.EqualTo(ShadowSizePreset.Small));
-            Assert.That(sunShroom.ShadowImageTopLeft, Is.EqualTo(new Vector2(-3f, 42f)));
-            Assert.That(sunShroom.ShadowCenterLocalPosition, Is.EqualTo(new Vector3(40f, -60f, 0f)));
+            Assert.That(sunShroom.ShadowLocalPosition,
+                Is.EqualTo(new Vector2(-2.275f, -14.125f)));
 
             foreach (var type in new[]
                      {
@@ -140,15 +141,15 @@ namespace Tests.EditMode
                 var plant = config.GetPlantDefinition(type).Prefab.GetComponent<PlantEntity>();
                 Assert.That(plant, Is.Not.Null, type.ToString());
                 Assert.That(plant.ShadowSize, Is.EqualTo(ShadowSizePreset.Large), type.ToString());
-                Assert.That(plant.ShadowImageTopLeft,
-                    Is.EqualTo(new Vector2(-3f, 51f)), type.ToString());
-                Assert.That(plant.ShadowCenterLocalPosition,
-                    Is.EqualTo(new Vector3(40f, -69f, 0f)), type.ToString());
+                var expected = type == GameConfigObject.PlantType.PeaShooterSingle
+                    ? new Vector2(0.55f, -21.25f)
+                    : new Vector2(-0.4f, -26.4f);
+                Assert.That(plant.ShadowLocalPosition, Is.EqualTo(expected), type.ToString());
             }
         }
 
         [Test]
-        public void AllPlantPrefabs_UseTheirRootAsTheOriginalDrawOrigin()
+        public void AllPlantPrefabs_UseCenteredTopLevelRoots()
         {
             var config = Resources.Load<GameConfigObject>("GameConfigObject");
             Assert.That(config, Is.Not.Null);
@@ -168,10 +169,11 @@ namespace Tests.EditMode
                     var basic = instance.transform.Find("component/basic")
                         ?.GetComponent<SpriteTransform>();
                     Assert.That(basic, Is.Not.Null, type.ToString());
-                    Assert.That(basic.transform.localPosition.x,
-                        Is.EqualTo(basic.spritePosition.x).Within(0.001f), type.ToString());
-                    Assert.That(basic.transform.localPosition.y,
-                        Is.EqualTo(-basic.spritePosition.y).Within(0.001f), type.ToString());
+                    Assert.That(instance.transform.localPosition, Is.EqualTo(Vector3.zero), type.ToString());
+                    Assert.That(basic.transform.localPosition, Is.EqualTo(Vector3.zero), type.ToString());
+                    Assert.That(basic.providesChildSpritePosition, Is.False, type.ToString());
+                    Assert.That(basic.providesChildSpriteAffine, Is.False, type.ToString());
+                    Assert.That(basic.spritePosition, Is.EqualTo(Vector2.zero), type.ToString());
                 }
             }
             finally
@@ -181,28 +183,26 @@ namespace Tests.EditMode
         }
 
         [Test]
-        public void BoardPlacement_UsesGridLogicalOriginWithoutPlantSpecificCorrection()
+        public void BoardPlacement_UsesGridCenterWithoutPlantSpecificCorrection()
         {
-            var config = Resources.Load<GameConfigObject>("GameConfigObject");
-            Assert.That(config, Is.Not.Null);
-            config.Init();
-
             var boardRoot = new GameObject("BoardRoot").transform;
-            var logicalOrigin = new Vector3(100f, 200f, 10f);
             try
             {
-                foreach (GameConfigObject.PlantType type in System.Enum.GetValues(
-                             typeof(GameConfigObject.PlantType)))
-                {
-                    var prefab = config.GetPlantDefinition(type).PresentationPrefab;
-                    var instance = Object.Instantiate(prefab, boardRoot, false);
-                    var plant = instance.GetComponent<PlantEntity>();
+                var instance = new GameObject("CenteredPlant", typeof(SpriteGroup), typeof(BoxCollider2D));
+                instance.transform.SetParent(boardRoot, false);
+                var plant = instance.AddComponent<CenteredPlacementTestPlant>();
+                plant.ResetRuntimeState();
+                var grid = new GridManager.Grid(
+                    new Vector2Int(3, 2),
+                    new Vector2(100f, 200f));
+                var plantData = new SerializedObject(plant);
+                plantData.FindProperty("drawsShadow").boolValue = false;
+                plantData.ApplyModifiedPropertiesWithoutUndo();
 
-                    Assert.That(plant, Is.Not.Null, type.ToString());
-                    plant.transform.localScale = Vector3.one;
-                    plant.transform.localPosition = logicalOrigin;
-                    Assert.That(plant.transform.localPosition, Is.EqualTo(logicalOrigin), type.ToString());
-                }
+                plant.EnterBoard(grid);
+
+                Assert.That(plant.transform.localPosition,
+                    Is.EqualTo(new Vector3(grid.Position.x, grid.Position.y, 10f)));
             }
             finally
             {
@@ -225,15 +225,15 @@ namespace Tests.EditMode
         }
 
         [Test]
-        public void PlantDefinition_DefaultCardLayoutMatchesOriginalPacket()
+        public void PlantDefinition_DefaultCardLayoutUsesCenteredRoot()
         {
             var definition = new PlantDefinition();
             Assert.That(definition.SeedPacketScale, Is.EqualTo(0.5f));
-            Assert.That(definition.SeedPacketDrawOffset, Is.EqualTo(new Vector2(5f, 9f)));
+            Assert.That(definition.SeedPacketLocalPosition, Is.EqualTo(Vector2.zero));
         }
 
         [Test]
-        public void CardPresentation_ConvertsOriginalTopLeftDrawOffsetToPacketLocalSpace()
+        public void CardPresentation_PlacesCenteredRootAtConfiguredPacketPosition()
         {
             var config = Resources.Load<GameConfigObject>("GameConfigObject");
             Assert.That(config, Is.Not.Null);
@@ -247,17 +247,10 @@ namespace Tests.EditMode
             try
             {
                 var plant = instance.GetComponent<PlantEntity>();
-                var drawOriginMethod = typeof(EntityPresentation).GetMethod(
-                    "GetSeedPacketDrawOrigin",
-                    BindingFlags.NonPublic | BindingFlags.Static);
-                Assert.That(drawOriginMethod, Is.Not.Null);
-                var drawOrigin = (Vector3)drawOriginMethod.Invoke(null, new object[]
-                {
-                    plant,
-                    definition.SeedPacketDrawOffset
-                });
-
-                Assert.That(drawOrigin, Is.EqualTo(new Vector3(-20f, 26f, 0f)));
+                plant.ResetRuntimeState();
+                EntityPresentation.ConfigureCardIcon(plant, definition);
+                Assert.That(plant.transform.localPosition,
+                    Is.EqualTo((Vector3)definition.SeedPacketLocalPosition));
                 Assert.That(definition.SeedPacketScale, Is.EqualTo(0.5f));
             }
             finally
@@ -320,17 +313,14 @@ namespace Tests.EditMode
             Assert.That(prefab.GetComponent<Blink>(), Is.Not.Null);
             var basicTransform = prefab.transform.Find("component/basic").GetComponent<SpriteTransform>();
             Assert.That(basicTransform, Is.Not.Null);
-            Assert.That(basicTransform.providesChildSpritePosition, Is.True);
-            Assert.That(basicTransform.spritePosition, Is.EqualTo(new Vector2(40.4f, 42.6f)));
+            Assert.That(basicTransform.providesChildSpritePosition, Is.False);
+            Assert.That(basicTransform.providesChildSpriteAffine, Is.False);
+            Assert.That(basicTransform.spritePosition, Is.EqualTo(Vector2.zero));
             Assert.That(prefab.transform.Find(BasicVisualPath + "/head/face"), Is.Null);
             var head = prefab.transform.Find(HeadPath);
             Assert.That(head, Is.Not.Null);
             var headTransform = head.GetComponent<SpriteTransform>();
             Assert.That(headTransform, Is.Not.Null);
-            Assert.That(headTransform.position.x, Is.EqualTo(40.97259f).Within(0.0002f));
-            Assert.That(headTransform.position.y, Is.EqualTo(29.84815f).Within(0.0002f));
-            Assert.That(headTransform.scale.x, Is.EqualTo(100f).Within(0.0002f));
-            Assert.That(headTransform.scale.y, Is.EqualTo(100.70281f).Within(0.0002f));
             Assert.That(headTransform.providesChildSpritePosition, Is.True);
             Assert.That(headTransform.providesChildSpriteAffine, Is.True);
             Assert.That(headTransform.spritePosition, Is.EqualTo(headTransform.position));
@@ -345,12 +335,12 @@ namespace Tests.EditMode
             var blink1Transform = blink1.GetComponent<SpriteTransform>();
             var blink2Transform = blink2.GetComponent<SpriteTransform>();
             Assert.That(blink1Transform.position,
-                Is.EqualTo(new Vector2(42.97259f, 26.39815f)));
+                Is.EqualTo(new Vector2(2.57259f, -16.20185f)));
             Assert.That(blink1Transform.scale,
                 Is.EqualTo(new Vector2(80f, 80.56224f)));
             Assert.That(blink1Transform.VisualRenderer.sortingOrder, Is.EqualTo(16));
             Assert.That(blink2Transform.position,
-                Is.EqualTo(new Vector2(42.97259f, 26.39815f)));
+                Is.EqualTo(new Vector2(2.57259f, -16.20185f)));
             Assert.That(blink2Transform.scale,
                 Is.EqualTo(new Vector2(80f, 80.56224f)));
             Assert.That(blink2Transform.VisualRenderer.sortingOrder, Is.EqualTo(15));
@@ -621,5 +611,11 @@ namespace Tests.EditMode
                 (-m10 * x + m00 * y) / determinant,
                 0f);
         }
+    }
+
+    internal sealed class CenteredPlacementTestPlant : PlantEntity
+    {
+        public override string GetChineseName() => "中心落点测试植物";
+        public override string GetEnglishName() => "CenteredPlacementTestPlant";
     }
 }

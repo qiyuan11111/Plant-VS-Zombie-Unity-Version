@@ -1,6 +1,7 @@
 using System;
 using PvZ.Config;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PvZ.Gameplay.Plants
 {
@@ -14,7 +15,8 @@ namespace PvZ.Gameplay.Plants
         [SerializeField, Min(0f)] private float cooldown;
         [SerializeField, Range(0f, 1f)] private float presentationNormalizedTime;
         [SerializeField, Min(0.01f)] private float seedPacketScale = 0.5f;
-        [SerializeField] private Vector2 seedPacketDrawOffset = new(5f, 9f);
+        [FormerlySerializedAs("seedPacketDrawOffset")]
+        [SerializeField] private Vector2 seedPacketLocalPosition = Vector2.zero;
 
         public GameConfigObject.PlantType Type => type;
         public GameObject Prefab => prefab;
@@ -23,6 +25,6 @@ namespace PvZ.Gameplay.Plants
         public float Cooldown => cooldown;
         public float PresentationNormalizedTime => Mathf.Clamp01(presentationNormalizedTime);
         public float SeedPacketScale => Mathf.Max(0.01f, seedPacketScale);
-        public Vector2 SeedPacketDrawOffset => seedPacketDrawOffset;
+        public Vector2 SeedPacketLocalPosition => seedPacketLocalPosition;
     }
 }

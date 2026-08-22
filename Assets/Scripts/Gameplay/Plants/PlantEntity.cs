@@ -13,7 +13,7 @@ namespace PvZ.Gameplay.Plants
         private static readonly Vector3 BoardScale = Vector3.one;
 
         [SerializeField] private ShadowSizePreset shadowSize = ShadowSizePreset.Large;
-        [SerializeField] private Vector2 shadowImageTopLeft = new(-3f, 51f);
+        [SerializeField] private Vector2 shadowLocalPosition = new(0f, -20f);
         [SerializeField] private bool drawsShadow = true;
         private GridManager.Grid _occupiedGrid;
         private Shadow _shadow;
@@ -21,8 +21,7 @@ namespace PvZ.Gameplay.Plants
 
         public bool IsOnBoard => _isOnBoard;
         public ShadowSizePreset ShadowSize => shadowSize;
-        public Vector2 ShadowImageTopLeft => shadowImageTopLeft;
-        public Vector3 ShadowCenterLocalPosition => Shadow.SourceTopLeftToUnityCenter(shadowImageTopLeft);
+        public Vector2 ShadowLocalPosition => shadowLocalPosition;
         public bool DrawsShadow => drawsShadow;
 
         public PlantEntity EnterBoard(GridManager.Grid grid)
@@ -45,7 +44,7 @@ namespace PvZ.Gameplay.Plants
                 .SetColliderState(true);
 
             SetLocalScale(BoardScale);
-            SetLocalPosition(new Vector3(grid.LogicalOrigin.x, grid.LogicalOrigin.y, 10f));
+            SetLocalPosition(new Vector3(grid.Position.x, grid.Position.y, 10f));
             SetName(GetEnglishName() + "-" + grid.Point.x + "-" + grid.Point.y);
 
             EnsureShadow();
@@ -64,7 +63,7 @@ namespace PvZ.Gameplay.Plants
             if (_shadow != null || !drawsShadow) return;
             var shadowPrefab = MainGameManager.Instance.GetObjectByType(GameConfigObject.ObjectType.PlanteShadow);
             var shadowObject = Instantiate(shadowPrefab, Transform, false);
-            shadowObject.transform.localPosition = ShadowCenterLocalPosition;
+            shadowObject.transform.localPosition = shadowLocalPosition;
             shadowObject.transform.localRotation = Quaternion.identity;
             _shadow = shadowObject.GetComponent<Shadow>();
 

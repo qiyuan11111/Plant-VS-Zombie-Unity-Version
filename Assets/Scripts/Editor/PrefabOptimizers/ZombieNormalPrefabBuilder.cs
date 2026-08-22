@@ -24,6 +24,8 @@ public static class ZombieNormalPrefabBuilder
     private const string SharedMaterialPath = "Assets/Material/LightnessSkew.mat";
     private const string GameConfigPath = "Assets/Resources/GameConfigObject.asset";
     private const string SortingLayer = "zombie-0";
+    private static readonly Vector2 ColliderOffset = new(-8.125f, 2.475f);
+    private static readonly Vector2 ColliderSize = new(45f, 105f);
 
     private readonly struct Part
     {
@@ -65,8 +67,7 @@ public static class ZombieNormalPrefabBuilder
         AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
         ConfigureTextureImporters();
 
-        var idle = AssetDatabase.LoadAssetAtPath<AnimationClip>(IdlePath);
-        if (idle == null) throw new MissingReferenceException($"Missing idle clip: {IdlePath}");
+        var idle = CreateReanimationClip(IdleXmlPath, IdlePath, "idle", false);
         var walk = CreateReanimationClip(WalkXmlPath, WalkPath, "walk", true);
         var controller = CreateController(idle, walk);
         var prefab = CreatePrefab(idle, controller);
@@ -445,6 +446,7 @@ public static class ZombieNormalPrefabBuilder
         var root = new GameObject("ZombieNormal") { layer = zombieLayer };
         try
         {
+            ConfigureRoot(root);
             var animator = root.AddComponent<Animator>();
             animator.runtimeAnimatorController = controller;
             animator.applyRootMotion = true;
@@ -452,11 +454,6 @@ public static class ZombieNormalPrefabBuilder
 
             root.AddComponent<ZombieNormal>();
             root.AddComponent<SpriteGroup>();
-
-            var collider = root.AddComponent<BoxCollider2D>();
-            collider.isTrigger = true;
-            collider.offset = new Vector2(35f, -65f);
-            collider.size = new Vector2(45f, 105f);
 
             foreach (var part in Parts)
             {
@@ -488,6 +485,7 @@ public static class ZombieNormalPrefabBuilder
         var root = PrefabUtility.LoadPrefabContents(PrefabPath);
         try
         {
+            ConfigureRoot(root);
             var animator = root.GetComponent<Animator>();
             if (animator == null) throw new MissingComponentException("ZombieNormal Animator is missing.");
 
@@ -509,6 +507,22 @@ public static class ZombieNormalPrefabBuilder
         {
             PrefabUtility.UnloadPrefabContents(root);
         }
+    }
+
+    private static void ConfigureRoot(GameObject root)
+    {
+        var zombieLayer = LayerMask.NameToLayer("Zombie");
+        if (zombieLayer < 0) throw new InvalidOperationException("The project has no Zombie layer.");
+
+        root.layer = zombieLayer;
+        root.transform.localPosition = Vector3.zero;
+        root.transform.localRotation = Quaternion.identity;
+        root.transform.localScale = Vector3.one;
+
+        var collider = root.GetComponent<BoxCollider2D>() ?? root.AddComponent<BoxCollider2D>();
+        collider.isTrigger = true;
+        collider.offset = ColliderOffset;
+        collider.size = ColliderSize;
     }
 
     private static void SynchronizeParts(Transform root)
@@ -610,7 +624,12 @@ public static class ZombieNormalPrefabBuilder
 
         var expectedPartNames = new HashSet<string>(StringComparer.Ordinal);
         foreach (var part in Parts) expectedPartNames.Add(part.Name);
-var walkPaths = new HashSet<string>(StringComparer.Ordinal);
+        if (!expectedPartNames.SetEquals(expectedPaths))
+        {
+            throw new InvalidOperationException("Idle XML bindings do not exactly match the prefab part set.");
+        }
+
+        var walkPaths = new HashSet<string>(StringComparer.Ordinal);
         foreach (var binding in AnimationUtility.GetCurveBindings(walk))
         {
             if (!string.IsNullOrEmpty(binding.path) && binding.type == typeof(SpriteTransform))

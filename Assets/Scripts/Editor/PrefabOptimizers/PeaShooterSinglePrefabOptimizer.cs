@@ -34,7 +34,7 @@ public static class PeaShooterSinglePrefabOptimizer
     private const string LeafVisualPath = BasicVisualPath + "/leaf/" + NativeContent;
     private const string BackLeafVisualPath = LeafVisualPath + "/backleaf/" + NativeContent;
     private const string FrontLeafVisualPath = LeafVisualPath + "/frontleaf/" + NativeContent;
-    private const string OptimizationVersion = "pea-shooter-single-animation-v26-hold-final-blink-key";
+    private const string OptimizationVersion = "pea-shooter-single-animation-v27-centered-root";
     private const float FrameRate = 12f;
     private const float IdleStateSpeed = 1.4f;
     private const float ShootStateSpeed = 2.8f;
@@ -65,8 +65,8 @@ public static class PeaShooterSinglePrefabOptimizer
     // PeaShooterSingle1.fla, anim_blink. These are absolute FLA transforms.
     // Native hierarchy converts them through the anim_face reference matrix,
     // leaving the generated Unity child transform reference-relative.
-    private static readonly Vector2 Blink1Position = new(45.3f, 29.85f);
-    private static readonly Vector2 Blink2Position = new(45.2199f, 29.782415f);
+    private static readonly Vector2 Blink1Position = new(5.85f, -17.9f);
+    private static readonly Vector2 Blink2Position = new(5.7699f, -17.967585f);
     private static readonly Vector2 Blink1Scale =
         new(55.54046630859375f, 55.54046630859375f);
     private static readonly Vector2 Blink2Scale = new(55.499268f, 55.499268f);
@@ -915,6 +915,7 @@ public static class PeaShooterSinglePrefabOptimizer
         var root = PrefabUtility.LoadPrefabContents(PrefabPath);
         try
         {
+            ConfigureCenteredRoot(root);
             var changed = FlattenPodHierarchy(root.transform);
             changed |= MigratePrefabToNativeHierarchy(root);
             foreach (var path in PartPaths.Values)
@@ -966,6 +967,44 @@ public static class PeaShooterSinglePrefabOptimizer
         finally
         {
             PrefabUtility.UnloadPrefabContents(root);
+        }
+    }
+
+    private static void ConfigureCenteredRoot(GameObject root)
+    {
+        if (root.GetComponent<SpriteGroup>() == null) root.AddComponent<SpriteGroup>();
+        root.transform.localPosition = Vector3.zero;
+        root.transform.localRotation = Quaternion.identity;
+        root.transform.localScale = Vector3.one;
+
+        var basic = root.transform.Find(BasicPath);
+        var basicTransform = basic != null ? basic.GetComponent<SpriteTransform>() : null;
+        if (basicTransform == null)
+        {
+            throw new MissingComponentException("PeaShooterSingle basic node requires SpriteTransform.");
+        }
+
+        basic.localPosition = Vector3.zero;
+        basic.localRotation = Quaternion.identity;
+        basic.localScale = Vector3.one;
+        basicTransform.enabled = true;
+        basicTransform.position = Vector2.zero;
+        basicTransform.scale = new Vector2(100f, 100f);
+        basicTransform.skew = Vector2.zero;
+        basicTransform.updatePosition = false;
+        basicTransform.providesChildSpritePosition = false;
+        basicTransform.providesChildSpriteAffine = false;
+        basicTransform.spritePosition = Vector2.zero;
+        basicTransform.spriteScale = new Vector2(100f, 100f);
+        basicTransform.spriteSkew = Vector2.zero;
+        EditorUtility.SetDirty(basicTransform);
+
+        var shooter = root.GetComponent<PeaShooterSingle>();
+        if (shooter != null)
+        {
+            var data = new SerializedObject(shooter);
+            data.FindProperty("shadowLocalPosition").vector2Value = new Vector2(0.55f, -21.25f);
+            data.ApplyModifiedPropertiesWithoutUndo();
         }
     }
 

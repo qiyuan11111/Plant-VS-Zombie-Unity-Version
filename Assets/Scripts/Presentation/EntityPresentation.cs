@@ -22,10 +22,9 @@ namespace PvZ.Presentation
                 .SetSortingLayer("card")
                 .SetColliderState(false);
 
-            var drawOrigin = GetSeedPacketDrawOrigin(entity, definition.SeedPacketDrawOffset);
             var scale = definition.SeedPacketScale;
             entity.SetLocalScale(new Vector3(scale, scale, 1f))
-                .SetLocalPosition(drawOrigin);
+                .SetLocalPosition(definition.SeedPacketLocalPosition);
 
             Freeze(entity, definition.PresentationNormalizedTime);
             return entity;
@@ -100,19 +99,5 @@ namespace PvZ.Presentation
             if (entity == null) throw new ArgumentNullException(nameof(entity));
         }
 
-        private static Vector3 GetSeedPacketDrawOrigin(GameEntity entity, Vector2 sourceOffset)
-        {
-            if (entity.transform.parent is RectTransform packet)
-            {
-                return new Vector3(
-                    packet.rect.xMin + sourceOffset.x,
-                    packet.rect.yMax - sourceOffset.y,
-                    0f);
-            }
-
-            // Non-UI callers can define their parent origin as the packet's
-            // top-left. This also keeps isolated tests deterministic.
-            return new Vector3(sourceOffset.x, -sourceOffset.y, 0f);
-        }
     }
 }

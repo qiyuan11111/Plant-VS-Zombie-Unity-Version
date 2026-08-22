@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 743919592881848576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.31250566, y: 2.687535, z: 0}
+  m_LocalPosition: {x: -0.31250468, y: 2.6875417, z: 0}
   m_LocalScale: {x: 1.0267795, y: 1.0555427, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 41.45, y: 54.2}
+  position: {x: -0.825, y: 8.325}
   scale: {x: 82.14111, y: 84.44214}
   skew: {x: 0, y: 0}
   brightness: 1
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 900100000000000003}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.275, y: -45.875, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -148,9 +148,9 @@ MonoBehaviour:
   alphaCoef: 1
   updatePosition: 0
   nativeContent: {fileID: 8166567966508847583}
-  providesChildSpritePosition: 1
+  providesChildSpritePosition: 0
   providesChildSpriteAffine: 0
-  spritePosition: {x: 42.275, y: 45.875}
+  spritePosition: {x: 0, y: 0}
   spriteScale: {x: 100, y: 100}
   spriteSkew: {x: 0, y: 0}
 --- !u!1 &900100000000000005
@@ -339,7 +339,7 @@ Transform:
   m_GameObject: {fileID: 900200000000000003}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1250057, y: 2.9375443, z: 0}
+  m_LocalPosition: {x: -0.12500194, y: 2.9375453, z: 0}
   m_LocalScale: {x: 1.250019, y: 1.250019, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -358,7 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 41.6, y: 54}
+  position: {x: -0.675, y: 8.125}
   scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
   brightness: 1
@@ -398,7 +398,7 @@ Transform:
   m_GameObject: {fileID: 900200000000000007}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.31250566, y: 3.0625443, z: 0}
+  m_LocalPosition: {x: -0.31250468, y: 3.0625477, z: 0}
   m_LocalScale: {x: 1.250019, y: 1.250019, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 41.45, y: 53.9}
+  position: {x: -0.825, y: 8.025}
   scale: {x: 100, y: 100}
   skew: {x: 0, y: 0}
   brightness: 1
@@ -662,7 +662,7 @@ Transform:
   m_GameObject: {fileID: 2647483252324358559}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -704,7 +704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   shadowSize: 1
-  shadowImageTopLeft: {x: -3, y: 42}
+  shadowLocalPosition: {x: -2.275, y: -14.125}
   drawsShadow: 1
   sunProducer: {fileID: 6219350413376402199}
   blink: {fileID: 900200000000000011}
@@ -832,7 +832,7 @@ Transform:
   m_GameObject: {fileID: 3249224087444324451}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.039259825, w: 0.9992291}
-  m_LocalPosition: {x: -0.025001526, y: 6.4749985, z: 0}
+  m_LocalPosition: {x: 42.25, y: -39.4, z: 0}
   m_LocalScale: {x: 0.799988, y: 0.799988, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1080,7 +1080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498f7a29a0cecf149b0251e26f2c55b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 41.7, y: 56.35}
+  position: {x: -0.575, y: 10.475}
   scale: {x: 79.99878, y: 79.99878}
   skew: {x: 0, y: 0}
   brightness: 1
@@ -1091,7 +1091,7 @@ MonoBehaviour:
   nativeContent: {fileID: 5885923108609235967}
   providesChildSpritePosition: 1
   providesChildSpriteAffine: 1
-  spritePosition: {x: 41.7, y: 56.35}
+  spritePosition: {x: -0.575, y: 10.475}
   spriteScale: {x: 79.99878, y: 79.99878}
   spriteSkew: {x: 0, y: 0}
 --- !u!1 &9138183166974559061

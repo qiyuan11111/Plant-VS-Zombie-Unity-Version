@@ -44,11 +44,6 @@ namespace PvZ.Gameplay.Board
         private const float LawnMinY = 80f;
         private static readonly Vector2 FirstLogicalOrigin = new(-440f, 220f);
 
-        // CursorObject is positioned at mouse-(25,35), then an ordinary held
-        // plant is drawn at (-10,-25). Converted from source Y-down to Unity
-        // Y-up, the reanimation draw origin is therefore mouse+(-35,+60).
-        public static readonly Vector2 CursorPlantDrawOriginOffset = new(-35f, 60f);
-
         public static int GetRowCount(BoardTerrain terrain)
         {
             return terrain == BoardTerrain.Pool ? PoolRowCount : FrontYardRowCount;

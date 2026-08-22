@@ -52,15 +52,7 @@ namespace Tests.EditMode
         }
 
         [Test]
-        public void CursorHotspot_MapsDirectlyToOriginalPlantDrawOrigin()
-        {
-            Assert.That(
-                BoardGeometry.CursorPlantDrawOriginOffset,
-                Is.EqualTo(new Vector2(-35f, 60f)));
-        }
-
-        [Test]
-        public void CursorHotspot_AppliesSourcePixelOffsetInPreviewParentSpace()
+        public void CursorPreview_PlacesCenteredRootAtPointerInPreviewParentSpace()
         {
             var parentObject = new GameObject("Scaled preview parent");
             try
@@ -69,14 +61,14 @@ namespace Tests.EditMode
                 parentObject.transform.localScale = new Vector3(2f, 2f, 1f);
                 var pointerWorldPosition = new Vector3(210f, 120f, 5f);
 
-                var localDrawOrigin = PlantingPreview.GetLocalCursorDrawOrigin(
+                var localPosition = PlantingPreview.GetLocalCursorPosition(
                     parentObject.transform,
                     pointerWorldPosition);
 
-                Assert.That(localDrawOrigin, Is.EqualTo(new Vector3(65f, 110f, 5f)));
+                Assert.That(localPosition, Is.EqualTo(new Vector3(100f, 50f, 5f)));
                 Assert.That(
-                    parentObject.transform.TransformPoint(localDrawOrigin),
-                    Is.EqualTo(pointerWorldPosition + new Vector3(-70f, 120f, 0f)));
+                    parentObject.transform.TransformPoint(localPosition),
+                    Is.EqualTo(pointerWorldPosition));
             }
             finally
             {

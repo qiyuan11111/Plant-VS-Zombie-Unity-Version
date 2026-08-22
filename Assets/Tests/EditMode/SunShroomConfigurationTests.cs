@@ -26,8 +26,9 @@ namespace Tests.EditMode
 
             var basicTransform = prefab.transform.Find("component/basic").GetComponent<SpriteTransform>();
             Assert.That(basicTransform, Is.Not.Null);
-            Assert.That(basicTransform.providesChildSpritePosition, Is.True);
-            Assert.That(basicTransform.spritePosition, Is.EqualTo(new Vector2(42.275f, 45.875f)));
+            Assert.That(basicTransform.providesChildSpritePosition, Is.False);
+            Assert.That(basicTransform.providesChildSpriteAffine, Is.False);
+            Assert.That(basicTransform.spritePosition, Is.EqualTo(Vector2.zero));
 
             var bodyContainer = prefab.transform.Find(BodyContainerPath);
             var body = prefab.transform.Find(BodyPath);
@@ -43,7 +44,7 @@ namespace Tests.EditMode
             Assert.That(prefab.transform.Find("component/basic/sleep"), Is.Null,
                 "The sleep replacement belongs directly to the body image.");
 
-            AssertRawTransform(body, new Vector2(41.7f, 56.35f),
+            AssertRawTransform(body, new Vector2(-0.575f, 10.475f),
                 new Vector2(79.998779296875f, 79.998779296875f));
             var bodyTransform = body.GetComponent<SpriteTransform>();
             Assert.That(bodyTransform.providesChildSpritePosition, Is.True);
@@ -52,8 +53,8 @@ namespace Tests.EditMode
             Assert.That(bodyTransform.spriteScale, Is.EqualTo(bodyTransform.scale));
             Assert.That(bodyTransform.spriteSkew, Is.EqualTo(bodyTransform.skew));
 
-            AssertRawTransform(blink1, new Vector2(41.6f, 54f), null);
-            AssertRawTransform(blink2, new Vector2(41.45f, 53.9f), null);
+            AssertRawTransform(blink1, new Vector2(-0.675f, 8.125f), null);
+            AssertRawTransform(blink2, new Vector2(-0.825f, 8.025f), null);
             Assert.That(blink1.gameObject.activeSelf, Is.False);
             Assert.That(blink2.gameObject.activeSelf, Is.False);
             Assert.That(blink1.localPosition.x, Is.EqualTo(-0.1250057f).Within(0.0001f));
@@ -61,7 +62,7 @@ namespace Tests.EditMode
             Assert.That(blink2.localPosition.x, Is.EqualTo(-0.31250566f).Within(0.0001f));
             Assert.That(blink2.localPosition.y, Is.EqualTo(3.0625443f).Within(0.0001f));
 
-            AssertRawTransform(sleep, new Vector2(41.45f, 54.2f),
+            AssertRawTransform(sleep, new Vector2(-0.825f, 8.325f),
                 new Vector2(82.14111328125f, 84.442138671875f));
             Assert.That(sleep.gameObject.activeSelf, Is.False);
             Assert.That(sleep.parent, Is.SameAs(body));
