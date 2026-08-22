@@ -3,10 +3,12 @@ using System.Reflection;
 using NUnit.Framework;
 using PvZ.Bootstrap;
 using PvZ.Config;
+using PvZ.Gameplay.World;
 using PvZ.Gameplay.Zombies;
 using PvZ.Presentation;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Tests.EditMode
 {
@@ -96,6 +98,22 @@ namespace Tests.EditMode
                 Is.EqualTo(new Vector3(points[2].position.x, points[2].position.y, 10f)));
             Assert.That(spawned.name, Is.EqualTo("TestZombie-2"));
             Assert.That(spawner.AliveZombieCount, Is.EqualTo(1));
+
+            var shadow = spawned.GetComponentInChildren<Shadow>();
+            Assert.That(shadow, Is.Not.Null);
+            Assert.That(shadow.transform.parent, Is.SameAs(spawned.transform));
+            Assert.That(shadow.transform.localPosition,
+                Is.EqualTo(new Vector3(-20.125f, -24.525f, 0f)));
+            Assert.That(shadow.transform.localScale, Is.EqualTo(Vector3.one));
+            var sortingGroup = shadow.GetComponent<SortingGroup>();
+            Assert.That(sortingGroup, Is.Not.Null);
+            Assert.That(sortingGroup.sortingLayerName, Is.EqualTo("shadow"));
+
+            var shadowRenderer = shadow.GetComponentInChildren<SpriteRenderer>();
+            shadow.SetNight(true);
+            Assert.That(shadowRenderer.sprite.name, Is.EqualTo("plantshadow2"));
+            shadow.SetNight(false);
+            Assert.That(shadowRenderer.sprite.name, Is.EqualTo("plantshadow"));
         }
 
         [Test]

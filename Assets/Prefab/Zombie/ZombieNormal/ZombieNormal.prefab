@@ -1353,6 +1353,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  drawsShadow: 1
+  shadowCenterLocalPosition: {x: -20.125, y: -24.525}
+  shadowScale: 1
 --- !u!114 &3239988787642110078
 MonoBehaviour:
   m_ObjectHideFlags: 0

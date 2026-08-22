@@ -31,6 +31,9 @@ public static class ZombieNormalPrefabBuilder
     private const string PartPathPrefix = BasicVisualPath + "/";
     private static readonly Vector2 ColliderOffset = new(-8.125f, 2.475f);
     private static readonly Vector2 ColliderSize = new(45f, 105f);
+    // Original shadow center (23,92), shifted by the centered XML origin
+    // (43.125,67.475) and converted from source Y-down to Unity Y-up.
+    private static readonly Vector2 ShadowLocalPosition = new(-20.125f, -24.525f);
 
     private readonly struct Part
     {
@@ -461,8 +464,7 @@ public static class ZombieNormalPrefabBuilder
 
             ConfigureCollider(root);
             SynchronizeParts(root.transform);
-
-
+            ConfigureShadow(root);
 
             // Apply the authored first frame so the prefab thumbnail and scene view
             // match the state that the Animator produces at runtime.
@@ -497,6 +499,7 @@ public static class ZombieNormalPrefabBuilder
             animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
             SynchronizeParts(root.transform);
             ConfigureCollider(root);
+            ConfigureShadow(root);
             defaultPose.SampleAnimation(root, 0f);
             foreach (var spriteTransform in root.GetComponentsInChildren<SpriteTransform>(true))
             {
@@ -626,6 +629,19 @@ public static class ZombieNormalPrefabBuilder
         collider.offset = ColliderOffset;
         collider.size = ColliderSize;
     }
+
+    private static void ConfigureShadow(GameObject root)
+    {
+        var zombie = root.GetComponent<ZombieNormal>();
+        if (zombie == null) throw new MissingComponentException("ZombieNormal component is missing.");
+
+        var serializedZombie = new SerializedObject(zombie);
+        serializedZombie.FindProperty("drawsShadow").boolValue = true;
+        serializedZombie.FindProperty("shadowCenterLocalPosition").vector2Value = ShadowLocalPosition;
+        serializedZombie.FindProperty("shadowScale").floatValue = 1f;
+        serializedZombie.ApplyModifiedPropertiesWithoutUndo();
+    }
+
     private static GameObject CreatePart(Transform root, Part part, int layer, Material material)
     {
         var spritePath = $"{SpritePath}/{part.Name}.png";
@@ -681,6 +697,18 @@ public static class ZombieNormalPrefabBuilder
         if (!prefab.GetComponent<Animator>().applyRootMotion)
         {
             throw new InvalidOperationException("ZombieNormal must apply the walk clip's root motion.");
+        }
+
+        var zombie = prefab.GetComponent<ZombieNormal>();
+        var expectedShadowCenter = new Vector3(
+            ShadowLocalPosition.x,
+            ShadowLocalPosition.y,
+            0f);
+        if (!zombie.DrawsShadow ||
+            Vector3.Distance(zombie.ShadowCenterLocalPosition, expectedShadowCenter) > 0.0001f ||
+            Mathf.Abs(zombie.ShadowScale - 1f) > 0.0001f)
+        {
+            throw new InvalidOperationException("ZombieNormal has an invalid decomp-compatible shadow configuration.");
         }
 
         var component = prefab.transform.Find(ComponentPath);

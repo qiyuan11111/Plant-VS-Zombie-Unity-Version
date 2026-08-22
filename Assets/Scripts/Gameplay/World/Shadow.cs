@@ -59,6 +59,7 @@ namespace PvZ.Gameplay.World
 
         public Shadow Initialize(float size)
         {
+            ResetRuntimeState();
             SetSize(size);
             SetSortingLayer("shadow");
             return this;

@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
+using PvZ.Gameplay.World;
 using PvZ.Gameplay.Zombies;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,10 +36,19 @@ namespace Tests.PlayMode
             Assert.That(animator, Is.Not.Null);
             Assert.That(animator.GetCurrentAnimatorStateInfo(0).IsName("walk"), Is.True);
 
+            var shadow = zombie.GetComponentInChildren<Shadow>();
+            Assert.That(shadow, Is.Not.Null, "A spawned normal zombie should create its ground shadow.");
+            Assert.That(shadow.transform.parent, Is.SameAs(zombie.transform));
+            var shadowLocalPosition = shadow.transform.localPosition;
+            Assert.That(shadowLocalPosition,
+                Is.EqualTo(new Vector3(-20.125f, -24.525f, 0f)));
+
             yield return new WaitForSeconds(0.75f);
 
             Assert.That(zombie.transform.localPosition.x, Is.LessThan(startX - 5f),
                 "The walk animation root motion should move the spawned zombie left.");
+            Assert.That(shadow.transform.localPosition, Is.EqualTo(shadowLocalPosition),
+                "The shadow should follow root motion without inheriting the body animation.");
         }
     }
 }
