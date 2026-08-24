@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using LitJson;
+using PvZ.Gameplay.Detection;
 using PvZ.Gameplay.Plants.Abilities;
 using PvZ.Gameplay.Plants.Types;
 using PvZ.Presentation;
@@ -34,6 +35,8 @@ public static class PeaShooterSinglePrefabOptimizer
     private const string LeafVisualPath = BasicVisualPath + "/leaf/" + NativeContent;
     private const string BackLeafVisualPath = LeafVisualPath + "/backleaf/" + NativeContent;
     private const string FrontLeafVisualPath = LeafVisualPath + "/frontleaf/" + NativeContent;
+    private const string DetectPath = "detect";
+    private const string DetectZombiePath = DetectPath + "/zombie";
     private const string OptimizationVersion = "pea-shooter-single-animation-v27-centered-root";
     private const float FrameRate = 12f;
     private const float IdleStateSpeed = 1.4f;
@@ -163,7 +166,8 @@ public static class PeaShooterSinglePrefabOptimizer
                NativeHierarchyIsCurrent(prefab) &&
                FirstFrameMatchesPrefab(prefab.transform, idleClip) &&
                FirstFrameMatchesPrefab(prefab.transform, headIdleClip) &&
-               PrefabBlinkIsCurrent(prefab, animator, faceBasePose);
+               PrefabBlinkIsCurrent(prefab, animator, faceBasePose) &&
+               PrefabCollisionIsCurrent(prefab);
     }
 
     private static JsonData LoadSource()
@@ -961,6 +965,7 @@ public static class PeaShooterSinglePrefabOptimizer
             changed |= ApplyFirstFrame(root.transform, headIdleClip);
             ConfigureBlinkParts(root, animator, headIdleClip);
             changed |= MigratePrefabToNativeHierarchy(root);
+            ConfigureCollision(root);
             changed = true;
             if (changed) PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
         }
@@ -1006,6 +1011,104 @@ public static class PeaShooterSinglePrefabOptimizer
             data.FindProperty("shadowLocalPosition").vector2Value = new Vector2(0.55f, -21.25f);
             data.ApplyModifiedPropertiesWithoutUndo();
         }
+    }
+
+    private static void ConfigureCollision(GameObject root)
+    {
+        var plantLayer = LayerMask.NameToLayer("Plant");
+        var detectZombieLayer = LayerMask.NameToLayer("DetectZombieRegion");
+        if (plantLayer < 0 || detectZombieLayer < 0)
+        {
+            throw new InvalidOperationException(
+                "Plant and DetectZombieRegion layers must exist before configuring PeaShooterSingle.");
+        }
+
+        var shooter = GetOrAddComponent<PeaShooterSingle>(root);
+        var bodyCollider = root.GetComponent<BoxCollider2D>();
+        if (bodyCollider == null)
+        {
+            throw new MissingComponentException("PeaShooterSingle root requires its Plant BoxCollider2D.");
+        }
+
+        root.layer = plantLayer;
+        var plantBody = GetOrAddComponent<PlantBodyCollider>(root);
+        plantBody.Configure(shooter, bodyCollider);
+        shooter.ConfigureBodyCollider(plantBody);
+
+        var rigidbody = GetOrAddComponent<Rigidbody2D>(root);
+        rigidbody.bodyType = RigidbodyType2D.Kinematic;
+        rigidbody.simulated = true;
+        rigidbody.gravityScale = 0f;
+        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+        rigidbody.interpolation = RigidbodyInterpolation2D.None;
+        rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        var detectRoot = GetOrCreatePath(root.transform, DetectPath);
+        detectRoot.localPosition = Vector3.zero;
+        detectRoot.localRotation = Quaternion.identity;
+        detectRoot.localScale = Vector3.one;
+        detectRoot.gameObject.layer = plantLayer;
+
+        var zombieNode = GetOrCreatePath(root.transform, DetectZombiePath);
+        zombieNode.localPosition = Vector3.zero;
+        zombieNode.localRotation = Quaternion.identity;
+        zombieNode.localScale = Vector3.one;
+        zombieNode.gameObject.layer = detectZombieLayer;
+
+        var detectorCollider = GetOrAddComponent<BoxCollider2D>(zombieNode.gameObject);
+        detectorCollider.isTrigger = true;
+        var detector = GetOrAddComponent<ZombieDetector>(zombieNode.gameObject);
+        detector.Configure(shooter, detectorCollider);
+
+        shooter.ConfigureShootingDetectorBinding(zombieNode);
+        shooter.LoadDetectorCallbacks();
+
+        EditorUtility.SetDirty(plantBody);
+        EditorUtility.SetDirty(rigidbody);
+        EditorUtility.SetDirty(detectorCollider);
+        EditorUtility.SetDirty(detector);
+    }
+
+    private static bool PrefabCollisionIsCurrent(GameObject root)
+    {
+        if (root == null) return false;
+
+        var shooter = root.GetComponent<PeaShooterSingle>();
+        var bodyCollider = root.GetComponent<BoxCollider2D>();
+        var plantBody = root.GetComponent<PlantBodyCollider>();
+        var rigidbody = root.GetComponent<Rigidbody2D>();
+        var detectRoot = root.transform.Find(DetectPath);
+        var zombieNode = root.transform.Find(DetectZombiePath);
+        var detectorCollider = zombieNode != null
+            ? zombieNode.GetComponent<BoxCollider2D>()
+            : null;
+        var detector = zombieNode != null
+            ? zombieNode.GetComponent<ZombieDetector>()
+            : null;
+        var hasShootingDetector = shooter != null &&
+                                  shooter.DetectorSlots.Count == 1 &&
+                                  shooter.DetectorSlots[0].Transform == zombieNode &&
+                                  shooter.DetectorSlots[0].Callback is IZombieDetectorCallback;
+
+        return shooter != null &&
+               bodyCollider != null &&
+               plantBody != null &&
+               plantBody.Collider == bodyCollider &&
+               plantBody.Plant == shooter &&
+               shooter.PlantBody == plantBody &&
+               rigidbody != null &&
+               rigidbody.bodyType == RigidbodyType2D.Kinematic &&
+               detectRoot != null &&
+               detectRoot.parent == root.transform &&
+               zombieNode != null &&
+               zombieNode.parent == detectRoot &&
+               detectorCollider != null &&
+               detectorCollider.isTrigger &&
+               zombieNode.gameObject.layer == LayerMask.NameToLayer("DetectZombieRegion") &&
+               detector != null &&
+               detector.Collider == detectorCollider &&
+               detector.Owner == shooter &&
+               hasShootingDetector;
     }
 
     private static bool FlattenPodHierarchy(Transform root)

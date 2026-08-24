@@ -3,6 +3,7 @@ using PvZ.Bootstrap;
 using PvZ.Config;
 using PvZ.Core.Entities;
 using PvZ.Gameplay.Board;
+using PvZ.Gameplay.Detection;
 using PvZ.Gameplay.World;
 using UnityEngine;
 
@@ -16,9 +17,11 @@ namespace PvZ.Gameplay.Zombies
         [SerializeField] private bool drawsShadow = true;
         [SerializeField] private Vector2 shadowCenterLocalPosition = new(-20.125f, -24.525f);
         [SerializeField, Min(0.01f)] private float shadowScale = Shadow.LargeScale;
+        [SerializeField] private ZombieBodyCollider zombieBody;
 
         private bool _isOnBoard;
         private Shadow _shadow;
+        private bool _bodyEventsBound;
 
         public bool IsOnBoard => _isOnBoard;
         public int RowIndex => Row;
@@ -28,6 +31,26 @@ namespace PvZ.Gameplay.Zombies
             shadowCenterLocalPosition.y,
             0f);
         public float ShadowScale => shadowScale;
+        public ZombieBodyCollider ZombieBody =>
+            zombieBody != null ? zombieBody : GetComponent<ZombieBodyCollider>();
+
+        public ZombieEntity ConfigureBodyCollider(ZombieBodyCollider bodyCollider)
+        {
+            if (bodyCollider == null)
+            {
+                throw new ArgumentNullException(nameof(bodyCollider));
+            }
+
+            if (bodyCollider.gameObject != gameObject)
+            {
+                throw new ArgumentException(
+                    $"{nameof(ZombieBodyCollider)} must be on the zombie root.",
+                    nameof(bodyCollider));
+            }
+
+            zombieBody = bodyCollider;
+            return this;
+        }
 
         public ZombieEntity EnterBoard(int row, Vector3 localPosition)
         {
@@ -61,6 +84,48 @@ namespace PvZ.Gameplay.Zombies
 
         protected virtual void OnEnteredBoard()
         {
+            BindBodyEvents();
+            LoadDetectorCallbacks();
+        }
+
+        protected virtual void OnDetectorEntered(GameEntity detector)
+        {
+        }
+
+        protected virtual void OnDetectorStayed(GameEntity detector)
+        {
+        }
+
+        protected virtual void OnDetectorExited(GameEntity detector)
+        {
+        }
+
+        private void BindBodyEvents()
+        {
+            if (_bodyEventsBound) return;
+
+            zombieBody = ZombieBody;
+            if (zombieBody == null) return;
+            if (zombieBody.Zombie != this)
+            {
+                throw new MissingComponentException(
+                    $"{name} requires a configured {nameof(ZombieBodyCollider)} on its root.");
+            }
+
+            zombieBody.DetectorEntered += OnDetectorEntered;
+            zombieBody.DetectorStayed += OnDetectorStayed;
+            zombieBody.DetectorExited += OnDetectorExited;
+            _bodyEventsBound = true;
+        }
+
+        private void UnbindBodyEvents()
+        {
+            if (!_bodyEventsBound || zombieBody == null) return;
+
+            zombieBody.DetectorEntered -= OnDetectorEntered;
+            zombieBody.DetectorStayed -= OnDetectorStayed;
+            zombieBody.DetectorExited -= OnDetectorExited;
+            _bodyEventsBound = false;
         }
 
         private void EnsureShadow()
@@ -92,6 +157,7 @@ namespace PvZ.Gameplay.Zombies
 
         protected virtual void OnDestroy()
         {
+            UnbindBodyEvents();
             _isOnBoard = false;
         }
     }

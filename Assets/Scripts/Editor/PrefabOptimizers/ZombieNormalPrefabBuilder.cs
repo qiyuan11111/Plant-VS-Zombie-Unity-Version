@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Xml;
 using PvZ.Config;
+using PvZ.Gameplay.Detection;
 using PvZ.Gameplay.Zombies;
 using PvZ.Presentation;
 using UnityEditor;
@@ -463,6 +464,7 @@ public static class ZombieNormalPrefabBuilder
             root.AddComponent<SpriteGroup>();
 
             ConfigureCollider(root);
+            ConfigureDetectedCollider(root);
             SynchronizeParts(root.transform);
             ConfigureShadow(root);
 
@@ -499,6 +501,7 @@ public static class ZombieNormalPrefabBuilder
             animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
             SynchronizeParts(root.transform);
             ConfigureCollider(root);
+            ConfigureDetectedCollider(root);
             ConfigureShadow(root);
             defaultPose.SampleAnimation(root, 0f);
             foreach (var spriteTransform in root.GetComponentsInChildren<SpriteTransform>(true))
@@ -628,6 +631,23 @@ public static class ZombieNormalPrefabBuilder
         collider.isTrigger = true;
         collider.offset = ColliderOffset;
         collider.size = ColliderSize;
+    }
+
+    private static void ConfigureDetectedCollider(GameObject root)
+    {
+        var zombie = root.GetComponent<ZombieNormal>();
+        var collider = root.GetComponent<BoxCollider2D>();
+        if (zombie == null || collider == null)
+        {
+            throw new MissingComponentException(
+                "ZombieNormal requires its entity and body Collider2D before detection is configured.");
+        }
+
+        var zombieBody = root.GetComponent<ZombieBodyCollider>();
+        if (zombieBody == null) zombieBody = root.AddComponent<ZombieBodyCollider>();
+        zombieBody.Configure(zombie, collider);
+        zombie.ConfigureBodyCollider(zombieBody);
+        EditorUtility.SetDirty(zombieBody);
     }
 
     private static void ConfigureShadow(GameObject root)
@@ -788,6 +808,15 @@ public static class ZombieNormalPrefabBuilder
             Vector2.Distance(collider.size, ColliderSize) > 0.0001f)
         {
             throw new InvalidOperationException("ZombieNormal collider is not expressed relative to the centered root.");
+        }
+
+        var zombieBody = prefab.GetComponent<ZombieBodyCollider>();
+        if (zombieBody == null ||
+            zombieBody.Collider != collider ||
+            zombieBody.Zombie != zombie ||
+            zombie.ZombieBody != zombieBody)
+        {
+            throw new InvalidOperationException("ZombieNormal has an invalid detected-collider binding.");
         }
 
         ValidateWalkRootMotion(walk);

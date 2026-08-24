@@ -1296,6 +1296,7 @@ GameObject:
   - component: {fileID: 8027492801726733232}
   - component: {fileID: 3239988787642110078}
   - component: {fileID: 1119785634721152384}
+  - component: {fileID: 3747922056989342400}
   m_Layer: 7
   m_Name: ZombieNormal
   m_TagString: Untagged
@@ -1352,10 +1353,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c60e409716058114288576b0bdf76bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectorSlots: []
   maxHealth: 100
   drawsShadow: 1
   shadowCenterLocalPosition: {x: -20.125, y: -24.525}
   shadowScale: 1
+  zombieBody: {fileID: 3747922056989342400}
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3239988787642110078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1413,6 +1419,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 45, y: 105}
   m_EdgeRadius: 0
+--- !u!114 &3747922056989342400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4997143841168407538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073b0d72f0eb8414c8d874eafb9c33a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boundCollider: {fileID: 1119785634721152384}
+  owner: {fileID: 8027492801726733232}
 --- !u!1 &5008510505610883337
 GameObject:
   m_ObjectHideFlags: 0
