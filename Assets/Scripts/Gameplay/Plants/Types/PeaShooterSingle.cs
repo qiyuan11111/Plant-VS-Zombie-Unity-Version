@@ -183,6 +183,7 @@ namespace PvZ.Gameplay.Plants.Types
             /// </summary>
             public void OnZombieEnter(ZombieDetector detector, ZombieEntity zombie)
             {
+                Debug.Log("ZombieEnter");
             }
 
             /// <summary>
@@ -190,6 +191,7 @@ namespace PvZ.Gameplay.Plants.Types
             /// </summary>
             public void OnZombieStay(ZombieDetector detector, ZombieEntity zombie)
             {
+                Debug.Log("ZombieStay");
             }
 
             /// <summary>
@@ -197,6 +199,7 @@ namespace PvZ.Gameplay.Plants.Types
             /// </summary>
             public void OnZombieExit(ZombieDetector detector, ZombieEntity zombie)
             {
+                Debug.Log("ZombieExit");
             }
         }
 
