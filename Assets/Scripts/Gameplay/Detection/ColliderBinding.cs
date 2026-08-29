@@ -1,5 +1,5 @@
 using System;
-using PvZ.Core.Entities;
+using PvZ.Gameplay.Entities;
 using UnityEngine;
 
 namespace PvZ.Gameplay.Detection

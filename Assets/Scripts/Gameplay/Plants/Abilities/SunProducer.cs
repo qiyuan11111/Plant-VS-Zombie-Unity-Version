@@ -1,6 +1,6 @@
 using System.Collections;
+using PvZ.Gameplay.Plants.Presentation;
 using PvZ.Gameplay.Sun;
-using PvZ.Presentation;
 using UnityEngine;
 
 namespace PvZ.Gameplay.Plants.Abilities
@@ -22,13 +22,12 @@ namespace PvZ.Gameplay.Plants.Abilities
         [SerializeField, Min(0f)] private float initialDelayVariationSeconds = 2f;
         [SerializeField, Min(0.1f)] private float intervalSeconds = 24f;
         [SerializeField, Min(0f)] private float intervalVariationSeconds = 3f;
-        [SerializeField] private SunManager.SunType fallbackSunType = SunManager.SunType.Small;
+        [SerializeField] private SunType fallbackSunType = SunType.Small;
 
         private Animator _animator;
         private Coroutine _productionRoutine;
         private Coroutine _fallbackProductionRoutine;
-        private SpriteTransform[] _fallbackVisualParts;
-        private float[] _fallbackBrightness;
+        private SunProductionGlow _fallbackGlow;
 
         public bool IsProducing => _productionRoutine != null;
 
@@ -40,10 +39,10 @@ namespace PvZ.Gameplay.Plants.Abilities
             }
 
             ResolveReferences();
-            if (SunManager.Instance == null)
+            if (SunSpawner.Instance == null)
             {
                 throw new MissingReferenceException(
-                    $"{nameof(SunProducer)} requires an active {nameof(SunManager)} in the scene.");
+                    $"{nameof(SunProducer)} requires an active {nameof(SunSpawner)} in the scene.");
             }
 
             enabled = true;
@@ -74,15 +73,15 @@ namespace PvZ.Gameplay.Plants.Abilities
                 return;
             }
 
-            var sunManager = SunManager.Instance;
-            if (sunManager == null)
+            var sunSpawner = SunSpawner.Instance;
+            if (sunSpawner == null)
             {
-                Debug.LogError($"Cannot produce sun because {nameof(SunManager)} is unavailable.", this);
+                Debug.LogError($"Cannot produce sun because {nameof(SunSpawner)} is unavailable.", this);
                 StopProducing();
                 return;
             }
 
-            SpawnSun(sunManager, sunManager.GetSunTypeByTypeNum(sunTypeNumber));
+            SpawnSun(sunSpawner, SunTypeCatalog.FromAnimationEvent(sunTypeNumber));
         }
 
         private IEnumerator ProductionLoop()
@@ -131,7 +130,7 @@ namespace PvZ.Gameplay.Plants.Abilities
 
         private IEnumerator FallbackProductionAnimation()
         {
-            CacheVisualBrightness();
+            _fallbackGlow = SunProductionGlow.Capture(transform);
 
             const float glowDuration = 2f;
             const float peakTime = glowDuration * 0.5f;
@@ -143,11 +142,11 @@ namespace PvZ.Gameplay.Plants.Abilities
                 var glow = elapsed <= peakTime
                     ? Mathf.SmoothStep(1f, 2f, elapsed / peakTime)
                     : Mathf.SmoothStep(2f, 1f, (elapsed - peakTime) / peakTime);
-                ApplyFallbackBrightness(glow);
+                _fallbackGlow.Apply(glow);
 
                 if (!produced && elapsed >= peakTime)
                 {
-                    SpawnSun(SunManager.Instance, fallbackSunType);
+                    SpawnSun(SunSpawner.Instance, fallbackSunType);
                     produced = true;
                 }
 
@@ -157,35 +156,11 @@ namespace PvZ.Gameplay.Plants.Abilities
 
             if (!produced && IsProducing)
             {
-                SpawnSun(SunManager.Instance, fallbackSunType);
+                SpawnSun(SunSpawner.Instance, fallbackSunType);
             }
 
             RestoreFallbackBrightness();
             _fallbackProductionRoutine = null;
-        }
-
-        private void CacheVisualBrightness()
-        {
-            _fallbackVisualParts = GetComponentsInChildren<SpriteTransform>(true);
-            _fallbackBrightness = new float[_fallbackVisualParts.Length];
-            for (var index = 0; index < _fallbackVisualParts.Length; index++)
-            {
-                _fallbackBrightness[index] = _fallbackVisualParts[index].brightness;
-            }
-        }
-
-        private void ApplyFallbackBrightness(float multiplier)
-        {
-            if (_fallbackVisualParts == null || _fallbackBrightness == null) return;
-
-            for (var index = 0; index < _fallbackVisualParts.Length; index++)
-            {
-                var part = _fallbackVisualParts[index];
-                if (part == null) continue;
-
-                part.brightness = _fallbackBrightness[index] * multiplier;
-                part.Apply();
-            }
         }
 
         private void StopFallbackProductionAnimation()
@@ -201,32 +176,20 @@ namespace PvZ.Gameplay.Plants.Abilities
 
         private void RestoreFallbackBrightness()
         {
-            if (_fallbackVisualParts != null && _fallbackBrightness != null)
-            {
-                for (var index = 0; index < _fallbackVisualParts.Length; index++)
-                {
-                    var part = _fallbackVisualParts[index];
-                    if (part == null) continue;
-
-                    part.brightness = _fallbackBrightness[index];
-                    part.Apply();
-                }
-            }
-
-            _fallbackVisualParts = null;
-            _fallbackBrightness = null;
+            _fallbackGlow?.Restore();
+            _fallbackGlow = null;
         }
 
-        private void SpawnSun(SunManager sunManager, SunManager.SunType type)
+        private void SpawnSun(SunSpawner sunSpawner, SunType type)
         {
-            if (sunManager == null)
+            if (sunSpawner == null)
             {
-                Debug.LogError($"Cannot produce sun because {nameof(SunManager)} is unavailable.", this);
+                Debug.LogError($"Cannot produce sun because {nameof(SunSpawner)} is unavailable.", this);
                 StopProducing();
                 return;
             }
 
-            sunManager.SpawnSun(productionAnchor.position, type);
+            sunSpawner.SpawnSun(productionAnchor.position, type);
         }
 
         private bool CanUseProductionAnimation()

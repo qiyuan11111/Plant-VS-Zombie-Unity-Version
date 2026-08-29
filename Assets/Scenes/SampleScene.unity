@@ -651,6 +651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 489634315}
   - component: {fileID: 489634316}
+  - component: {fileID: 489634317}
   m_Layer: 5
   m_Name: ZombieSpawner
   m_TagString: Untagged
@@ -702,10 +703,23 @@ MonoBehaviour:
   - {fileID: 498703701}
   - {fileID: 2126844788}
   spawnDepth: 10
-  spawnAutomatically: 1
   defaultZombieType: 0
-  spawnInterval: 5
   maxAliveZombies: 30
+--- !u!114 &489634317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489634314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f893572f294ee7a894917b15cc2bc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnAutomatically: 1
+  zombieType: 0
+  spawnInterval: 5
 --- !u!1 &490093142
 GameObject:
   m_ObjectHideFlags: 0
@@ -2770,9 +2784,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1623294087}
   - component: {fileID: 1623294086}
-  - component: {fileID: 1623294088}
   m_Layer: 0
-  m_Name: MainGameManager
+  m_Name: GameBootstrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2805,18 +2818,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1623294088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1623294085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf43ea8dab184719bacc0c41e1d2da4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1625883277
 GameObject:
   m_ObjectHideFlags: 0
@@ -3358,8 +3359,9 @@ GameObject:
   - component: {fileID: 2011606525}
   - component: {fileID: 2011606524}
   - component: {fileID: 2011606526}
+  - component: {fileID: 2011606527}
   m_Layer: 5
-  m_Name: Grid
+  m_Name: BoardGrid
   m_TagString: Grid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3443,6 +3445,18 @@ MonoBehaviour:
   terrain: 0
   isNight: 0
   highGroundCells: []
+--- !u!114 &2011606527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011606522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed84c40c2164a5ebc8a0c3594fd6744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2036146108
 GameObject:
   m_ObjectHideFlags: 0
@@ -3453,8 +3467,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2036146109}
   - component: {fileID: 2036146110}
+  - component: {fileID: 2036146111}
+  - component: {fileID: 2036146112}
   m_Layer: 5
-  m_Name: Sun
+  m_Name: SunSystems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3491,14 +3507,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158407cae0801f8478b748f49abd9f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sunPoint: {fileID: 2127898155}
-  sunLightText: {fileID: 787954046}
+  initialBalance: 100
+--- !u!114 &2036146111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036146108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a861b203f694fa2a56e482bed4e9871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   enableNaturalSun: 1
   naturalSunInterval: 0.8
   maxNaturalSunCount: 30
   naturalSunXRange: {x: -600, y: 600}
   naturalSunYRange: {x: -500, y: 500}
-  sunPointPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &2036146112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036146108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b52c42df6db4c28b2e52e15afb73b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionTarget: {fileID: 2127898155}
+  sunlightText: {fileID: 787954046}
 --- !u!1 &2126844787
 GameObject:
   m_ObjectHideFlags: 0

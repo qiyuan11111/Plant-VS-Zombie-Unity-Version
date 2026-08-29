@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using PvZ.Presentation;
 using PvZ.Gameplay.Detection;
-using PvZ.Gameplay.Plants;
+using PvZ.Gameplay.Detection.Zombies;
 using PvZ.Gameplay.Plants.Abilities;
 using PvZ.Gameplay.Zombies;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace PvZ.Gameplay.Plants.Types
 {
@@ -17,7 +13,7 @@ namespace PvZ.Gameplay.Plants.Types
     /// 实际生成子弹和攻击结算由后续的射击能力负责。
     /// </summary>
     [RequireComponent(typeof(Blink))]
-    public class PeaShooterSingle : PlantEntity, IPointerClickHandler
+    public sealed class PeaShooterSingle : PlantEntity
     {
         // 射击检测框从植物前方开始，并一直延伸到棋盘右边界。
         // 这些值使用预制体本地坐标，与当前美术资源和棋盘尺寸对应。
@@ -34,10 +30,10 @@ namespace PvZ.Gameplay.Plants.Types
         private const string PreviousNativeMouthPath =
             "component/basic/head/__AffineContent/pod/mouth";
         private const string LegacyMouthPath = "component/basic/head/pod/mouth";
-        private static readonly int Shoot = Animator.StringToHash("shoot");
-
         [SerializeField] private Blink blink;
         [SerializeField] private Transform projectileSpawnAnchor;
+
+        public event Action<Vector3> ProjectileRequested;
 
         /// <summary>
         /// 在嘴部锚点位置发射一颗豌豆。
@@ -45,9 +41,7 @@ namespace PvZ.Gameplay.Plants.Types
         /// </summary>
         public void ShootProjectilePea()
         {
-            Vector3 position = ResolveProjectileSpawnAnchor().position;
-            // BulletManager.instance.InstantiateBullet(this, position + new Vector3(30, 6, 0),
-            //     GameConfigObject.BulletType.ProjectilePea);
+            ProjectileRequested?.Invoke(ResolveProjectileSpawnAnchor().position);
         }
 
         /// <summary>
@@ -203,24 +197,6 @@ namespace PvZ.Gameplay.Plants.Types
             }
         }
 
-
-        // IEnumerator StartShootColdDown()
-        // {
-        //     while (true)
-        //     {
-        //         if (attack)
-        //         {
-        //             animator.SetTrigger(Shoot);
-        //             yield return new TimeWait(Random.Range(1.45f, 1.55f));
-        //         }
-        //         else
-        //         {
-        //             yield return new TimeWait();
-        //         }
-        //
-        //     }
-        // }
-
         public override string GetChineseName()
         {
             return "豌豆射手";
@@ -230,20 +206,6 @@ namespace PvZ.Gameplay.Plants.Types
         {
             return "PeaShooterSingle";
         }
-
-        // public override void SetNormalModeAnimatioSpeed()
-        // {
-        //     SetAnimationSpeed(1f);
-        // }
-
-
-        /// <summary>
-        /// 响应植物上的指针点击；当前尚未绑定交互行为。
-        /// </summary>
-        public void OnPointerClick(PointerEventData eventData)
-        {
-        }
-
 #if UNITY_EDITOR
         /// <summary>
         /// 在编辑器中自动补全可直接获取的组件引用。

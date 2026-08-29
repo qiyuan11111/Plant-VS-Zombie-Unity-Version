@@ -1,14 +1,12 @@
 using UnityEngine;
-using PvZ.Bootstrap;
-using PvZ.Core.Entities;
+using PvZ.Gameplay.Entities;
 using PvZ.Gameplay.Board;
 using PvZ.Gameplay.Detection;
-using PvZ.Gameplay.World;
+using PvZ.Gameplay.Detection.Plants;
+using PvZ.Gameplay.Presentation.Shadows;
 
 namespace PvZ.Gameplay.Plants
 {
-    using PvZ.Config;
-
     /// <summary>
     /// 所有植物实体的基类，负责植物进入棋盘后的通用生命周期。
     /// <para>
@@ -35,7 +33,7 @@ namespace PvZ.Gameplay.Plants
         [SerializeField] private PlantBodyCollider plantBody;
 
         // 当前占用的棋盘格，用于实体销毁时释放格子。
-        private GridManager.Grid _occupiedGrid;
+        private BoardCell _occupiedCell;
         private Shadow _shadow;
         private bool _isOnBoard;
 
@@ -90,30 +88,30 @@ namespace PvZ.Gameplay.Plants
         /// 将植物放入指定棋盘格，并完成所有通用入场初始化。
         /// 每个植物实例只能成功调用一次。
         /// </summary>
-        /// <param name="grid">已经分配给该植物的有效棋盘格。</param>
+        /// <param name="cell">已经分配给该植物的有效棋盘格。</param>
         /// <returns>当前植物，便于链式调用。</returns>
-        public PlantEntity EnterBoard(GridManager.Grid grid)
+        public PlantEntity EnterBoard(BoardCell cell)
         {
             if (_isOnBoard)
             {
                 throw new System.InvalidOperationException($"{name} is already on the board.");
             }
 
-            if (grid == null || grid == GridManager.Grid.None)
+            if (cell == null || cell == BoardCell.None)
             {
-                throw new System.ArgumentException("A plant requires a valid grid.", nameof(grid));
+                throw new System.ArgumentException("A plant requires a valid board cell.", nameof(cell));
             }
 
-            _occupiedGrid = grid;
-            SetRow(grid.Point.y).SetHeight(0f);
+            _occupiedCell = cell;
+            SetRow(cell.Point.y).SetHeight(0f);
 
             GetComponentRoot()
-                .SetSortingLayer("plant-" + grid.Point.y)
+                .SetSortingLayer("plant-" + cell.Point.y)
                 .SetColliderState(true);
 
             SetLocalScale(BoardScale);
-            SetLocalPosition(new Vector3(grid.Position.x, grid.Position.y, 10f));
-            SetName(GetEnglishName() + "-" + grid.Point.x + "-" + grid.Point.y);
+            SetLocalPosition(new Vector3(cell.Position.x, cell.Position.y, 10f));
+            SetName(GetEnglishName() + "-" + cell.Point.x + "-" + cell.Point.y);
 
             EnsureShadow();
             _isOnBoard = true;
@@ -192,20 +190,12 @@ namespace PvZ.Gameplay.Plants
         private void EnsureShadow()
         {
             if (_shadow != null || !drawsShadow) return;
-            var shadowPrefab = MainGameManager.Instance.GetObjectByType(GameConfigObject.ObjectType.PlanteShadow);
-            var shadowObject = Instantiate(shadowPrefab, Transform, false);
-            shadowObject.transform.localPosition = shadowLocalPosition;
-            shadowObject.transform.localRotation = Quaternion.identity;
-            _shadow = shadowObject.GetComponent<Shadow>();
-
-            if (_shadow == null)
-            {
-                Destroy(shadowObject);
-                throw new MissingComponentException($"{shadowPrefab.name} requires a Shadow component.");
-            }
-
-            var drawNightShadow = GridManager.Instance != null && GridManager.Instance.IsNight;
-            _shadow.Initialize(shadowSize, drawNightShadow);
+            var drawNightShadow = BoardGrid.Instance != null && BoardGrid.Instance.IsNight;
+            _shadow = ShadowFactory.Create(
+                Transform,
+                shadowLocalPosition,
+                Shadow.GetScale(shadowSize),
+                drawNightShadow);
         }
 
         /// <summary>
@@ -216,8 +206,8 @@ namespace PvZ.Gameplay.Plants
         {
             UnbindBodyEvents();
             _isOnBoard = false;
-            _occupiedGrid?.TryRelease(this);
-            _occupiedGrid = null;
+            _occupiedCell?.TryRelease(this);
+            _occupiedCell = null;
         }
 
         /// <summary>将植物恢复到其所在行的常规渲染层。</summary>

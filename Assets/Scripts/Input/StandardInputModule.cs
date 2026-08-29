@@ -1,4 +1,4 @@
-using PvZ.Gameplay.Board;
+using PvZ.Gameplay.Planting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -35,7 +35,7 @@ namespace PvZ.Input
             leftData.button = PointerEventData.InputButton.Left;
             eventSystem.RaycastAll(leftData, m_RaycastResultCache);
 
-            var isPlanting = PlantingManager.Instance != null && PlantingManager.Instance.IsPlanting;
+            var isPlanting = PlantingController.Instance != null && PlantingController.Instance.IsPlanting;
             leftData.pointerCurrentRaycast = PointerPriorityPolicy.Select(m_RaycastResultCache, isPlanting);
             m_RaycastResultCache.Clear();
 

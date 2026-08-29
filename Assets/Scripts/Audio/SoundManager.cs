@@ -1,39 +1,43 @@
-using PvZ.Bootstrap;
 using PvZ.Core;
 using UnityEngine;
 
 namespace PvZ.Audio
 {
 
-    public class SoundManager : SceneSingleton<SoundManager>
+    public sealed class SoundManager : SceneSingleton<SoundManager>
     {
         [SerializeField] private AudioSource bgm;
         [SerializeField] private AudioSource effect;
+        [SerializeField] private GameSound sounds;
+
+        protected override void OnSingletonAwake()
+        {
+            if (sounds == null)
+            {
+                sounds = Resources.Load<GameSound>(nameof(GameSound));
+            }
+        }
 
         protected override bool ValidateReferences()
         {
             var isValid = true;
             isValid &= RequireReference(bgm, nameof(bgm));
             isValid &= RequireReference(effect, nameof(effect));
+            isValid &= RequireReference(sounds, $"Resources/{nameof(GameSound)}");
             return isValid;
-        }
-
-        protected override bool ValidateDependencies()
-        {
-            return RequireManager(MainGameManager.Instance);
         }
 
         protected override void OnSingletonStart()
         {
-            bgm.clip = MainGameManager.Instance.GetAudioClipByType(GameSound.SoundType.BGM_day);
+            bgm.clip = sounds.GetClip(SoundCue.BgmDay);
             if (bgm.clip == null) return;
 
             bgm.Play();
         }
 
-        public void PlayEffect(GameSound.SoundType soundType)
+        public void PlayEffect(SoundCue cue)
         {
-            var audioClip = MainGameManager.Instance.GetAudioClipByType(soundType);
+            var audioClip = sounds.GetClip(cue);
             if (audioClip != null)
             {
                 effect.PlayOneShot(audioClip);

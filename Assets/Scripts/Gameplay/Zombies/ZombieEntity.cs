@@ -1,10 +1,9 @@
 using System;
-using PvZ.Bootstrap;
-using PvZ.Config;
-using PvZ.Core.Entities;
+using PvZ.Gameplay.Entities;
 using PvZ.Gameplay.Board;
 using PvZ.Gameplay.Detection;
-using PvZ.Gameplay.World;
+using PvZ.Gameplay.Detection.Zombies;
+using PvZ.Gameplay.Presentation.Shadows;
 using UnityEngine;
 
 namespace PvZ.Gameplay.Zombies
@@ -131,28 +130,13 @@ namespace PvZ.Gameplay.Zombies
         private void EnsureShadow()
         {
             if (_shadow != null || !drawsShadow) return;
-            if (MainGameManager.Instance == null)
-            {
-                throw new MissingReferenceException(
-                    $"{nameof(ZombieEntity)} requires an active {nameof(MainGameManager)} to create its shadow.");
-            }
-
-            var shadowPrefab = MainGameManager.Instance.GetObjectByType(
-                GameConfigObject.ObjectType.PlanteShadow);
-            var shadowObject = Instantiate(shadowPrefab, Transform, false);
-            shadowObject.name = "ZombieShadow";
-            shadowObject.transform.localPosition = ShadowCenterLocalPosition;
-            shadowObject.transform.localRotation = Quaternion.identity;
-            _shadow = shadowObject.GetComponent<Shadow>();
-
-            if (_shadow == null)
-            {
-                Destroy(shadowObject);
-                throw new MissingComponentException($"{shadowPrefab.name} requires a Shadow component.");
-            }
-
-            var drawNightShadow = GridManager.Instance != null && GridManager.Instance.IsNight;
-            _shadow.SetNight(drawNightShadow).Initialize(shadowScale);
+            var drawNightShadow = BoardGrid.Instance != null && BoardGrid.Instance.IsNight;
+            _shadow = ShadowFactory.Create(
+                Transform,
+                ShadowCenterLocalPosition,
+                shadowScale,
+                drawNightShadow,
+                "ZombieShadow");
         }
 
         protected virtual void OnDestroy()

@@ -2,27 +2,6 @@ using UnityEngine;
 
 namespace PvZ.Gameplay.Board
 {
-    public enum BoardTerrain
-    {
-        FrontYard,
-        Pool,
-        Roof
-    }
-
-    public readonly struct BoardCellGeometry
-    {
-        public BoardCellGeometry(Vector2 logicalOrigin, Vector2 center, Vector2 size)
-        {
-            LogicalOrigin = logicalOrigin;
-            Center = center;
-            Size = size;
-        }
-
-        public Vector2 LogicalOrigin { get; }
-        public Vector2 Center { get; }
-        public Vector2 Size { get; }
-    }
-
     /// <summary>
     /// Converts the original 800x600 board coordinates (Y down) to the Grid
     /// RectTransform's local coordinates (Y up). The scene authors the Grid pivot

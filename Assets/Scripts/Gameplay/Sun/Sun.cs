@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using PvZ.Audio;
-using PvZ.Core.Entities;
+using PvZ.Gameplay.Entities;
+using PvZ.UI.HUD;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 namespace PvZ.Gameplay.Sun
 {
-    public class Sun : WorldObject, IPointerClickHandler
+    public sealed class Sun : GameEntity, IPointerClickHandler
     {
         private const float LifetimeSeconds = 100f;
         private const float JumpDuration = 0.5f;
@@ -19,7 +20,7 @@ namespace PvZ.Gameplay.Sun
 
         private static readonly int DisappearProperty = Animator.StringToHash("disappear");
 
-        private SunManager.SunType _sunType;
+        private SunType _sunType;
         private Coroutine _jumpCoroutine;
         private Coroutine _lifetimeCoroutine;
         private Coroutine _collectCoroutine;
@@ -118,19 +119,19 @@ namespace PvZ.Gameplay.Sun
             Disappear();
         }
 
-        public Sun SetSunType(SunManager.SunType type)
+        public Sun SetSunType(SunType type)
         {
             _sunType = type;
             return this;
         }
 
-        public Sun Initialize(SunManager.SunType type, Vector3 localPosition)
+        public Sun Initialize(SunType type, Vector3 localPosition)
         {
             ResetRuntimeState();
             _isCollected = false;
             SetComponentState(true);
 
-            var scale = SunManager.Instance.GetSunScaleBySunType(type);
+            var scale = SunTypeCatalog.GetScale(type);
             SetSunType(type);
             SetLocalPosition(localPosition);
             SetLocalScale(new Vector3(scale, scale, 1f));
@@ -166,9 +167,9 @@ namespace PvZ.Gameplay.Sun
             SetComponentState(false);
             StopRoutine(ref _lifetimeCoroutine);
 
-            SunManager.Instance.AddCurrentSunLight(SunManager.Instance.GetSunLightBySunType(_sunType));
-            SoundManager.Instance.PlayEffect(GameSound.SoundType.Points);
-            _collectCoroutine = StartCoroutine(CollectTo(SunManager.Instance.sunPointPosition));
+            SunWallet.Instance.Deposit(SunTypeCatalog.GetValue(_sunType));
+            SoundManager.Instance.PlayEffect(SoundCue.Points);
+            _collectCoroutine = StartCoroutine(CollectTo(SunHud.Instance.CollectionTargetLocalPosition));
         }
 
         private void StopRunningCoroutines()

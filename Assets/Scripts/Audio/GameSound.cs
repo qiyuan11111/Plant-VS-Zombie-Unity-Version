@@ -1,43 +1,37 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PvZ.Audio
 {
-
-    [CreateAssetMenu(fileName = "GameSound", menuName = "GameSound", order = 2)]
-    public class GameSound : ScriptableObject
+    [CreateAssetMenu(fileName = "GameSound", menuName = "PvZ/Game Sound", order = 2)]
+    public sealed class GameSound : ScriptableObject
     {
-        [Tooltip("背景音乐")]
-        public AudioClip BGM_day;
+        [FormerlySerializedAs("BGM_day")]
+        [SerializeField, Tooltip("背景音乐")]
+        private AudioClip bgmDay;
 
-        [Tooltip("种下植物时的音效")]
-        public AudioClip Plant;
+        [FormerlySerializedAs("Plant")]
+        [SerializeField, Tooltip("种下植物时的音效")]
+        private AudioClip plant;
 
-        [Tooltip("从卡槽选择植物卡片的声音")]
-        public AudioClip SeedLift;
+        [FormerlySerializedAs("SeedLift")]
+        [SerializeField, Tooltip("从卡槽选择植物卡片的声音")]
+        private AudioClip seedLift;
 
-        [Tooltip("收集阳光的声音")]
-        public AudioClip Points;
+        [FormerlySerializedAs("Points")]
+        [SerializeField, Tooltip("收集阳光的声音")]
+        private AudioClip points;
 
-        public enum SoundType
+        public AudioClip GetClip(SoundCue cue)
         {
-            None,
-            BGM_day,
-            Plante,
-            SeedLift,
-            Points
-        }
-
-        public AudioClip GetAudioClipByType(SoundType soundType)
-        {
-            return soundType switch
+            return cue switch
             {
-                SoundType.BGM_day => BGM_day,
-                SoundType.Plante => Plant,
-                SoundType.SeedLift => SeedLift,
-                SoundType.Points => Points,
+                SoundCue.BgmDay => bgmDay,
+                SoundCue.Plant => plant,
+                SoundCue.SeedLift => seedLift,
+                SoundCue.Points => points,
                 _ => null
             };
         }
     }
-
 }

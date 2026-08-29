@@ -1,42 +1,13 @@
 using System;
 using System.Collections.Generic;
-using PvZ.Gameplay.Plants;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PvZ.Config
 {
     [CreateAssetMenu(fileName = "GameConfigObject", menuName = "GameConfigObject", order = 1)]
-    public class GameConfigObject : ScriptableObject
+    public sealed class GameConfigObject : ScriptableObject
     {
-        public enum PlantType
-        {
-            SunShroom = 0,
-            PeaShooterSingle = 1,
-            SunFlower = 2
-        }
-
-        public enum ZombieType
-        {
-            ZombieNormal = 0
-        }
-
-        public enum ObjectType
-        {
-            Card = 0,
-            Sun = 1,
-            PlanteShadow = 2
-        }
-
-        public enum BulletType
-        {
-            ProjectilePea = 0
-        }
-
-        public enum ParticleType
-        {
-            PeaSplat = 0
-        }
-
         [Header("Plants")]
         [SerializeField] private List<PlantDefinition> plantDefinitions = new();
 
@@ -46,7 +17,8 @@ namespace PvZ.Config
         [Header("Objects")]
         public GameObject Card;
         public GameObject Sun;
-        public GameObject PlanteShadow;
+        [FormerlySerializedAs("PlanteShadow")]
+        public GameObject PlantShadow;
 
         [Header("Bullets")]
         public GameObject ProjectilePea;
@@ -88,7 +60,7 @@ namespace PvZ.Config
             Register(_zombies, ZombieType.ZombieNormal, ZombieNormal);
             Register(_objects, ObjectType.Card, Card);
             Register(_objects, ObjectType.Sun, Sun);
-            Register(_objects, ObjectType.PlanteShadow, PlanteShadow);
+            Register(_objects, ObjectType.PlantShadow, PlantShadow);
             Register(_bullets, BulletType.ProjectilePea, ProjectilePea);
             Register(_particles, ParticleType.PeaSplat, PeaSplat);
         }

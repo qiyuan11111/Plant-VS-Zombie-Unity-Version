@@ -1,0 +1,277 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using NUnit.Framework;
+using PvZ.Gameplay.Plants;
+using PvZ.Gameplay.Plants.Types;
+using PvZ.Gameplay.Plants.Abilities;
+using PvZ.Gameplay.Presentation.Shadows;
+using PvZ.Presentation.Rendering;
+using PvZ.Gameplay.Presentation.EntityPreviews;
+using PvZ.Config;
+using PvZ.Gameplay.Board;
+using UnityEditor;
+using UnityEditor.Animations;
+using UnityEngine;
+
+namespace PvZ.Tests.EditMode.Plants
+{
+    public sealed partial class SunFlowerConfigurationTests
+    {
+    [Test]
+            public void ProductionAnchor_IsFixedAtDefaultHeadCenter()
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
+                    "Assets/Prefab/Plant/SunFlower/SunFlower.prefab");
+                Assert.That(prefab, Is.Not.Null);
+    
+                var anchor = prefab.transform.Find("component/anchors/Sun_Anchor");
+                var head = prefab.transform.Find(HeadPath);
+                Assert.That(anchor, Is.Not.Null);
+                Assert.That(head, Is.Not.Null);
+                Assert.That(anchor.parent, Is.SameAs(prefab.transform.Find("component/anchors")),
+                    "The production point must remain independent from animated head motion.");
+    
+                var anchorInPlantSpace = prefab.transform.InverseTransformPoint(anchor.position);
+                var headInPlantSpace = prefab.transform.InverseTransformPoint(head.position);
+                Assert.That(anchorInPlantSpace.x, Is.EqualTo(headInPlantSpace.x).Within(0.0001f));
+                Assert.That(anchorInPlantSpace.y, Is.EqualTo(headInPlantSpace.y).Within(0.0001f));
+                Assert.That(anchor.localRotation, Is.EqualTo(Quaternion.identity));
+                Assert.That(anchor.localScale, Is.EqualTo(Vector3.one));
+    
+                var producer = prefab.GetComponent<SunProducer>();
+                Assert.That(producer, Is.Not.Null);
+                var serializedProducer = new SerializedObject(producer);
+                Assert.That(serializedProducer.FindProperty("productionAnchor").objectReferenceValue,
+                    Is.SameAs(anchor));
+            }
+
+    [Test]
+            public void BlinkAnimation_ReturnsDedicatedSpritesToInactiveDefaults()
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
+                    "Assets/Prefab/Plant/SunFlower/SunFlower.prefab");
+                var instance = Object.Instantiate(prefab);
+                try
+                {
+                    var animator = instance.GetComponent<Animator>();
+                    animator.enabled = true;
+                    animator.Rebind();
+                    animator.Update(0f);
+    
+                    var blink1 = instance.transform.Find(
+                        HeadVisualPath + "/blink/SunFlower_blink1");
+                    var blink2 = instance.transform.Find(
+                        HeadVisualPath + "/blink/SunFlower_blink2");
+                    var blinkLayer = animator.GetLayerIndex("SunFlower_blink");
+                    var idleState = Animator.StringToHash("blink_idle");
+    
+                    animator.SetTrigger("blink");
+                    animator.Update(0.01f);
+                    animator.Update(0.01f);
+                    animator.Update(0.15f);
+                    for (var frame = 0; frame < 30; frame++)
+                    {
+                        animator.Update(0.01f);
+                    }
+    
+                    Assert.That(animator.GetCurrentAnimatorStateInfo(blinkLayer).shortNameHash,
+                        Is.EqualTo(idleState));
+                    Assert.That(blink1.gameObject.activeSelf, Is.False);
+                    Assert.That(blink2.gameObject.activeSelf, Is.False);
+                }
+                finally
+                {
+                    Object.DestroyImmediate(instance);
+                }
+            }
+
+    [Test]
+            public void Definition_ProvidesPlaceableSunProducingPrefab()
+            {
+                var config = Resources.Load<GameConfigObject>("GameConfigObject");
+                Assert.That(config, Is.Not.Null);
+    
+                config.Init();
+                var definition = config.GetPlantDefinition(PlantType.SunFlower);
+    
+                Assert.That(definition.SunPrice, Is.EqualTo(50));
+                Assert.That(definition.Cooldown, Is.EqualTo(5f));
+                Assert.That(definition.PresentationNormalizedTime, Is.EqualTo(0.15f));
+                Assert.That(definition.Prefab, Is.Not.Null);
+                Assert.That(definition.Prefab.GetComponent<SunFlower>(), Is.Not.Null);
+                Assert.That(definition.Prefab.GetComponent<SunProducer>(), Is.Not.Null);
+            }
+
+    [Test]
+            public void Definition_DefaultPresentationTime_IsFirstFrame()
+            {
+                Assert.That(new PlantDefinition().PresentationNormalizedTime, Is.EqualTo(0f));
+            }
+
+    [Test]
+            public void PresentationPrefab_HasProductionGlowAndParallelBlinkLayers()
+            {
+                var config = Resources.Load<GameConfigObject>("GameConfigObject");
+                Assert.That(config, Is.Not.Null);
+                config.Init();
+    
+                var prefab = config.GetPlantDefinition(PlantType.SunFlower).PresentationPrefab;
+                Assert.That(prefab.GetComponent<Blink>(), Is.Not.Null);
+                var basicTransform = prefab.transform.Find("component/basic").GetComponent<SpriteTransform>();
+                Assert.That(basicTransform, Is.Not.Null);
+                Assert.That(basicTransform.providesChildSpritePosition, Is.False);
+                Assert.That(basicTransform.providesChildSpriteAffine, Is.False);
+                Assert.That(basicTransform.spritePosition, Is.EqualTo(Vector2.zero));
+                Assert.That(prefab.transform.Find(BasicVisualPath + "/head/face"), Is.Null);
+                var head = prefab.transform.Find(HeadPath);
+                Assert.That(head, Is.Not.Null);
+                var headTransform = head.GetComponent<SpriteTransform>();
+                Assert.That(headTransform, Is.Not.Null);
+                Assert.That(headTransform.providesChildSpritePosition, Is.True);
+                Assert.That(headTransform.providesChildSpriteAffine, Is.True);
+                Assert.That(headTransform.spritePosition, Is.EqualTo(headTransform.position));
+                Assert.That(headTransform.spriteScale, Is.EqualTo(headTransform.scale));
+                Assert.That(headTransform.spriteSkew, Is.EqualTo(headTransform.skew));
+                var blink1 = head.Find("__AffineContent/blink/SunFlower_blink1");
+                var blink2 = head.Find("__AffineContent/blink/SunFlower_blink2");
+                Assert.That(blink1, Is.Not.Null);
+                Assert.That(blink2, Is.Not.Null);
+                Assert.That(blink1.gameObject.activeSelf, Is.False);
+                Assert.That(blink2.gameObject.activeSelf, Is.False);
+                var blink1Transform = blink1.GetComponent<SpriteTransform>();
+                var blink2Transform = blink2.GetComponent<SpriteTransform>();
+                Assert.That(blink1Transform.position,
+                    Is.EqualTo(new Vector2(2.57259f, -16.20185f)));
+                Assert.That(blink1Transform.scale,
+                    Is.EqualTo(new Vector2(80f, 80.56224f)));
+                Assert.That(blink1Transform.VisualRenderer.sortingOrder, Is.EqualTo(16));
+                Assert.That(blink2Transform.position,
+                    Is.EqualTo(new Vector2(2.57259f, -16.20185f)));
+                Assert.That(blink2Transform.scale,
+                    Is.EqualTo(new Vector2(80f, 80.56224f)));
+                Assert.That(blink2Transform.VisualRenderer.sortingOrder, Is.EqualTo(15));
+    
+                foreach (var blink in new[] { blink1, blink2 })
+                {
+                    var sprite = blink.GetComponent<SpriteTransform>().VisualRenderer.sprite;
+                    Assert.That(sprite.pivot.x, Is.EqualTo(sprite.rect.width * 0.5f).Within(0.001f));
+                    Assert.That(sprite.pivot.y, Is.EqualTo(sprite.rect.height * 0.5f).Within(0.001f));
+                }
+    
+                var controller = prefab.GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
+                Assert.That(controller, Is.Not.Null);
+                Assert.That(controller.parameters.Select(parameter => parameter.name),
+                    Is.SupersetOf(new[] { "produce", "blink" }));
+                Assert.That(controller.layers.Select(layer => layer.name),
+                    Is.SupersetOf(new[] { "SunFlower", "SunFlower_sun", "SunFlower_blink" }));
+    
+                var sunClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(
+                    "Assets/Prefab/Plant/SunFlower/Animation/sun.anim");
+                Assert.That(sunClip, Is.Not.Null);
+                Assert.That(AnimationUtility.GetAnimationEvents(sunClip)
+                        .Any(animationEvent =>
+                            animationEvent.functionName == "ProduceSun" &&
+                            animationEvent.intParameter == 1),
+                    Is.True);
+    
+                var blinkClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(
+                    "Assets/Prefab/Plant/SunFlower/Animation/blink.anim");
+                Assert.That(blinkClip, Is.Not.Null);
+                Assert.That(blinkClip.frameRate, Is.EqualTo(12f));
+            }
+
+    [Test]
+            public void PresentationPrefab_DefaultPoseMatchesIdleFifthFrame()
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
+                    "Assets/Prefab/Plant/SunFlower/SunFlower.prefab");
+                var idle = AssetDatabase.LoadAssetAtPath<AnimationClip>(
+                    "Assets/Prefab/Plant/SunFlower/Animation/idle.anim");
+                Assert.That(prefab, Is.Not.Null);
+                Assert.That(idle, Is.Not.Null);
+    
+                var sampleTime = 4f / idle.frameRate;
+                var animatedTransforms = new HashSet<SpriteTransform>();
+                foreach (var binding in AnimationUtility.GetCurveBindings(idle))
+                {
+                    if (binding.type != typeof(SpriteTransform)) continue;
+    
+                    var target = prefab.transform.Find(binding.path);
+                    Assert.That(target, Is.Not.Null, binding.path);
+                    var spriteTransform = target.GetComponent<SpriteTransform>();
+                    Assert.That(spriteTransform, Is.Not.Null, binding.path);
+                    var curve = AnimationUtility.GetEditorCurve(idle, binding);
+                    Assert.That(curve, Is.Not.Null, $"{binding.path}: {binding.propertyName}");
+    
+                    var actual = GetAnimatedValue(spriteTransform, binding.propertyName);
+                    if (float.IsNaN(actual)) continue;
+    
+                    Assert.That(actual, Is.EqualTo(curve.Evaluate(sampleTime)).Within(0.0002f),
+                        $"{binding.path}: {binding.propertyName}");
+                    animatedTransforms.Add(spriteTransform);
+                }
+    
+                foreach (var spriteTransform in animatedTransforms)
+                {
+                    var sourceParent = FindNativeSourceParent(spriteTransform.transform.parent);
+                    if (sourceParent != null && spriteTransform.NativeContent != null)
+                    {
+                        var nativeExpectedLocalPosition = ResolveSourceLocalPosition(
+                            spriteTransform,
+                            sourceParent);
+                        var expectedWorldPosition = sourceParent.NativeContent.TransformPoint(
+                            nativeExpectedLocalPosition);
+                        Assert.That(spriteTransform.transform.position.x,
+                            Is.EqualTo(expectedWorldPosition.x).Within(0.0002f), spriteTransform.name);
+                        Assert.That(spriteTransform.transform.position.y,
+                            Is.EqualTo(expectedWorldPosition.y).Within(0.0002f), spriteTransform.name);
+                        continue;
+                    }
+    
+                    var provider = FindPositionProvider(spriteTransform.transform.parent);
+                    var origin = provider != null ? provider.spritePosition : Vector2.zero;
+                    var delta = spriteTransform.position - origin;
+                    var expectedLocalPosition = new Vector3(
+                        delta.x,
+                        -delta.y,
+                        spriteTransform.transform.localPosition.z);
+    
+                    Assert.That(spriteTransform.transform.localPosition.x,
+                        Is.EqualTo(expectedLocalPosition.x).Within(0.0002f), spriteTransform.name);
+                    Assert.That(spriteTransform.transform.localPosition.y,
+                        Is.EqualTo(expectedLocalPosition.y).Within(0.0002f), spriteTransform.name);
+                }
+            }
+
+    [Test]
+            public void PresentationAnimations_TargetExistingHierarchyNodes()
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
+                    "Assets/Prefab/Plant/SunFlower/SunFlower.prefab");
+                Assert.That(prefab, Is.Not.Null);
+    
+                var clipPaths = new[]
+                {
+                    "Assets/Prefab/Plant/SunFlower/Animation/idle.anim",
+                    "Assets/Prefab/Plant/SunFlower/Animation/blink.anim",
+                    "Assets/Prefab/Plant/SunFlower/Animation/nosun.anim",
+                    "Assets/Prefab/Plant/SunFlower/Animation/sun.anim"
+                };
+    
+                foreach (var clipPath in clipPaths)
+                {
+                    var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(clipPath);
+                    Assert.That(clip, Is.Not.Null, clipPath);
+    
+                    foreach (var binding in AnimationUtility.GetCurveBindings(clip))
+                    {
+                        Assert.That(
+                            prefab.transform.Find(binding.path),
+                            Is.Not.Null,
+                            $"{clip.name} targets missing hierarchy path '{binding.path}'.");
+                    }
+                }
+            }
+    }
+}

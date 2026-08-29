@@ -1,13 +1,14 @@
 using System;
-using PvZ.Core.Entities;
-using PvZ.Gameplay.Board;
-using PvZ.Gameplay.Plants;
+using PvZ.Config;
+using PvZ.Gameplay.Entities;
+using PvZ.Gameplay.Planting;
+using PvZ.Gameplay.SeedCards.Presentation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace PvZ.Gameplay.SeedCards
 {
-    public class SeedCard : WorldObject, IPointerClickHandler
+    public sealed class SeedCard : GameEntity, IPointerClickHandler
     {
         [SerializeField] private SeedCardView view;
 
@@ -93,11 +94,11 @@ namespace PvZ.Gameplay.SeedCards
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                PlantingManager.Instance.TryBegin(this);
+                PlantingController.Instance.TryBegin(this);
             }
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
-                PlantingManager.Instance.Cancel();
+                PlantingController.Instance.Cancel();
             }
         }
 
