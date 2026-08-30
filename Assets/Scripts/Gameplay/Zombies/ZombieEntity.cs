@@ -14,7 +14,8 @@ namespace PvZ.Gameplay.Zombies
 
         [Header("Shadow")]
         [SerializeField] private bool drawsShadow = true;
-        [SerializeField] private Vector2 shadowCenterLocalPosition = new(-20.125f, -24.525f);
+        [SerializeField] private Transform shadowAnchor;
+        [SerializeField] private Vector2 shadowCenterLocalPosition = new(12.75f, -50f);
         [SerializeField, Min(0.01f)] private float shadowScale = Shadow.LargeScale;
         [SerializeField] private ZombieBodyCollider zombieBody;
 
@@ -25,10 +26,13 @@ namespace PvZ.Gameplay.Zombies
         public bool IsOnBoard => _isOnBoard;
         public int RowIndex => Row;
         public bool DrawsShadow => drawsShadow;
-        public Vector3 ShadowCenterLocalPosition => new(
-            shadowCenterLocalPosition.x,
-            shadowCenterLocalPosition.y,
-            0f);
+        public Transform ShadowAnchor => shadowAnchor;
+        public Vector3 ShadowCenterLocalPosition => shadowAnchor != null
+            ? Transform.InverseTransformPoint(shadowAnchor.position)
+            : new Vector3(
+                shadowCenterLocalPosition.x,
+                shadowCenterLocalPosition.y,
+                0f);
         public float ShadowScale => shadowScale;
         public ZombieBodyCollider ZombieBody =>
             zombieBody != null ? zombieBody : GetComponent<ZombieBodyCollider>();

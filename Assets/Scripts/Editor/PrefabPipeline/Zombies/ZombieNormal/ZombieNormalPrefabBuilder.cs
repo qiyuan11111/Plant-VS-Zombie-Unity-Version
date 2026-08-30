@@ -33,12 +33,13 @@ public static partial class ZombieNormalPrefabBuilder
     private const string BasicPath = ComponentPath + "/basic";
     private const string BasicVisualPath = BasicPath + "/" + SpriteTransform.NativeContentName;
     private const string AnchorsPath = ComponentPath + "/anchors";
+    private const string ShadowAnchorPath = AnchorsPath + "/shadow";
     private const string PartPathPrefix = BasicVisualPath + "/";
     private static readonly Vector2 ColliderOffset = new(-8.125f, 2.475f);
     private static readonly Vector2 ColliderSize = new(45f, 105f);
-    // Original shadow center (23,92), shifted by the centered XML origin
-    // (43.125,67.475) and converted from source Y-down to Unity Y-up.
-    private static readonly Vector2 ShadowLocalPosition = new(-20.125f, -24.525f);
+    // Stable center between the two animated feet. This is only used when the
+    // anchor is first created; later prefab rebuilds preserve authored tuning.
+    private static readonly Vector2 DefaultShadowAnchorLocalPosition = new(12.75f, -50f);
 
     private readonly struct Part
     {

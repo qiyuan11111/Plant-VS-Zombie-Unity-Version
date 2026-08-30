@@ -111,9 +111,21 @@ namespace PvZ.Editor.PrefabPipeline.Zombies.ZombieNormal
             var component = GetOrCreateChild(root, "component", zombieLayer);
             var basic = GetOrCreateChild(component, "basic", zombieLayer);
             var anchors = GetOrCreateChild(component, "anchors", zombieLayer);
+            var shadowAnchor = anchors.Find("shadow");
+            if (shadowAnchor == null)
+            {
+                shadowAnchor = GetOrCreateChild(anchors, "shadow", zombieLayer);
+                shadowAnchor.localPosition = DefaultShadowAnchorLocalPosition;
+            }
+            else
+            {
+                shadowAnchor.gameObject.layer = zombieLayer;
+            }
             SetIdentity(component);
             SetIdentity(basic);
             SetIdentity(anchors);
+            shadowAnchor.localRotation = Quaternion.identity;
+            shadowAnchor.localScale = Vector3.one;
     
             var basicTransform = basic.GetComponent<SpriteTransform>();
             if (basicTransform == null) basicTransform = basic.gameObject.AddComponent<SpriteTransform>();
@@ -216,7 +228,8 @@ namespace PvZ.Editor.PrefabPipeline.Zombies.ZombieNormal
     
             var serializedZombie = new SerializedObject(zombie);
             serializedZombie.FindProperty("drawsShadow").boolValue = true;
-            serializedZombie.FindProperty("shadowCenterLocalPosition").vector2Value = ShadowLocalPosition;
+            serializedZombie.FindProperty("shadowAnchor").objectReferenceValue =
+                root.transform.Find(ShadowAnchorPath);
             serializedZombie.FindProperty("shadowScale").floatValue = 1f;
             serializedZombie.ApplyModifiedPropertiesWithoutUndo();
         }

@@ -43,7 +43,7 @@ namespace PvZ.Tests.PlayMode.Zombies
             Assert.That(shadow.transform.parent, Is.SameAs(zombie.transform));
             var shadowLocalPosition = shadow.transform.localPosition;
             Assert.That(shadowLocalPosition,
-                Is.EqualTo(new Vector3(-20.125f, -24.525f, 0f)));
+                Is.EqualTo(new Vector3(12.75f, -50f, 0f)));
 
             yield return new WaitForSeconds(0.75f);
 

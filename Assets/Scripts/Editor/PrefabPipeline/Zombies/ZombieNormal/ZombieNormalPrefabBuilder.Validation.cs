@@ -37,15 +37,15 @@ namespace PvZ.Editor.PrefabPipeline.Zombies.ZombieNormal
             }
     
             var zombie = prefab.GetComponent<ZombieNormalEntity>();
-            var expectedShadowCenter = new Vector3(
-                ShadowLocalPosition.x,
-                ShadowLocalPosition.y,
-                0f);
+            var shadowAnchor = prefab.transform.Find(ShadowAnchorPath);
             if (!zombie.DrawsShadow ||
-                Vector3.Distance(zombie.ShadowCenterLocalPosition, expectedShadowCenter) > 0.0001f ||
+                shadowAnchor == null ||
+                zombie.ShadowAnchor != shadowAnchor ||
+                shadowAnchor.localRotation != Quaternion.identity ||
+                shadowAnchor.localScale != Vector3.one ||
                 Mathf.Abs(zombie.ShadowScale - 1f) > 0.0001f)
             {
-                throw new InvalidOperationException("ZombieNormal has an invalid decomp-compatible shadow configuration.");
+                throw new InvalidOperationException("ZombieNormal has an invalid stable shadow-anchor configuration.");
             }
     
             var component = prefab.transform.Find(ComponentPath);

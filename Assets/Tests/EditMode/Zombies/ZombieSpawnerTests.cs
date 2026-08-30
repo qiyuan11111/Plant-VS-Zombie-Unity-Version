@@ -74,6 +74,13 @@ namespace PvZ.Tests.EditMode.Zombies
                 Assert.That(spriteTransform.providesChildSpriteAffine, Is.False,
                     spriteTransform.name);
             }
+
+            var zombie = prefab.GetComponent<ZombieNormal>();
+            var shadowAnchor = prefab.transform.Find("component/anchors/shadow");
+            Assert.That(shadowAnchor, Is.Not.Null);
+            Assert.That(zombie.ShadowAnchor, Is.SameAs(shadowAnchor));
+            Assert.That(zombie.ShadowCenterLocalPosition,
+                Is.EqualTo(new Vector3(12.75f, -50f, 0f)));
         }
 
         [Test]
@@ -104,7 +111,7 @@ namespace PvZ.Tests.EditMode.Zombies
             Assert.That(shadow, Is.Not.Null);
             Assert.That(shadow.transform.parent, Is.SameAs(spawned.transform));
             Assert.That(shadow.transform.localPosition,
-                Is.EqualTo(new Vector3(-20.125f, -24.525f, 0f)));
+                Is.EqualTo(new Vector3(12.75f, -50f, 0f)));
             Assert.That(shadow.transform.localScale, Is.EqualTo(Vector3.one));
             var sortingGroup = shadow.GetComponent<SortingGroup>();
             Assert.That(sortingGroup, Is.Not.Null);
