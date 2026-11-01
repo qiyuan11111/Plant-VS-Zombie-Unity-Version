@@ -41,5 +41,5 @@ MonoBehaviour:
   Card: {fileID: 5784924986378957517, guid: 555cb2e475817a442b49304743fdd90e, type: 3}
   Sun: {fileID: 5634576352058383807, guid: 43e0cd8660f85924caf47f1b88329c4a, type: 3}
   PlantShadow: {fileID: 5221094972796793387, guid: 3136945d49b693b4b99fb9faa81393e7, type: 3}
-  ProjectilePea: {fileID: 5634576352058383807, guid: 43e0cd8660f85924caf47f1b88329c4a, type: 3}
+  ProjectilePea: {fileID: 3601408114021686271, guid: f19b36729a1a2f942870be19b9d37cc2, type: 3}
   PeaSplat: {fileID: 7648562607328567218, guid: 0afe8e2823e4c184dba0d66e9fbe0533, type: 3}
