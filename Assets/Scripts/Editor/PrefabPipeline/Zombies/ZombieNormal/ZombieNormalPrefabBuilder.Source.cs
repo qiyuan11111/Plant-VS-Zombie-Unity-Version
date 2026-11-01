@@ -33,7 +33,7 @@ namespace PvZ.Editor.PrefabPipeline.Zombies.ZombieNormal
 
         private static void ConfigureTextureImporters()
         {
-            var pixelsPerUnit = ReadWalkPixelsPerUnit();
+            var pixelsPerUnit = ReadPixelsPerUnit();
             foreach (var part in Parts)
             {
                 var path = $"{SpritePath}/{part.Name}.png";
@@ -41,7 +41,7 @@ namespace PvZ.Editor.PrefabPipeline.Zombies.ZombieNormal
                 if (importer == null) throw new MissingReferenceException($"Missing zombie sprite: {path}");
                 if (!pixelsPerUnit.TryGetValue(part.Name, out var partPixelsPerUnit))
                 {
-                    throw new InvalidDataException($"Walk XML has no size for zombie part: {part.Name}");
+                    throw new InvalidDataException($"Animation XML has no size for zombie part: {part.Name}");
                 }
     
                 importer.textureType = TextureImporterType.Sprite;
@@ -56,18 +56,36 @@ namespace PvZ.Editor.PrefabPipeline.Zombies.ZombieNormal
             }
         }
 
-        private static Dictionary<string, float> ReadWalkPixelsPerUnit()
+        private static Dictionary<string, float> ReadPixelsPerUnit()
         {
-            var xmlAbsolutePath = Path.Combine(Application.dataPath, WalkXmlPath.Substring("Assets/".Length));
+            var result = new Dictionary<string, float>(StringComparer.Ordinal);
+            foreach (var xmlPath in new[] { IdleXmlPath, WalkXmlPath, EatXmlPath })
+            {
+                foreach (var entry in ReadClipPixelsPerUnit(xmlPath))
+                {
+                    if (result.TryGetValue(entry.Key, out var existing) &&
+                        !Mathf.Approximately(existing, entry.Value))
+                    {
+                        throw new InvalidDataException($"Animation XML gives conflicting sizes for {entry.Key}: {xmlPath}");
+                    }
+                    result[entry.Key] = entry.Value;
+                }
+            }
+            return result;
+        }
+
+        private static Dictionary<string, float> ReadClipPixelsPerUnit(string xmlPath)
+        {
+            var xmlAbsolutePath = Path.Combine(Application.dataPath, xmlPath.Substring("Assets/".Length));
             if (!File.Exists(xmlAbsolutePath))
             {
-                throw new FileNotFoundException("Missing normal zombie walk XML.", xmlAbsolutePath);
+                throw new FileNotFoundException("Missing normal zombie animation XML.", xmlAbsolutePath);
             }
     
             var document = new XmlDocument();
             document.Load(xmlAbsolutePath);
             var layers = document.SelectNodes("/animate/layer");
-            if (layers == null) throw new InvalidDataException($"Walk XML has no layers: {WalkXmlPath}");
+            if (layers == null) throw new InvalidDataException($"Animation XML has no layers: {xmlPath}");
     
             var result = new Dictionary<string, float>(StringComparer.Ordinal);
             foreach (XmlNode layer in layers)
@@ -84,7 +102,7 @@ namespace PvZ.Editor.PrefabPipeline.Zombies.ZombieNormal
                 var authoredHeight = ParseXmlFloat(layer, "height");
                 if (authoredWidth <= 0f || authoredHeight <= 0f)
                 {
-                    throw new InvalidDataException($"Walk XML layer has an invalid size: {layerName}");
+                    throw new InvalidDataException($"Animation XML layer has an invalid size: {layerName}");
                 }
     
                 var widthRatio = texture.width / authoredWidth;
@@ -92,7 +110,7 @@ namespace PvZ.Editor.PrefabPipeline.Zombies.ZombieNormal
                 var ppu = ChoosePixelsPerUnit(targetName, widthRatio, heightRatio);
                 if (result.TryGetValue(targetName, out var existing) && !Mathf.Approximately(existing, ppu))
                 {
-                    throw new InvalidDataException($"Walk XML gives conflicting sizes for {targetName}.");
+                    throw new InvalidDataException($"Animation XML gives conflicting sizes for {targetName}.");
                 }
                 result[targetName] = ppu;
             }

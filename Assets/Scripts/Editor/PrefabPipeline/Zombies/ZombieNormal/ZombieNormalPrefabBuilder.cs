@@ -22,8 +22,10 @@ public static partial class ZombieNormalPrefabBuilder
     private const string AnimationPath = BasePath + "/Animation";
     private const string IdleXmlPath = "Assets/StreamingAssets/Zombie_anim_idle1.xml";
     private const string WalkXmlPath = "Assets/StreamingAssets/Zombie_anim_walk1.xml";
+    private const string EatXmlPath = "Assets/StreamingAssets/Zombie_anim_eat.xml";
     private const string IdlePath = AnimationPath + "/idle.anim";
     private const string WalkPath = AnimationPath + "/walk.anim";
+    private const string EatPath = AnimationPath + "/eat.anim";
     private const string ControllerPath = AnimationPath + "/ZombieNormal.controller";
     private const string PrefabPath = BasePath + "/ZombieNormal.prefab";
     private const string SharedMaterialPath = "Assets/Material/LightnessSkew.mat";
@@ -70,6 +72,7 @@ public static partial class ZombieNormalPrefabBuilder
         new("Zombie_tie", 28),
         new("Zombie_jaw", 29),
         new("Zombie_outerarm_hand", 35),
+        new("Zombie_outerarm_hand2", 35),
         new("Zombie_outerarm_upper", 36),
         new("Zombie_outerarm_lower", 38),
     };
@@ -83,10 +86,14 @@ public static partial class ZombieNormalPrefabBuilder
 
         var idle = CreateReanimationClip(IdleXmlPath, IdlePath, "idle", false);
         var walk = CreateReanimationClip(WalkXmlPath, WalkPath, "walk", true);
-        var controller = CreateController(idle, walk);
+        var eat = CreateReanimationClip(EatXmlPath, EatPath, "eat", false);
+        ConfigurePartVisibility(idle, IdleXmlPath);
+        ConfigurePartVisibility(walk, WalkXmlPath);
+        ConfigurePartVisibility(eat, EatXmlPath);
+        var controller = CreateController(idle, walk, eat);
         var prefab = CreatePrefab(idle, controller);
         ConnectGameConfig(prefab);
-        Validate(prefab, idle, walk, controller);
+        Validate(prefab, idle, walk, eat, controller);
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);

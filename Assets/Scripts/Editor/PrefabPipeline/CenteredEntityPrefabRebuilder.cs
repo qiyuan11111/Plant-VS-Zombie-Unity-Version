@@ -20,9 +20,5 @@ public static class CenteredEntityPrefabRebuilder
         Debug.Log("Centered plant and zombie prefabs rebuilt successfully.");
     }
 
-    public static void RebuildFromCommandLine()
-    {
-        Rebuild();
-    }
 }
 }

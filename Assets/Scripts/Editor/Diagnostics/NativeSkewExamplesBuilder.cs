@@ -9,7 +9,6 @@ namespace PvZ.Editor.Diagnostics
 {
 public static class NativeSkewExamplesBuilder
 {
-    private const string ScenePath = "Assets/Scenes/SampleScene.unity";
     private const string RootName = "NativeSkewExamples_ONE_LAYER__SELECT_EACH_EXAMPLE";
     private const string LegacyRootName = "NativeSkewExamples__SELECT_EACH_EXAMPLE";
     private const string HeadSpritePath =
@@ -21,46 +20,10 @@ public static class NativeSkewExamplesBuilder
     private const string PivotSpritePath =
         "Assets/Prefab/Plant/PeaShooterSingle/Sprite/PeaShooter_blink1.png";
 
-    [InitializeOnLoadMethod]
-    private static void RefreshOutdatedOpenExamples()
-    {
-        var remainingChecks = 120;
-        void TryRefresh()
-        {
-            if (EditorApplication.isCompiling || EditorApplication.isPlayingOrWillChangePlaymode)
-            {
-                return;
-            }
-
-            var legacyRoot = GameObject.Find(LegacyRootName);
-            if (legacyRoot == null)
-            {
-                if (--remainingChecks <= 0) EditorApplication.update -= TryRefresh;
-                return;
-            }
-
-            EditorApplication.update -= TryRefresh;
-            var scene = legacyRoot.scene;
-            BuildExamples(scene);
-            EditorSceneManager.SaveScene(scene);
-            AssetDatabase.SaveAssets();
-        }
-
-        EditorApplication.update += TryRefresh;
-    }
-
     [MenuItem("Tools/PvZ/Build Native Skew Hierarchy Examples")]
     public static void BuildInCurrentScene()
     {
         BuildExamples(SceneManager.GetActiveScene());
-    }
-
-    public static void BuildFromCommandLine()
-    {
-        var scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
-        BuildExamples(scene);
-        EditorSceneManager.SaveScene(scene);
-        AssetDatabase.SaveAssets();
     }
 
     private static void BuildExamples(Scene scene)

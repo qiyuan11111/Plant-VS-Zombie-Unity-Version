@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using NUnit.Framework;
 using PvZ.Gameplay.Sun;
 using UnityEngine;
@@ -54,7 +55,12 @@ namespace PvZ.Tests.EditMode.Sun
         private SunWallet CreateWallet()
         {
             _gameObject = new GameObject("SunWalletTests");
-            return _gameObject.AddComponent<SunWallet>();
+            var wallet = _gameObject.AddComponent<SunWallet>();
+            // EditMode AddComponent does not run the scene manager lifecycle.
+            var awake = typeof(SunWallet).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.That(awake, Is.Not.Null);
+            awake.Invoke(wallet, null);
+            return wallet;
         }
     }
 }

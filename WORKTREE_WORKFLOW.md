@@ -16,6 +16,8 @@
 3. 新增、移动或删除 Unity 资源时，必须连同对应 `.meta` 一起提交。
 4. `Assets/Scenes/SampleScene.unity` 默认只在 integration 分支修改。
 5. 功能分支合并前，先合并或变基最新 integration，并运行相关 EditMode 测试。
+6. 所有 Builder、Optimizer 和资源迁移工具只能由用户通过 `Tools/PvZ` 菜单手动触发；菜单中的统一重建可以显式调用各子构建器。
+7. 禁止在编辑器启动、脚本重载、资源导入、版本检查、`OnValidate`、播放模式或其他自动回调中触发构建、优化、迁移或自动保存。不得添加自动重建或命令行构建快捷入口。
 
 ## 推荐合并顺序
 

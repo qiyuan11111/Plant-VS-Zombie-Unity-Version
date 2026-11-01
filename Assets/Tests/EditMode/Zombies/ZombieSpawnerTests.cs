@@ -76,6 +76,7 @@ namespace PvZ.Tests.EditMode.Zombies
             }
 
             var zombie = prefab.GetComponent<ZombieNormal>();
+            zombie.ResetRuntimeState();
             var shadowAnchor = prefab.transform.Find("component/anchors/shadow");
             Assert.That(shadowAnchor, Is.Not.Null);
             Assert.That(zombie.ShadowAnchor, Is.SameAs(shadowAnchor));

@@ -34,34 +34,6 @@ public static class SunShroomPrefabOptimizer
     private const string BlinkPath = "component/basic/body/SunShroom_body/blink";
     private const string OptimizationVersion = "sunshroom-structure-v7-centered-root";
 
-    [InitializeOnLoadMethod]
-    private static void SchedulePendingOptimization()
-    {
-        EditorApplication.delayCall += OptimizePendingAssets;
-    }
-
-    private static void OptimizePendingAssets()
-    {
-        if (EditorApplication.isCompiling || EditorApplication.isUpdating ||
-            EditorApplication.isPlayingOrWillChangePlaymode)
-        {
-            EditorApplication.delayCall += OptimizePendingAssets;
-            return;
-        }
-
-        var importer = AssetImporter.GetAtPath(PrefabPath);
-        if (importer == null || importer.userData == OptimizationVersion) return;
-
-        try
-        {
-            OptimizeSunShroom();
-        }
-        catch (Exception exception)
-        {
-            Debug.LogException(exception);
-        }
-    }
-
     [MenuItem("Tools/PvZ/Optimize SunShroom Prefab")]
     public static void OptimizeSunShroom()
     {
@@ -83,11 +55,6 @@ public static class SunShroomPrefabOptimizer
         AssetDatabase.WriteImportSettingsIfDirty(PrefabPath);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
-    }
-
-    public static void OptimizeSunShroomFromCommandLine()
-    {
-        OptimizeSunShroom();
     }
 
     private static JsonData LoadSource()

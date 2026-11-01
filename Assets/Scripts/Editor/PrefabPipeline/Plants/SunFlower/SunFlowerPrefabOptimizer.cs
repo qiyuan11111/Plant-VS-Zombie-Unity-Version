@@ -130,10 +130,5 @@ public static partial class SunFlowerPrefabOptimizer
         Debug.Log("SunFlower prefab hierarchy, production glow, blink layer and animation bindings optimized.");
     }
 
-    public static void OptimizeSunFlowerFromCommandLine()
-    {
-        OptimizeSunFlower();
-    }
-
 }
 }

@@ -23,6 +23,7 @@ namespace PvZ.Editor.PrefabPipeline.Zombies.ZombieNormal
             GameObject prefab,
             AnimationClip idle,
             AnimationClip walk,
+            AnimationClip eat,
             RuntimeAnimatorController controller)
         {
             if (prefab.GetComponent<ZombieNormalEntity>() == null) throw new MissingComponentException("ZombieNormal component is missing.");
@@ -75,26 +76,55 @@ namespace PvZ.Editor.PrefabPipeline.Zombies.ZombieNormal
                 throw new InvalidOperationException("ZombieNormal basic container must use the centered-root contract.");
             }
     
-            foreach (var binding in AnimationUtility.GetCurveBindings(idle))
+            var sourcePartNames = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var xmlPath in new[] { IdleXmlPath, WalkXmlPath, EatXmlPath })
             {
-                if (string.IsNullOrEmpty(binding.path)) continue;
-                var target = prefab.transform.Find(binding.path);
-                if (target == null) throw new MissingReferenceException($"Idle animation target is missing: {binding.path}");
+                sourcePartNames.UnionWith(ReadClipPartNames(xmlPath));
             }
-    
             var expectedPartPaths = new HashSet<string>(StringComparer.Ordinal);
             foreach (var part in Parts) expectedPartPaths.Add(PartPathPrefix + part.Name);
-            var walkPaths = new HashSet<string>(StringComparer.Ordinal);
-            foreach (var binding in AnimationUtility.GetCurveBindings(walk))
+            var sourcePartPaths = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var name in sourcePartNames) sourcePartPaths.Add(PartPathPrefix + name);
+            if (!expectedPartPaths.SetEquals(sourcePartPaths))
+                throw new InvalidOperationException("Zombie prefab parts must match the idle, walk and eat source union.");
+
+            var clips = new[] { idle, walk, eat };
+            var sources = new[] { IdleXmlPath, WalkXmlPath, EatXmlPath };
+            for (var clipIndex = 0; clipIndex < clips.Length; clipIndex++)
             {
-                if (!string.IsNullOrEmpty(binding.path) && binding.type == typeof(SpriteTransform))
+                var clip = clips[clipIndex];
+                var visible = ReadClipPartNames(sources[clipIndex]);
+                var geometryPaths = new HashSet<string>(StringComparer.Ordinal);
+                var visibilityPaths = new HashSet<string>(StringComparer.Ordinal);
+                foreach (var binding in AnimationUtility.GetCurveBindings(clip))
                 {
-                    walkPaths.Add(binding.path);
+                    if (string.IsNullOrEmpty(binding.path))
+                    {
+                        if (clip == eat) throw new InvalidOperationException("Eating must not animate the zombie root.");
+                        continue;
+                    }
+                    var target = prefab.transform.Find(binding.path);
+                    if (target == null || (binding.type != typeof(GameObject) && target.GetComponent(binding.type) == null))
+                        throw new MissingReferenceException($"{clip.name} animation target is missing: {binding.path}");
+                    if (binding.type == typeof(SpriteTransform)) geometryPaths.Add(binding.path);
+                    if (binding.type == typeof(GameObject) && binding.propertyName == "m_IsActive")
+                    {
+                        visibilityPaths.Add(binding.path);
+                        var curve = AnimationUtility.GetEditorCurve(clip, binding);
+                        var name = target.name;
+                        foreach (var key in curve.keys)
+                        {
+                            if (!Mathf.Approximately(key.value, visible.Contains(name) ? 1f : 0f))
+                                throw new InvalidOperationException($"{clip.name} has incorrect part visibility: {name}");
+                        }
+                    }
                 }
-            }
-            if (!expectedPartPaths.SetEquals(walkPaths))
-            {
-                throw new InvalidOperationException("Walk XML bindings do not exactly match the standard prefab part paths.");
+                var visiblePaths = new HashSet<string>(StringComparer.Ordinal);
+                foreach (var name in visible) visiblePaths.Add(PartPathPrefix + name);
+                if (!geometryPaths.SetEquals(visiblePaths) || !visibilityPaths.SetEquals(expectedPartPaths))
+                    throw new InvalidOperationException($"{clip.name} bindings do not match its source parts and complete visibility contract.");
+                if (!AnimationUtility.GetAnimationClipSettings(clip).loopTime || !Mathf.Approximately(clip.frameRate, 12f))
+                    throw new InvalidOperationException($"{clip.name} must loop at its source rate of 12fps.");
             }
     
             foreach (var part in Parts)

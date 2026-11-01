@@ -66,11 +66,6 @@ public static class SpriteTransformHierarchyMigration
             $"cleaned {cleanedMaterialCount} materials.");
     }
 
-    public static void MigrateAllPrefabsFromCommandLine()
-    {
-        MigrateAllPrefabs();
-    }
-
     public static bool EnsureNativeHierarchy(SpriteTransform spriteTransform)
     {
         if (spriteTransform == null || spriteTransform.NativeContent != null) return false;

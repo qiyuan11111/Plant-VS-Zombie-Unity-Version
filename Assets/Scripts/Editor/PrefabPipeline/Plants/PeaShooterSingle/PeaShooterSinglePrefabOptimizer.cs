@@ -86,11 +86,6 @@ public static partial class PeaShooterSinglePrefabOptimizer
         OptimizePeaShooterSingle(LoadSource());
     }
 
-    public static void OptimizePeaShooterSingleFromCommandLine()
-    {
-        OptimizePeaShooterSingle();
-    }
-
     private static void OptimizePeaShooterSingle(JsonData source)
     {
         EnsureSpriteImportSettings(Blink1SpritePath);
